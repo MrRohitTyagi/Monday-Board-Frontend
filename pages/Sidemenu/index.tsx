@@ -1,29 +1,35 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 
 //utils
 import { cn } from "@/lib/utils";
 
 //constants
-import { navConfig } from "@/pages/Sidemenu/constants";
+import { gertNavConfig } from "@/pages/Sidemenu/constants";
 
 //hooks
-import { useSideMenu } from "@/zstore";
+import { useAuth, useSideMenu } from "@/zstore";
 import { ChevronLeft, ChevronRight, LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type SideMenuProps = {};
 
-const SideMenu = (props: SideMenuProps) => {
+const SideMenu = ({}: SideMenuProps) => {
   const { isCollapsed, toggleSideMenu } = useSideMenu();
+  const { isAuthenticated } = useAuth();
+  const { org } = useAuth();
   const [selected, setSelected] = useState("");
   const pathname = usePathname();
 
   useEffect(() => {
     setSelected(pathname as string);
   }, [pathname]);
+
+  const navConfig = useMemo(() => {
+    return gertNavConfig(org);
+  }, [gertNavConfig]);
 
   return (
     <div
@@ -35,7 +41,8 @@ const SideMenu = (props: SideMenuProps) => {
         `bg-main-fg rounded-tr-lg shrink-0`,
         isCollapsed ? "" : `p-4 pt-8`,
         `relative overflow-hidden`,
-        `group`
+        `group`,
+        isAuthenticated ? "" : "pointer-events-none opacity-70"
       )}
     >
       <Button
