@@ -1,3 +1,3 @@
 export default function Home() {
-  return <main className=" bg-main-bg">Cleanup</main>;
+  return <main className="">Clfdsfeanup</main>;
 }

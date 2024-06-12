@@ -17,10 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={figtree.className}>
-        <div className="h-screen bg-main-bg">
-          <Authorize>{children}</Authorize>
-        </div>
+      <body
+        className={
+          figtree.className + " " + `max-h-dvh min-h-dvh w-screen bg-main-bg`
+        }
+      >
+        <Authorize>{children}</Authorize>
       </body>
     </html>
   );

@@ -9,6 +9,7 @@ const config = {
     "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
+
   theme: {
     container: {
       center: true,
@@ -18,8 +19,15 @@ const config = {
       },
     },
     extend: {
-      colors: {
+      height: {
         "navbar-height": "3rem",
+      },
+      width: {
+        "sidemenu-width-extended": "10rem",
+        "sidemenu-width-collapsed": "3rem",
+      },
+      colors: {
+        "main-light": "#30324E",
         "main-bg": "#292F4C",
         "main-fg": "#1C1F3B",
         border: "hsl(var(--border))",

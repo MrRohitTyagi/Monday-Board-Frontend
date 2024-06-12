@@ -5,11 +5,7 @@ import MainLayout from "./MainLayout";
 type AuthorizeTypes = ChildrenType & {};
 
 const Authorize = ({ children }: AuthorizeTypes) => {
-  return (
-    <div className="bg-main-bg">
-      <MainLayout>{children}</MainLayout>
-    </div>
-  );
+  return <MainLayout>{children}</MainLayout>;
 };
 
 export default Authorize;
