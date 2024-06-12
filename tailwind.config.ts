@@ -19,6 +19,9 @@ const config = {
     },
     extend: {
       colors: {
+        "navbar-height": "3rem",
+        "main-bg": "#292F4C",
+        "main-fg": "#1C1F3B",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -74,7 +77,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("daisyui")],
 } satisfies Config;
 
 export default config;
