@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+
 //utils
 import { cn } from "@/lib/utils";
 
@@ -16,17 +18,23 @@ type SideMenuProps = {};
 
 const SideMenu = (props: SideMenuProps) => {
   const { isCollapsed, toggleSideMenu } = useSideMenu();
-  const [selected, setSelected] = useState("/");
+  const [selected, setSelected] = useState("");
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setSelected(pathname as string);
+  }, [pathname]);
 
   return (
     <div
+      style={{ transition: "width 200ms ease" }}
       className={cn(
         isCollapsed
           ? "w-sidemenu-width-collapsed"
           : "w-sidemenu-width-extended",
         `bg-main-fg rounded-tr-lg shrink-0`,
         isCollapsed ? "" : `p-4 pt-8`,
-        `relative overflow-hidden transition-all`,
+        `relative overflow-hidden`,
         `group`
       )}
     >
@@ -34,10 +42,13 @@ const SideMenu = (props: SideMenuProps) => {
         variant={"ghost"}
         onClick={toggleSideMenu}
         className={cn(
+          "transition-all",
           "rounded-none rounded-bl-md bg-main-light transition-all",
           isCollapsed ? "relative" : "absolute",
           "h-10 place-content-center top-0 right-0 overflow-hidden p-1",
-          `opacity-${isCollapsed ? "100" : "0"} group-hover:opacity-100`,
+          `${
+            isCollapsed ? "opacity-100" : "opacity-0"
+          } group-hover:opacity-100`,
           isCollapsed ? `rounded-none w-full` : "w-10"
         )}
       >
@@ -49,10 +60,7 @@ const SideMenu = (props: SideMenuProps) => {
       </Button>
 
       <div
-        className={cn(
-          "sidemenu-content flex flex-col gap-2 ",
-          isCollapsed ? "items-center" : "items-start"
-        )}
+        className={cn("sidemenu-content flex flex-col gap-2 ", "items-start")}
       >
         {navConfig.map((nav) => (
           <NavLink
@@ -86,7 +94,14 @@ const NavLink = ({
 }: NavLinkProps) => {
   return (
     <Link
-      className={`transition-all hover:bg-main-light p-2 rounded-sm w-full`}
+      className={cn(
+        "transition-all duration-300 ",
+        selected ? "" : "hover:bg-main-light",
+        " p-2 rounded-sm w-full",
+        "whitespace-nowrap",
+        isCollapsed ? "flex flex-row justify-center" : "flex flex-row",
+        selected ? "bg-main-active" : ""
+      )}
       href={href}
     >
       {isCollapsed ? <Icon size={"20px"} /> : label}

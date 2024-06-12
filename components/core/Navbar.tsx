@@ -9,15 +9,13 @@ type Props = {};
 
 const Navbar = (props: Props) => {
   return (
-    <div className="items-center w-full h-navbar-height flex flex-row justify-between">
+    <div className="p-2 items-center w-full h-navbar-height flex flex-row justify-between">
       <Link href="/">Logo</Link>
       <div className="right-side-navbar-stuff">
         <Button className="" variant="ghost">
           <Bell />
         </Button>
-        <Button className="" variant="ghost">
-          <UserProfile />
-        </Button>
+        <UserProfile />
       </div>
     </div>
   );

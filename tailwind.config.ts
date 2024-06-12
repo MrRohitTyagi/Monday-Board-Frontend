@@ -27,6 +27,7 @@ const config = {
         "sidemenu-width-collapsed": "3rem",
       },
       colors: {
+        "main-active": "#0073EA",
         "main-light": "#30324E",
         "main-bg": "#292F4C",
         "main-fg": "#1C1F3B",
