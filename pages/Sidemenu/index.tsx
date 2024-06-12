@@ -24,12 +24,18 @@ const SideMenu = ({}: SideMenuProps) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    setSelected(pathname as string);
+    setSelected(`${pathname}`);
   }, [pathname]);
+
+  console.log(
+    `%c selected `,
+    "color: aqua;border:2px solid darkorange",
+    selected
+  );
 
   const navConfig = useMemo(() => {
     return gertNavConfig(org);
-  }, [gertNavConfig]);
+  }, [gertNavConfig, org]);
 
   return (
     <div
