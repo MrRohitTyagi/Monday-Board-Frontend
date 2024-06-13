@@ -34,7 +34,7 @@ const Board = ({ params }: pageProps) => {
   );
 
   return (
-    <div className="h-full relative  pt-4 pl-4">
+    <div className="h-full relative">
       {isLoading ? (
         <span
           className={cn(
@@ -54,7 +54,13 @@ const Board = ({ params }: pageProps) => {
             {/* //  Board Content  */}
             <div className="flex flex-col gap-4">
               {currentBoard.sprints.map((sprint) => {
-                return <Sprint key={sprint.pk} sprint={sprint} />;
+                return (
+                  <Sprint
+                    key={sprint.pk}
+                    sprint={sprint}
+                    board={currentBoard}
+                  />
+                );
               })}
               <Space h={4} />
             </div>

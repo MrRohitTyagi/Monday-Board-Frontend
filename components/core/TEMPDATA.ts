@@ -27,6 +27,7 @@ const PULSE_ONE = {
   title: "Create a navbar for our product",
   assigned: ["member1", "member2"],
   timeline: "",
+  status: "2",
   priority: "1",
   tag: "#TODO",
 };
@@ -44,6 +45,7 @@ const PULSE_THREE = {
   priority: "3",
   title: "Remove all the use effects from code and start feom stratch",
   assigned: ["member1"],
+  status: "3",
   timeline: "",
   tag: "#For Rohit",
 };
@@ -88,16 +90,18 @@ const TEMP_BOARD = {
   picture: "https://stiltsoft.com/wp-content/uploads/2022/10/pandadoc2.png",
   admins: [ADMIN_ONE, ADMIN_ONE, ADMIN_ONE],
   members: [MEMBER_ONE, MEMBER_TWO],
-  statuses: [
-    { title: "For Dev", color: "yellow", id: "1" },
-    { title: "Done", color: "green", id: "2" },
-    { title: "Under QA", color: "pink", id: "3" },
-  ],
-  priority: [
-    { title: "Low", color: "orange", id: "1" },
-    { title: "High", color: "green", id: "2" },
-    { title: "Critical", color: "yellow", id: "3" },
-  ],
+
+  statuses: {
+    "1": { title: "For Dev", color: "darkyellow" },
+    "2": { title: "Done", color: "green" },
+    "3": { title: "Under QA", color: "pink" },
+  },
+
+  priority: {
+    "1": { title: "Low", color: "orange" },
+    "2": { title: "High", color: "green" },
+    "3": { title: "Critical", color: "cyan" },
+  },
   sprints: [
     SPRINT_ONE,
     SPRINT_TWO,

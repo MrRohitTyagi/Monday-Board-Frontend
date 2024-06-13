@@ -1,12 +1,14 @@
 "use client";
 
 import React from "react";
-import { SprintType } from "@/zstore";
-import { cn } from "@/lib/utils";
 import { startCase } from "lodash";
-import Pulse from "./Pulse";
+
 import Space from "@/components/core/Space";
-import TempPulseRow from "./TempPulseRow";
+
+import { BoardType, SprintType } from "@/zstore";
+import { cn } from "@/lib/utils";
+
+import Pulse from "./Pulse";
 
 const tempPulse = {
   pk: "temp-pulse",
@@ -18,9 +20,9 @@ const tempPulse = {
   tag: "# Tag",
 };
 
-type SprintProps = { sprint: SprintType };
+type SprintProps = { sprint: SprintType; board: BoardType };
 
-const Sprint = ({ sprint }: SprintProps) => {
+const Sprint = ({ sprint, board }: SprintProps) => {
   return (
     <div className={cn(`w-full`)}>
       <h2 className="text-xl" style={{ color: sprint.color }}>
@@ -28,27 +30,86 @@ const Sprint = ({ sprint }: SprintProps) => {
       </h2>
       <Space />
       {/* pulses */}
-      <div className="pulse-container flex flex-col ">
-        {/* <TempPulseRow color={sprint.color} /> */}
-        <Pulse
-          pulse={tempPulse}
-          sprint={sprint}
-          index={0}
-          isLast={false}
-          isFake={true}
-        />
-        {sprint.pulses.map((pulse, i) => {
-          return (
+      <div className="grid grid-cols-[20rem_1fr]">
+        <div className="pulse-container-left flex flex-row">
+          <div
+            style={{ background: sprint.color }}
+            className={cn(
+              "left-color w-2 h-full shrink-0",
+              "rounded-tl-md",
+              "rounded-bl-md"
+            )}
+          />
+          <div className="pulse-container-left flex flex-col overflow-hidden">
+            {/* <TempPulseRow color={sprint.color} /> */}
+
+            <PulseWrapper>
+              <Pulse
+                pulse={tempPulse}
+                board={board}
+                sprint={sprint}
+                leftPart={true}
+                isFake={true}
+              />
+            </PulseWrapper>
+
+            {sprint.pulses.map((pulse, i) => {
+              return (
+                <PulseWrapper>
+                  <Pulse
+                    isFake={false}
+                    pulse={pulse}
+                    board={board}
+                    sprint={sprint}
+                    leftPart={true}
+                  />
+                </PulseWrapper>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* RIGHT PART  */}
+        <div className="pulse-container-right flex flex-col w-full overflow-x-auto">
+          <PulseWrapper>
             <Pulse
-              isFake={false}
-              pulse={pulse}
+              board={board}
+              pulse={tempPulse}
               sprint={sprint}
-              index={++i}
-              isLast={i === sprint.pulses.length}
+              leftPart={false}
+              isFake={true}
             />
-          );
-        })}
+          </PulseWrapper>
+          {sprint.pulses.map((pulse, i) => {
+            return (
+              <PulseWrapper>
+                <Pulse
+                  board={board}
+                  isFake={false}
+                  pulse={pulse}
+                  sprint={sprint}
+                  leftPart={false}
+                />
+              </PulseWrapper>
+            );
+          })}
+        </div>
       </div>
+    </div>
+  );
+};
+
+const PulseWrapper = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div
+      className={cn(
+        "h-10 w-full",
+        "transition-all duration-300",
+        "hover:bg-main-bg",
+        "active:bg-main-active-dark"
+      )}
+    >
+      {children}
     </div>
   );
 };

@@ -36,8 +36,8 @@ export type BoardType = {
   description: string;
   admins: UserType[];
   members: UserType[];
-  statuses: { title: string; color: string }[];
-  priority: { title: string; color: string }[];
+  statuses: { [key: string]: { title: string; color: string } };
+  priority: { [key: string]: { title: string; color: string } };
   sprints: SprintType[];
 };
 

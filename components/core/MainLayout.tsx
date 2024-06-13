@@ -27,8 +27,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           style={{ transition: "width 200ms ease" }}
           className={cn(
             'main-right-cont',
-            "p-2 rounded-tl-lg grow shrink-0 bg-main-fg",
-            "h-main-content-height  overflow-auto"
+            "rounded-tl-lg grow shrink-0 bg-main-fg",
+            "h-main-content-height  overflow-auto",'pt-4 pl-4'
           )}
         >
           {children}

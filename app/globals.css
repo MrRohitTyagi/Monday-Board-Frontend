@@ -87,19 +87,11 @@ body {
   min-height: 100dvh;
 }
 
-.main-right-cont {
-  scrollbar-width: 4px; /* Firefox */
-}
-
-.main-right-cont::-webkit-scrollbar {
-  width: 4px; /* Chrome, Safari, and Opera */
-}
-
-.pulse-rest-scroller {
+.pulse-container-right {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
 
-.pulse-rest-scroller::-webkit-scrollbar {
+.pulse-container-right::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
 }
