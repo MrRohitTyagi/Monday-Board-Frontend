@@ -1,7 +1,7 @@
 import React from "react";
 type pageProps = {};
-const MyWork = ({ params }: pageProps) => {
-  return <div>MyWfdsork</div>;
+const MyWork = ({}: pageProps) => {
+  return <div>My Wsork under Dev</div>;
 };
 
 export default MyWork;
