@@ -15,13 +15,13 @@ const SidemenuBoardListing = (props: SidemenuBoardListingProps) => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 animate-fadeIn">
       {boards.map((board) => {
         const isActive = pathname?.includes(board.pk);
 
         return (
           <div
-            key={board.pk+'fdsfds'}
+            key={board.pk + "fdsfds"}
             onClick={() => navigate(`board/${board.pk}`)}
             className={cn(
               "flex flex-row gap-2 items-center ",

@@ -103,7 +103,7 @@ const PulseWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       className={cn(
-        "h-10 w-full",
+        "h-10 w-full animate-fadeIn",
         "transition-all duration-300",
         "hover:bg-main-bg",
         "active:bg-main-active-dark"

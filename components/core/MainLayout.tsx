@@ -14,7 +14,7 @@ type MainLayoutProps = ChildrenType & {};
 const MainLayout = ({ children }: MainLayoutProps) => {
   const { isCollapsed } = useSideMenu();
   return (
-    <div className="grid grid-rows-[3rem_1fr] h-dvh">
+    <div className="grid grid-rows-[3rem_1fr] h-dvh animate-fadeIn">
       <Navbar />
       <div
         className={cn(
@@ -26,20 +26,15 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         <div
           style={{ transition: "width 200ms ease" }}
           className={cn(
-            'main-right-cont',
+            "main-right-cont",
             "rounded-tl-lg grow shrink-0 bg-main-fg",
-            "h-main-content-height  overflow-auto",'pt-4 pl-4'
+            "h-main-content-height  overflow-auto",
+            "pt-4 pl-4"
           )}
         >
           {children}
         </div>
       </div>
-      {/* <div className="flex grow-1 flex-row gap-4 rounded-tr-md">
-        <SideMenu />
-        <div className="p-2 rounded-tl-lg grow shrink-0 bg-main-fg">
-          {children}
-        </div>
-      </div> */}
     </div>
   );
 };

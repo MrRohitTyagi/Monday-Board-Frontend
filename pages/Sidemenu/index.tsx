@@ -45,7 +45,7 @@ const SideMenu = ({}: SideMenuProps) => {
         `bg-main-fg rounded-tr-lg shrink-0`,
         isCollapsed ? "" : `p-4 pt-8`,
         `relative overflow-hidden`,
-        `group`,
+        `group  animate-fadeIn`,
         isAuthenticated ? "" : "pointer-events-none opacity-70"
       )}
     >
