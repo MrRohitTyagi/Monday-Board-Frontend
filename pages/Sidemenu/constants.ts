@@ -1,18 +1,13 @@
 "use client";
 
-import {
-  BriefcaseBusiness,
-  ClipboardList,
-  HomeIcon,
-  LucideIcon,
-} from "lucide-react";
+import { BriefcaseBusiness, HomeIcon, LucideIcon } from "lucide-react";
 
 export const gertNavConfig = (org: string) => {
   return [
     {
       href: `/${org}`,
       label: "Home",
-      icon: HomeIcon as LucideIcon,
+      icon: HomeIcon,
     },
     {
       href: `/${org}/my-work`,
