@@ -27,14 +27,58 @@ const PULSE_ONE = {
   title: "Create a navbar for our product",
   assigned: ["member1", "member2"],
   timeline: "",
+  priority: "1",
   tag: "#TODO",
+};
+const PULSE_TWO = {
+  pk: "nfdjn3n454tf",
+  priority: "2",
+  status: "2",
+  title: "Create a Footer with company logo",
+  assigned: ["member1", "member2"],
+  timeline: "",
+  tag: "#For Rohit",
+};
+const PULSE_THREE = {
+  pk: "nfdjn3n454tf",
+  priority: "3",
+  title: "Remove all the use effects from code and start feom stratch",
+  assigned: ["member1"],
+  timeline: "",
+  tag: "#For Rohit",
 };
 
 const SPRINT_ONE = {
   pk: "nfdjn3n4",
-  title: "JUNE Sprint",
+  title: "june Sprint",
   color: "yellow",
-  pulses: [PULSE_ONE],
+  pulses: [PULSE_TWO, PULSE_ONE, PULSE_TWO, PULSE_THREE],
+};
+const SPRINT_TWO = {
+  pk: "nf4323n4",
+  title: "July Sprint",
+  color: "orange",
+  pulses: [
+    PULSE_TWO,
+    PULSE_ONE,
+    PULSE_THREE,
+    PULSE_THREE,
+    PULSE_ONE,
+    PULSE_TWO,
+  ],
+};
+const SPRINT_THREE = {
+  pk: "nfgdfn4",
+  title: "July Sprint",
+  color: "lightgreen",
+  pulses: [
+    PULSE_ONE,
+    PULSE_THREE,
+    PULSE_TWO,
+    PULSE_THREE,
+    PULSE_ONE,
+    PULSE_TWO,
+  ],
 };
 
 const TEMP_BOARD = {
@@ -45,17 +89,29 @@ const TEMP_BOARD = {
   admins: [ADMIN_ONE, ADMIN_ONE, ADMIN_ONE],
   members: [MEMBER_ONE, MEMBER_TWO],
   statuses: [
-    { title: "For Dev", color: "yellow" },
-    { title: "Done", color: "green" },
-    { title: "Under QA", color: "pink" },
+    { title: "For Dev", color: "yellow", id: "1" },
+    { title: "Done", color: "green", id: "2" },
+    { title: "Under QA", color: "pink", id: "3" },
   ],
   priority: [
-    { title: "Low", color: "purple" },
-    { title: "High", color: "green" },
-    { title: "Critical", color: "yellow" },
+    { title: "Low", color: "orange", id: "1" },
+    { title: "High", color: "green", id: "2" },
+    { title: "Critical", color: "yellow", id: "3" },
   ],
-  sprints: [SPRINT_ONE],
+  sprints: [
+    SPRINT_ONE,
+    SPRINT_TWO,
+    SPRINT_THREE,
+    SPRINT_TWO,
+    SPRINT_TWO,
+    SPRINT_TWO,
+    SPRINT_TWO,
+  ],
 };
+const tempboardarr = [1, 2, 3, 4].map((e) => ({
+  ...TEMP_BOARD,
+  pk: TEMP_BOARD.pk + e,
+}));
 
 const TEMP_USER = {
   pk: "nfdj432432n3n4",
@@ -66,7 +122,7 @@ const TEMP_USER = {
   org: "granite-stack",
   picture:
     "https://res-console.cloudinary.com/derplm8c6/media_explorer_thumbnails/f57b47e7a470284681bc9e282059df02/detailed",
-  boards: [TEMP_BOARD],
+  boards: [...tempboardarr],
 };
 
 async function getBoard(id: string) {

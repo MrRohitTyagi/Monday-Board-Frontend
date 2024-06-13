@@ -22,7 +22,7 @@ export type UserType = {
   picture: string;
 };
 
-type SprintType = {
+export type SprintType = {
   pk: string;
   title: string;
   color: string;
@@ -41,12 +41,14 @@ export type BoardType = {
   sprints: SprintType[];
 };
 
-type PulseType = {
+export type PulseType = {
   pk: string;
   title: string;
   assigned: string[];
   timeline: string;
   tag: string;
+  status: string;
+  priority: string;
 };
 
 export const useSideMenu = create<SideMenuStoreType>((setState) => ({

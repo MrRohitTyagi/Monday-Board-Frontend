@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+const navbarHeight = "3rem";
 const config = {
   darkMode: ["class"],
   content: [
@@ -20,7 +20,8 @@ const config = {
     },
     extend: {
       height: {
-        "navbar-height": "3rem",
+        "main-content-height": `calc(100vh - ${navbarHeight})`,
+        "navbar-height": navbarHeight,
         "card-height": "13rem",
       },
       width: {
@@ -29,6 +30,8 @@ const config = {
         "card-width": "20rem",
       },
       colors: {
+        "border-light": "#524f4f",
+        "pulse-divider": "#747171",
         "main-active": "#0073EA",
         "main-active-dark": "#133774",
         "main-light": "#30324E",

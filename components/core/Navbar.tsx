@@ -15,7 +15,7 @@ const Navbar = (props: Props) => {
   return (
     <div
       className={cn(
-        "p-2 items-center w-full h-navbar-height",
+        "p-2 pr-8 items-center w-full h-navbar-height",
         " flex flex-row justify-between",
         isAuthenticated ? "" : "pointer-events-none opacity-50"
       )}

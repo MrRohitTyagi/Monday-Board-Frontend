@@ -1,25 +1,21 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { startCase } from "lodash";
 
 import { getBoard } from "@/components/core/TEMPDATA";
 
 import { cn } from "@/lib/utils";
 import { BoardType } from "@/zstore";
-import { ChevronDown } from "lucide-react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@radix-ui/react-popover";
+
 import BoardTitle from "./components/BoardTitle";
+import Sprint from "./components/Sprint";
+import Space from "@/components/core/Space";
 
 type pageProps = {
   params: { board: string; organisation: string };
 };
 
 const Board = ({ params }: pageProps) => {
-  const [currentBoard, setcurrentBoard] = useState<BoardType>({});
+  const [currentBoard, setcurrentBoard] = useState<BoardType>({} as BoardType);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -38,7 +34,7 @@ const Board = ({ params }: pageProps) => {
   );
 
   return (
-    <div className="h-full relative">
+    <div className="h-full relative  pt-4 pl-4">
       {isLoading ? (
         <span
           className={cn(
@@ -48,16 +44,22 @@ const Board = ({ params }: pageProps) => {
           )}
         />
       ) : (
-        <div
-          className={cn(
-            "board-main-div w-full pt-4 pl-4",
-            "flex justify-between"
-          )}
-        >
-          <BoardTitle board={currentBoard} />
+        <>
+          <div className={cn("board-main-div w-full", "flex justify-between")}>
+            <BoardTitle board={currentBoard} />
+          </div>
+          <div>
+            <Space h={4} />
 
-          <div></div>
-        </div>
+            {/* //  Board Content  */}
+            <div className="flex flex-col gap-4">
+              {currentBoard.sprints.map((sprint) => {
+                return <Sprint key={sprint.pk} sprint={sprint} />;
+              })}
+              <Space h={4} />
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

@@ -32,7 +32,7 @@ const Organisation = (props: pageProps) => {
         )}
       >
         <h1 className="font-bold text-2xl">Your Boards</h1>
-        <div className="boards-listing">
+        <div className="boards-listing flex flex-row gap-4 flex-wrap">
           {boards.map((board) => {
             return <BoardComp key={board.pk + "board"} board={board} />;
           })}
@@ -49,7 +49,7 @@ const BoardComp = ({ board }: { board: BoardType }) => {
       onClick={() => navigate(`board/${board.pk}`)}
       className={cn(
         "bg-transparent h-card-height w-card-width ",
-        "p-2 border-[#524f4f] space-y-2",
+        "p-2 border-border-light border-[1px] space-y-2",
         "transition-all",
         "hover:shadow-foreground shadow-lg"
       )}

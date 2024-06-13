@@ -74,12 +74,32 @@
   box-sizing: border-box;
   background-color: inherit;
 }
+html {
+  max-width: 100dvw;
+  min-width: 100dvw;
+  max-height: 100dvh;
+  min-height: 100dvh;
+}
+body {
+  max-width: 100dvw;
+  min-width: 100dvw;
+  max-height: 100dvh;
+  min-height: 100dvh;
+}
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+.main-right-cont {
+  scrollbar-width: 4px; /* Firefox */
+}
+
+.main-right-cont::-webkit-scrollbar {
+  width: 4px; /* Chrome, Safari, and Opera */
+}
+
+.pulse-rest-scroller {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.pulse-rest-scroller::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
 }

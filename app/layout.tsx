@@ -19,7 +19,9 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={
-          figtree.className + " " + `max-h-dvh min-h-dvh w-screen bg-main-bg`
+          figtree.className +
+          " " +
+          `max-h-dvh min-h-dvh w-screen bg-main-bg overflow-hidden`
         }
       >
         <Authorize>{children}</Authorize>
