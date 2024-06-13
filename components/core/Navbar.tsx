@@ -20,7 +20,7 @@ const Navbar = (props: Props) => {
         isAuthenticated ? "" : "pointer-events-none opacity-50"
       )}
     >
-      <Link href="/">Logo</Link>
+      <Link href="/">TaskBoard.io</Link>
       <div className="right-side-navbar-stuff">
         <Button className="" variant="ghost">
           <Bell />
