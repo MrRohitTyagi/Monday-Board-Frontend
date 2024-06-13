@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 //constants
-import { boardFilterOptions } from "@/pages/Sidemenu/constants";
 
 //hooks
 import { useAuth, useSideMenu } from "@/zstore";
@@ -23,6 +22,7 @@ import {
 } from "lucide-react";
 import SelectComp from "@/components/core/Select";
 import SidemenuBoardListing from "./SidemenuBoardListing";
+import { boardFilterOptions } from "@/constants/constants";
 
 export const gertNavConfig = (org: string) => {
   return [
