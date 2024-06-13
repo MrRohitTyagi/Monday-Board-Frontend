@@ -3,16 +3,20 @@ import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 
+//UI elements
+import { Button } from "@/components/ui/button";
+
 //utils
 import { cn } from "@/lib/utils";
 
 //constants
-import { gertNavConfig } from "@/pages/Sidemenu/constants";
+import { boardFilterOptions, gertNavConfig } from "@/pages/Sidemenu/constants";
 
 //hooks
 import { useAuth, useSideMenu } from "@/zstore";
 import { ChevronLeft, ChevronRight, LucideIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import SelectComp from "@/components/core/Select";
+import SidemenuBoardListing from "./SidemenuBoardListing";
 
 type SideMenuProps = {};
 
@@ -26,12 +30,6 @@ const SideMenu = ({}: SideMenuProps) => {
   useEffect(() => {
     setSelected(`${pathname}`);
   }, [pathname]);
-
-  console.log(
-    `%c selected `,
-    "color: aqua;border:2px solid darkorange",
-    selected
-  );
 
   const navConfig = useMemo(() => {
     return gertNavConfig(org);
@@ -75,16 +73,27 @@ const SideMenu = ({}: SideMenuProps) => {
       <div
         className={cn("sidemenu-content flex flex-col gap-2 ", "items-start")}
       >
-        {navConfig.map((nav) => (
-          <NavLink
-            key={nav.href}
-            href={nav.href}
-            label={nav.label}
-            selected={selected === nav.href}
-            icon={nav.icon}
-            isCollapsed={isCollapsed}
-          />
-        ))}
+        {navConfig.map(({ href = "", label, ...nav }, i) =>
+          nav.isDivider ? (
+            <div key={href + i} className="divider m-0 h-0" />
+          ) : (
+            <NavLink
+              key={href + i}
+              href={href || ""}
+              label={label || ""}
+              selected={selected === href}
+              icon={nav.icon as LucideIcon}
+              isCollapsed={isCollapsed}
+            />
+          )
+        )}
+        {/* Extra nav items  */}
+        {isCollapsed === false && (
+          <>
+            <SelectComp onChange={() => {}} options={boardFilterOptions} />
+            <SidemenuBoardListing />
+          </>
+        )}
       </div>
     </div>
   );

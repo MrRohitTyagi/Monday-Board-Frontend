@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 
 export const gertNavConfig = (org: string) => {
-  console.log(`%c org `, "color: yellow;border:1px solid lightgreen", org);
   return [
     {
       href: `/${org}`,
@@ -20,6 +19,12 @@ export const gertNavConfig = (org: string) => {
       label: "My Work",
       icon: BriefcaseBusiness,
     },
-    { href: `/${org}/board`, label: "Board", icon: ClipboardList },
+    { isDivider: true },
+    // { href: `/${org}/board`, label: "Board", icon: ClipboardList },
   ];
 };
+
+export const boardFilterOptions = [
+  { value: "all boards", label: "All Boards" },
+  { value: "favourite", label: "Favourite" },
+];

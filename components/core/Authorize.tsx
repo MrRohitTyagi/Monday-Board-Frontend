@@ -3,28 +3,23 @@ import React, { useEffect } from "react";
 import { ChildrenType } from "@/types";
 import MainLayout from "./MainLayout";
 import { useAuth } from "@/zstore";
-import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { TEMP_USER } from "./TEMPDATA";
 
 type AuthorizeTypes = ChildrenType & {};
 
-const tempuser = {
-  isAuthenticated: true,
-  isLoading: false,
-  username: "rohit",
-  email: "rohit11@11.com",
-  org: "granite-stack",
-};
-
 const Authorize = ({ children }: AuthorizeTypes) => {
   const { setUser, isLoading } = useAuth();
-  const router = useRouter();
-
+  console.log(
+    `%c TEMP_USER `,
+    "color: yellow;border:1px solid lightgreen",
+    TEMP_USER
+  );
   useEffect(() => {
     setTimeout(() => {
-      setUser(tempuser);
-      router.push(`/${tempuser.org}`);
-    }, 1000);
+      setUser(TEMP_USER);
+      // router.push(`/${TEMP_USER.org}`);
+    }, 10);
   }, []);
 
   return (
@@ -33,9 +28,10 @@ const Authorize = ({ children }: AuthorizeTypes) => {
         <span
           className={cn(
             "loading loading-ring loading-lg",
-            "absolute top-1/2 left-1/2"
+            "absolute top-1/2 left-1/2",
+            "translate-x-[-50%] translate-y-[-50%]"
           )}
-        ></span>
+        />
       ) : (
         children
       )}

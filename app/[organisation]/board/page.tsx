@@ -1,7 +1,7 @@
 import React from "react";
 type pageProps = {};
-const Board = (props: pageProps) => {
-  return <div>Board</div>;
+const TEMP = (props: pageProps) => {
+  return <div>TEMP</div>;
 };
 
-export default Board;
+export default TEMP;

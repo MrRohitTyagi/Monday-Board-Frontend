@@ -21,13 +21,16 @@ const config = {
     extend: {
       height: {
         "navbar-height": "3rem",
+        "card-height": "13rem",
       },
       width: {
-        "sidemenu-width-extended": "10rem",
+        "sidemenu-width-extended": "12rem",
         "sidemenu-width-collapsed": "3rem",
+        "card-width": "20rem",
       },
       colors: {
         "main-active": "#0073EA",
+        "main-active-dark": "#133774",
         "main-light": "#30324E",
         "main-bg": "#292F4C",
         "main-fg": "#1C1F3B",
