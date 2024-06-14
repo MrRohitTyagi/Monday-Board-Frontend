@@ -96,5 +96,5 @@ body {
   display: none; /* Chrome, Safari, and Opera */
 }
 * {
-  transition: grid-template-columns 500ms ease;
+  transition: grid-template-columns 500ms ease-in-out;
 }

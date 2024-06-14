@@ -60,7 +60,7 @@ const SideMenu = ({}: SideMenuProps) => {
 
   return (
     <div
-      style={{ transition: "width 500ms ease" }}
+      style={{ transition: "width 500ms ease-in-out" }}
       className={cn(
         isCollapsed
           ? "w-sidemenu-width-collapsed"
