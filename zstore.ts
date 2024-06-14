@@ -15,7 +15,7 @@ type AuthStoreType = {
   setUser: (user: any) => void;
 };
 export type UserType = {
-  pk: string;
+  id: string;
   username: string;
   email: string;
   org?: string;
@@ -23,14 +23,14 @@ export type UserType = {
 };
 
 export type SprintType = {
-  pk: string;
+  id: string;
   title: string;
   color: string;
   pulses: PulseType[];
 };
 
 export type BoardType = {
-  pk: string;
+  id: string;
   title: string;
   picture: string;
   description: string;
@@ -42,7 +42,7 @@ export type BoardType = {
 };
 
 export type PulseType = {
-  pk: string;
+  id: string;
   title: string;
   assigned: string[];
   timeline: { start?: string; end?: string };

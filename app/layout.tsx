@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./globals.css";
+import "./nprogress.css";
+
 import Authorize from "@/components/core/Authorize";
 
 const figtree = Figtree({ subsets: ["latin"] });
@@ -17,6 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          src="https://unpkg.com/nprogress@0.2.0/nprogress.js"
+          defer
+        ></script>
+      </head>
       <body
         className={
           figtree.className +
