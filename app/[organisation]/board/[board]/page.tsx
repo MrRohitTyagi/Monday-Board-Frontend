@@ -56,7 +56,7 @@ const Board = ({ params }: pageProps) => {
               {currentBoard.sprints.map((sprint) => {
                 return (
                   <Sprint
-                    key={sprint.pk}
+                    key={sprint._id}
                     sprint={sprint}
                     board={currentBoard}
                   />

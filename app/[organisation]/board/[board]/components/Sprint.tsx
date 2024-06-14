@@ -12,7 +12,7 @@ import Pulse from "./Pulse";
 import ScrollWrapper from "@/components/core/ScrollWrapper";
 
 const tempPulse = {
-  pk: "temp-pulse",
+  _id: "temp-pulse",
   priority: "Priority",
   status: "Status",
   title: "Item",
@@ -62,7 +62,7 @@ const Sprint = ({ sprint: mainSprint, board }: SprintProps) => {
 
             {sprint.pulses.map((pulse, i) => {
               return (
-                <PulseWrapper key={pulse.pk + i + "left"}>
+                <PulseWrapper key={pulse._id + i + "left"}>
                   <Pulse
                     isFake={false}
                     pulse={pulse}
@@ -89,7 +89,7 @@ const Sprint = ({ sprint: mainSprint, board }: SprintProps) => {
           </PulseWrapper>
           {sprint.pulses.map((pulse, i) => {
             return (
-              <PulseWrapper key={pulse.pk + i + "right"}>
+              <PulseWrapper key={pulse._id + i + "right"}>
                 <Pulse
                   board={board}
                   isFake={false}

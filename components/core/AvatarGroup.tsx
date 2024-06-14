@@ -9,13 +9,13 @@ const AvatarGroup = ({ users }: AvatarGroupProps) => {
     <div className="avatar-group -space-x-6 rtl:space-x-reverse">
       {users.map((user, i) => (
         <div
-          key={(user.pk + "user", +i)}
+          key={(user._id + "user", +i)}
           className="tooltip tooltip-bottom"
           data-tip={user.username}
         >
           <div className="avatar border-[1px]">
             <div className="w-8">
-              <Image height={12} width={12} src={user.picture} alt="" />
+              <Image height={12} width={12} src={user.picture} alt="pic" />
             </div>
           </div>
         </div>

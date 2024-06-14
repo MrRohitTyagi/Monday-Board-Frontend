@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { getUser } from "./gateways/user-gateway";
 
 type SideMenuStoreType = {
   isCollapsed: boolean;
@@ -6,31 +7,30 @@ type SideMenuStoreType = {
 };
 
 type AuthStoreType = {
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  user: UserType;
+  fetchUser: (user: any) => void;
+};
+
+export type UserType = {
+  _id: string;
   username: string;
   email: string;
   org: string;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  boards: BoardType[];
-  setUser: (user: any) => void;
-};
-export type UserType = {
-  id: string;
-  username: string;
-  email: string;
-  org?: string;
   picture: string;
+  boards: BoardType[];
 };
 
 export type SprintType = {
-  id: string;
+  _id: string;
   title: string;
   color: string;
   pulses: PulseType[];
 };
 
 export type BoardType = {
-  id: string;
+  _id: string;
   title: string;
   picture: string;
   description: string;
@@ -42,7 +42,7 @@ export type BoardType = {
 };
 
 export type PulseType = {
-  id: string;
+  _id: string;
   title: string;
   assigned: string[];
   timeline: { start?: string; end?: string };
@@ -61,11 +61,27 @@ export const useSideMenu = create<SideMenuStoreType>((setState) => ({
 export const useAuth = create<AuthStoreType>((setState) => ({
   isAuthenticated: false,
   isLoading: true,
-  username: "",
-  email: "",
-  org: "",
-  boards: [],
-  setUser: (user: any) => {
-    setState(() => user);
+  user: {
+    _id: "",
+    email: "",
+    username: "",
+    boards: [],
+    org: "",
+    picture: "",
+  } as UserType,
+
+  fetchUser: (id) => {
+    getUser(id).then((user) => {
+      console.log(
+        `%c user `,
+        "color: yellow;border:1px solid lightgreen",
+        user
+      );
+      setState((ps) => ({
+        user: { ...ps.user, ...user, org: user.org ? user.org : user.username },
+        isLoading: false,
+        isAuthenticated: true,
+      }));
+    });
   },
 }));

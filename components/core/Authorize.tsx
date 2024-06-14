@@ -4,27 +4,31 @@ import { ChildrenType } from "@/types";
 import MainLayout from "./MainLayout";
 import { useAuth } from "@/zstore";
 import { cn } from "@/lib/utils";
-import { TEMP_USER } from "./TEMPDATA";
 
 type AuthorizeTypes = ChildrenType & {};
 
 const Authorize = ({ children }: AuthorizeTypes) => {
-  const { setUser, isLoading } = useAuth();
-  console.log(
-    `%c TEMP_USER `,
-    "color: yellow;border:1px solid lightgreen",
-    TEMP_USER
-  );
+  const { isLoading, fetchUser, user } = useAuth();
+
   useEffect(() => {
-    setTimeout(() => {
-      setUser(TEMP_USER);
-      // router.push(`/${TEMP_USER.org}`);
-    }, 10);
+    // setTimeout(() => {
+    //   setUser(TEMP_USER);
+    //   // router.push(`/${TEMP_USER.org}`);
+    // }, 10);
+    async function init() {
+      fetchUser("666c949816b08c238854cabe");
+    }
+    init();
   }, []);
+
+  console.log(`%c {isloading,user} `, "color: red;border:2px dotted red", {
+    isLoading,
+    user,
+  });
 
   return (
     <MainLayout>
-      {isLoading ? (
+      {isLoading === true ? (
         <span
           className={cn(
             "loading loading-ring loading-lg",

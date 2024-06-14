@@ -46,7 +46,9 @@ type SideMenuProps = {};
 const SideMenu = ({}: SideMenuProps) => {
   const { isCollapsed, toggleSideMenu } = useSideMenu();
   const { isAuthenticated } = useAuth();
-  const { org } = useAuth();
+  const {
+    user: { org },
+  } = useAuth();
   const [selected, setSelected] = useState("");
   const pathname = usePathname();
 

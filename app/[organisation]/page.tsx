@@ -16,8 +16,10 @@ import useNavigate from "@/hooks/useNavigate";
 
 type pageProps = {};
 const Organisation = (props: pageProps) => {
-  const { boards } = useAuth();
-  const { username } = useAuth();
+  const {
+    user: { boards, username },
+  } = useAuth();
+
   return (
     <div>
       <h2>
@@ -34,7 +36,7 @@ const Organisation = (props: pageProps) => {
         <h1 className="font-bold text-2xl">Your Boards</h1>
         <div className="boards-listing flex flex-row gap-4 flex-wrap">
           {boards.map((board) => {
-            return <BoardComp key={board.pk + "board"} board={board} />;
+            return <BoardComp key={board._id + "board"} board={board} />;
           })}
         </div>
       </div>
@@ -46,7 +48,7 @@ const BoardComp = ({ board }: { board: BoardType }) => {
   const navigate = useNavigate();
   return (
     <Card
-      onClick={() => navigate(`board/${board.pk}`)}
+      onClick={() => navigate(`board/${board._id}`)}
       className={cn(
         "bg-transparent h-card-height w-card-width ",
         "p-2 border-border-light border-[1px] space-y-2",

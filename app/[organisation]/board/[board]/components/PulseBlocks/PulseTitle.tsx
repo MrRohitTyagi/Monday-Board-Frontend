@@ -47,7 +47,6 @@ const PulseTitle = ({ pulse }: PulseTitleProps) => {
       onClick={(e) => {
         setIsEditable(true);
       }}
-      contentEditable={true}
       className={cn(
         "pulse-title",
         "w-full text-sm opacity-80 content-around",
