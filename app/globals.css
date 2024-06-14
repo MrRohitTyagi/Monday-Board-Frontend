@@ -95,3 +95,6 @@ body {
 .pulse-container-right::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
 }
+* {
+  transition: grid-template-columns 500ms ease;
+}

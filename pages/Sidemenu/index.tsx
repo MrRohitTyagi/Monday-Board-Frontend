@@ -60,38 +60,41 @@ const SideMenu = ({}: SideMenuProps) => {
 
   return (
     <div
-      style={{ transition: "width 200ms ease" }}
+      style={{ transition: "width 500ms ease" }}
       className={cn(
         isCollapsed
           ? "w-sidemenu-width-collapsed"
           : "w-sidemenu-width-extended",
         `bg-main-fg rounded-tr-lg shrink-0`,
-        isCollapsed ? "" : `p-4 pt-8`,
+        isCollapsed ? "" : `p-4`,
         `relative overflow-hidden`,
         `group  animate-fadeIn`,
         isAuthenticated ? "" : "pointer-events-none opacity-70"
       )}
     >
-      <Button
-        variant={"ghost"}
-        onClick={toggleSideMenu}
-        className={cn(
-          "transition-all",
-          "rounded-none rounded-bl-md bg-main-light transition-all",
-          isCollapsed ? "relative" : "absolute",
-          "h-10 place-content-center top-0 right-0 overflow-hidden p-1",
-          `${
-            isCollapsed ? "opacity-100" : "opacity-0"
-          } group-hover:opacity-100`,
-          isCollapsed ? `rounded-none w-full` : "w-10"
-        )}
-      >
-        {isCollapsed ? (
-          <ChevronRight size="15px" />
-        ) : (
-          <ChevronLeft size="15px" />
-        )}
-      </Button>
+      <div className="expand-buitton-wrapper flex flex-row justify-end">
+        <Button
+          variant={"ghost"}
+          onClick={toggleSideMenu}
+          className={cn(
+            "rounded-tr-lg",
+            "transition-[width] duration-500",
+            "rounded-none rounded-bl-md bg-main-light transition-all",
+            isCollapsed ? "relative" : "absolute",
+            "h-10 place-content-center top-0 right-0 overflow-hidden p-1",
+            `${
+              isCollapsed ? "opacity-100" : "opacity-0"
+            } group-hover:opacity-100`,
+            isCollapsed ? `rounded-none w-full` : "w-10"
+          )}
+        >
+          {isCollapsed ? (
+            <ChevronRight size="15px" />
+          ) : (
+            <ChevronLeft size="15px" />
+          )}
+        </Button>
+      </div>
 
       <div
         className={cn("sidemenu-content flex flex-col gap-2 ", "items-start")}

@@ -86,7 +86,7 @@ const config = {
           to: { height: "0" },
         },
         fadeIn: {
-          "0%": { opacity: "0.3", filter: `blur(1px)` },
+          "0%": { opacity: "0.3", filter: `blur(0.4px)` },
           "100%": { opacity: "1", filter: `blur(0px)` },
         },
       },

@@ -36,6 +36,7 @@ type PulseContextType = {
   updatePriority: (p: string) => void;
   updateTitle: (p: string) => void;
   updateStatus: (p: string) => void;
+  updateTimeline: (p: { start: string; end: string }) => void;
 };
 const PulseContext = createContext<PulseContextType>({} as PulseContextType);
 
@@ -73,7 +74,13 @@ const Pulse = ({
 
   return (
     <PulseContext.Provider
-      value={{ setPulse, updateStatus, updatePriority, updateTitle }}
+      value={{
+        setPulse,
+        updateStatus,
+        updatePriority,
+        updateTitle,
+        updateTimeline,
+      }}
     >
       <div
         className={cn(

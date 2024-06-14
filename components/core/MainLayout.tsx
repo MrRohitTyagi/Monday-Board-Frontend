@@ -24,7 +24,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       >
         <SideMenu />
         <div
-          style={{ transition: "width 200ms ease" }}
           className={cn(
             "main-right-cont",
             "rounded-tl-lg grow shrink-0 bg-main-fg",
