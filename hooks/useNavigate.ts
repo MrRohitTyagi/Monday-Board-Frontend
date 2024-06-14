@@ -5,11 +5,17 @@ import { useRouter } from "next/navigation";
 
 const useNavigate = () => {
   const router = useRouter();
-  const { org } = useAuth();
+  const {
+    user: { org },
+  } = useAuth();
 
   const navigate = useCallback(
     (path: string) => {
-      router.push(`/${org}/${path}`);
+      if (org) {
+        router.push(`/main/${org}/${path}`);
+      } else {
+        router.push(`/${path}`);
+      }
     },
     [org]
   );

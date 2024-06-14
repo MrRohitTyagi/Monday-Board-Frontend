@@ -6,7 +6,6 @@ const USER_BASE_URL = ((process.env.NEXT_PUBLIC_BACKEND_URL as string) +
 
 async function getUser(id: string): Promise<UserType> {
   const { data } = await axiosInstance().get(`${USER_BASE_URL}/get/${id}`);
-  console.log(`%c {data} `, "color: green;border:1px solid green", data);
   return data.response;
 }
 async function deleteUser(id: string) {
@@ -15,7 +14,6 @@ async function deleteUser(id: string) {
 async function updateUser(payload: any): Promise<UserType> {
   const { id } = payload;
   const { data } = await axiosInstance().put(`${USER_BASE_URL}/update/${id}`);
-  console.log(`%c {data} `, "color: green;border:1px solid green", data);
   return data.response;
 }
 

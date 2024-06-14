@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 
 import Pulse from "./Pulse";
 import ScrollWrapper from "@/components/core/ScrollWrapper";
+import { getSprint } from "@/gateways/sprint-gateway";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -21,17 +22,28 @@ const tempPulse = {
   tag: "# Tag",
 };
 
-type SprintProps = { sprint: SprintType; board: BoardType };
+type SprintProps = { sprintID: string; board: BoardType };
 
-const Sprint = ({ sprint: mainSprint, board }: SprintProps) => {
-  const [sprint, setSprint] = useState<SprintType>(mainSprint);
-
+const Sprint = ({ sprintID, board }: SprintProps) => {
+  const [sprint, setSprint] = useState<SprintType>({} as SprintType);
+  const [isloading, setIsloading] = useState(true);
   useEffect(() => {
-    setSprint(mainSprint);
-  }, [mainSprint]);
+    (async function init() {
+      const fetchedSprint = await getSprint(sprintID);
+      console.log(
+        `%c fetchedSprint `,
+        "color: aqua;border:2px solid darkorange",
+        fetchedSprint
+      );
+      setSprint(fetchedSprint);
+      setIsloading(false);
+    })();
+  }, [sprintID]);
 
-  return (
-    <div className={cn(`w-full`)}>
+  return isloading === true ? (
+    <div className={cn(`w-full`)}>Skeleton Loading...</div>
+  ) : (
+    <div className={cn(`w-full animate-fadeIn`)}>
       <h2 className="text-xl" style={{ color: sprint.color }}>
         {startCase(sprint.title)}
       </h2>
@@ -47,7 +59,7 @@ const Sprint = ({ sprint: mainSprint, board }: SprintProps) => {
               "rounded-bl-md"
             )}
           />
-          <div className="pulse-container-left flex flex-col overflow-hidden">
+          <div className="pulse-container-left w-full flex flex-col overflow-hidden">
             {/* <TempPulseRow color={sprint.color} /> */}
 
             <PulseWrapper>

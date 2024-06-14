@@ -3,7 +3,7 @@ import { getUser } from "./gateways/user-gateway";
 
 type SideMenuStoreType = {
   isCollapsed: boolean;
-  toggleSideMenu: () => void;
+  toggleSideMenu: (c: any) => void;
 };
 
 type AuthStoreType = {
@@ -11,6 +11,7 @@ type AuthStoreType = {
   isLoading: boolean;
   user: UserType;
   fetchUser: (user: any) => void;
+  notAuthenticated: () => void;
 };
 
 export type UserType = {
@@ -38,7 +39,7 @@ export type BoardType = {
   members: UserType[];
   statuses: { [key: string]: { title: string; color: string } };
   priority: { [key: string]: { title: string; color: string } };
-  sprints: SprintType[];
+  sprints: string[];
 };
 
 export type PulseType = {
@@ -53,8 +54,8 @@ export type PulseType = {
 
 export const useSideMenu = create<SideMenuStoreType>((setState) => ({
   isCollapsed: false,
-  toggleSideMenu: () => {
-    setState(({ isCollapsed }) => ({ isCollapsed: !isCollapsed }));
+  toggleSideMenu: (c: any) => {
+    setState(({ isCollapsed }) => ({ isCollapsed: c ?? !isCollapsed }));
   },
 }));
 
@@ -83,5 +84,11 @@ export const useAuth = create<AuthStoreType>((setState) => ({
         isAuthenticated: true,
       }));
     });
+  },
+  notAuthenticated: () => {
+    setState((ps) => ({
+      isLoading: false,
+      isAuthenticated: false,
+    }));
   },
 }));

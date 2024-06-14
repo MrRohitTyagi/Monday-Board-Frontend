@@ -29,15 +29,15 @@ const Status = ({ board, pulse }: PriorityProps) => {
       }}
       trigger={
         <div
-          style={{ background: board.statuses[pulse.status].color }}
+          style={{ background: board?.statuses?.[pulse?.status]?.color }}
           className={cn(baseCssMiniItems(), "priority", "hover:opacity-60")}
         >
-          {board.statuses[pulse.status].title}
+          {board.statuses?.[pulse?.status]?.title}
         </div>
       }
       content={
         <>
-          {Object.entries(board.statuses).map(([key, s], i) => {
+          {Object.entries(board.statuses || {}).map(([key, s], i) => {
             return (
               <Button
                 variant={"ghost"}

@@ -39,7 +39,7 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
           <div className="h-2"></div>
 
           {/* Created On */}
-          <div className="flex items-center flex-row gap-4">
+          <div className="flex items-center flex-row gap-4 overflow-hidden">
             <h4 className="text-sm w-20 text-nowrap opacity-80">Created On</h4>
             <h4 className="text-sm opacity-80">{board._id}</h4>
           </div>

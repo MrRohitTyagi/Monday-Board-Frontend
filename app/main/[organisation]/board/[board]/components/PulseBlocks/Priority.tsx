@@ -26,15 +26,15 @@ const Priority = ({ board, pulse }: PriorityProps) => {
       }}
       trigger={
         <div
-          style={{ background: board.priority[pulse.priority].color }}
+          style={{ background: board?.priority?.[pulse?.priority]?.color }}
           className={cn(baseCssMiniItems(), "priority", "hover:opacity-60")}
         >
-          {board.priority[pulse.priority].title}
+          {board?.priority?.[pulse?.priority]?.title || "NA"}
         </div>
       }
       content={
         <>
-          {Object.entries(board.priority).map(([key, p], i) => {
+          {Object.entries(board.priority || {}).map(([key, p], i) => {
             return (
               <Button
                 onClick={() => {

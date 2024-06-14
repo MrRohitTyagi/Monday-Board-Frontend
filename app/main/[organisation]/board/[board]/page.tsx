@@ -1,14 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-import { getBoard } from "@/components/core/TEMPDATA";
-
 import { cn } from "@/lib/utils";
 import { BoardType } from "@/zstore";
 
 import BoardTitle from "./components/BoardTitle";
 import Sprint from "./components/Sprint";
 import Space from "@/components/core/Space";
+import { getBoard } from "@/gateways/board-gateway";
 
 type pageProps = {
   params: { board: string; organisation: string };
@@ -53,11 +52,11 @@ const Board = ({ params }: pageProps) => {
 
             {/* //  Board Content  */}
             <div className="flex flex-col gap-6">
-              {currentBoard.sprints.map((sprint) => {
+              {currentBoard.sprints.map((sprintID) => {
                 return (
                   <Sprint
-                    key={sprint._id}
-                    sprint={sprint}
+                    key={sprintID}
+                    sprintID={sprintID}
                     board={currentBoard}
                   />
                 );

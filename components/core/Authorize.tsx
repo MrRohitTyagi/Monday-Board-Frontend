@@ -2,27 +2,40 @@
 import React, { useEffect } from "react";
 import { ChildrenType } from "@/types";
 import MainLayout from "./MainLayout";
-import { useAuth } from "@/zstore";
+import { useAuth, useSideMenu } from "@/zstore";
 import { cn } from "@/lib/utils";
+import { getToken } from "@/utils/cookie";
+import useNavigate from "@/hooks/useNavigate";
 
 type AuthorizeTypes = ChildrenType & {};
 
 const Authorize = ({ children }: AuthorizeTypes) => {
-  const { isLoading, fetchUser, user } = useAuth();
+  const { isLoading, fetchUser, notAuthenticated, isAuthenticated, user } =
+    useAuth();
+  const { toggleSideMenu } = useSideMenu();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   setUser(TEMP_USER);
-    //   // router.push(`/${TEMP_USER.org}`);
-    // }, 10);
     async function init() {
+      const token = getToken();
+      if (!token) {
+        navigate("auth");
+        notAuthenticated();
+        toggleSideMenu(true);
+      } else {
+        console.log(`%c token `, "color: green;border:1px solid green", token);
+        fetchUser(token);
+      }
+    }
+    function tempInit() {
       fetchUser("666c949816b08c238854cabe");
     }
-    init();
+    // init();
+    tempInit();
   }, []);
-
-  console.log(`%c {isloading,user} `, "color: red;border:2px dotted red", {
+  console.log(`%c {isLoading} `, "color: red;border:2px dotted red", {
     isLoading,
+    isAuthenticated,
     user,
   });
 

@@ -37,7 +37,7 @@ const Timeline = ({ board, pulse }: TimelineProps) => {
       }}
       trigger={
         <div className={cn(baseCssMiniItems(), "timeline-block")}>
-          {pulse.timeline.start}
+          {'TimeLine'}
         </div>
       }
       content={
