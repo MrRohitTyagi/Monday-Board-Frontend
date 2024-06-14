@@ -17,7 +17,9 @@ const UserProfile = (props: UserProfileProps) => {
       <PopoverTrigger>
         <User />
       </PopoverTrigger>
-      <PopoverContent>Place content for the popover here.</PopoverContent>
+      <PopoverContent align="end" className="bg-transparent">
+        Place content for the popover here.
+      </PopoverContent>
     </Popover>
   );
 };

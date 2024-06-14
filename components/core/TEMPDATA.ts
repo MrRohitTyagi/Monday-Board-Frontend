@@ -26,7 +26,7 @@ const PULSE_ONE = {
   pk: "nfdjn3n454tf",
   title: "Create a navbar for our product",
   assigned: ["member1", "member2"],
-  timeline: "",
+  timeline: { start: "", end: "" },
   status: "2",
   priority: "1",
   tag: "#TODO",
@@ -37,7 +37,7 @@ const PULSE_TWO = {
   status: "2",
   title: "Create a Footer with company logo",
   assigned: ["member1", "member2"],
-  timeline: "",
+  timeline: { start: "", end: "" },
   tag: "#For Rohit",
 };
 const PULSE_THREE = {
@@ -46,7 +46,7 @@ const PULSE_THREE = {
   title: "Remove all the use effects from code and start feom stratch",
   assigned: ["member1"],
   status: "3",
-  timeline: "",
+  timeline: { start: "", end: "" },
   tag: "#For Rohit",
 };
 
@@ -92,7 +92,7 @@ const TEMP_BOARD = {
   members: [MEMBER_ONE, MEMBER_TWO],
 
   statuses: {
-    "1": { title: "For Dev", color: "darkyellow" },
+    "1": { title: "For Dev", color: "orange" },
     "2": { title: "Done", color: "green" },
     "3": { title: "Under QA", color: "pink" },
   },

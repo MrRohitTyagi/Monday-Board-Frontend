@@ -45,7 +45,7 @@ export type PulseType = {
   pk: string;
   title: string;
   assigned: string[];
-  timeline: string;
+  timeline: { start?: string; end?: string };
   tag: string;
   status: string;
   priority: string;

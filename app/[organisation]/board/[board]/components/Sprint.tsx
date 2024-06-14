@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { startCase } from "lodash";
 
 import Space from "@/components/core/Space";
@@ -16,13 +16,19 @@ const tempPulse = {
   status: "Status",
   title: "Item",
   assigned: ["Assigned"],
-  timeline: "Timeline",
+  timeline: { start: "Timeline" },
   tag: "# Tag",
 };
 
 type SprintProps = { sprint: SprintType; board: BoardType };
 
-const Sprint = ({ sprint, board }: SprintProps) => {
+const Sprint = ({ sprint: mainSprint, board }: SprintProps) => {
+  const [sprint, setSprint] = useState<SprintType>(mainSprint);
+
+  useEffect(() => {
+    setSprint(mainSprint);
+  }, [mainSprint]);
+
   return (
     <div className={cn(`w-full`)}>
       <h2 className="text-xl" style={{ color: sprint.color }}>
@@ -55,7 +61,7 @@ const Sprint = ({ sprint, board }: SprintProps) => {
 
             {sprint.pulses.map((pulse, i) => {
               return (
-                <PulseWrapper>
+                <PulseWrapper key={pulse.pk + i + "left"}>
                   <Pulse
                     isFake={false}
                     pulse={pulse}
@@ -82,7 +88,7 @@ const Sprint = ({ sprint, board }: SprintProps) => {
           </PulseWrapper>
           {sprint.pulses.map((pulse, i) => {
             return (
-              <PulseWrapper>
+              <PulseWrapper key={pulse.pk + i + "right"}>
                 <Pulse
                   board={board}
                   isFake={false}
