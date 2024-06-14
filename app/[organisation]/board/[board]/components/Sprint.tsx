@@ -9,6 +9,7 @@ import { BoardType, SprintType } from "@/zstore";
 import { cn } from "@/lib/utils";
 
 import Pulse from "./Pulse";
+import ScrollWrapper from "@/components/core/ScrollWrapper";
 
 const tempPulse = {
   pk: "temp-pulse",
@@ -76,7 +77,7 @@ const Sprint = ({ sprint: mainSprint, board }: SprintProps) => {
         </div>
 
         {/* RIGHT PART  */}
-        <div className="pulse-container-right flex flex-col w-full overflow-x-auto">
+        <ScrollWrapper className="pulse-container-right flex flex-col w-full overflow-x-auto">
           <PulseWrapper>
             <Pulse
               board={board}
@@ -99,7 +100,7 @@ const Sprint = ({ sprint: mainSprint, board }: SprintProps) => {
               </PulseWrapper>
             );
           })}
-        </div>
+        </ScrollWrapper>
       </div>
     </div>
   );

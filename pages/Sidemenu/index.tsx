@@ -97,7 +97,10 @@ const SideMenu = ({}: SideMenuProps) => {
       </div>
 
       <div
-        className={cn("sidemenu-content flex flex-col gap-2 ", "items-start")}
+        className={cn(
+          "sidemenu-content flex flex-col gap-2 ",
+          "items-start animate-fadeIn"
+        )}
       >
         {navConfig.map(({ href = "", label, ...nav }, i) =>
           nav.isDivider ? (

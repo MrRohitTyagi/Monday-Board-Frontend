@@ -118,9 +118,10 @@ const tempboardarr = [1, 2, 3, 4].map((e) => ({
 }));
 
 const TEMP_USER = {
-  pk: "nfdj432432n3n4",
   isAuthenticated: true,
   isLoading: false,
+
+  pk: "nfdj432432n3n4",
   username: "rohit",
   email: "rohit11@11.com",
   org: "granite-stack",
