@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { getSchema, getfields } from "./utils";
 import { login, signup } from "@/gateways/auth-gateway";
 import { toast } from "sonner";
@@ -25,8 +25,11 @@ import { setToken } from "@/utils/cookie";
 
 const { div: MotionDiv } = motion;
 
-const LoginComponent = ({ isSignupForm }: { isSignupForm: boolean }) => {
-  //
+const LoginComponent = () => {
+  const pathname = usePathname();
+  const isSignupForm = pathname === "/signup";
+  const isLoginForm = isSignupForm === false;
+
   const { fetchUser } = useAuth();
   const form = useForm({
     resolver: zodResolver(getSchema({ isSignupForm })),
@@ -34,8 +37,6 @@ const LoginComponent = ({ isSignupForm }: { isSignupForm: boolean }) => {
 
   const router = useRouter();
   const [picture, setPicture] = useState<any>(null);
-
-  const isLoginForm = isSignupForm === false;
 
   const onSubmit = useCallback(
     async (values: any) => {
@@ -90,7 +91,7 @@ const LoginComponent = ({ isSignupForm }: { isSignupForm: boolean }) => {
       <div
         className={cn(
           "form-container",
-          isSignupForm ? "w-9/12" : "w-5/12",
+          isSignupForm === true ? "w-9/12" : "w-5/12",
           "border-2 border-main-light p-4 pl-8 pr-8 rounded-md"
         )}
       >

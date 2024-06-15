@@ -2,7 +2,7 @@ import React from "react";
 import Login from "../login/page";
 
 const SingUp = () => {
-  return <Login isSignupForm={true} />;
+  return <Login />;
 };
 
 export default SingUp;

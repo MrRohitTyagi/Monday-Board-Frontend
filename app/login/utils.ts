@@ -1,7 +1,7 @@
 import React from "react";
 import { z } from "zod";
 
-type fieldType = {
+type FieldType = {
   name: string;
   label: string;
   placeholder: string;
@@ -9,13 +9,16 @@ type fieldType = {
   customOnChange?: (e: any) => void;
 };
 
-function getfields({
-  isSignupForm,
-  setPicture,
-}: {
+type GetFieldsProps = {
   isSignupForm: boolean;
-  setPicture: React.Dispatch<any>;
-}): fieldType[] {
+  setPicture: React.Dispatch<React.SetStateAction<any>>;
+};
+
+type GetSchemaProps = {
+  isSignupForm: boolean;
+};
+
+function getfields({ isSignupForm, setPicture }: GetFieldsProps): FieldType[] {
   const commonFileds = [
     {
       name: "email",
@@ -61,7 +64,7 @@ function getfields({
   return finalFields;
 }
 
-function getSchema({ isSignupForm }: { isSignupForm: boolean }) {
+function getSchema({ isSignupForm }: GetSchemaProps) {
   const formSchema = z.object({
     ...(isSignupForm === true
       ? {
