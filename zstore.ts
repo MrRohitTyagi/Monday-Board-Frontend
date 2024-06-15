@@ -55,7 +55,9 @@ export type PulseType = {
 export const useSideMenu = create<SideMenuStoreType>((setState) => ({
   isCollapsed: false,
   toggleSideMenu: (c: any) => {
-    setState(({ isCollapsed }) => ({ isCollapsed: c ?? !isCollapsed }));
+    setState(({ isCollapsed }) => ({
+      isCollapsed: typeof c == "boolean" ? c : !isCollapsed,
+    }));
   },
 }));
 

@@ -52,7 +52,7 @@ const BoardComp = ({ board }: { board: BoardType }) => {
       className={cn(
         "bg-transparent h-card-height w-card-width ",
         "p-2 border-border-light border-[1px] space-y-2",
-        "transition-all",
+        "transition-all cursor-pointer",
         "hover:shadow-foreground shadow-lg"
       )}
     >

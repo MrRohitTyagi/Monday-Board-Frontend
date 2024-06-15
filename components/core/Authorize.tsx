@@ -19,7 +19,7 @@ const Authorize = ({ children }: AuthorizeTypes) => {
     async function init() {
       const token = getToken();
       if (!token) {
-        navigate("auth");
+        navigate("login");
         notAuthenticated();
         toggleSideMenu(true);
       } else {
@@ -30,8 +30,8 @@ const Authorize = ({ children }: AuthorizeTypes) => {
     function tempInit() {
       fetchUser("666c949816b08c238854cabe");
     }
-    // init();
-    tempInit();
+    init();
+    // tempInit();
   }, []);
   console.log(`%c {isLoading} `, "color: red;border:2px dotted red", {
     isLoading,
