@@ -25,11 +25,7 @@ import { setToken } from "@/utils/cookie";
 
 const { div: MotionDiv } = motion;
 
-function Login({
-  isSignupForm = false,
-}: {
-  isSignupForm: boolean | undefined;
-}) {
+const Login = ({ isSignupForm = false }: { isSignupForm: boolean }) => {
   //
   const { fetchUser } = useAuth();
   const form = useForm({
@@ -175,6 +171,6 @@ function Login({
       </div>
     </div>
   );
-}
+};
 
 export default Login;
