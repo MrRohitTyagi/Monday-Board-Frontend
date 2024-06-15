@@ -25,12 +25,9 @@ import { setToken } from "@/utils/cookie";
 
 const { div: MotionDiv } = motion;
 
-type LoginFormProps = {
-  isSignupForm: boolean;
-};
-function Login({ isSignupForm = false }: LoginFormProps) {
-  const { fetchUser } = useAuth();
+function Login({ isSignupForm = false }) {
   //
+  const { fetchUser } = useAuth();
   const form = useForm({
     resolver: zodResolver(getSchema({ isSignupForm })),
   });
