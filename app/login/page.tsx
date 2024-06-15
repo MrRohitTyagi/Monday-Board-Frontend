@@ -25,7 +25,7 @@ import { setToken } from "@/utils/cookie";
 
 const { div: MotionDiv } = motion;
 
-const Login = ({ isSignupForm }: { isSignupForm: boolean }) => {
+const LoginComponent = ({ isSignupForm }: { isSignupForm: boolean }) => {
   //
   const { fetchUser } = useAuth();
   const form = useForm({
@@ -50,7 +50,7 @@ const Login = ({ isSignupForm }: { isSignupForm: boolean }) => {
         promise = signup(values);
       }
 
-      await toast.promise(promise, {
+      toast.promise(promise, {
         loading: "Fetching details please wait",
         success: (data) => {
           isSuccess = true;
@@ -173,4 +173,4 @@ const Login = ({ isSignupForm }: { isSignupForm: boolean }) => {
   );
 };
 
-export default Login;
+export default LoginComponent;
