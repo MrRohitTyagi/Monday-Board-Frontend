@@ -8,10 +8,14 @@ async function login(payload: string) {
     `${AUTH_BASE_URL}/login`,
     payload
   );
+  if (data.success === false) {
+    throw Error(data.message);
+  }
   return {
     response: data.response,
     message: data.message,
     success: data.success,
+    token: data.token,
   };
 }
 async function signup(payload: string) {
@@ -19,6 +23,9 @@ async function signup(payload: string) {
     `${AUTH_BASE_URL}/signup`,
     payload
   );
+  if (data.success === false) {
+    throw Error(data.message);
+  }
   return {
     response: data.response,
     message: data.message,

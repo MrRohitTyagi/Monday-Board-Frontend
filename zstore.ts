@@ -10,8 +10,7 @@ type AuthStoreType = {
   isAuthenticated: boolean;
   isLoading: boolean;
   user: UserType;
-  fetchUser: (user: any) => void;
-  setUser: (user: UserType, isAuthenticated: boolean | undefined) => void;
+  fetchUser: (id: any, cb?: (e: UserType) => any) => void;
   notAuthenticated: () => void;
 };
 
@@ -74,22 +73,18 @@ export const useAuth = create<AuthStoreType>((setState) => ({
     picture: "",
   } as UserType,
 
-  fetchUser: (id) => {
-    getUser(id).then((user) => {
+  fetchUser: async (id = "", cb) => {
+    await getUser(id || "").then((user) => {
+      const userObj = { ...user, org: user.org ? user.org : user.username };
       setState((ps) => ({
-        user: { ...ps.user, ...user, org: user.org ? user.org : user.username },
+        user: { ...ps.user, ...userObj },
         isLoading: false,
         isAuthenticated: true,
       }));
+      cb?.(userObj);
     });
   },
-  setUser: (user: UserType, isAuthenticated: boolean | undefined) => {
-    setState((ps) => ({
-      ...ps,
-      user: user,
-      isAuthenticated: isAuthenticated ?? ps.isAuthenticated,
-    }));
-  },
+
   notAuthenticated: () => {
     setState((ps) => ({
       isLoading: false,

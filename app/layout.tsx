@@ -29,12 +29,16 @@ export default function RootLayout({
       <body
         className={
           figtree.className +
-          " " +
           `max-h-dvh min-h-dvh w-screen bg-main-bg overflow-hidden`
         }
       >
         <Authorize>{children}</Authorize>
-        <Toaster />
+        <Toaster
+          richColors
+          duration={2000}
+          offset="5px"
+          style={{ flexDirection: "row" }}
+        />
       </body>
     </html>
   );

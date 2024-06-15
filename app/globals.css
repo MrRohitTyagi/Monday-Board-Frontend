@@ -68,11 +68,21 @@
 * {
   font-family: "Figtree", sans-serif;
   font-optical-sizing: auto;
-  color: white;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   background-color: inherit;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+label,
+input {
+  color: white;
 }
 html {
   max-width: 100dvw;
@@ -97,4 +107,8 @@ body {
 }
 * {
   transition: grid-template-columns 500ms ease-in-out;
+}
+
+li.toast {
+  flex-direction: row !important;
 }

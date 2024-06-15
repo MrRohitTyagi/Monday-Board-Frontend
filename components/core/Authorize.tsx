@@ -26,14 +26,10 @@ const Authorize = ({ children }: AuthorizeTypes) => {
         toggleSideMenu(true);
       } else {
         console.log(`%c token `, "color: green;border:1px solid green", token);
-        fetchUser(token);
+        fetchUser("user");
       }
     }
-    function tempInit() {
-      fetchUser("666c949816b08c238854cabe");
-    }
     init();
-    // tempInit();
   }, []);
 
   console.log(`%c {isLoading} `, "color: red;border:2px dotted red", {

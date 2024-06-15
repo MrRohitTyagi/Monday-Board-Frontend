@@ -20,7 +20,8 @@ import { useRouter } from "next/navigation";
 import { getSchema, getfields } from "./utils";
 import { login, signup } from "@/gateways/auth-gateway";
 import { toast } from "sonner";
-import { useAuth } from "@/zstore";
+import { UserType, useAuth } from "@/zstore";
+import { setToken } from "@/utils/cookie";
 
 const { div: MotionDiv } = motion;
 
@@ -28,7 +29,7 @@ type LoginFormProps = {
   isSignupForm: boolean;
 };
 function Login({ isSignupForm = false }: LoginFormProps) {
-  const {} = useAuth();
+  const { fetchUser } = useAuth();
   //
   const form = useForm({
     resolver: zodResolver(getSchema({ isSignupForm })),
@@ -41,16 +42,38 @@ function Login({ isSignupForm = false }: LoginFormProps) {
 
   const onSubmit = useCallback(
     async (values: any) => {
-      let result;
+      let result: UserType = {} as UserType;
+      let promise;
+      let token: string;
+      let isSuccess = false;
+
       if (isLoginForm) {
-        result = await login(values);
+        promise = login(values);
       } else {
-        result = await signup(values);
+        promise = signup(values);
       }
-      if (result?.success === false) {
-        return toast.warning(result.message);
-      } else {
-      }
+
+      await toast.promise(promise, {
+        loading: "Fetching details please wait",
+        success: (data) => {
+          isSuccess = true;
+          result = data.response;
+          token = data.token;
+          return data.message;
+        },
+
+        error: (data) => {
+          return data.message;
+        },
+      });
+
+      await promise;
+
+      if (!isSuccess) return;
+      fetchUser(result?._id || "", (data) => {
+        router.replace(`/main/${data.org}`);
+        setToken(token);
+      });
     },
     [isLoginForm]
   );
@@ -58,12 +81,6 @@ function Login({ isSignupForm = false }: LoginFormProps) {
   const fields = useMemo(() => {
     return getfields({ isSignupForm, setPicture });
   }, [isSignupForm]);
-
-  console.log(`%c picture `, "color: yellow;border:1px solid lightgreen", {
-    errors: form.formState.errors,
-    formstate: form.formState,
-    form,
-  });
 
   return (
     <div

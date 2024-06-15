@@ -24,7 +24,7 @@ import SelectComp from "@/components/core/Select";
 import SidemenuBoardListing from "./SidemenuBoardListing";
 import { boardFilterOptions } from "@/constants/constants";
 
-export const gertNavConfig = (org: string) => {
+export const gertNavConfig = (org: string = "") => {
   return [
     {
       href: `/main/${org}`,
@@ -47,7 +47,7 @@ const SideMenu = ({}: SideMenuProps) => {
   const { isCollapsed, toggleSideMenu } = useSideMenu();
   const { isAuthenticated, isLoading } = useAuth();
   const {
-    user: { org },
+    user: { org, username },
   } = useAuth();
   const [selected, setSelected] = useState("");
   const pathname = usePathname();
@@ -57,7 +57,7 @@ const SideMenu = ({}: SideMenuProps) => {
   }, [pathname]);
 
   const navConfig = useMemo(() => {
-    return gertNavConfig(org);
+    return gertNavConfig(org || username);
   }, [gertNavConfig, org]);
 
   return (

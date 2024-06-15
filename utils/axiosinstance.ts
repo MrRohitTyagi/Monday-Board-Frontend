@@ -10,7 +10,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const axiosInstance = (headers: {} = {}) => {
   const instance = axios.create({
     baseURL: BASE_URL,
-    headers: { token: getToken(), ...headers },
+    headers: { authorization: getToken(), ...headers },
   });
 
   instance.interceptors.request.use(
