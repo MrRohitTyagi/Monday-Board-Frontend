@@ -42,7 +42,6 @@ const LoginComponent = () => {
     async (values: any) => {
       let result: UserType = {} as UserType;
       let promise;
-      let token: string;
       let isSuccess = false;
 
       if (isLoginForm) {
@@ -56,7 +55,7 @@ const LoginComponent = () => {
         success: (data) => {
           isSuccess = true;
           result = data.response;
-          token = data.token;
+          setToken(data.token);
           return data.message;
         },
 
@@ -68,9 +67,8 @@ const LoginComponent = () => {
       await promise;
 
       if (!isSuccess) return;
-      fetchUser(result?._id || "", (data) => {
+      fetchUser('user', (data) => {
         router.replace(`/main/${data.org}`);
-        setToken(token);
       });
     },
     [isLoginForm]

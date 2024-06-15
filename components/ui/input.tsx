@@ -37,7 +37,10 @@ const Input = React.forwardRef<
       />
       {type === "password" && (
         <div
-          className="absolute right-4 top-1/4 opacity-70 transition-all duration-200"
+          className={cn(
+            "absolute right-4 top-1/4 opacity-70 transition-all duration-200 ",
+            " cursor-pointer"
+          )}
           onClick={() => setvisible((ps) => !ps)}
         >
           {visible ? <EyeIcon size="22px" /> : <EyeOff size="22px" />}
