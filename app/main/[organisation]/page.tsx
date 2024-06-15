@@ -35,11 +35,31 @@ const Organisation = (props: pageProps) => {
       >
         <h1 className="font-bold text-2xl">Your Boards</h1>
         <div className="boards-listing flex flex-row gap-4 flex-wrap">
-          {boards.map((board) => {
-            return <BoardComp key={board._id + "board"} board={board} />;
-          })}
+          {boards.length === 0 ? (
+            <CreateNewBoard />
+          ) : (
+            boards.map((board) => {
+              return <BoardComp key={board._id + "board"} board={board} />;
+            })
+          )}
         </div>
       </div>
+    </div>
+  );
+};
+const CreateNewBoard = () => {
+  const router = useRouter();
+  return (
+    <div className="w-full gap-4 flex flex-col items-center create-new-board-cont">
+      <h1 className="text-xl">No boards Found</h1>
+      <Button
+        variant={"default"}
+        onClick={() => {
+          router.push("/board-settings/new");
+        }}
+      >
+        Create New Board
+      </Button>
     </div>
   );
 };
