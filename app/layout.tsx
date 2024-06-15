@@ -4,6 +4,7 @@ import "./globals.css";
 import "./nprogress.css";
 
 import Authorize from "@/components/core/Authorize";
+import { Toaster } from "@/components/ui/sonner";
 
 const figtree = Figtree({ subsets: ["latin"] });
 
@@ -33,6 +34,7 @@ export default function RootLayout({
         }
       >
         <Authorize>{children}</Authorize>
+        <Toaster />
       </body>
     </html>
   );

@@ -11,6 +11,7 @@ type AuthStoreType = {
   isLoading: boolean;
   user: UserType;
   fetchUser: (user: any) => void;
+  setUser: (user: UserType, isAuthenticated: boolean | undefined) => void;
   notAuthenticated: () => void;
 };
 
@@ -75,17 +76,19 @@ export const useAuth = create<AuthStoreType>((setState) => ({
 
   fetchUser: (id) => {
     getUser(id).then((user) => {
-      console.log(
-        `%c user `,
-        "color: yellow;border:1px solid lightgreen",
-        user
-      );
       setState((ps) => ({
         user: { ...ps.user, ...user, org: user.org ? user.org : user.username },
         isLoading: false,
         isAuthenticated: true,
       }));
     });
+  },
+  setUser: (user: UserType, isAuthenticated: boolean | undefined) => {
+    setState((ps) => ({
+      ...ps,
+      user: user,
+      isAuthenticated: isAuthenticated ?? ps.isAuthenticated,
+    }));
   },
   notAuthenticated: () => {
     setState((ps) => ({

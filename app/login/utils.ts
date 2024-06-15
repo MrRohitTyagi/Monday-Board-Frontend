@@ -1,50 +1,96 @@
+import React from "react";
 import { z } from "zod";
 
-export function getSchema(isSignupForm: boolean, isRegistration: boolean) {
-  let schema = null;
+type fieldType = {
+  name: string;
+  label: string;
+  placeholder: string;
+  type: string;
+  customOnChange?: (e: any) => void;
+};
 
-  if (isRegistration) {
-    schema = z.object({
-      email: z
-        .string()
-        .email("Invalid Email")
-        .max(30, "Email too long")
-        .min(6, "Email too short"),
-      password: z
-        .string()
-        .max(20, "Password too long")
-        .min(6, "Password too short"),
-      name: z.string().max(20, "Name too long").min(3, "Name too short"),
-      shop_name: z.string().max(30, "Name too long").min(6, "Name too short"),
-      shop_desc: z.string().max(100, "Name too long"),
-    });
-  } else if (isSignupForm) {
-    schema = z.object({
-      email: z
-        .string()
-        .email("Invalid Email")
-        .max(30, "Email too long")
-        .min(6, "Email too short"),
-      password: z
-        .string()
-        .max(20, "Password too long")
-        .min(6, "Password too short"),
-      name: z.string().max(20, "Name too long").min(3, "Name too short"),
-    });
-  } else {
-    schema = z.object({
-      email: z
-        .string()
-        .email("Invalid Email")
-        .max(30, "Email too long")
-        .min(6, "Email too short"),
-      password: z
-        .string()
-        .max(20, "Password too long")
-        .min(6, "Password too short"),
-      // name: z.string().nullable(),
-    });
-  }
+function getfields({
+  isSignupForm,
+  setPicture,
+}: {
+  isSignupForm: boolean;
+  setPicture: React.Dispatch<any>;
+}): fieldType[] {
+  const commonFileds = [
+    {
+      name: "email",
+      label: "Email",
+      placeholder: "your-email@email.com",
+      type: "email",
+    },
+    {
+      label: "Password",
+      name: "password",
+      placeholder: "Enter password (min : 3 , max : 20)",
+      type: "password",
+    },
+  ];
 
-  return schema;
+  const signupfields = [
+    {
+      name: "username",
+      label: "Username",
+      placeholder: "Username",
+      type: "text",
+    },
+    {
+      name: "org",
+      label: "Organisation name",
+      placeholder: "Enter your Organisation name",
+      type: "text",
+    },
+    {
+      name: "picture",
+      customOnChange: (e: any) => {
+        setPicture(e);
+      },
+      label: "Profile picture",
+      placeholder: "Profile Picture",
+      type: "file",
+    },
+  ];
+  const finalFields = [
+    ...commonFileds,
+    ...(isSignupForm === true ? signupfields : []),
+  ];
+  return finalFields;
 }
+
+function getSchema({ isSignupForm }: { isSignupForm: boolean }) {
+  const formSchema = z.object({
+    ...(isSignupForm === true
+      ? {
+          username: z
+            .string({ message: "Username is required" })
+            .min(2, {
+              message: "Username must be at least 2 characters.",
+            })
+            .max(20, { message: "Username must not exceed 20 characters." }),
+          org: z
+            .string({ message: "Username is required" })
+            .min(2, {
+              message: "Organisation name must be at least 2 characters.",
+            })
+            .max(20, {
+              message: "Organisation name must not exceed 20 characters.",
+            })
+            .optional()
+            .nullable(),
+          picture: z.any().optional(),
+        }
+      : {}),
+    email: z.string({ message: "Invalid Email" }).email(),
+    password: z
+      .string({ message: "Password is required" })
+      .min(4, "Password too short")
+      .max(20, "Password too long"),
+  });
+  return formSchema;
+}
+
+export { getfields, getSchema };
