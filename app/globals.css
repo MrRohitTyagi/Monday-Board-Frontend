@@ -81,8 +81,9 @@ h5,
 h6,
 a,
 label,
-input {
-  color: white;
+input,
+textarea {
+  color: rgba(255, 255, 255, 0.865);
 }
 html {
   max-width: 100dvw;
@@ -112,3 +113,6 @@ body {
 li.toast {
   flex-direction: row !important;
 }
+/* .react-colorful__interactive {
+  position: relative !important;
+} */

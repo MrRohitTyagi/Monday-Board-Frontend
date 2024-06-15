@@ -9,9 +9,6 @@ import { Form } from "@/components/ui/form";
 
 import SimpleFormInput from "@/components/core/FormSimpleInput";
 import { Button } from "@/components/ui/button";
-import FormSimpleTextArea from "@/components/core/FormSimpleTextArea";
-import { Label } from "@/components/ui/label";
-import CreatableSelect from "@/components/core/CreatableSelect";
 
 type BoardSettingsProps = {};
 const boardSchema = z.object({
@@ -37,19 +34,14 @@ const BoardSettings = (props: BoardSettingsProps) => {
   return (
     <div className="board-settings-conatiner p-4 pr-8">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 "
-        >
-          {/* // Title  */}
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <SimpleFormInput
             form={form}
             name="title"
             label="Title"
             placeHolder="Board title"
           />
-          {/* // Description  */}
-          <FormSimpleTextArea
+          <SimpleFormInput
             form={form}
             name="description"
             label="Description"
@@ -66,9 +58,6 @@ const BoardSettings = (props: BoardSettingsProps) => {
               setPicture(e);
             }}
           />
-          {/* // Priority */}
-          <Label>Priority </Label>
-          <CreatableSelect />
           <Button>Submit</Button>
         </form>
       </Form>
