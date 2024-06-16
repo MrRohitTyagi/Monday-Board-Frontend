@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React, { BaseSyntheticEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -12,8 +12,32 @@ import { Button } from "@/components/ui/button";
 import FormSimpleTextArea from "@/components/core/FormSimpleTextArea";
 import { Label } from "@/components/ui/label";
 import CreatableSelect from "@/components/core/CreatableSelect";
+import { createBoard, updateBoard } from "@/gateways/board-gateway";
+import { useAuth } from "@/zstore";
+import { uploadImage } from "@/utils/imageupload";
+import { toast } from "sonner";
+import Space from "@/components/core/Space";
+import useNavigate from "@/hooks/useNavigate";
 
-type BoardSettingsProps = {};
+type BoardSettingsProps = {
+  params: {
+    boardID: string;
+  };
+};
+type ValueType = {
+  id: string;
+  title: string;
+  isEditing: boolean;
+  color: string;
+  textColor: string;
+};
+
+type PriorityType = {
+  [key: string]: ValueType;
+};
+type StatusesType = {
+  [key: string]: ValueType;
+};
 const boardSchema = z.object({
   title: z
     .string({ message: "Board title is required" })
@@ -22,20 +46,56 @@ const boardSchema = z.object({
   description: z
     .string()
     .min(5, "Description too short")
-    .max(300, "Description too long")
+    .max(400, "Description too long")
     .optional(),
 });
-const BoardSettings = (props: BoardSettingsProps) => {
-  const [picture, setPicture] = useState<any>(null);
+const BoardSettings = ({ params }: BoardSettingsProps) => {
+  const {
+    user: { _id },
+    updateBoards,
+  } = useAuth();
+  const navigate = useNavigate();
+
+  const [picture, setPicture] = useState<BaseSyntheticEvent | null>(null);
+  const [statuses, setstatuses] = useState<StatusesType>({});
+  const [priority, setpriority] = useState<PriorityType>({});
 
   const form = useForm({
     resolver: zodResolver(boardSchema),
   });
-  const onSubmit = (values: any) => {
-    console.log(`%c values `, "color: pink;border:1px solid pink", values);
+
+  const onSubmit = async (values: any) => {
+    const url = picture ? await uploadImage(picture.target.files[0]) : "";
+
+    const payload = {
+      ...values,
+      statuses,
+      priority,
+      picture: url,
+      admins: [_id],
+    };
+
+    let board;
+    if (params.boardID === "new") {
+      board = await createBoard(payload);
+      toast.success("Board created successfully");
+    } else {
+      payload._id = params.boardID;
+      board = await updateBoard(payload);
+      toast.success("Board updated successfully");
+    }
+    updateBoards(board);
+    navigate(`board/${board._id}`);
   };
+
   return (
     <div className="board-settings-conatiner p-4 pr-8">
+      <h1 className="text-2xl font-bold">
+        {params.boardID === "new" ? "Create new board" : "Update board"}
+      </h1>
+
+      <div className="divider m-0"></div>
+      <Space h={4} />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -68,8 +128,13 @@ const BoardSettings = (props: BoardSettingsProps) => {
           />
           {/* // Priority */}
           <Label>Priority </Label>
-          <CreatableSelect />
-          <Button>Submit</Button>
+          <CreatableSelect data={priority} setData={setpriority} />
+          <Label>Statuses </Label>
+          {/* Statuses */}
+          <CreatableSelect data={statuses} setData={setstatuses} />
+          <Button disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+          </Button>
         </form>
       </Form>
     </div>

@@ -8,13 +8,20 @@ async function getBoard(id: string): Promise<BoardType> {
   const { data } = await axiosInstance().get(`${BOARD_BASE_URL}/get/${id}`);
   return data.response;
 }
+async function createBoard(payload: any): Promise<BoardType> {
+  const { data } = await axiosInstance().post(
+    `${BOARD_BASE_URL}/create`,
+    payload
+  );
+  return data.response;
+}
 async function deleteBoard(id: string) {
   await axiosInstance().delete(`${BOARD_BASE_URL}/delete/${id}`);
 }
 async function updateBoard(payload: any): Promise<BoardType> {
-  const { id } = payload;
-  const { data } = await axiosInstance().put(`${BOARD_BASE_URL}/update/${id}`);
+  const { _id } = payload;
+  const { data } = await axiosInstance().put(`${BOARD_BASE_URL}/update/${_id}`);
   return data.response;
 }
 
-export { getBoard, deleteBoard, updateBoard };
+export { getBoard, deleteBoard, updateBoard, createBoard };

@@ -7,7 +7,6 @@ import { Input } from "../ui/input";
 import PopoverComp from "./PopoverComp";
 import { RgbaColor, RgbaColorPicker } from "react-colorful";
 
-type CreatableSelectProps = {};
 type ValueType = {
   id: string;
   title: string;
@@ -16,13 +15,16 @@ type ValueType = {
   textColor: string;
 };
 
-type PriorityType = {
+type DataType = {
   [key: string]: ValueType;
 };
 
-const CreatableSelect = (props: CreatableSelectProps) => {
-  const [data, setData] = useState<PriorityType>({} as PriorityType);
+type CreatableSelectProps = {
+  data: DataType;
+  setData: React.Dispatch<React.SetStateAction<DataType>>;
+};
 
+const CreatableSelect = ({ data, setData }: CreatableSelectProps) => {
   function handleUpdate({
     id,
     key,
@@ -46,10 +48,6 @@ const CreatableSelect = (props: CreatableSelectProps) => {
       )}
     >
       {Object.entries(data).map(([pulseID, value]) => {
-        console.log(`%c value `, "color: red;border:2px dotted orange", {
-          ...value,
-        });
-
         return (
           <div key={pulseID} className="flex flex-col gap-2 justify-start">
             {value.isEditing ? (

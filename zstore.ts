@@ -6,14 +6,6 @@ type SideMenuStoreType = {
   toggleSideMenu: (c: any) => void;
 };
 
-type AuthStoreType = {
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  user: UserType;
-  fetchUser: (id: any, cb?: (e: UserType) => any) => void;
-  notAuthenticated: () => void;
-};
-
 export type UserType = {
   _id: string;
   username: string;
@@ -61,6 +53,15 @@ export const useSideMenu = create<SideMenuStoreType>((setState) => ({
   },
 }));
 
+type AuthStoreType = {
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  user: UserType;
+  fetchUser: (id: any, cb?: (e: UserType) => any) => void;
+  notAuthenticated: () => void;
+  updateBoards: (board: BoardType) => void;
+};
+
 export const useAuth = create<AuthStoreType>((setState) => ({
   isAuthenticated: false,
   isLoading: true,
@@ -73,6 +74,17 @@ export const useAuth = create<AuthStoreType>((setState) => ({
     picture: "",
   } as UserType,
 
+  updateBoards: (board) => {
+    setState((ps) => {
+      return {
+        ...ps,
+        user: {
+          ...ps.user,
+          boards: [...ps.user.boards, board],
+        },
+      };
+    });
+  },
   fetchUser: async (id = "", cb) => {
     await getUser(id || "").then((user) => {
       const userObj = { ...user, org: user.org ? user.org : user.username };

@@ -19,7 +19,7 @@ const SidemenuBoardListing = (props: SidemenuBoardListingProps) => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col gap-2 animate-fadeIn">
+    <div className="flex flex-col gap-2 animate-fadeIn w-full">
       {boards.map((board) => {
         const isActive = pathname?.includes(board._id);
 
