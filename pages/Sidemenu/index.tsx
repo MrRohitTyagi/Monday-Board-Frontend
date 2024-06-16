@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 
 //UI elements
@@ -175,4 +175,4 @@ const NavLink = ({
   );
 };
 
-export default SideMenu;
+export default memo(SideMenu);

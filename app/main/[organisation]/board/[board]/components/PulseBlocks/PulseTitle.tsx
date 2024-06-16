@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { PulseType } from "@/zstore";
 import { startCase } from "lodash";
-import React, { useCallback, useContext, useState } from "react";
+import React, { memo, useCallback, useContext, useState } from "react";
 import { PulseContext } from "../Pulse";
 
 type PulseTitleProps = {
@@ -52,4 +52,4 @@ const PulseTitle = ({ pulse }: PulseTitleProps) => {
   );
 };
 
-export default PulseTitle;
+export default memo(PulseTitle);

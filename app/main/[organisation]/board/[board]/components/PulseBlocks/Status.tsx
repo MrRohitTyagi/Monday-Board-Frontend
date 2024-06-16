@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 
 import PopoverComp from "@/components/core/PopoverComp";
 import { BoardType, PulseType } from "@/zstore";
@@ -66,4 +66,4 @@ const Status = ({ board, pulse }: PriorityProps) => {
   );
 };
 
-export default Status;
+export default memo(Status);

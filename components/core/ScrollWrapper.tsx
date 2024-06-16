@@ -1,5 +1,5 @@
 import useClickScroll from "@/hooks/useClickScroll";
-import React from "react";
+import React, { memo } from "react";
 
 type ScrollWrapperProps = { children: React.ReactNode; className: string };
 
@@ -21,4 +21,4 @@ const ScrollWrapper = ({ children, className }: ScrollWrapperProps) => {
   );
 };
 
-export default ScrollWrapper;
+export default memo(ScrollWrapper);

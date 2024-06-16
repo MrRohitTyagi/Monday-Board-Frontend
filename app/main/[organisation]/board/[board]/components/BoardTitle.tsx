@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { startCase } from "lodash";
 
 import { BoardType } from "@/zstore";
@@ -61,4 +61,4 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
   );
 };
 
-export default BoardTitle;
+export default memo(BoardTitle);

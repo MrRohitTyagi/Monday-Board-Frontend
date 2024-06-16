@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { memo } from "react";
 import { baseCssMiniItems } from "./Pulse";
 import Loader from "@/components/core/Loader";
 
@@ -55,4 +55,4 @@ const SprintSkeletonLoader = () => {
   );
 };
 
-export default SprintSkeletonLoader;
+export default memo(SprintSkeletonLoader);

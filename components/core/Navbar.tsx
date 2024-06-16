@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { memo } from "react";
 import { Bell } from "lucide-react";
 
 import { Button } from "../ui/button";
@@ -31,4 +31,4 @@ const Navbar = (props: Props) => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

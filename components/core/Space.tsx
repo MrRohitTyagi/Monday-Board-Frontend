@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 type SpaceProps = { h?: number };
 const Space = ({ h = 2 }: SpaceProps) => {
   return <div className={`h-${h} height-component`} />;
 };
 
-export default Space;
+export default memo(Space);

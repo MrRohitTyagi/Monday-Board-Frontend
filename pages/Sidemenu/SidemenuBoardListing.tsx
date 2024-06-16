@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import useNavigate from "@/hooks/useNavigate";
 import { startCase } from "lodash";
 import { usePathname } from "next/navigation";
@@ -48,4 +48,4 @@ const SidemenuBoardListing = (props: SidemenuBoardListingProps) => {
   );
 };
 
-export default SidemenuBoardListing;
+export default memo(SidemenuBoardListing);

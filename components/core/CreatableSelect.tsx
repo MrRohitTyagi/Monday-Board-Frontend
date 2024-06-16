@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { v4 as uid } from "uuid";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -235,4 +235,4 @@ const PreviewColor = ({
   );
 };
 
-export default CreatableSelect;
+export default memo(CreatableSelect);

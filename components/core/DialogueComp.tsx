@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, memo } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
@@ -32,4 +32,4 @@ const DialogueComp = ({
   );
 };
 
-export default DialogueComp;
+export default memo(DialogueComp);

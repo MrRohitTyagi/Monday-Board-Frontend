@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { memo } from "react";
 // types
 import { ChildrenType } from "@/types";
 
@@ -38,4 +38,4 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   );
 };
 
-export default MainLayout;
+export default memo(MainLayout);

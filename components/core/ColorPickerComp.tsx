@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { SketchPicker, CirclePicker, SwatchesPicker } from "react-color";
 
 type ColorPickerCompProps = {
@@ -20,9 +20,10 @@ const ColorPickerComp = ({
           styles={{
             default: {
               body: {},
-              picker: { boxShadow: "none",
-                //  backgroundColor: "transparent" 
-                },
+              picker: {
+                boxShadow: "none",
+                //  backgroundColor: "transparent"
+              },
             },
           }}
           color={color}
@@ -55,4 +56,4 @@ const ColorPickerComp = ({
   }
 };
 
-export default ColorPickerComp;
+export default memo(ColorPickerComp);

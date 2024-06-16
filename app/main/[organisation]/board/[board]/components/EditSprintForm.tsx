@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -103,4 +103,4 @@ const EditSprintForm = ({
   );
 };
 
-export default EditSprintForm;
+export default memo(EditSprintForm);

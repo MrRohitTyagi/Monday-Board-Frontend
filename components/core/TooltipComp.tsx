@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import { cn } from "@/lib/utils";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -32,4 +32,4 @@ const TooltipComp = ({ children, title }: TooltipCompProps) => {
   );
 };
 
-export default TooltipComp;
+export default memo(TooltipComp);

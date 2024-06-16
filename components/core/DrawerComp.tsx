@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 type DrawerCompProps = {
@@ -14,4 +14,4 @@ const DrawerComp = ({ trigger, children }: DrawerCompProps) => {
   );
 };
 
-export default DrawerComp;
+export default memo(DrawerComp);

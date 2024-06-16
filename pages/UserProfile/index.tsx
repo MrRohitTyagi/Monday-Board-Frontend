@@ -1,6 +1,6 @@
 "use client";
 import { User } from "lucide-react";
-import React from "react";
+import React, { memo } from "react";
 import {
   Popover,
   PopoverContent,
@@ -24,4 +24,4 @@ const UserProfile = (props: UserProfileProps) => {
   );
 };
 
-export default UserProfile;
+export default memo(UserProfile);

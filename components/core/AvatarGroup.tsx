@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Image from "next/image";
 import { UserType } from "@/zstore";
 
@@ -24,4 +24,4 @@ const AvatarGroup = ({ users }: AvatarGroupProps) => {
   );
 };
 
-export default AvatarGroup;
+export default memo(AvatarGroup);

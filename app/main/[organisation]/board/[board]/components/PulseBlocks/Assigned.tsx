@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import { cn } from "@/lib/utils";
 import { baseCssMiniItems } from "../Pulse";
@@ -13,4 +13,4 @@ const Assigned = ({ board, pulse }: AssignedProps) => {
   return <h1 className={cn(baseCssMiniItems(), "assigned-to")}>Assigned</h1>;
 };
 
-export default Assigned;
+export default memo(Assigned);

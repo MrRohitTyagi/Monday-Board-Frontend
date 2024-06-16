@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -19,4 +19,4 @@ const ResizableSplit = ({ leftPannel, rightPannel }: ResizableSplitProps) => {
   );
 };
 
-export default ResizableSplit;
+export default memo(ResizableSplit);

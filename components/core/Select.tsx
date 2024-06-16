@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -47,4 +47,4 @@ const SelectComp = ({ options = [], onChange }: SelectProps) => {
   );
 };
 
-export default SelectComp;
+export default memo(SelectComp);

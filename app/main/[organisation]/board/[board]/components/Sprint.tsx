@@ -2,6 +2,7 @@
 
 import React, {
   SetStateAction,
+  memo,
   useCallback,
   useContext,
   useEffect,
@@ -283,4 +284,4 @@ const EditSprint = ({ children, sprint, setSprint }: EditSprintProps) => {
   );
 };
 
-export default Sprint;
+export default memo(Sprint);

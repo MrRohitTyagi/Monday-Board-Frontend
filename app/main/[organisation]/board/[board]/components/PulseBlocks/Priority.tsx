@@ -1,6 +1,6 @@
 import PopoverComp from "@/components/core/PopoverComp";
 import { BoardType, PulseType } from "@/zstore";
-import React, { useContext, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 import { PulseContext, baseCssMiniItems } from "../Pulse";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -67,4 +67,4 @@ const Priority = ({ board, pulse }: PriorityProps) => {
   );
 };
 
-export default Priority;
+export default memo(Priority);

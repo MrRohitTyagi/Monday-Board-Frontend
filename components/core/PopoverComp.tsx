@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 
@@ -67,4 +67,4 @@ const PopoverComp = ({
   );
 };
 
-export default PopoverComp;
+export default memo(PopoverComp);

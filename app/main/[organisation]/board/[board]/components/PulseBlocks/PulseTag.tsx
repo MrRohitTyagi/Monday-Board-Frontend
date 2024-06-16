@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { PulseType, SprintType } from "@/zstore";
 import { startCase } from "lodash";
-import React, { useCallback, useContext, useState } from "react";
+import React, { memo, useCallback, useContext, useState } from "react";
 import { PulseContext, baseCssMiniItems } from "../Pulse";
 
 type PulseTagProps = {
@@ -50,4 +50,4 @@ const PulseTag = ({ pulse, sprint }: PulseTagProps) => {
   );
 };
 
-export default PulseTag;
+export default memo(PulseTag);

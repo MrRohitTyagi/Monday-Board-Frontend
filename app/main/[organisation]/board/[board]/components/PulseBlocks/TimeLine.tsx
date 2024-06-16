@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange, Range } from "react-date-range";
@@ -56,4 +56,4 @@ const Timeline = ({ board, pulse }: TimelineProps) => {
   );
 };
 
-export default Timeline;
+export default memo(Timeline);

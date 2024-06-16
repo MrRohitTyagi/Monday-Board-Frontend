@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import {
   Form,
   FormControl,
@@ -56,4 +56,4 @@ const FormSimpleTextArea = ({
   );
 };
 
-export default FormSimpleTextArea;
+export default memo(FormSimpleTextArea);

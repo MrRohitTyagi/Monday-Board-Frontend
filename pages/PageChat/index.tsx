@@ -1,5 +1,5 @@
 import { PulseType } from "@/zstore";
-import React from "react";
+import React, { memo } from "react";
 
 import ResizableSplit from "@/components/core/ResizableSplit";
 
@@ -22,4 +22,4 @@ const PulseChat = ({ pulse }: PulseChatProps) => {
   );
 };
 
-export default PulseChat;
+export default memo(PulseChat);

@@ -2,6 +2,7 @@
 
 import React, {
   createContext,
+  memo,
   useCallback,
   useEffect,
   useRef,
@@ -218,4 +219,4 @@ const Pulse = ({
   );
 };
 export { PulseContext };
-export default Pulse;
+export default memo(Pulse);

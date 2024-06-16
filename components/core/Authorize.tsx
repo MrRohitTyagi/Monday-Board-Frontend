@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { ChildrenType } from "@/types";
 import MainLayout from "./MainLayout";
 import { useAuth, useSideMenu } from "@/zstore";
@@ -55,4 +55,4 @@ const Authorize = ({ children }: AuthorizeTypes) => {
   );
 };
 
-export default Authorize;
+export default memo(Authorize);
