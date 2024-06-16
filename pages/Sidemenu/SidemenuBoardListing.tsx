@@ -36,7 +36,7 @@ const SidemenuBoardListing = (props: SidemenuBoardListingProps) => {
           >
             <ClipboardEdit size="15px" />
             <h2
-              className="text-ellipsis text-nowrap"
+              className="text-ellipsis text-nowrap overflow-hidden"
               key={board._id + "board-listing"}
             >
               {startCase(board.title)}

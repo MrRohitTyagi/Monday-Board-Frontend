@@ -28,11 +28,11 @@ import {
 } from "lucide-react";
 import TooltipComp from "@/components/core/TooltipComp";
 import DialogueComp from "@/components/core/DialogueComp";
-import { BoardContext } from "../page";
 import EditSprintForm from "./EditSprintForm";
 import { createPulse } from "@/gateways/pulse-gateway";
 import Loader from "@/components/core/Loader";
 import { toast } from "sonner";
+import useBoardContext from "@/hooks/useBoardContext";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -258,7 +258,7 @@ type EditSprintProps = {
 };
 const EditSprint = ({ children, sprint, setSprint }: EditSprintProps) => {
   //
-  const { setCurrentBoard, board } = useContext(BoardContext);
+  const { setCurrentBoard, board } = useBoardContext();
 
   const [openSprintEditForm, setOpenSprintEditForm] = useState(false);
   return (

@@ -12,17 +12,12 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import DialogueComp from "@/components/core/DialogueComp";
 import EditSprintForm from "./components/EditSprintForm";
+import { BoardContext } from "@/hooks/useBoardContext";
 
 type pageProps = {
   params: { board: string; organisation: string };
 };
-type BoardContenxtProps = {
-  board: BoardType;
-  setCurrentBoard: React.Dispatch<React.SetStateAction<BoardType>>;
-};
-const BoardContext = createContext<BoardContenxtProps>(
-  {} as BoardContenxtProps
-);
+
 const Board = ({ params }: pageProps) => {
   const [currentBoard, setCurrentBoard] = useState<BoardType>({} as BoardType);
   const [isLoading, setIsLoading] = useState(true);
@@ -108,5 +103,4 @@ const Board = ({ params }: pageProps) => {
     </div>
   );
 };
-export { BoardContext };
 export default Board;

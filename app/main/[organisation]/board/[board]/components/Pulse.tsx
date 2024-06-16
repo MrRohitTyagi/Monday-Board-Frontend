@@ -68,10 +68,6 @@ const Pulse = ({
     }, 1000);
   };
 
-  useEffect(() => {
-    setPulse(mainPulse);
-  }, [mainPulse]);
-
   const updateStatus = useCallback((status: string) => {
     debouncePulseUpdate({ status });
     setPulse((prev) => ({ ...prev, status: status }));
@@ -99,6 +95,10 @@ const Pulse = ({
     },
     []
   );
+
+  useEffect(() => {
+    setPulse(mainPulse);
+  }, [mainPulse]);
 
   return (
     <PulseContext.Provider
