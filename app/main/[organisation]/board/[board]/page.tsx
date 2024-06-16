@@ -32,12 +32,6 @@ const Board = ({ params }: pageProps) => {
     init();
   }, []);
 
-  console.log(
-    `%c {paramsmvurrentBoard} `,
-    "color: aqua;border:2px solid darkorange",
-    currentBoard
-  );
-
   return (
     <div className="h-full relative">
       {isLoading ? (

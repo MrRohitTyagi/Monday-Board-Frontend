@@ -33,6 +33,7 @@ import { createPulse } from "@/gateways/pulse-gateway";
 import Loader from "@/components/core/Loader";
 import { toast } from "sonner";
 import useBoardContext from "@/hooks/useBoardContext";
+import SprintSkeletonLoader from "./SprintSkeletonLoader";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -59,8 +60,10 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
     })();
   }, [sprintID]);
 
+  // return <SprintSkeletonLoader />;
+
   return isloading === true ? (
-    <div className={cn(`w-full`)}>Skeleton Loading...</div>
+    <SprintSkeletonLoader />
   ) : (
     <div className={cn(`w-full animate-fadeIn`)}>
       <div
@@ -109,6 +112,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
         </div>
       </div>
       <Space />
+
       {/* pulses */}
       <div className="grid grid-cols-[20rem_1fr]">
         <div className="pulse-container-left flex flex-row">
@@ -184,6 +188,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
     </div>
   );
 };
+
 type CreateNewPulseProps = {
   setSprint: React.Dispatch<SetStateAction<SprintType>>;
   sprint: SprintType;
