@@ -20,6 +20,7 @@ import Assigned from "./PulseBlocks/Assigned";
 import PulseTitle from "./PulseBlocks/PulseTitle";
 import { updatePulse } from "@/gateways/pulse-gateway";
 import PulseTag from "./PulseBlocks/PulseTag";
+import usePulseChat from "@/hooks/usePulseChat";
 
 type PulseProps = {
   pulse: PulseType;
@@ -60,6 +61,8 @@ const Pulse = ({
 }: PulseProps) => {
   const [pulse, setPulse] = useState<PulseType>(mainPulse);
   const debounceRef = useRef<any>();
+
+  const { openPulseChatLayer } = usePulseChat();
 
   const debouncePulseUpdate = (data: any) => {
     clearTimeout(debounceRef.current);
@@ -144,6 +147,7 @@ const Pulse = ({
           >
             {/* ----------------------------------------------------------------------- */}
             <div
+              onClick={() => openPulseChatLayer(pulse)}
               className={cn(
                 baseCssMiniItems(12),
                 "openchat-to flex flex-row items-center justify-center",
