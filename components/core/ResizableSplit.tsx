@@ -6,19 +6,15 @@ import {
 } from "@/components/ui/resizable";
 
 type ResizableSplitProps = {
-  children: React.ReactNode;
+  leftPannel: React.ReactNode;
+  rightPannel: React.ReactNode;
 };
-const ResizableSplit = ({ children }: ResizableSplitProps) => {
+const ResizableSplit = ({ leftPannel, rightPannel }: ResizableSplitProps) => {
   return (
     <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel>
-        <div
-          className="resizable-left-side h-full w-full bg-black 
-            opacity-80 pointer-events-none"
-        />
-      </ResizablePanel>
+      <ResizablePanel>{leftPannel}</ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel>{children}</ResizablePanel>
+      <ResizablePanel>{rightPannel}</ResizablePanel>
     </ResizablePanelGroup>
   );
 };
