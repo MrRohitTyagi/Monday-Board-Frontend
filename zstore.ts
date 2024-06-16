@@ -6,6 +6,19 @@ type SideMenuStoreType = {
   toggleSideMenu: (c: any) => void;
 };
 
+type ValueType = {
+  id: string;
+  title: string;
+  color: string;
+  textColor: string;
+};
+
+export type PriorityType = {
+  [key: string]: ValueType;
+};
+export type StatusesType = {
+  [key: string]: ValueType;
+};
 export type UserType = {
   _id: string;
   username: string;
@@ -29,8 +42,8 @@ export type BoardType = {
   description: string;
   admins: UserType[];
   members: UserType[];
-  statuses: { [key: string]: { title: string; color: string } };
-  priority: { [key: string]: { title: string; color: string } };
+  statuses: StatusesType;
+  priority: PriorityType;
   sprints: string[];
 };
 
@@ -59,7 +72,8 @@ type AuthStoreType = {
   user: UserType;
   fetchUser: (id: any, cb?: (e: UserType) => any) => void;
   notAuthenticated: () => void;
-  updateBoards: (board: BoardType) => void;
+  addNewBoard: (board: BoardType) => void;
+  updateBoardState: (board: BoardType) => void;
 };
 
 export const useAuth = create<AuthStoreType>((setState) => ({
@@ -74,13 +88,29 @@ export const useAuth = create<AuthStoreType>((setState) => ({
     picture: "",
   } as UserType,
 
-  updateBoards: (board) => {
+  addNewBoard: (board) => {
     setState((ps) => {
       return {
         ...ps,
         user: {
           ...ps.user,
           boards: [...ps.user.boards, board],
+        },
+      };
+    });
+  },
+  updateBoardState: (board) => {
+    setState((ps) => {
+      const updatedBoardsList = [...ps.user.boards].map((b) => {
+        if (b._id === board._id) return board;
+        else return b;
+      });
+
+      return {
+        ...ps,
+        user: {
+          ...ps.user,
+          boards: updatedBoardsList,
         },
       };
     });

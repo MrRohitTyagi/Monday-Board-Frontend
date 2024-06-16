@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { v4 as uid } from "uuid";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -7,41 +7,48 @@ import { Input } from "../ui/input";
 import PopoverComp from "./PopoverComp";
 import { RgbaColor, RgbaColorPicker } from "react-colorful";
 
-type ValueType = {
+type CreatanbleSelectValueType = {
   id: string;
   title: string;
-  isEditing: boolean;
+  isEditing?: boolean;
   color: string;
   textColor: string;
 };
 
 type DataType = {
-  [key: string]: ValueType;
+  [key: string]: CreatanbleSelectValueType;
 };
 
 type CreatableSelectProps = {
   data: DataType;
   setData: React.Dispatch<React.SetStateAction<DataType>>;
+  name: string;
 };
 
-const CreatableSelect = ({ data, setData }: CreatableSelectProps) => {
-  function handleUpdate({
-    id,
-    key,
-    value,
-  }: {
-    key: string;
-    value: any;
-    id: string;
-  }) {
-    setData((ps) => ({
-      ...ps,
-      [id]: { ...ps[id], [key]: value },
-    }));
-  }
+export function cleanCreatableSelectPayload(data: DataType) {
+  return Object.values(data).reduce((acc: DataType, ite) => {
+    const { isEditing, ...rest } = ite as CreatanbleSelectValueType;
+    acc[ite.id] = rest;
+    return acc;
+  }, {});
+}
+
+const CreatableSelect = ({ data, setData, name }: CreatableSelectProps) => {
+  const handleUpdate = useCallback(
+    ({ id, key, value }: { key: string; value: any; id: string }) => {
+      setData((ps) => ({
+        ...ps,
+        [id]: { ...ps[id], [key]: value },
+      }));
+    },
+    []
+  );
+
+  console.log(`%c data `, "color: red;border:2px dotted red", data);
 
   return (
     <div
+      key={name}
       className={cn(
         "flex flex-row gap-4 justify-start items-baseline",
         "animate-fadeIn flex-wrap"
@@ -81,10 +88,7 @@ const CreatableSelect = ({ data, setData }: CreatableSelectProps) => {
             ) : (
               <div className="flex flex-row gap-2">
                 <Button
-                  style={{
-                    backgroundColor: value.color,
-                    color: value.textColor,
-                  }}
+                  style={{ backgroundColor: value.color }}
                   key={pulseID}
                   type="button"
                   className="w-32 px-2"
@@ -194,7 +198,7 @@ function rgbaToString({
 }
 
 type PreviewColorProps = {
-  value: ValueType;
+  value: CreatanbleSelectValueType;
   onChange: (e: RgbaColor) => void;
   valueKey: "color" | "textColor";
   label: string;

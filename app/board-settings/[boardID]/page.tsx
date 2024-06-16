@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { BaseSyntheticEvent, useState } from "react";
+import React, { BaseSyntheticEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -11,33 +11,23 @@ import SimpleFormInput from "@/components/core/FormSimpleInput";
 import { Button } from "@/components/ui/button";
 import FormSimpleTextArea from "@/components/core/FormSimpleTextArea";
 import { Label } from "@/components/ui/label";
-import CreatableSelect from "@/components/core/CreatableSelect";
-import { createBoard, updateBoard } from "@/gateways/board-gateway";
-import { useAuth } from "@/zstore";
+import CreatableSelect, {
+  cleanCreatableSelectPayload,
+} from "@/components/core/CreatableSelect";
+import { createBoard, getBoard, updateBoard } from "@/gateways/board-gateway";
+import { PriorityType, StatusesType, useAuth } from "@/zstore";
 import { uploadImage } from "@/utils/imageupload";
 import { toast } from "sonner";
 import Space from "@/components/core/Space";
-import useNavigate from "@/hooks/useNavigate";
+import { Input } from "@/components/ui/input";
+import { isEmpty } from "lodash";
 
 type BoardSettingsProps = {
   params: {
     boardID: string;
   };
 };
-type ValueType = {
-  id: string;
-  title: string;
-  isEditing: boolean;
-  color: string;
-  textColor: string;
-};
 
-type PriorityType = {
-  [key: string]: ValueType;
-};
-type StatusesType = {
-  [key: string]: ValueType;
-};
 const boardSchema = z.object({
   title: z
     .string({ message: "Board title is required" })
@@ -52,11 +42,13 @@ const boardSchema = z.object({
 const BoardSettings = ({ params }: BoardSettingsProps) => {
   const {
     user: { _id },
-    updateBoards,
+    addNewBoard,
+    updateBoardState,
   } = useAuth();
-  const navigate = useNavigate();
 
-  const [picture, setPicture] = useState<BaseSyntheticEvent | null>(null);
+  const [picture, setPicture] = useState<BaseSyntheticEvent | null | string>(
+    null
+  );
   const [statuses, setstatuses] = useState<StatusesType>({});
   const [priority, setpriority] = useState<PriorityType>({});
 
@@ -64,28 +56,54 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
     resolver: zodResolver(boardSchema),
   });
 
-  const onSubmit = async (values: any) => {
-    const url = picture ? await uploadImage(picture.target.files[0]) : "";
+  console.log(`%c form.formsta `, "color: aqua;border:2px solid darkorange", {
+    values: form.formState.defaultValues,
+    priority,
+    statuses,
+    picture,
+  });
 
+  useEffect(() => {
+    if (params.boardID === "new") return;
+    (async function () {
+      const board = await getBoard(params.boardID);
+      form.reset(board);
+      if (board.picture) setPicture(board.picture);
+      if (!isEmpty(board.statuses)) setstatuses(board.statuses as StatusesType);
+      if (!isEmpty(board.priority)) setpriority(board.priority as PriorityType);
+    })();
+  }, []);
+
+  const onSubmit = async (values: any) => {
+    const url =
+      typeof picture !== "string"
+        ? await uploadImage(picture?.target?.files?.[0])
+        : picture;
+
+    const cleanPriorities = cleanCreatableSelectPayload(priority);
+    const cleanStatuses = cleanCreatableSelectPayload(statuses);
     const payload = {
       ...values,
-      statuses,
-      priority,
+      statuses: cleanStatuses,
+      priority: cleanPriorities,
       picture: url,
       admins: [_id],
     };
+
+    console.log(`%c payload `, "color: green;border:1px solid green", payload);
 
     let board;
     if (params.boardID === "new") {
       board = await createBoard(payload);
       toast.success("Board created successfully");
+      addNewBoard(board);
     } else {
       payload._id = params.boardID;
       board = await updateBoard(payload);
+      updateBoardState(board);
       toast.success("Board updated successfully");
     }
-    updateBoards(board);
-    navigate(`board/${board._id}`);
+    // navigate(`board/${board._id}`);
   };
 
   return (
@@ -104,34 +122,51 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
           {/* // Title  */}
           <SimpleFormInput
             form={form}
+            showDot={true}
             name="title"
             label="Title"
             placeHolder="Board title"
           />
           {/* // Description  */}
           <FormSimpleTextArea
+            showDot={true}
             form={form}
             name="description"
             label="Description"
             placeHolder="Board description"
           />
           {/* // Picture  */}
-          <SimpleFormInput
-            form={form}
-            name="picture"
-            type="file"
-            label="picture"
-            placeHolder="Board picture"
-            customOnChange={(e: any) => {
-              setPicture(e);
-            }}
-          />
+          <div className="board-picture flex flex-row gap-4">
+            <div className="board-picture flex flex-col gap-2">
+              <Label>• Picture</Label>
+              <Input
+                name="picture"
+                type="file"
+                customOnChange={(e: any) => {
+                  setPicture(e);
+                }}
+              />
+            </div>
+          </div>
           {/* // Priority */}
-          <Label>Priority </Label>
-          <CreatableSelect data={priority} setData={setpriority} />
-          <Label>Statuses </Label>
+          <div className="priority space-y-1">
+            <Label>• Priority </Label>
+            <CreatableSelect
+              data={priority}
+              setData={setpriority}
+              name="priority"
+            />
+          </div>
+
           {/* Statuses */}
-          <CreatableSelect data={statuses} setData={setstatuses} />
+          <div className="statuses space-y-1">
+            <Label>• Statuses </Label>
+            <CreatableSelect
+              data={statuses}
+              setData={setstatuses}
+              name="statuses"
+            />
+          </div>
           <Button disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting ? "Submitting..." : "Submit"}
           </Button>

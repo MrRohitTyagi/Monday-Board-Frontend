@@ -8,6 +8,8 @@ import BoardTitle from "./components/BoardTitle";
 import Sprint from "./components/Sprint";
 import Space from "@/components/core/Space";
 import { getBoard } from "@/gateways/board-gateway";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 type pageProps = {
   params: { board: string; organisation: string };
@@ -51,7 +53,7 @@ const Board = ({ params }: pageProps) => {
             <Space h={4} />
 
             {/* //  Board Content  */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 sprint-container">
               {currentBoard.sprints.map((sprintID) => {
                 return (
                   <Sprint
@@ -62,6 +64,14 @@ const Board = ({ params }: pageProps) => {
                 );
               })}
               <Space h={4} />
+            </div>
+            <div className="create-new-sprint">
+              <Button>
+                <div className="flex flex-row gap-2 items-center">
+                  <Plus size={"15px"} />
+                  <h2>Ceate New Sprint</h2>
+                </div>
+              </Button>
             </div>
           </div>
         </>

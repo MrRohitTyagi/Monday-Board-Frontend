@@ -19,8 +19,10 @@ async function deleteBoard(id: string) {
   await axiosInstance().delete(`${BOARD_BASE_URL}/delete/${id}`);
 }
 async function updateBoard(payload: any): Promise<BoardType> {
-  const { _id } = payload;
-  const { data } = await axiosInstance().put(`${BOARD_BASE_URL}/update/${_id}`);
+  const { data } = await axiosInstance().put(
+    `${BOARD_BASE_URL}/update/${payload._id}`,
+    payload
+  );
   return data.response;
 }
 

@@ -22,6 +22,7 @@ type SimpleFormInputProps = {
   };
   customOnChange?: (e: any) => void;
   type?: string;
+  showDot?: boolean;
 };
 
 const SimpleFormInput = ({
@@ -32,6 +33,7 @@ const SimpleFormInput = ({
   classNames,
   customOnChange,
   type,
+  showDot,
 }: SimpleFormInputProps) => {
   return (
     <FormField
@@ -39,7 +41,7 @@ const SimpleFormInput = ({
       name={name}
       render={({ field }) => (
         <FormItem className={cn("w-full", classNames?.formItem)}>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel>{showDot ? `• ${label}` : label}</FormLabel>
           <FormControl>
             <Input
               {...(type ? { type: type } : {})}

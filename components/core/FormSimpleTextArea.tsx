@@ -22,6 +22,7 @@ type FormSimpleTextAreaProps = {
     formItem: string;
   };
   type?: string;
+  showDot?: boolean;
 };
 
 const FormSimpleTextArea = ({
@@ -30,7 +31,7 @@ const FormSimpleTextArea = ({
   name,
   placeHolder,
   classNames,
-
+  showDot,
   type,
 }: FormSimpleTextAreaProps) => {
   return (
@@ -39,7 +40,7 @@ const FormSimpleTextArea = ({
       name={name}
       render={({ field }) => (
         <FormItem className={cn("w-full", classNames?.formItem)}>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel>{showDot ? `• ${label}` : label}</FormLabel>
           <FormControl>
             <Textarea
               {...(type ? { type: type } : {})}

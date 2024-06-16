@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ChildrenType } from "@/types";
 import MainLayout from "./MainLayout";
 import { useAuth, useSideMenu } from "@/zstore";
@@ -25,19 +25,18 @@ const Authorize = ({ children }: AuthorizeTypes) => {
         notAuthenticated();
         toggleSideMenu(true);
       } else {
-        console.log(`%c token `, "color: green;border:1px solid green", token);
         fetchUser("user");
       }
     }
     init();
   }, []);
 
-  console.log(`%c {isLoading} `, "color: red;border:2px dotted red", {
-    isLoading,
-    isAuthenticated,
-    user,
-    pathname,
-  });
+  useMemo(() => {
+    console.log(`%c {isLoading} `, "color: red;border:2px dotted red", {
+      user,
+      pathname,
+    });
+  }, [user]);
 
   return (
     <MainLayout>

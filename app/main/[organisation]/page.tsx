@@ -2,7 +2,7 @@
 import React from "react";
 import { startCase } from "lodash";
 import Image from "next/image";
-import { Edit, Edit2, Edit3, Star, Trash } from "lucide-react";
+import { Edit, Star } from "lucide-react";
 
 // UI elements
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
@@ -67,9 +67,14 @@ const CreateNewBoard = () => {
 
 const BoardComp = ({ board }: { board: BoardType }) => {
   const navigate = useNavigate();
+  const router = useRouter();
   return (
     <Card
-      onClick={() => navigate(`board/${board._id}`)}
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        navigate(`board/${board._id}`);
+      }}
       className={cn(
         "bg-transparent h-card-height w-card-width ",
         "p-2 border-border-light border-[1px] space-y-2",
@@ -92,19 +97,25 @@ const BoardComp = ({ board }: { board: BoardType }) => {
         <div className="flex flex-row justify-between w-full items-center">
           <h3 className="text-ellipsis font-bold">{startCase(board.title)}</h3>
           <div className="board-actions space-x-2">
+            {/* StarBoard  */}
             <Button variant="ghost" className="p-0">
               <TooltipComp title={"Star board"}>
                 <Star size="18px" color="white" />
               </TooltipComp>
             </Button>
-            <Button variant="ghost" className="p-0" onClick={() => {}}>
+
+            {/* {EditBoard} */}
+            <Button
+              variant="ghost"
+              className="p-0"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                router.push(`/board-settings/${board._id}`, { scroll: true });
+              }}
+            >
               <TooltipComp title={"Edit board"}>
                 <Edit size="18px" color="white" />
-              </TooltipComp>
-            </Button>
-            <Button variant="ghost" className="p-0" onClick={() => {}}>
-              <TooltipComp title={"Delete board"}>
-                <Trash size="18px" color="red" />
               </TooltipComp>
             </Button>
           </div>
