@@ -127,8 +127,11 @@ li.toast {
 }
 
 .sprint-handlers {
-  display: none;
+  visibility: hidden;
 }
 .sprint-title:hover .sprint-handlers {
-  display: flex;
+  visibility: visible !important;
+}
+.sprint-title-popover:hover .sprint-handlers {
+  visibility: visible !important;
 }

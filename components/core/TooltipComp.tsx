@@ -16,7 +16,7 @@ const TooltipComp = ({ children, title }: TooltipCompProps) => {
         <Tooltip.Portal>
           <Tooltip.Content
             className={cn(
-              "TooltipContent",
+              "TooltipContent z-50",
               "bg-main-fg overflow-hidden",
               "text-white border-main-light border-[1px]",
               "p-2 rounded-lg transition-all"

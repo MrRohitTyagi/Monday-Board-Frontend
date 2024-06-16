@@ -19,8 +19,10 @@ async function createSprint(payload: any): Promise<SprintType> {
   return data.response;
 }
 async function updateSprint(payload: any): Promise<SprintType> {
-  const { id } = payload;
-  const { data } = await axiosInstance().put(`${SPRINT_BASE_URL}/update/${id}`);
+  const { data } = await axiosInstance().put(
+    `${SPRINT_BASE_URL}/update/${payload._id}`,
+    payload
+  );
   return data.response;
 }
 
