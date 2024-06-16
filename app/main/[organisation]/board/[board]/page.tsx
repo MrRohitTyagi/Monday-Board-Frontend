@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
-import { BoardType } from "@/zstore";
+import { BoardType, SprintType } from "@/zstore";
 
 import BoardTitle from "./components/BoardTitle";
 import Sprint from "./components/Sprint";
@@ -10,19 +10,22 @@ import Space from "@/components/core/Space";
 import { getBoard } from "@/gateways/board-gateway";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import DialogueComp from "@/components/core/DialogueComp";
+import EditSprintForm from "./components/EditSprintForm";
 
 type pageProps = {
   params: { board: string; organisation: string };
 };
 
 const Board = ({ params }: pageProps) => {
-  const [currentBoard, setcurrentBoard] = useState<BoardType>({} as BoardType);
+  const [currentBoard, setCurrentBoard] = useState<BoardType>({} as BoardType);
   const [isLoading, setIsLoading] = useState(true);
+  const [openSprintForm, setOpenSprintForm] = useState(false);
 
   useEffect(() => {
     async function init() {
       const board = await getBoard(params.board);
-      setcurrentBoard(board as BoardType);
+      setCurrentBoard(board as BoardType);
       setIsLoading(false);
     }
     init();
@@ -66,12 +69,29 @@ const Board = ({ params }: pageProps) => {
               <Space h={4} />
             </div>
             <div className="create-new-sprint">
-              <Button>
-                <div className="flex flex-row gap-2 items-center">
-                  <Plus size={"15px"} />
-                  <h2>Ceate New Sprint</h2>
-                </div>
-              </Button>
+              <DialogueComp
+                setOpen={setOpenSprintForm}
+                open={openSprintForm}
+                trigger={
+                  <Button
+                    onClick={() => {
+                      setOpenSprintForm(true);
+                    }}
+                  >
+                    <div className="flex flex-row gap-2 items-center">
+                      <Plus size={"15px"} />
+                      <h2>Ceate New Sprint</h2>
+                    </div>
+                  </Button>
+                }
+              >
+                <EditSprintForm
+                  onClose={() => setOpenSprintForm(false)}
+                  sprint={{} as SprintType}
+                  board={currentBoard}
+                  setCurrentBoard={setCurrentBoard}
+                />
+              </DialogueComp>
             </div>
           </div>
         </>

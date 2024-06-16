@@ -11,10 +11,17 @@ async function getSprint(id: string): Promise<SprintType> {
 async function deleteSprint(id: string) {
   await axiosInstance().delete(`${SPRINT_BASE_URL}/delete/${id}`);
 }
+async function createSprint(payload: any): Promise<SprintType> {
+  const { data } = await axiosInstance().post(
+    `${SPRINT_BASE_URL}/create`,
+    payload
+  );
+  return data.response;
+}
 async function updateSprint(payload: any): Promise<SprintType> {
   const { id } = payload;
   const { data } = await axiosInstance().put(`${SPRINT_BASE_URL}/update/${id}`);
   return data.response;
 }
 
-export { getSprint, deleteSprint, updateSprint };
+export { getSprint, deleteSprint, updateSprint, createSprint };

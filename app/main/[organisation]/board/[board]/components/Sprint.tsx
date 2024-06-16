@@ -11,6 +11,18 @@ import { cn } from "@/lib/utils";
 import Pulse from "./Pulse";
 import ScrollWrapper from "@/components/core/ScrollWrapper";
 import { getSprint } from "@/gateways/sprint-gateway";
+import PopoverComp from "@/components/core/PopoverComp";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowDown,
+  ChevronDown,
+  ChevronUp,
+  Dot,
+  Edit,
+  Settings,
+  SlidersHorizontal,
+} from "lucide-react";
+import TooltipComp from "@/components/core/TooltipComp";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -25,6 +37,8 @@ const tempPulse = {
 type SprintProps = { sprintID: string; board: BoardType };
 
 const Sprint = ({ sprintID, board }: SprintProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const [sprint, setSprint] = useState<SprintType>({} as SprintType);
   const [isloading, setIsloading] = useState(true);
   useEffect(() => {
@@ -44,9 +58,38 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
     <div className={cn(`w-full`)}>Skeleton Loading...</div>
   ) : (
     <div className={cn(`w-full animate-fadeIn`)}>
-      <h2 className="text-xl" style={{ color: sprint.color }}>
-        {startCase(sprint.title)}
-      </h2>
+      <div
+        className={cn(
+          "hover:bg-main-light w-fit rounded-sm pr-4 pl-2",
+          "sprint-title flex flex-row gap-3 items-center"
+        )}
+      >
+        <h2 className="text-xl" style={{ color: sprint.color }}>
+          {startCase(sprint.title)}
+        </h2>
+        <div className="sprint-handlers cursor-pointer">
+          <PopoverComp
+            trigger={<SlidersHorizontal size={15} />}
+            content={
+              <div className="sprint-expand-collapse">
+                <Button
+                  variant={"ghost"}
+                  className="px-2"
+                  onClick={() => setIsExpanded((p) => !p)}
+                >
+                  <TooltipComp title={isExpanded ? "Expand" : "Collapse"}>
+                    {isExpanded ? (
+                      <ChevronUp size={20} />
+                    ) : (
+                      <ChevronDown size={20} />
+                    )}
+                  </TooltipComp>
+                </Button>
+              </div>
+            }
+          />
+        </div>
+      </div>
       <Space />
       {/* pulses */}
       <div className="grid grid-cols-[20rem_1fr]">

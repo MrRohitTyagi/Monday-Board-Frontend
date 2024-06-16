@@ -117,3 +117,18 @@ li.toast {
 [data-radix-popper-content-wrapper] {
   background-color: transparent;
 }
+
+.swatches-picker {
+  width: 100% !important;
+}
+.swatches-picker > div > div {
+  /* border: 2px solid red;  */
+  box-shadow: none !important;
+}
+
+.sprint-handlers {
+  display: none;
+}
+.sprint-title:hover .sprint-handlers {
+  display: flex;
+}
