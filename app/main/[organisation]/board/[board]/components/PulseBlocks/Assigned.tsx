@@ -10,7 +10,7 @@ type AssignedProps = {
 };
 
 const Assigned = ({ board, pulse }: AssignedProps) => {
-  return <div className={cn(baseCssMiniItems(), "assigned-to")}>Assigned</div>;
+  return <h1 className={cn(baseCssMiniItems(), "assigned-to")}>Assigned</h1>;
 };
 
 export default Assigned;

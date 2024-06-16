@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { startCase } from "lodash";
 import { MessageCircleMore } from "lucide-react";
 
@@ -12,6 +18,8 @@ import TimeLine from "./PulseBlocks/TimeLine";
 import Priority from "./PulseBlocks/Priority";
 import Assigned from "./PulseBlocks/Assigned";
 import PulseTitle from "./PulseBlocks/PulseTitle";
+import { updatePulse } from "@/gateways/pulse-gateway";
+import PulseTag from "./PulseBlocks/PulseTag";
 
 type PulseProps = {
   pulse: PulseType;
@@ -21,12 +29,13 @@ type PulseProps = {
   isLast?: boolean;
   leftPart?: boolean;
   isFake?: boolean;
+  setSprint?: React.Dispatch<React.SetStateAction<SprintType>>;
 };
 // max-w-40 max-w-12 min-w-40 min-w-12
 export const baseCssMiniItems = (w = 40) =>
   cn(
     "text-sm text-center tracking-wider",
-    `opacity-80 max-w-${w} min-w-${w} h-full`,
+    `max-w-${w} min-w-${w} h-full`,
     "content-around shrink-0 text-center tracking-wider text-nowrap",
     "border-pulse-divider border-r-[1px] cursor-pointer"
   );
@@ -35,6 +44,7 @@ type PulseContextType = {
   setPulse: React.Dispatch<React.SetStateAction<PulseType>>;
   updatePriority: (p: string) => void;
   updateTitle: (p: string) => void;
+  updateTag: (p: string) => void;
   updateStatus: (p: string) => void;
   updateTimeline: (p: { start: string; end: string }) => void;
 };
@@ -45,28 +55,46 @@ const Pulse = ({
   sprint,
   isFake,
   leftPart,
+  setSprint,
   board,
 }: PulseProps) => {
   const [pulse, setPulse] = useState<PulseType>(mainPulse);
+  const debounceRef = useRef<any>();
+
+  const debouncePulseUpdate = (data: any) => {
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      updatePulse({ ...data, _id: pulse._id });
+    }, 1000);
+  };
 
   useEffect(() => {
     setPulse(mainPulse);
   }, [mainPulse]);
 
   const updateStatus = useCallback((status: string) => {
+    debouncePulseUpdate({ status });
     setPulse((prev) => ({ ...prev, status: status }));
   }, []);
 
   const updatePriority = useCallback((priority: string) => {
+    debouncePulseUpdate({ priority });
     setPulse((prev) => ({ ...prev, priority: priority }));
   }, []);
 
   const updateTitle = useCallback((title: string) => {
+    debouncePulseUpdate({ title });
     setPulse((prev) => ({ ...prev, title: title }));
+  }, []);
+
+  const updateTag = useCallback((tag: string) => {
+    debouncePulseUpdate({ tag });
+    setPulse((prev) => ({ ...prev, tag: tag }));
   }, []);
 
   const updateTimeline = useCallback(
     (timeline: { start: string; end: string }) => {
+      debouncePulseUpdate({ timeline });
       setPulse((prev) => ({ ...prev, timeline: timeline }));
     },
     []
@@ -80,6 +108,7 @@ const Pulse = ({
         updatePriority,
         updateTitle,
         updateTimeline,
+        updateTag,
       }}
     >
       <div
@@ -93,16 +122,16 @@ const Pulse = ({
       >
         {/* Pulse title  */}
         {leftPart === true && isFake ? (
-          <div
+          <h2
             className={cn(
               "pulse-title",
-              "w-full text-sm opacity-80 content-around",
+              "w-full text-sm  content-around",
               "text-ellipsis overflow-hidden text-nowrap",
               isFake === true && "text-center tracking-wider"
             )}
           >
             {startCase(pulse.title)}
-          </div>
+          </h2>
         ) : (
           <PulseTitle pulse={pulse} />
         )}
@@ -168,12 +197,16 @@ const Pulse = ({
             )}
             {/* ----------------------------------------------------------------------- */}
 
-            <div
-              className={cn(baseCssMiniItems(), "pulse-tag")}
-              style={{ color: sprint.color }}
-            >
-              {pulse.tag}
-            </div>
+            {isFake ? (
+              <div
+                className={cn(baseCssMiniItems(), "pulse-tag")}
+                style={{ color: sprint.color }}
+              >
+                {pulse.tag}
+              </div>
+            ) : (
+              <PulseTag pulse={pulse} sprint={sprint} />
+            )}
           </div>
         )}
       </div>

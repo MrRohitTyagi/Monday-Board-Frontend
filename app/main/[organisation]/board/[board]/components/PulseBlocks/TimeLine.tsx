@@ -33,12 +33,12 @@ const Timeline = ({ board, pulse }: TimelineProps) => {
       classNames={{
         trigger: "h-full",
         content:
-          "bg-transparent p-2 shadow-lg shadow-foreground w-full rounded-sm overflow-hidden",
+          "bg-main-fg p-2 shadow-lg shadow-foreground w-full rounded-sm overflow-hidden",
       }}
       trigger={
-        <div className={cn(baseCssMiniItems(), "timeline-block")}>
-          {'TimeLine'}
-        </div>
+        <h1 className={cn(baseCssMiniItems(), "timeline-block")}>
+          {"TimeLine"}
+        </h1>
       }
       content={
         <>

@@ -25,15 +25,18 @@ const Status = ({ board, pulse }: PriorityProps) => {
       }}
       classNames={{
         trigger: "h-full",
-        content: "w-44 bg-transparent p-4 shadow-lg shadow-foreground",
+        content: "w-44 bg-main-fg p-4 shadow-lg shadow-foreground",
       }}
       trigger={
-        <div
-          style={{ background: board?.statuses?.[pulse?.status]?.color }}
-          className={cn(baseCssMiniItems(), "priority", "hover:opacity-60")}
+        <h1
+          style={{
+            background: board?.statuses?.[pulse?.status]?.color,
+            color: board?.statuses?.[pulse?.status]?.textColor,
+          }}
+          className={cn(baseCssMiniItems(), "statuses", "hover:opacity-60")}
         >
           {board.statuses?.[pulse?.status]?.title}
-        </div>
+        </h1>
       }
       content={
         <>
@@ -46,7 +49,7 @@ const Status = ({ board, pulse }: PriorityProps) => {
                   setOpen(false);
                 }}
                 key={s.title + i}
-                style={{ background: s.color }}
+                style={{ background: s.color, color: s.textColor }}
                 className={cn(
                   "w-full h-10 text-center flex items-center justify-center mt-2",
                   "cursor-pointer",

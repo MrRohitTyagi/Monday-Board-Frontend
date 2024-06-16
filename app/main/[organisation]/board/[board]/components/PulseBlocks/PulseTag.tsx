@@ -1,16 +1,17 @@
 import { cn } from "@/lib/utils";
-import { PulseType } from "@/zstore";
+import { PulseType, SprintType } from "@/zstore";
 import { startCase } from "lodash";
 import React, { useCallback, useContext, useState } from "react";
-import { PulseContext } from "../Pulse";
+import { PulseContext, baseCssMiniItems } from "../Pulse";
 
-type PulseTitleProps = {
+type PulseTagProps = {
   pulse: PulseType;
+  sprint: SprintType;
 };
 
-const PulseTitle = ({ pulse }: PulseTitleProps) => {
+const PulseTag = ({ pulse, sprint }: PulseTagProps) => {
   const [isEditable, setIsEditable] = useState(false);
-  const { updateTitle } = useContext(PulseContext);
+  const { updateTag } = useContext(PulseContext);
 
   const handleKey = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     switch (e.key) {
@@ -30,10 +31,10 @@ const PulseTitle = ({ pulse }: PulseTitleProps) => {
         ref={(e) => {
           e?.focus();
         }}
-        className="w-11/12"
+        className={cn(baseCssMiniItems(), "pulse-tag-to")}
         type="text"
-        onChange={(e) => updateTitle(e.target.value)}
-        value={pulse.title}
+        onChange={(e) => updateTag(e.target.value)}
+        value={pulse.tag}
       />
     </>
   ) : (
@@ -41,15 +42,12 @@ const PulseTitle = ({ pulse }: PulseTitleProps) => {
       onClick={(e) => {
         setIsEditable(true);
       }}
-      className={cn(
-        "pulse-title",
-        "w-full text-sm content-around",
-        "text-ellipsis overflow-hidden text-nowrap"
-      )}
+      style={{ color: sprint.color }}
+      className={cn(baseCssMiniItems(), "pulse-tag-to")}
     >
-      {startCase(pulse.title)}
+      {startCase(pulse.tag)}
     </h1>
   );
 };
 
-export default PulseTitle;
+export default PulseTag;

@@ -1,11 +1,17 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  SetStateAction,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { startCase } from "lodash";
 
 import Space from "@/components/core/Space";
 
-import { BoardType, SprintType } from "@/zstore";
+import { BoardType, PulseType, SprintType } from "@/zstore";
 import { cn } from "@/lib/utils";
 
 import Pulse from "./Pulse";
@@ -13,11 +19,20 @@ import ScrollWrapper from "@/components/core/ScrollWrapper";
 import { getSprint } from "@/gateways/sprint-gateway";
 import PopoverComp from "@/components/core/PopoverComp";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Edit, SlidersHorizontal } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Edit,
+  Plus,
+  SlidersHorizontal,
+} from "lucide-react";
 import TooltipComp from "@/components/core/TooltipComp";
 import DialogueComp from "@/components/core/DialogueComp";
 import { BoardContext } from "../page";
 import EditSprintForm from "./EditSprintForm";
+import { createPulse } from "@/gateways/pulse-gateway";
+import Loader from "@/components/core/Loader";
+import { toast } from "sonner";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -122,6 +137,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
               return (
                 <PulseWrapper key={pulse._id + i + "left"}>
                   <Pulse
+                    setSprint={setSprint}
                     isFake={false}
                     pulse={pulse}
                     board={board}
@@ -131,6 +147,10 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
                 </PulseWrapper>
               );
             })}
+            {/* // Create new Pulse */}
+            <PulseWrapper>
+              <CreateNewPulse setSprint={setSprint} sprint={sprint} />
+            </PulseWrapper>
           </div>
         </div>
 
@@ -149,6 +169,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
             return (
               <PulseWrapper key={pulse._id + i + "right"}>
                 <Pulse
+                  setSprint={setSprint}
                   board={board}
                   isFake={false}
                   pulse={pulse}
@@ -159,6 +180,58 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
             );
           })}
         </ScrollWrapper>
+      </div>
+    </div>
+  );
+};
+type CreateNewPulseProps = {
+  setSprint: React.Dispatch<SetStateAction<SprintType>>;
+  sprint: SprintType;
+};
+const newPulse = { title: "New item" };
+const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
+  const [loading, setLoading] = useState(false);
+  //
+  const handleCreateNewpulse = useCallback(async () => {
+    try {
+      setLoading(true);
+      const pulse = await createPulse({ ...newPulse, sprint: sprint._id });
+
+      setSprint((ps) => {
+        return { ...ps, pulses: [...ps.pulses, pulse] };
+      });
+      setLoading(false);
+    } catch (error: any) {
+      toast.error(error?.message || "Unable to create pulse");
+      setLoading(false);
+    }
+  }, [setSprint, sprint._id]);
+
+  return (
+    <div
+      className={cn(
+        "flex flex-row items-center justify-start h-full",
+        "bg-main-light pl-2 opacity-80",
+        "border-pulse-divider border-[1px]",
+        "hover:bg-main-fg transition-all duration-150",
+        "active:bg-main-active-dark transition-all duration-150",
+        " rounded-br-lg animate-fadeIn"
+      )}
+    >
+      <div
+        onClick={handleCreateNewpulse}
+        className={cn(
+          "pulse-title",
+          "w-full text-sm content-around",
+          "text-ellipsis overflow-hidden text-nowrap",
+          "text-center tracking-wider",
+          "Create-new-pulse flex flex-row items-center",
+          "gap-2 justify-center cursor-pointer",
+          "font-bold"
+        )}
+      >
+        <h2>{loading ? "Creating new pulse item ..." : "Ceate New Pulse"}</h2>
+        {loading ? <Loader /> : <Plus color="white" size={20} />}
       </div>
     </div>
   );

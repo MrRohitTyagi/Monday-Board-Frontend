@@ -16,13 +16,14 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
     <PopoverComp
       additional={{ content: { align: "start" } }}
       classNames={{
-        content: "bg-main-light border-[#696767] p-2 pl-4 pr-4 shadow-lg shadow-foreground",
+        content:
+          "bg-main-light border-[#696767] p-2 pl-4 pr-4 shadow-lg shadow-foreground",
       }}
       content={
         <>
           <h2>Board Info</h2>
           <div className="h-2"></div>
-          <p className="text-xs">{board.description}</p>
+          <h1 className="text-xs opacity-80">{board.description}</h1>
           <div className="divider m-0"></div>
 
           {/* // Admins */}

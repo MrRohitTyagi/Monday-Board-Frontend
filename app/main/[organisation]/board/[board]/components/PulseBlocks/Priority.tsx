@@ -22,15 +22,22 @@ const Priority = ({ board, pulse }: PriorityProps) => {
       }}
       classNames={{
         trigger: "h-full",
-        content: "w-44 bg-transparent p-4 shadow-lg shadow-foreground",
+        content: "w-44 bg-main-fg p-4 shadow-lg shadow-foreground",
       }}
       trigger={
-        <div
-          style={{ background: board?.priority?.[pulse?.priority]?.color }}
-          className={cn(baseCssMiniItems(), "priority", "hover:opacity-60")}
+        <h1
+          style={{
+            background: board?.priority?.[pulse?.priority]?.color,
+            color: board?.priority?.[pulse?.priority]?.textColor,
+          }}
+          className={cn(
+            baseCssMiniItems(),
+            "priority",
+            "hover:opacity-60"
+          )}
         >
           {board?.priority?.[pulse?.priority]?.title || "NA"}
-        </div>
+        </h1>
       }
       content={
         <>
@@ -43,7 +50,7 @@ const Priority = ({ board, pulse }: PriorityProps) => {
                 }}
                 variant={"ghost"}
                 key={p.title + i}
-                style={{ background: p.color }}
+                style={{ background: p.color, color: p.textColor }}
                 className={cn(
                   "w-full h-10 text-center flex items-center justify-center mt-2",
                   "cursor-pointer",

@@ -12,9 +12,18 @@ async function deletePulse(id: string) {
   await axiosInstance().delete(`${PULSE_BASE_URL}/delete/${id}`);
 }
 async function updatePulse(payload: any): Promise<PulseType> {
-  const { id } = payload;
-  const { data } = await axiosInstance().put(`${PULSE_BASE_URL}/update/${id}`);
+  const { data } = await axiosInstance().put(
+    `${PULSE_BASE_URL}/update/${payload._id}`,
+    payload
+  );
+  return data.response;
+}
+async function createPulse(payload: any): Promise<PulseType> {
+  const { data } = await axiosInstance().post(
+    `${PULSE_BASE_URL}/create`,
+    payload
+  );
   return data.response;
 }
 
-export { getPulse, deletePulse, updatePulse };
+export { getPulse, deletePulse, updatePulse, createPulse };
