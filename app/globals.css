@@ -113,6 +113,7 @@ body {
 li.toast {
   flex-direction: row !important;
 }
-/* .react-colorful__interactive {
-  position: relative !important;
-} */
+
+[data-radix-popper-content-wrapper] {
+  background-color: transparent;
+}

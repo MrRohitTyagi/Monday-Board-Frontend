@@ -2,7 +2,7 @@
 import React from "react";
 import { startCase } from "lodash";
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { Edit, Edit2, Edit3, Star, Trash } from "lucide-react";
 
 // UI elements
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
@@ -13,6 +13,7 @@ import { BoardType, useAuth } from "@/zstore";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import useNavigate from "@/hooks/useNavigate";
+import TooltipComp from "@/components/core/TooltipComp";
 
 type pageProps = {};
 const Organisation = (props: pageProps) => {
@@ -90,9 +91,23 @@ const BoardComp = ({ board }: { board: BoardType }) => {
       <CardFooter className="flex flex-col justify-start items-start p-0">
         <div className="flex flex-row justify-between w-full items-center">
           <h3 className="text-ellipsis font-bold">{startCase(board.title)}</h3>
-          <Button variant="ghost" className="p-0">
-            <Star size="18px" />
-          </Button>
+          <div className="board-actions space-x-2">
+            <Button variant="ghost" className="p-0">
+              <TooltipComp title={"Star board"}>
+                <Star size="18px" color="white" />
+              </TooltipComp>
+            </Button>
+            <Button variant="ghost" className="p-0" onClick={() => {}}>
+              <TooltipComp title={"Edit board"}>
+                <Edit size="18px" color="white" />
+              </TooltipComp>
+            </Button>
+            <Button variant="ghost" className="p-0" onClick={() => {}}>
+              <TooltipComp title={"Delete board"}>
+                <Trash size="18px" color="red" />
+              </TooltipComp>
+            </Button>
+          </div>
         </div>
         {/* <h5>{board.description}</h5> */}
       </CardFooter>
