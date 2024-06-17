@@ -36,8 +36,10 @@ export default function RootLayout({
         <Toaster
           richColors
           duration={2000}
-          offset="5px"
-          style={{ flexDirection: "row" }}
+          // offset="30px"
+          className="h-14"
+          position="top-center"
+          // style={{ flexDirection: "row", height: "3rem" }}
         />
       </body>
     </html>

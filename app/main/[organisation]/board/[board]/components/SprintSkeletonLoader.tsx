@@ -7,7 +7,7 @@ const SprintSkeletonLoader = () => {
   return (
     <>
       <div className="h-8 w-40 bg-main-bg animate-pulse items-center flex felx-row pl-2 rounded-md">
-        <Loader />
+        {/* <Loader /> */}
       </div>
       {[1, 2, 4].map((i) => {
         return (

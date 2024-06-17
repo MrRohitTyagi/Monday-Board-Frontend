@@ -1,46 +1,75 @@
 "use client";
 
-import axios from "axios";
+import axios, { AxiosRequestHeaders, AxiosResponse, AxiosError } from "axios";
 import { deleteToken, getToken } from "@/utils/cookie";
 import NProgress from "nprogress";
+import { toast } from "sonner";
 NProgress.configure({ showSpinner: false });
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+export type MyErrorType = {
+  message: string;
+  status: boolean;
+};
+class MyError extends Error {
+  success: boolean;
+  constructor(error: string) {
+    super(error);
+    this.name = "MyError";
+    this.message = error;
+    this.stack = new Error(error).stack;
+    this.success = false;
+  }
+}
 
-const axiosInstance = (headers: {} = {}) => {
+const axiosInstance = (headers?: AxiosRequestHeaders | {}) => {
   const instance = axios.create({
     baseURL: BASE_URL,
-    headers: { authorization: getToken(), ...headers },
+    headers: { authorization: getToken(), ...(headers || {}) },
   });
 
   instance.interceptors.request.use(
-    function (config) {
+    (config) => {
       NProgress.start();
       return config;
     },
-    function (error) {
-      console.log("error", error);
+    (error) => {
+      console.error("Request error", error);
       NProgress.done();
       return Promise.reject(error);
     }
   );
 
   instance.interceptors.response.use(
-    function (response) {
+    (response: AxiosResponse) => {
       NProgress.done();
       return response;
     },
-    function (error) {
+    (error: any) => {
+      console.log('error  AXIOS ERROR',error)
       NProgress.done();
-      if (error.response && error.response.status === 401) {
-        deleteToken();
-        window.location.href = "/";
-        window.location.reload();
+      if (error.response) {
+        if (error.response.status === 401) {
+          toast.error(
+            error?.response?.data?.message ||
+              "Session expired, please login again"
+          );
+          deleteToken();
+          setTimeout(() => {
+            window.location.href = "/";
+            window.location.reload();
+          }, 1000);
+        } else {
+          let message = error.response.data?.message || "Something went wrong";
+          throw new MyError(message);
+        }
+      } else {
+        throw new MyError("Network error");
       }
-      console.log("error", error);
-      return Promise.reject(error);
     }
   );
+
   return instance;
 };
+
 export default axiosInstance;

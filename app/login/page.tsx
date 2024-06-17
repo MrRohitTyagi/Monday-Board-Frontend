@@ -20,8 +20,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { getSchema, getfields } from "./utils";
 import { login, signup } from "@/gateways/auth-gateway";
 import { toast } from "sonner";
-import { UserType, useAuth } from "@/zstore";
+import { useAuth } from "@/zstore";
 import { setToken } from "@/utils/cookie";
+import Loader from "@/components/core/Loader";
+import { uploadImage } from "@/utils/imageupload";
 
 const { div: MotionDiv } = motion;
 
@@ -36,40 +38,36 @@ const LoginComponent = () => {
   });
 
   const router = useRouter();
-  const [picture, setPicture] = useState<any>(null);
+  const [picture, setPicture] = useState<any>("");
 
   const onSubmit = useCallback(
     async (values: any) => {
-      let result: UserType = {} as UserType;
       let promise;
-      let isSuccess = false;
+      const url =
+        typeof picture !== "string"
+          ? await uploadImage(picture?.target?.files?.[0])
+          : picture;
+
+      const payload = {
+        ...values,
+        ...(url ? { picture: url } : {}),
+      };
 
       if (isLoginForm) {
-        promise = login(values);
+        promise = await login(payload);
       } else {
-        promise = signup(values);
+        promise = await signup(payload);
       }
 
-      toast.promise(promise, {
-        loading: "Fetching details please wait",
-        success: (data) => {
-          isSuccess = true;
-          result = data.response;
-          setToken(data.token);
-          return data.message;
-        },
-
-        error: (data) => {
-          return data.message;
-        },
-      });
-
-      await promise;
-
-      if (!isSuccess) return;
-      fetchUser('user', (data) => {
-        router.replace(`/main/${data.org}`);
-      });
+      if (promise.success === false) {
+        toast.error(promise.message);
+      } else {
+        toast.success(promise.message);
+        setToken(promise.token);
+        fetchUser("user", (data) => {
+          router.replace(`/main/${data.org}`);
+        });
+      }
     },
     [isLoginForm]
   );
@@ -113,6 +111,7 @@ const LoginComponent = () => {
                 <FormField
                   key={f.name}
                   control={form.control}
+                  disabled={form.formState.isSubmitting}
                   name={f.name}
                   render={({ field }) => (
                     <FormItem className="w-full">
@@ -141,16 +140,30 @@ const LoginComponent = () => {
               }}
             >
               <Button
+                disabled={form.formState.isSubmitting}
                 type="submit"
-                className="w-full border-main-light border-2"
+                className={cn(
+                  "flex flex-row items-center gap-3",
+                  "w-full border-main-light border-2"
+                )}
               >
-                Submit
+                {form.formState.isSubmitting && <Loader />}
+                {form.formState.isSubmitting ? (
+                  <h1 className="animate-fadeIn">Submitting ...</h1>
+                ) : (
+                  <h1 className="animate-fadeIn">Submit</h1>
+                )}
               </Button>
             </MotionDiv>
           </form>
         </Form>
 
-        <div className="flex flex-row mt-4 justify-center gap-2">
+        <div
+          className={cn(
+            form.formState.isSubmitting && "pointer-events-none opacity-60",
+            "flex flex-row mt-4 justify-center gap-2"
+          )}
+        >
           <h2 className="">
             {isLoginForm ? "New to monday.io?" : "Already have an account?"}
           </h2>

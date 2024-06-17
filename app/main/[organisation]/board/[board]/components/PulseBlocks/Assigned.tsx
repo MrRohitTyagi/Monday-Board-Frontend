@@ -13,4 +13,5 @@ const Assigned = ({ board, pulse }: AssignedProps) => {
   return <h1 className={cn(baseCssMiniItems(), "assigned-to")}>Assigned</h1>;
 };
 
+
 export default memo(Assigned);
