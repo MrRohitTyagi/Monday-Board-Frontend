@@ -22,6 +22,7 @@ import PulseTitle from "./PulseBlocks/PulseTitle";
 import { updatePulse } from "@/gateways/pulse-gateway";
 import PulseTag from "./PulseBlocks/PulseTag";
 import usePulseChat from "@/hooks/usePulseChat";
+import { useRouter } from "next/navigation";
 
 type PulseProps = {
   pulse: PulseType;
@@ -62,8 +63,9 @@ const Pulse = ({
 }: PulseProps) => {
   const [pulse, setPulse] = useState<PulseType>(mainPulse);
   const debounceRef = useRef<any>();
+  const router = useRouter();
 
-  const { openPulseChatLayer } = usePulseChat();
+  // const { openPulseChatLayer } = usePulseChat();
 
   const debouncePulseUpdate = (data: any) => {
     clearTimeout(debounceRef.current);
@@ -148,7 +150,10 @@ const Pulse = ({
           >
             {/* ----------------------------------------------------------------------- */}
             <div
-              onClick={() => openPulseChatLayer(pulse)}
+              onClick={() =>
+                isFake === false &&
+                router.push(`${board._id}/pulse/${pulse._id}`)
+              }
               className={cn(
                 baseCssMiniItems(12),
                 "openchat-to flex flex-row items-center justify-center",

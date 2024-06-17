@@ -2,26 +2,30 @@
 
 import ResizableSplit from "@/components/core/ResizableSplit";
 import React from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
-type layoutProps = {};
-const layout = (props: layoutProps) => {
-  const params = useParams();
-  const src = window.location.origin;
+type layoutProps = {
+  params: { pulse_id: string };
+};
+const layout = ({ params }: layoutProps) => {
+  const router = useRouter();
+  // const params = useParams();
 
-  console.log(`%c src `, "color: orange;border:2px solid cyan", src);
+  console.log(`%c params `, "color: orange;border:2px solid cyan", params);
 
   return (
     <div className="fixed right-0 top-0 left-0 bottom-0">
-      <ResizableSplit
-        leftPannel={
-          <div
-            className="resizable-left-side h-full w-full bg-black 
-        opacity-50 pointer-events-none"
-          />
-        }
-        rightPannel={<div className="w-full h-full bg-main-fg">gjkdfbjgdf</div>}
-      />
+      <ResizableSplit childMode={true} id={params.pulse_id}>
+        <div className="w-full h-full bg-main-fg">
+          <div className="header">
+            <Button onClick={() => router.back()}>
+              <X />
+            </Button>
+          </div>
+        </div>
+      </ResizableSplit>
     </div>
   );
 };
