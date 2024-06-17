@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export async function waitfor(time: number) {
+export async function waitfor(time?: number) {
   return await new Promise((e) => {
     setTimeout(() => {
       e("");

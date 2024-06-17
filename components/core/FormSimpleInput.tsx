@@ -17,12 +17,13 @@ type SimpleFormInputProps = {
   label: string;
   placeHolder: string;
   classNames?: {
-    input: string;
-    formItem: string;
+    input?: string;
+    formItem?: string;
   };
   customOnChange?: (e: any) => void;
   type?: string;
   showDot?: boolean;
+  disabled?: boolean;
 };
 
 const SimpleFormInput = ({
@@ -34,9 +35,11 @@ const SimpleFormInput = ({
   customOnChange,
   type,
   showDot,
+  disabled,
 }: SimpleFormInputProps) => {
   return (
     <FormField
+      disabled={disabled}
       control={form.control}
       name={name}
       render={({ field }) => (
@@ -48,7 +51,7 @@ const SimpleFormInput = ({
               customOnChange={customOnChange}
               placeholder={placeHolder}
               {...field}
-              className={classNames?.input}
+              className={cn("bg-transparent", classNames?.input)}
             />
           </FormControl>
           <FormMessage />

@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from "react";
+import React, { memo, useContext, useMemo, useState } from "react";
 
 import PopoverComp from "@/components/core/PopoverComp";
 import { BoardType, PulseType } from "@/zstore";
@@ -6,6 +6,7 @@ import { BoardType, PulseType } from "@/zstore";
 import { cn } from "@/lib/utils";
 import { PulseContext, baseCssMiniItems } from "../Pulse";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 type PriorityProps = {
   board: BoardType;
@@ -15,6 +16,8 @@ type PriorityProps = {
 const Status = ({ board, pulse }: PriorityProps) => {
   const [open, setOpen] = useState(false);
   const { updateStatus } = useContext(PulseContext);
+
+  const statuses = useMemo(() => Object.values(board.statuses || {}), [board]);
 
   return (
     <PopoverComp
@@ -39,16 +42,16 @@ const Status = ({ board, pulse }: PriorityProps) => {
         </h1>
       }
       content={
-        <>
-          {Object.entries(board.statuses || {}).map(([key, s], i) => {
+        <div className="flex flex-col gap-2">
+          {statuses.map((s, i) => {
             return (
               <Button
-                variant={"ghost"}
+                variant="ghost"
                 onClick={() => {
-                  updateStatus(key);
+                  updateStatus(s.id);
                   setOpen(false);
                 }}
-                key={s.title + i}
+                key={s.id + i}
                 style={{ background: s.color, color: s.textColor }}
                 className={cn(
                   "w-full h-10 text-center flex items-center justify-center mt-2",
@@ -60,7 +63,14 @@ const Status = ({ board, pulse }: PriorityProps) => {
               </Button>
             );
           })}
-        </>
+
+          <div className="divider m-0" />
+
+          <Button className="flex w-full flex-row items-center gap-2 border-2 border-main-light ">
+            <Plus size={20} />
+            <h1>Create New</h1>
+          </Button>
+        </div>
       }
     />
   );

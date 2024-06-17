@@ -45,7 +45,7 @@ const PulseTag = ({ pulse, sprint }: PulseTagProps) => {
       style={{ color: sprint.color }}
       className={cn(baseCssMiniItems(), "pulse-tag-to")}
     >
-      {startCase(pulse.tag)}
+      {pulse.tag}
     </h1>
   );
 };

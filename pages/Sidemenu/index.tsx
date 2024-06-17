@@ -127,9 +127,9 @@ const SideMenu = ({}: SideMenuProps) => {
         {isCollapsed === false && isAuthenticated === true && (
           <>
             <SelectComp onChange={() => {}} options={boardFilterOptions} />
-            <SidemenuBoardListing />
           </>
         )}
+        <SidemenuBoardListing isCollapsed={isCollapsed} />
       </div>
     </div>
   );

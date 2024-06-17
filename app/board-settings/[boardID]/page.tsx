@@ -21,6 +21,10 @@ import { toast } from "sonner";
 import Space from "@/components/core/Space";
 import { Input } from "@/components/ui/input";
 import { isEmpty } from "lodash";
+import Loader from "@/components/core/Loader";
+import { cn, waitfor } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import useNavigate from "@/hooks/useNavigate";
 
 type BoardSettingsProps = {
   params: {
@@ -46,21 +50,16 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
     updateBoardState,
   } = useAuth();
 
+  const navigate = useNavigate();
+
   const [picture, setPicture] = useState<BaseSyntheticEvent | null | string>(
-    null
+    ""
   );
   const [statuses, setstatuses] = useState<StatusesType>({});
   const [priority, setpriority] = useState<PriorityType>({});
 
   const form = useForm({
     resolver: zodResolver(boardSchema),
-  });
-
-  console.log(`%c form.formsta `, "color: aqua;border:2px solid darkorange", {
-    values: form.formState.defaultValues,
-    priority,
-    statuses,
-    picture,
   });
 
   useEffect(() => {
@@ -91,19 +90,20 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
     };
 
     console.log(`%c payload `, "color: green;border:1px solid green", payload);
-
+    // await waitfor();
     let board;
     if (params.boardID === "new") {
       board = await createBoard(payload);
       toast.success("Board created successfully");
       addNewBoard(board);
+      navigate(`/`);
     } else {
       payload._id = params.boardID;
       board = await updateBoard(payload);
       updateBoardState(board);
       toast.success("Board updated successfully");
+      navigate(`/`);
     }
-    // navigate(`board/${board._id}`);
   };
 
   return (
@@ -117,10 +117,12 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 "
+          className="flex flex-col gap-4"
         >
           {/* // Title  */}
           <SimpleFormInput
+            classNames={{ input: "bg-transparent" }}
+            disabled={form.formState.isSubmitting}
             form={form}
             showDot={true}
             name="title"
@@ -128,7 +130,9 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
             placeHolder="Board title"
           />
           {/* // Description  */}
+          {/* // */}
           <FormSimpleTextArea
+            disabled={form.formState.isSubmitting}
             showDot={true}
             form={form}
             name="description"
@@ -157,7 +161,6 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
               name="priority"
             />
           </div>
-
           {/* Statuses */}
           <div className="statuses space-y-1">
             <Label>• Statuses </Label>
@@ -167,8 +170,19 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
               name="statuses"
             />
           </div>
-          <Button disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+          <Button
+            disabled={form.formState.isSubmitting}
+            className={cn(
+              "flex flex-row items-center gap-3",
+              "w-full border-main-light border-2"
+            )}
+          >
+            {form.formState.isSubmitting && <Loader />}
+            {form.formState.isSubmitting ? (
+              <h1 className="animate-fadeIn">Submitting ...</h1>
+            ) : (
+              <h1 className="animate-fadeIn">Submit</h1>
+            )}
           </Button>
         </form>
       </Form>

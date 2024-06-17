@@ -1,9 +1,10 @@
 import PopoverComp from "@/components/core/PopoverComp";
 import { BoardType, PulseType } from "@/zstore";
-import React, { memo, useContext, useState } from "react";
+import React, { memo, useContext, useMemo, useState } from "react";
 import { PulseContext, baseCssMiniItems } from "../Pulse";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 type PriorityProps = {
   board: BoardType;
   pulse: PulseType;
@@ -12,6 +13,8 @@ type PriorityProps = {
 const Priority = ({ board, pulse }: PriorityProps) => {
   const [open, setOpen] = useState(false);
   const { updatePriority } = useContext(PulseContext);
+
+  const priority = useMemo(() => Object.values(board.priority || {}), [board]);
 
   return (
     <PopoverComp
@@ -30,29 +33,25 @@ const Priority = ({ board, pulse }: PriorityProps) => {
             background: board?.priority?.[pulse?.priority]?.color,
             color: board?.priority?.[pulse?.priority]?.textColor,
           }}
-          className={cn(
-            baseCssMiniItems(),
-            "priority",
-            "hover:opacity-60"
-          )}
+          className={cn(baseCssMiniItems(), "priority", "hover:opacity-60")}
         >
           {board?.priority?.[pulse?.priority]?.title || "NA"}
         </h1>
       }
       content={
-        <>
-          {Object.entries(board.priority || {}).map(([key, p], i) => {
+        <div className="flex flex-col gap-2">
+          {priority.map((p, i) => {
             return (
               <Button
                 onClick={() => {
-                  updatePriority(key);
+                  updatePriority(p.id);
                   setOpen(false);
                 }}
-                variant={"ghost"}
+                variant="ghost"
                 key={p.title + i}
                 style={{ background: p.color, color: p.textColor }}
                 className={cn(
-                  "w-full h-10 text-center flex items-center justify-center mt-2",
+                  "w-full h-10 text-center flex items-center justify-center",
                   "cursor-pointer",
                   "hover:opacity-60"
                 )}
@@ -61,7 +60,14 @@ const Priority = ({ board, pulse }: PriorityProps) => {
               </Button>
             );
           })}
-        </>
+
+          <div className="divider m-0" />
+
+          <Button className="flex w-full flex-row items-center gap-2 border-2 border-main-light ">
+            <Plus size={20} />
+            <h1>Create New</h1>
+          </Button>
+        </div>
       }
     />
   );

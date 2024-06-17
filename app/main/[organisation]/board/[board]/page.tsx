@@ -13,6 +13,7 @@ import { Plus } from "lucide-react";
 import DialogueComp from "@/components/core/DialogueComp";
 import EditSprintForm from "./components/EditSprintForm";
 import { BoardContext } from "@/hooks/useBoardContext";
+import BoardFilter from "./components/BoardFilter";
 
 type pageProps = {
   params: { board: string; organisation: string };
@@ -52,6 +53,9 @@ const Board = ({ params }: pageProps) => {
             <BoardContext.Provider
               value={{ setCurrentBoard, board: currentBoard }}
             >
+              {/* Board filter */}
+              <BoardFilter />
+
               {/* //  Board Content  */}
               <div className="flex flex-col gap-6 sprint-container">
                 {currentBoard.sprints.map((sprintID) => {

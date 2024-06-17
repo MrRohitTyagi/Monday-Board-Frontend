@@ -1,17 +1,24 @@
+"use client";
+
 import React, { memo } from "react";
 import { startCase } from "lodash";
-
 import { BoardType } from "@/zstore";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Edit } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AvatarGroup from "@/components/core/AvatarGroup";
 import PopoverComp from "@/components/core/PopoverComp";
+import Space from "@/components/core/Space";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import TooltipComp from "@/components/core/TooltipComp";
 
 type BoardTitleProps = {
   board: BoardType;
 };
 
 const BoardTitle = ({ board }: BoardTitleProps) => {
+  const router = useRouter();
+
   return (
     <PopoverComp
       additional={{ content: { align: "start" } }}
@@ -21,8 +28,19 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
       }}
       content={
         <>
-          <h2>Board Info</h2>
-          <div className="h-2"></div>
+          <div className="flex felx-row items-center justify-between">
+            <h2>Board Info</h2>
+            <Button
+              className="p-0 m-0"
+              variant={"ghost"}
+              onClick={() => router.push("/board-settings/" + board._id)}
+            >
+              <TooltipComp title="Edit board" side="right">
+                <Edit size={15} color="white" />
+              </TooltipComp>
+            </Button>
+          </div>
+          <Space />
           <h1 className="text-xs opacity-80">{board.description}</h1>
           <div className="divider m-0"></div>
 

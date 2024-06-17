@@ -23,6 +23,7 @@ type FormSimpleTextAreaProps = {
   };
   type?: string;
   showDot?: boolean;
+  disabled?: boolean;
 };
 
 const FormSimpleTextArea = ({
@@ -33,9 +34,11 @@ const FormSimpleTextArea = ({
   classNames,
   showDot,
   type,
+  disabled,
 }: FormSimpleTextAreaProps) => {
   return (
     <FormField
+      disabled={disabled}
       control={form.control}
       name={name}
       render={({ field }) => (

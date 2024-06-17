@@ -6,15 +6,17 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 type TooltipCompProps = {
   children: React.ReactNode | string;
   title: React.ReactNode | string;
+  side?: "top" | "right" | "bottom" | "left" | undefined;
 };
 
-const TooltipComp = ({ children, title }: TooltipCompProps) => {
+const TooltipComp = ({ children, title, side }: TooltipCompProps) => {
   return (
     <Tooltip.Provider>
       <Tooltip.Root delayDuration={100}>
         <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
         <Tooltip.Portal>
           <Tooltip.Content
+            side={side}
             className={cn(
               "TooltipContent z-50",
               "bg-main-fg overflow-hidden",

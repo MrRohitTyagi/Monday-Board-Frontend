@@ -35,6 +35,7 @@ import Loader from "@/components/core/Loader";
 import { toast } from "sonner";
 import useBoardContext from "@/hooks/useBoardContext";
 import SprintSkeletonLoader from "./SprintSkeletonLoader";
+import CustomDiv from "@/components/core/CustomDiv";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -196,25 +197,25 @@ type CreateNewPulseProps = {
 };
 const newPulse = { title: "New item" };
 const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
-  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   //
   const handleCreateNewpulse = useCallback(async () => {
     try {
-      setLoading(true);
+      setIsSubmitting(true);
       const pulse = await createPulse({ ...newPulse, sprint: sprint._id });
 
       setSprint((ps) => {
         return { ...ps, pulses: [...ps.pulses, pulse] };
       });
-      setLoading(false);
+      setIsSubmitting(false);
     } catch (error: any) {
       toast.error(error?.message || "Unable to create pulse");
-      setLoading(false);
+      setIsSubmitting(false);
     }
   }, [setSprint, sprint._id]);
 
   return (
-    <div
+    <CustomDiv
       className={cn(
         "flex flex-row items-center justify-start h-full",
         "bg-main-light pl-2 opacity-80",
@@ -223,9 +224,10 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
         "active:bg-main-active-dark transition-all duration-150",
         " rounded-br-lg animate-fadeIn"
       )}
+      onClick={handleCreateNewpulse}
+      disabled={isSubmitting}
     >
       <div
-        onClick={handleCreateNewpulse}
         className={cn(
           "pulse-title",
           "w-full text-sm content-around",
@@ -236,10 +238,12 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
           "font-bold"
         )}
       >
-        <h2>{loading ? "Creating new pulse item ..." : "Ceate New Pulse"}</h2>
-        {loading ? <Loader /> : <Plus color="white" size={20} />}
+        <h2>
+          {isSubmitting ? "Creating new pulse item ..." : "Ceate New Pulse"}
+        </h2>
+        {isSubmitting ? <Loader /> : <Plus color="white" size={20} />}
       </div>
-    </div>
+    </CustomDiv>
   );
 };
 
