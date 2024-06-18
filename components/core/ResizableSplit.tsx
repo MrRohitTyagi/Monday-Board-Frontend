@@ -41,8 +41,8 @@ const ResizableSplit = ({
       <ResizablePanel className={cn(classNames?.leftPanel)}>
         {leftPannel ? leftPannel : tempLeftPannel}
       </ResizablePanel>
-      <ResizableHandle withHandle />
-      <ResizablePanel>{children}</ResizablePanel>
+      <ResizableHandle withHandle className="cursor-ew-resize" />
+      <ResizablePanel minSize={30}>{children}</ResizablePanel>
     </ResizablePanelGroup>
   ) : (
     <ResizablePanelGroup direction="horizontal" autoSaveId={id}>
@@ -50,9 +50,7 @@ const ResizableSplit = ({
         {leftPannel ? leftPannel : tempLeftPannel}
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel minSize={1000} className="">
-        {rightPannel}
-      </ResizablePanel>
+      <ResizablePanel className="">{rightPannel}</ResizablePanel>
     </ResizablePanelGroup>
   );
 };

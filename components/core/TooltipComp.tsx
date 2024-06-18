@@ -1,7 +1,7 @@
 import React, { memo } from "react";
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 import { cn } from "@/lib/utils";
-import * as Tooltip from "@radix-ui/react-tooltip";
 
 type TooltipCompProps = {
   children: React.ReactNode | string;
@@ -18,7 +18,7 @@ const TooltipComp = ({ children, title, side }: TooltipCompProps) => {
           <Tooltip.Content
             side={side}
             className={cn(
-              "TooltipContent z-50",
+              "TooltipContent z-50 animate",
               "bg-main-fg overflow-hidden",
               "text-white border-main-light border-[1px]",
               "p-2 rounded-lg transition-all"
@@ -26,6 +26,7 @@ const TooltipComp = ({ children, title, side }: TooltipCompProps) => {
             sideOffset={5}
           >
             {title}
+
             <Tooltip.Arrow className="TooltipArrow bg-main-light" />
           </Tooltip.Content>
         </Tooltip.Portal>

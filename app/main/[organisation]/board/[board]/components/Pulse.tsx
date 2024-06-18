@@ -11,7 +11,7 @@ import React, {
 import { startCase } from "lodash";
 import { MessageCircleMore } from "lucide-react";
 
-import { BoardType, PulseType, SprintType } from "@/zstore";
+import { BoardType, PulseType, SprintType, UserType } from "@/zstore";
 import { cn } from "@/lib/utils";
 import Status from "./PulseBlocks/Status";
 
@@ -50,6 +50,7 @@ type PulseContextType = {
   updateTag: (p: string) => void;
   updateStatus: (p: string) => void;
   updateTimeline: (p: { start: string; end: string }) => void;
+  updateAssigned: (p: UserType) => void;
 };
 const PulseContext = createContext<PulseContextType>({} as PulseContextType);
 
@@ -94,6 +95,14 @@ const Pulse = ({
     setPulse((prev) => ({ ...prev, tag: tag }));
   }, []);
 
+  const updateAssigned = useCallback((user: UserType) => {
+    setPulse((prev) => {
+      const assigned = [user._id, ...prev.assigned];
+      debouncePulseUpdate({ assigned });
+      return { ...prev, assigned };
+    });
+  }, []);
+
   const updateTimeline = useCallback(
     (timeline: { start: string; end: string }) => {
       debouncePulseUpdate({ timeline });
@@ -115,6 +124,7 @@ const Pulse = ({
         updateTitle,
         updateTimeline,
         updateTag,
+        updateAssigned,
       }}
     >
       <div
@@ -193,7 +203,7 @@ const Pulse = ({
                 Assigned
               </div>
             ) : (
-              <Assigned pulse={pulse} board={board} />
+              <Assigned pulse={pulse} board={board} setPulse={setPulse} />
             )}
             {/* ----------------------------------------------------------------------- */}
 
