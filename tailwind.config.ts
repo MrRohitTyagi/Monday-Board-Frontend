@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 const navbarHeight = "3rem";
+const main_bg_fg = "#1C1F3B";
+
 const config = {
   darkMode: ["class"],
   content: [
@@ -36,7 +38,7 @@ const config = {
         "main-active-dark": "#133774",
         "main-light": "#30324E",
         "main-bg": "#292F4C",
-        "main-fg": "#1C1F3B",
+        "main-fg": main_bg_fg,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -89,11 +91,24 @@ const config = {
           "0%": { opacity: "0.3", filter: `blur(0.4px)` },
           "100%": { opacity: "1", filter: `blur(0px)` },
         },
+        //resizable Split layer animations
+        "pulse-layer": {
+          "0%": { left: "100%" },
+          "100%": { left: "0%" },
+        },
+        "change-bg-transparency": {
+          "0%": { backgroundColor: "transparent" },
+          "90%": { backgroundColor: "transparent" },
+          "100%": { backgroundColor: "black",opacity:'50%' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         fadeIn: "fadeIn 500ms ease-in-out",
+        "pulse-layer": "pulse-layer 500ms ease-in-out forwards",
+        "change-bg-transparency":
+          "change-bg-transparency 500ms ease-in-out forwards",
       },
     },
   },

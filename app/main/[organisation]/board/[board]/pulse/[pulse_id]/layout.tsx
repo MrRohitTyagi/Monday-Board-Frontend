@@ -16,7 +16,7 @@ const layout = ({ params }: layoutProps) => {
   console.log(`%c params `, "color: orange;border:2px solid cyan", params);
 
   return (
-    <div className="fixed right-0 top-0 left-0 bottom-0">
+    <div className="fixed right-0 top-0 bottom-0 animate-pulse-layer">
       <ResizableSplit childMode={true} id={params.pulse_id}>
         <div className="w-full h-full bg-main-fg">
           <div className="header">

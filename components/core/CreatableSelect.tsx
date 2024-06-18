@@ -57,36 +57,40 @@ const CreatableSelect = ({ data, setData, name }: CreatableSelectProps) => {
       {Object.entries(data).map(([pulseID, value]) => {
         return (
           <div key={pulseID} className="flex flex-col gap-2 justify-start">
-            {value.isEditing ? (
-              <Input
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+            <div className="flex flex-row gap-2">
+              {value.isEditing === true ? (
+                <Input
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleUpdate({
+                        id: pulseID,
+                        key: "isEditing",
+                        value: false,
+                      });
+                    }
+                  }}
+                  className="w-32"
+                  key={pulseID}
+                  value={value.title}
+                  ref={(e) => {
+                    e?.focus();
+                  }}
+                  onChange={(e) => {
+                    handleUpdate({
+                      id: pulseID,
+                      key: "title",
+                      value: e.target.value,
+                    });
+                  }}
+                  onBlur={() => {
                     handleUpdate({
                       id: pulseID,
                       key: "isEditing",
                       value: false,
                     });
-                  }
-                }}
-                className="w-32"
-                key={pulseID}
-                value={value.title}
-                ref={(e) => {
-                  e?.focus();
-                }}
-                onChange={(e) => {
-                  handleUpdate({
-                    id: pulseID,
-                    key: "title",
-                    value: e.target.value,
-                  });
-                }}
-                onBlur={() => {
-                  handleUpdate({ id: pulseID, key: "isEditing", value: false });
-                }}
-              />
-            ) : (
-              <div className="flex flex-row gap-2">
+                  }}
+                />
+              ) : (
                 <Button
                   style={{ backgroundColor: value.color }}
                   key={pulseID}
@@ -107,20 +111,20 @@ const CreatableSelect = ({ data, setData, name }: CreatableSelectProps) => {
                     {value.title}
                   </h1>
                 </Button>
-                <Button
-                  variant={"ghost"}
-                  className="px-0"
-                  onClick={() => {
-                    setData((ps) => {
-                      const { [pulseID]: pid, ...rest } = ps;
-                      return rest;
-                    });
-                  }}
-                >
-                  <Trash2 color="red" />
-                </Button>
-              </div>
-            )}
+              )}
+              <Button
+                variant={"ghost"}
+                className="px-0"
+                onClick={() => {
+                  setData((ps) => {
+                    const { [pulseID]: pid, ...rest } = ps;
+                    return rest;
+                  });
+                }}
+              >
+                <Trash2 color="red" />
+              </Button>
+            </div>
 
             <PreviewColor
               label={"Text color"}

@@ -1,7 +1,8 @@
 import React from "react";
+// NOT IN USE
 type pageProps = {};
 const page = (props: pageProps) => {
-  return <div>NOT IN USE</div>;
+  return null;
 };
 
 export default page;

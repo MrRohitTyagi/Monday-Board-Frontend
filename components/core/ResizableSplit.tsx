@@ -16,11 +16,15 @@ type ResizableSplitProps = {
     rightPanel?: string;
   };
   id?: string;
+  // rest: any;
 };
 const tempLeftPannel = (
   <div
-    className="resizable-left-side h-full w-full bg-black 
-        opacity-50 pointer-events-none"
+    className={cn(
+      "resizable-left-side h-full w-full",
+      // "opacity-50 pointer-events-none",
+      "animate-change-bg-transparency"
+    )}
   />
 );
 const ResizableSplit = ({
@@ -30,9 +34,10 @@ const ResizableSplit = ({
   childMode,
   classNames,
   id,
+  ...rest
 }: ResizableSplitProps) => {
   return childMode === true ? (
-    <ResizablePanelGroup direction="horizontal" autoSaveId={id}>
+    <ResizablePanelGroup direction="horizontal" autoSaveId={id} {...rest}>
       <ResizablePanel className={cn(classNames?.leftPanel)}>
         {leftPannel ? leftPannel : tempLeftPannel}
       </ResizablePanel>

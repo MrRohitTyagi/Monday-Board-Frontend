@@ -96,20 +96,23 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
       board = await createBoard(payload);
       toast.success("Board created successfully");
       addNewBoard(board);
-      navigate(`/`);
+      // navigate(`/`);
     } else {
       payload._id = params.boardID;
       board = await updateBoard(payload);
       updateBoardState(board);
       toast.success("Board updated successfully");
-      navigate(`/`);
     }
+
+    navigate(`/`);
   };
 
   return (
     <div className="board-settings-conatiner p-4 pr-8">
       <h1 className="text-2xl font-bold">
-        {params.boardID === "new" ? "Create new board" : "Update board"}
+        {params.boardID === "new"
+          ? "Create new board"
+          : `Update ${form.getValues("title")}`}
       </h1>
 
       <div className="divider m-0"></div>
