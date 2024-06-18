@@ -55,7 +55,7 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
         <Button
           disabled={isAuthenticated === false}
           onClick={() => {
-            router.push("/board-settings/new");
+            router.push("/main/board-settings/new");
           }}
           className={cn(
             "border-main-light border-2 gap-1",

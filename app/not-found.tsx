@@ -3,7 +3,7 @@
 import { useAuth } from "@/zstore";
 import { useRouter } from "next/navigation";
 
-export default function Home() {
+export default function NotFound() {
   const {
     user: { org },
   } = useAuth();

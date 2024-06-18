@@ -182,7 +182,7 @@ const AssignedSelector = ({
         className={cn(
           "assigned-content",
           "flex flex-col gap-2",
-          "max-h-96 overflow-y-auto"
+          "max-h-60 overflow-y-auto"
         )}
       >
         {usersToPreview.length === 0 ? (
