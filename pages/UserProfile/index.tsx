@@ -28,10 +28,7 @@ const UserProfile = (props: UserProfileProps) => {
             className="w-full h-full"
             unoptimized
             alt={"NA"}
-            src={
-              user.picture ||
-              "https://res.cloudinary.com/derplm8c6/image/upload/v1718526303/dkm7ezl1whano6p8osei.png"
-            }
+            src={user.picture||"https://res.cloudinary.com/derplm8c6/image/upload/v1718526303/dkm7ezl1whano6p8osei.png"}
           />
         </div>
       </PopoverTrigger>
