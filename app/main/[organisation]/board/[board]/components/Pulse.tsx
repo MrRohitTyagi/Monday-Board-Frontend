@@ -50,7 +50,7 @@ type PulseContextType = {
   updateTag: (p: string) => void;
   updateStatus: (p: string) => void;
   updateTimeline: (p: { start: string; end: string }) => void;
-  updateAssigned: (p: UserType) => void;
+  updateAssigned: (p: UserType, action?: "add" | "remove") => void;
 };
 const PulseContext = createContext<PulseContextType>({} as PulseContextType);
 
@@ -95,9 +95,14 @@ const Pulse = ({
     setPulse((prev) => ({ ...prev, tag: tag }));
   }, []);
 
-  const updateAssigned = useCallback((user: UserType) => {
+  const updateAssigned = useCallback((user: UserType, action = "add") => {
     setPulse((prev) => {
-      const assigned = [user._id, ...prev.assigned];
+      let assigned = [];
+      if (action == "remove") {
+        assigned = prev.assigned.filter((a) => a !== user._id);
+      } else {
+        assigned = [user._id, ...prev.assigned];
+      }
       debouncePulseUpdate({ assigned });
       return { ...prev, assigned };
     });
