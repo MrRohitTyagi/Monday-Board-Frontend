@@ -6,7 +6,7 @@ async function uploadImage(file: File) {
     `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDNERY_CLOUDNAME}/upload`,
     pic
   );
-  return imageData.data.url;
+  return imageData.data.secure_url;
 }
 
 function encodeImageFileAsURL(element: File) {

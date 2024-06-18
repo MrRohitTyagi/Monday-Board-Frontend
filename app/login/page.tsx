@@ -60,7 +60,7 @@ const LoginComponent = () => {
       }
 
       if (promise.success === false) {
-        toast.error(promise.message);
+        toast.error(promise?.message || "Login successfully!");
       } else {
         toast.success(promise.message);
         setToken(promise.token);
@@ -69,7 +69,7 @@ const LoginComponent = () => {
         });
       }
     },
-    [isLoginForm]
+    [isLoginForm, picture]
   );
 
   const fields = useMemo(() => {

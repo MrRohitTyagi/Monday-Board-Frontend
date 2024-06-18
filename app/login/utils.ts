@@ -84,7 +84,6 @@ function getSchema({ isSignupForm }: GetSchemaProps) {
             })
             .optional()
             .nullable(),
-          picture: z.any().optional(),
         }
       : {}),
     email: z.string({ message: "Invalid Email" }).email(),
