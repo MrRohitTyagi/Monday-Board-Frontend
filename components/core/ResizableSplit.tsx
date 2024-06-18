@@ -10,7 +10,7 @@ type ResizableSplitProps = {
   leftPannel?: React.ReactNode;
   children?: React.ReactNode;
   rightPannel?: React.ReactNode;
-  childMode: boolean;
+  childMode?: boolean;
   classNames?: {
     leftPanel?: string;
     rightPanel?: string;
