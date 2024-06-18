@@ -4,6 +4,7 @@ import axios, { AxiosRequestHeaders, AxiosResponse, AxiosError } from "axios";
 import { deleteToken, getToken } from "@/utils/cookie";
 import NProgress from "nprogress";
 import { toast } from "sonner";
+import { handleLogout } from "./customEvents";
 NProgress.configure({ showSpinner: false });
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -46,7 +47,7 @@ const axiosInstance = (headers?: AxiosRequestHeaders | {}) => {
       return response;
     },
     (error: any) => {
-      console.log('error  AXIOS ERROR',error)
+      console.log("error  AXIOS ERROR", error);
       NProgress.done();
       if (error.response) {
         if (error.response.status === 401) {
@@ -56,9 +57,8 @@ const axiosInstance = (headers?: AxiosRequestHeaders | {}) => {
           );
           deleteToken();
           setTimeout(() => {
-            window.location.href = "/";
-            window.location.reload();
-          }, 1000);
+            handleLogout();
+          }, 100);
         } else {
           let message = error.response.data?.message || "Something went wrong";
           throw new MyError(message);

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { getUser } from "./gateways/user-gateway";
+import { deleteToken } from "./utils/cookie";
 
 type SideMenuStoreType = {
   isCollapsed: boolean;
@@ -76,17 +77,19 @@ type AuthStoreType = {
   updateBoardState: (board: BoardType) => void;
 };
 
+const emptyUser: UserType = {
+  _id: "",
+  email: "",
+  username: "",
+  boards: [],
+  org: "",
+  picture: "",
+};
+
 export const useAuth = create<AuthStoreType>((setState) => ({
   isAuthenticated: false,
   isLoading: true,
-  user: {
-    _id: "",
-    email: "",
-    username: "",
-    boards: [],
-    org: "",
-    picture: "",
-  } as UserType,
+  user: emptyUser,
 
   addNewBoard: (board) => {
     setState((ps) => {
@@ -128,7 +131,9 @@ export const useAuth = create<AuthStoreType>((setState) => ({
   },
 
   notAuthenticated: () => {
+    deleteToken();
     setState((ps) => ({
+      user: emptyUser,
       isLoading: false,
       isAuthenticated: false,
     }));

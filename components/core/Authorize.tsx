@@ -6,7 +6,7 @@ import { useAuth, useSideMenu } from "@/zstore";
 import { cn } from "@/lib/utils";
 import { getToken } from "@/utils/cookie";
 import useNavigate from "@/hooks/useNavigate";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type AuthorizeTypes = ChildrenType & {};
 
@@ -15,15 +15,26 @@ const Authorize = ({ children }: AuthorizeTypes) => {
     useAuth();
   const { toggleSideMenu } = useSideMenu();
   const navigate = useNavigate();
+  const router = useRouter();
   const pathname = usePathname();
+
+  function logout(data: any) {
+    router.replace("/login");
+    notAuthenticated();
+  }
+
+  useEffect(() => {
+    document.addEventListener("LOGOUT", logout);
+    return () => document.removeEventListener("LOGOUT", logout);
+  }, []);
 
   useEffect(() => {
     async function init() {
       const token = getToken();
       if (!token) {
         if (!["/login", "/signup"].includes(pathname || "")) navigate("login");
+        // toggleSideMenu(true);
         notAuthenticated();
-        toggleSideMenu(true);
       } else {
         fetchUser("user");
       }
@@ -35,6 +46,8 @@ const Authorize = ({ children }: AuthorizeTypes) => {
     console.log(`%c {isLoading} `, "color: red;border:2px dotted red", {
       user,
       pathname,
+      isLoading,
+      isAuthenticated,
     });
   }, [user]);
 

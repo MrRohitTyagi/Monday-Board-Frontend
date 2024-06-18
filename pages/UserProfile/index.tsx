@@ -11,12 +11,14 @@ import { cn } from "@/lib/utils";
 import { deleteToken } from "@/utils/cookie";
 import Image from "next/image";
 import { useAuth } from "@/zstore";
+import { useRouter } from "next/navigation";
 // import { Button } from "@/components/ui/button";
 
 type UserProfileProps = {};
 
 const UserProfile = (props: UserProfileProps) => {
-  const { user } = useAuth();
+  const { user, notAuthenticated } = useAuth();
+  const router = useRouter();
   // TODO
   return (
     <Popover>
@@ -28,7 +30,10 @@ const UserProfile = (props: UserProfileProps) => {
             className="w-full h-full"
             unoptimized
             alt={"NA"}
-            src={user.picture||"https://res.cloudinary.com/derplm8c6/image/upload/v1718526303/dkm7ezl1whano6p8osei.png"}
+            src={
+              user.picture ||
+              "https://res.cloudinary.com/derplm8c6/image/upload/v1718526303/dkm7ezl1whano6p8osei.png"
+            }
           />
         </div>
       </PopoverTrigger>
@@ -46,8 +51,8 @@ const UserProfile = (props: UserProfileProps) => {
           </Button>
           <Button
             onClick={() => {
-              deleteToken();
-              window.location.href = "/login";
+              router.replace("/login");
+              notAuthenticated();
             }}
             className={cn(
               "logout ",

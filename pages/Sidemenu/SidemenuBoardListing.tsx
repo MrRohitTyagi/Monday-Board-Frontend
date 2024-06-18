@@ -18,6 +18,7 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
   const navigate = useNavigate();
   const {
     user: { boards },
+    isAuthenticated,
   } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
@@ -52,6 +53,7 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
 
       <TooltipComp title={"Create new board"} side="right">
         <Button
+          disabled={isAuthenticated === false}
           onClick={() => {
             router.push("/board-settings/new");
           }}
