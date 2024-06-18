@@ -124,6 +124,7 @@ li.toast {
 .swatches-picker > div > div {
   /* border: 2px solid red;  */
   box-shadow: none !important;
+  background: transparent !important;
 }
 
 .sprint-handlers {

@@ -21,6 +21,7 @@ const ColorPickerComp = ({
             default: {
               body: {},
               picker: {
+                background: "transparent",
                 boxShadow: "none",
                 //  backgroundColor: "transparent"
               },

@@ -91,7 +91,7 @@ const EditSprintForm = ({
 
         <CustomDiv
           disabled={form.formState.isSubmitting}
-          className="space-y-2 w-full"
+          className="space-y-2 w-full xxxxxxxxx"
         >
           <Label>Sprint Color</Label>
 
