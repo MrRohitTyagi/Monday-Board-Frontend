@@ -111,7 +111,9 @@ const BoardComp = ({ board }: { board: BoardType }) => {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                router.push(`/board-settings/${board._id}`, { scroll: true });
+                router.push(`/main/board-settings/${board._id}`, {
+                  scroll: true,
+                });
               }}
             >
               <TooltipComp title={"Edit board"}>

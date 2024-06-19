@@ -9,12 +9,15 @@ import { useAuth } from "@/zstore";
 import { cn } from "@/lib/utils";
 import TooltipComp from "./TooltipComp";
 import { useParams } from "next/navigation";
+import DialogueComp from "./DialogueComp";
+import UserInvite from "@/pages/UserInvite";
 
 type Props = {};
 
 const Navbar = ({}: Props) => {
   //
-  const [openUserInviteFOrm, setopenUserInviteFOrm] = useState("");
+  const [openUserInviteForm, setopenUserInviteForm] = useState(false);
+
   const params = useParams();
 
   const { isAuthenticated, user } = useAuth();
@@ -34,15 +37,29 @@ const Navbar = ({}: Props) => {
       <Link href="/">TaskBoard.io</Link>
       <div className="right-side-navbar-stuff gap-4 flex flex-row items-center">
         {!!currentBoard && (
-          <Button
-            key={currentBoard?._id}
-            className="p-0 m-0  animate-fadeIn"
-            variant="ghost"
+          <DialogueComp
+            trigger={
+              <Button
+                key={currentBoard?._id}
+                className="p-0 m-0  animate-fadeIn"
+                variant="ghost"
+              >
+                <TooltipComp
+                  title={`Invite members to ${currentBoard.title}`}
+                  side="left"
+                >
+                  <UserRoundPlus />
+                </TooltipComp>
+              </Button>
+            }
+            open={openUserInviteForm}
+            setOpen={setopenUserInviteForm}
           >
-            <TooltipComp title="Invite members" side="left">
-              <UserRoundPlus />
-            </TooltipComp>
-          </Button>
+            <UserInvite
+              board={currentBoard}
+              onClose={() => setopenUserInviteForm(false)}
+            />
+          </DialogueComp>
         )}
         <Button className="p-0 m-0" variant="ghost">
           <Bell />

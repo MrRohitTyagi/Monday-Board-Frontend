@@ -18,8 +18,8 @@ type FormSimpleTextAreaProps = {
   label: string;
   placeHolder: string;
   classNames?: {
-    input: string;
-    formItem: string;
+    input?: string;
+    formItem?: string;
   };
   type?: string;
   showDot?: boolean;
