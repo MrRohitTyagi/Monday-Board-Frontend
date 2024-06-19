@@ -27,17 +27,17 @@ import { uploadImage } from "@/utils/imageupload";
 
 const { div: MotionDiv } = motion;
 
-const LoginComponent = ({ title }: { title?: String }) => {
+const LoginComponent = () => {
   const pathname = usePathname();
   const isSignupForm = pathname === "/signup";
   const isLoginForm = isSignupForm === false;
+  const router = useRouter();
 
   const { fetchUser } = useAuth();
   const form = useForm({
     resolver: zodResolver(getSchema({ isSignupForm })),
   });
 
-  const router = useRouter();
   const [picture, setPicture] = useState<any>("");
 
   const onSubmit = useCallback(
@@ -92,7 +92,7 @@ const LoginComponent = ({ title }: { title?: String }) => {
         )}
       >
         <h2 className="text-3xl text-center">
-          {title ? title : isLoginForm ? "Login" : "Sign Up"}
+          {isLoginForm ? "Login" : "Sign Up"}
         </h2>
         <Form {...form}>
           <form
