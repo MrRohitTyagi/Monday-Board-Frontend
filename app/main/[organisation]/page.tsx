@@ -31,7 +31,7 @@ const Organisation = (props: pageProps) => {
       <div
         className={cn(
           "user-boards bg-main-light p-4 pt-8 pb-8 ",
-          "rounded-lg space-y-4"
+          "rounded-tl-lg rounded-bl-lg space-y-4"
         )}
       >
         <h1 className="font-bold text-2xl">Your Boards</h1>
