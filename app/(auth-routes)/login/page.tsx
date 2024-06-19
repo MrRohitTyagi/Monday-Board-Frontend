@@ -87,7 +87,7 @@ const LoginComponent = () => {
       <div
         className={cn(
           "form-container",
-          isSignupForm === true ? "w-9/12" : "w-5/12",
+          "w-fit",
           "border-2 border-main-light p-4 pl-8 pr-8 rounded-md"
         )}
       >
@@ -104,7 +104,7 @@ const LoginComponent = () => {
                 "mt-4 w-full fields-comtainer",
                 isLoginForm
                   ? "grid grid-cols-[100%] gap-6"
-                  : "grid grid-cols-[50%_50%] gap-4"
+                  : "lg:grid grid-cols-[50%_50%] gap-4"
               )}
             >
               {fields.map((f) => (

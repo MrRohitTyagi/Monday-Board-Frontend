@@ -7,22 +7,29 @@ import { ChildrenType } from "@/types";
 import Navbar from "./Navbar";
 import SideMenu from "@/pages/Sidemenu";
 import { cn } from "@/lib/utils";
-import { useSideMenu } from "@/zstore";
+import { useAuth, useSideMenu } from "@/zstore";
 
 type MainLayoutProps = ChildrenType & {};
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const { isCollapsed } = useSideMenu();
+  const { isAuthenticated } = useAuth();
   return (
     <div className="grid grid-rows-[3rem_1fr] h-dvh animate-fadeIn">
       <Navbar />
       <div
         className={cn(
-          isCollapsed ? "grid-cols-[3rem_1fr]" : "grid-cols-[12rem_1fr]",
-          "grid gap-4 rounded-tr-md"
+          "grid",
+          isAuthenticated === true && "grid grid-cols-[1fr] w-full",
+          isAuthenticated === true &&
+            (isCollapsed === true
+              ? "grid-cols-[3rem_1fr]"
+              : "grid-cols-[12rem_1fr]"),
+          //
+          "gap-4 rounded-tr-md"
         )}
       >
-        <SideMenu />
+        {isAuthenticated ? <SideMenu /> : null}
         <div
           className={cn(
             "main-right-cont",
