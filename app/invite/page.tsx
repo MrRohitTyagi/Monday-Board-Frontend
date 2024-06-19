@@ -19,7 +19,7 @@ const Invite = (props: InviteProps) => {
     invited_by,
   });
 
-  return <LoginComponent />;
+  return <LoginComponent title={"Invited title"} />;
 };
 
 export default Invite;

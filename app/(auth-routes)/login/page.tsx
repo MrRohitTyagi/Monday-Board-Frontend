@@ -27,7 +27,7 @@ import { uploadImage } from "@/utils/imageupload";
 
 const { div: MotionDiv } = motion;
 
-const LoginComponent = () => {
+const LoginComponent = ({ title }: { title?: String }) => {
   const pathname = usePathname();
   const isSignupForm = pathname === "/signup";
   const isLoginForm = isSignupForm === false;
@@ -92,7 +92,7 @@ const LoginComponent = () => {
         )}
       >
         <h2 className="text-3xl text-center">
-          {isLoginForm ? "Login" : "Sign Up"}
+          {title || isLoginForm ? "Login" : "Sign Up"}
         </h2>
         <Form {...form}>
           <form
