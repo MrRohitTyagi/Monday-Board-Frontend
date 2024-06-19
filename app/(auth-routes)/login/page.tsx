@@ -92,7 +92,7 @@ const LoginComponent = ({ title }: { title?: String }) => {
         )}
       >
         <h2 className="text-3xl text-center">
-          {title || isLoginForm ? "Login" : "Sign Up"}
+          {title ? title : isLoginForm ? "Login" : "Sign Up"}
         </h2>
         <Form {...form}>
           <form
