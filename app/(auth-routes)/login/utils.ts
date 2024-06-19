@@ -2,7 +2,7 @@ import React from "react";
 import { z } from "zod";
 
 type FieldType = {
-  name: string;
+  name: string | any;
   label: string;
   placeholder: string;
   type: string;
@@ -21,10 +21,10 @@ type GetSchemaProps = {
 function getfields({ isSignupForm, setPicture }: GetFieldsProps): FieldType[] {
   const commonFileds = [
     {
-      name: "email",
+      name: "email" as string,
       label: "Email",
       placeholder: "your-email@email.com",
-      type: "email",
+      type: "email" as string,
     },
     {
       label: "Password",

@@ -33,11 +33,12 @@ const { div: MotionDiv } = motion;
 
 const Invite = ({}: InviteProps) => {
   const query = useSearchParams();
-  const boardID = query?.get("board_id");
-  const userEmail = query?.get("email");
-  const boardName = query?.get("board_name");
-  const invited_by = query?.get("invited_by");
-  const extra = query?.get("extra");
+  const boardID: string = query?.get("board_id") || "";
+  const userEmail: string = query?.get("email") || "";
+  const boardName: string = query?.get("board_name") || "";
+  const invited_by: string = query?.get("invited_by") || "";
+  const extra: string = query?.get("extra") || "";
+
   const { isAuthenticated, fetchUser } = useAuth();
   const router = useRouter();
 
