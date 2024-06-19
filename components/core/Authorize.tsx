@@ -13,7 +13,6 @@ type AuthorizeTypes = ChildrenType & {};
 const Authorize = ({ children }: AuthorizeTypes) => {
   const { isLoading, fetchUser, notAuthenticated, isAuthenticated, user } =
     useAuth();
-  const { toggleSideMenu } = useSideMenu();
   const navigate = useNavigate();
   const router = useRouter();
   const pathname = usePathname();
@@ -29,17 +28,14 @@ const Authorize = ({ children }: AuthorizeTypes) => {
   }, []);
 
   useEffect(() => {
+    const token = getToken();
     async function init() {
-      const token = getToken();
-      if (!token) {
-        if (!["/login", "/signup"].includes(pathname || "")) navigate("login");
-        // toggleSideMenu(true);
-        notAuthenticated();
-      } else {
-        fetchUser("user");
-      }
+      fetchUser("user");
     }
-    init();
+    if (token) init();
+    else {
+      notAuthenticated();
+    }
   }, []);
 
   useMemo(() => {

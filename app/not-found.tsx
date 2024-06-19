@@ -4,12 +4,12 @@ import { useAuth } from "@/zstore";
 import { useRouter } from "next/navigation";
 
 export default function NotFound() {
-  const {
-    user: { org },
-  } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
-
-  router.replace(`/main/${org}`);
+  if (user._id) router.replace(`/main/${user.org}`);
+  else {
+    router.replace(`/login`);
+  }
 
   return null;
 }
