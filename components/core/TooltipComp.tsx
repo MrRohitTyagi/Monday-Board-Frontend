@@ -6,28 +6,42 @@ import { cn } from "@/lib/utils";
 type TooltipCompProps = {
   children: React.ReactNode | string;
   title: React.ReactNode | string;
+  className?: string;
+  open?: boolean;
   side?: "top" | "right" | "bottom" | "left" | undefined;
+  align?: "center" | "start" | "end" | undefined;
+  delayDuration?: number;
 };
 
-const TooltipComp = ({ children, title, side }: TooltipCompProps) => {
+const TooltipComp = ({
+  children,
+  title,
+  side,
+  align,
+  className,
+  open,
+  delayDuration = 100,
+}: TooltipCompProps) => {
   return (
     <Tooltip.Provider>
-      <Tooltip.Root delayDuration={100}>
+      <Tooltip.Root open={open} delayDuration={100}>
         <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
         <Tooltip.Portal>
           <Tooltip.Content
+            align={align}
             side={side}
             className={cn(
-              "TooltipContent z-50 animate",
+              "TooltipContent z-10 animate",
               "bg-main-fg overflow-hidden",
               "text-white border-main-light border-[1px]",
-              "p-2 rounded-lg transition-all"
+              "rounded-lg transition-all",
+              className
             )}
             sideOffset={5}
           >
             {title}
 
-            <Tooltip.Arrow className="TooltipArrow bg-main-light" />
+            <Tooltip.Arrow className="TooltipArrow" />
           </Tooltip.Content>
         </Tooltip.Portal>
       </Tooltip.Root>

@@ -128,15 +128,15 @@ const config = {
 
         fadeIn: "fadeIn 500ms ease-in-out",
 
-        "pulse-layer": "pulse-layer 500ms ease-in-out forwards",
+        "pulse-layer": "pulse-layer 300ms ease-in-out forwards",
         "pulse-layer-close": "pulse-layer-close 300ms ease-in-out forwards",
 
-        "chat-cont-scroll": "chat-cont-scroll 500ms ease-in-out forwards",
+        "chat-cont-scroll": "chat-cont-scroll 300ms ease-in-out forwards",
 
-        "chat-cont-heading": "chat-cont-heading 500ms ease-in-out forwards",
+        "chat-cont-heading": "chat-cont-heading 300ms ease-in-out forwards",
 
         "change-bg-transparency":
-          "change-bg-transparency 500ms ease-in-out forwards",
+          "change-bg-transparency 300ms ease-in-out forwards",
       },
     },
   },

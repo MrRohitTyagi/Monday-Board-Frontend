@@ -19,7 +19,11 @@ const Header = ({ pulse }: HeaderProps) => {
   const { handleLayerClose } = usePulseChat();
   return (
     <div className={cn("animate-chat-cont-heading", "flex flex-col shrink-0")}>
-      <div className={cn("header flex flex-row justify-between items-start")}>
+      <div
+        className={cn(
+          "header flex flex-row justify-between items-start px-4 pt-3"
+        )}
+      >
         <h1 className={cn("", "text-md overflow-hidden text-ellipsis mt-1")}>
           {pulse.title}
         </h1>
@@ -40,18 +44,18 @@ const Header = ({ pulse }: HeaderProps) => {
               </>
             }
             trigger={
-              <Button variant={"ghost"} className="py-0">
+              <Button variant={"ghost"} className="py-0 px-2">
                 <Settings2 />
               </Button>
             }
           />
           {/* CLOSE BUTTON */}
-          <Button variant={"ghost"} onClick={handleLayerClose} className="py-0">
+          <Button variant={"ghost"} onClick={handleLayerClose} className="py-0 px-2">
             <X />
           </Button>
         </div>
       </div>
-      <Divider />
+      <Divider className="h-2" />
     </div>
   );
 };

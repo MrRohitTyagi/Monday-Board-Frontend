@@ -20,6 +20,7 @@ export type PriorityType = {
 export type StatusesType = {
   [key: string]: ValueType;
 };
+
 export type UserType = {
   _id: string;
   username: string;
@@ -27,6 +28,15 @@ export type UserType = {
   org: string;
   picture: string;
   boards: BoardType[];
+};
+export type ChatType = {
+  _id: string;
+  pulseId: string;
+  createdBy: UserType;
+  thread: ChatType[];
+  seenBy: UserType[];
+  content: string;
+  draft: string;
 };
 
 export type SprintType = {

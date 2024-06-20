@@ -2,18 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import Header from "./components/Header";
-import { PulseType } from "@/zstore";
-import { StateSetter } from "@/types";
+import { ChatType, PulseType } from "@/zstore";
 import { getPulse } from "@/gateways/pulse-gateway";
-import { useRouter } from "next/navigation";
-import Loader from "@/components/core/Loader";
-import { cn, waitfor } from "@/lib/utils";
-import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import PulseChatSkeletonLoader from "./components/PulseChatSkeletonLoader";
 import SingleChatBox from "./components/SingleChatBox";
 import Space from "@/components/core/Space";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { getChats } from "@/gateways/chat-gateway";
 
 type PulseChatMainType = {
   params: {
@@ -23,28 +19,39 @@ type PulseChatMainType = {
 
 const PulseChatMain = ({ params }: PulseChatMainType) => {
   const [pulse, setPulse] = useState<PulseType>({} as PulseType);
+  const [chats, setChats] = useState<ChatType[]>([] as ChatType[]);
   const [isLoading, setisLoading] = useState(true);
 
   const pulse_id = params.pulse_id;
 
   useEffect(() => {
     async function init() {
-      const pulse = await getPulse(pulse_id);
-      await waitfor();
+      const [pulse, chats] = await Promise.all([
+        getPulse(pulse_id),
+        getChats(pulse_id),
+      ]);
+      // await waitfor();
       setPulse(pulse);
+      setChats(chats);
       setisLoading(false);
     }
     init();
   }, []);
 
-  console.log(`%c {pulse} `, "color: red;border:2px dotted red", {
-    pulse,
-    isLoading,
-    params,
-  });
+  console.log(`%c chats `, "color: green;border:1px solid green", chats);
+  console.log(
+    `%c pulse `,
+    "color: burlywood;border:2px solid burlywood",
+    pulse
+  );
 
   return (
-    <div className="w-full h-full bg-main-fg p-3 flex flex-col">
+    <div
+      className={cn(
+        "main-chats-cont",
+        "w-full h-full bg-main-fg flex flex-col"
+      )}
+    >
       {isLoading ? (
         <PulseChatSkeletonLoader />
       ) : (
@@ -53,8 +60,8 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
           <div
             className={cn(
               "animate-chat-cont-scroll",
-              "h-full p-6 pt-0 items-center",
-              "main-chats-cont flex flex-col gap-4"
+              "h-full p-4 pt-0 items-center",
+              "flex flex-col gap-4"
             )}
           >
             <Space />
@@ -63,15 +70,16 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
               placeholder="Write an update ..."
               className={cn("max-w-[40rem] w-full", "h-fit shrink-0")}
             />
-            <SingleChatBox />
-            <SingleChatBox />
-            <SingleChatBox />
-            <SingleChatBox />
-            <SingleChatBox />
-            <SingleChatBox />
-            <SingleChatBox />
-            <SingleChatBox />
-            <SingleChatBox />
+            {chats.map((chat) => {
+              return (
+                <SingleChatBox
+                  chat={chat}
+                  pulse={pulse}
+                  setChats={setChats}
+                  setPulse={setPulse}
+                />
+              );
+            })}
           </div>
         </>
       )}
