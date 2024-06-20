@@ -29,9 +29,12 @@ const ViededBy = ({ viewers }: ViededByProps) => {
               "bg-main-bg"
             )}
           >
-            {viewers.map((viewer) => {
+            {viewers.map((viewer, i) => {
               return (
-                <div className="per-viewer shrink-0 p-2 animate-fadeIn">
+                <div
+                  className="per-viewer shrink-0 p-2 animate-fadeIn"
+                  key={viewer._id + i}
+                >
                   <AvatarComp
                     className="h-8 w-8"
                     src={viewer.picture}

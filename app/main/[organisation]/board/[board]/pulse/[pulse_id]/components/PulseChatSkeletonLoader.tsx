@@ -9,7 +9,7 @@ type PulseChatSkeletonLoaderProps = {};
 const PulseChatSkeletonLoader = ({}: PulseChatSkeletonLoaderProps) => {
   return (
     <div className={cn("flex flex-col gap-3 animate-pulse", "items-center")}>
-      <div className="flex flex-row gap-3 w-full">
+      <div className="flex flex-row gap-3 w-full px-4 pt-3">
         <Skeleton className="h-8 w-full" />
         <Skeleton className="h-8 w-10" />
         <Skeleton className="h-8 w-10" />

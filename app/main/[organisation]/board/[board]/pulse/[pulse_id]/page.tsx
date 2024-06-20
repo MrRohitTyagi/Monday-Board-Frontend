@@ -59,20 +59,22 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
           <Header pulse={pulse} setPulse={setPulse} />
           <div
             className={cn(
-              "animate-chat-cont-scroll",
+              "chat-scroll-area",
+              // "animate-chat-cont-scroll",
+              "overflow-y-auto scrollbar-thin",
               "h-full p-4 pt-0 items-center",
               "flex flex-col gap-4"
             )}
           >
             <Space />
             <Textarea
-              // maxHeight={false}
               placeholder="Write an update ..."
               className={cn("max-w-[40rem] w-full", "h-fit shrink-0")}
             />
-            {chats.map((chat) => {
+            {chats.map((chat, i) => {
               return (
                 <SingleChatBox
+                  key={chat._id + i}
                   chat={chat}
                   pulse={pulse}
                   setChats={setChats}

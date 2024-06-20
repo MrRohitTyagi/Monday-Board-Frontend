@@ -21,6 +21,11 @@ const config = {
       },
     },
     extend: {
+      scrollbar: {
+        thin: {
+          width: "8px", // Adjust the width here as needed
+        },
+      },
       height: {
         "main-content-height": `calc(100vh - ${navbarHeight})`,
         "navbar-height": navbarHeight,
@@ -108,7 +113,7 @@ const config = {
         "chat-cont-heading": {
           from: {
             overflow: "hidden",
-            height: "3rem",
+            height: "3.7rem",
           },
           to: {
             overflow: "auto",
@@ -140,7 +145,18 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("daisyui")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("daisyui"),
+    function ({ addUtilities }: { addUtilities: any }) {
+      addUtilities({
+        ".mask-bottom-blur": {
+          "mask-image":
+            "linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255 , 20%), rgba(255, 255, 255, 0))",
+        },
+      });
+    },
+  ],
 } satisfies Config;
 
 export default config;

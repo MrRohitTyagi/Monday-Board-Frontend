@@ -106,6 +106,7 @@ body {
 .pulse-container-right::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
 }
+
 * {
   transition: grid-template-columns 500ms ease-in-out;
 }
@@ -125,6 +126,15 @@ li.toast {
   /* border: 2px solid red;  */
   box-shadow: none !important;
   background: transparent !important;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin; /* For WebKit browsers */
+  scrollbar-width: 5px; /* Adjust as needed */
+}
+* {
+  scrollbar-width: thin; /* For WebKit browsers */
+  scrollbar-width: 5px; /* Adjust as needed */
 }
 
 .sprint-handlers {
