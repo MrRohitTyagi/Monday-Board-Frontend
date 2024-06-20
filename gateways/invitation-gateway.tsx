@@ -24,5 +24,24 @@ async function acceptInvitation(payload: any) {
     };
   }
 }
+async function getInvitation(id: string) {
+  try {
+    const { data } = await axiosInstance().get(
+      `${INVITATION_BASE_URL}/get/${id}`
+    );
+    console.log("data", data);
+    return {
+      response: data.response,
+      message: data.message,
+      success: data.success,
+    };
+  } catch (error: any) {
+    toast.error(error.message);
+    return {
+      message: error.message,
+      success: error.success,
+    };
+  }
+}
 
-export { acceptInvitation };
+export { acceptInvitation, getInvitation };

@@ -26,7 +26,8 @@ import { setToken } from "@/utils/cookie";
 import Loader from "@/components/core/Loader";
 import { uploadImage } from "@/utils/imageupload";
 import { getSchema, getfields } from "../(auth-routes)/login/utils";
-import { acceptInvitation } from "@/gateways/invitation-gateway";
+import { acceptInvitation, getInvitation } from "@/gateways/invitation-gateway";
+import { InvitationConfigType } from "@/types";
 
 type InviteProps = {};
 
@@ -34,20 +35,39 @@ const { div: MotionDiv } = motion;
 
 const Invite = ({}: InviteProps) => {
   const query = useSearchParams();
-  const boardID: string = query?.get("board_id") || "";
-  const userEmail: string = query?.get("email") || "";
-  const boardName: string = query?.get("board_name") || "";
-  const invited_by: string = query?.get("invited_by") || "";
-  const extra: string = query?.get("extra") || "";
+  const invitation_id: string = query?.get("invitation_id") || "";
 
   const { isAuthenticated, fetchUser, user, addNewBoard } = useAuth();
+
+  const [invitationConfig, setInvitationConfig] =
+    useState<InvitationConfigType>({} as InvitationConfigType);
+
   const router = useRouter();
   const [picture, setPicture] = useState<any>("");
   const [formType, setFormType] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
+  const [invalid, setInvalid] = useState({ isTrue: false, message: "" });
+  const [initialLoading, setInitialLoading] = useState(true);
+
+  const { board_id, to, board_name, from, extra } = invitationConfig || {};
 
   useEffect(() => {
     setFormType(isAuthenticated === true ? "LOGIN" : "SIGNUP");
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    async function init() {
+      const { response, success, message } = await getInvitation(invitation_id);
+      if (success === true) {
+        setInvitationConfig(response as InvitationConfigType);
+        setInitialLoading(false);
+      } else {
+        setInvalid({ message: message, isTrue: true });
+        setInitialLoading(false);
+      }
+    }
+    init();
   }, [isAuthenticated]);
 
   const isLoginForm = useMemo(() => formType === "LOGIN", [formType]);
@@ -56,20 +76,9 @@ const Invite = ({}: InviteProps) => {
   async function handleInviteAccept(values: any = {}) {
     if (isEmpty(values)) setIsLoading(true);
     let payload: any = {
-      board_id: boardID,
+      board_id: board_id,
+      invitation_id: invitation_id,
     };
-
-    console.log(`%c query `, "color: yellow;border:1px solid lightgreen", {
-      boardID,
-      userEmail,
-      boardName,
-      invited_by,
-      extra,
-      isAuthenticated,
-      formType,
-      isLoginForm,
-      isSignupForm,
-    });
 
     if (isAuthenticated === true) {
       payload = { ...payload, user_id: user._id };
@@ -104,7 +113,16 @@ const Invite = ({}: InviteProps) => {
     if (isEmpty(values)) setIsLoading(false);
   }
 
+  console.log(`%c query `, "color: yellow;border:1px solid lightgreen", {
+    invitationConfig,
+    isAuthenticated,
+    formType,
+    isLoginForm,
+    isSignupForm,
+  });
+
   const onSubmit = async (values: any) => {
+    setIsLoading(true);
     const url =
       typeof picture !== "string"
         ? await uploadImage(picture?.target?.files?.[0])
@@ -115,6 +133,7 @@ const Invite = ({}: InviteProps) => {
       ...(url ? { picture: url } : {}),
     };
     await handleInviteAccept(payload);
+    setIsLoading(false);
   };
 
   const fields = useMemo(() => {
@@ -122,7 +141,7 @@ const Invite = ({}: InviteProps) => {
   }, [isSignupForm]);
 
   const form = useForm({
-    defaultValues: { email: userEmail ? userEmail : "" },
+    defaultValues: { email: to ? to : "" },
     resolver:
       isAuthenticated === true
         ? undefined
@@ -137,121 +156,134 @@ const Invite = ({}: InviteProps) => {
         "flex flex-col gap-4 justify-center items-center"
       )}
     >
-      <h2 className="text-3xl">{`${invited_by}`}</h2>
-      <h2 className="text-2xl">{`Invited you to ${boardName}`}</h2>
-      {!isEmpty(extra) && <h2 className="opacity-70">{extra}</h2>}
-      {isAuthenticated === true ? (
-        <Button
-          onClick={() => handleInviteAccept()}
-          className={cn(
-            "h-20 active:scale-95 transition-all",
-            "rounded-lg border-b-green-400 ",
-            "border-x-transparent border-t-transparent border-2",
-            "bg-main-active-dark py-3 px-12 text-xl"
-          )}
-          disabled={isLoading}
-        >
-          {isLoading ? <h2>Please Wait...</h2> : <h2>Accept Invitation</h2>}
-          {isLoading && <Loader />}
-        </Button>
+      {initialLoading ? (
+        <Loader />
+      ) : invalid.isTrue === true ? (
+        <h1 className="text-3xl animate-fadeIn">{invalid.message}</h1>
       ) : (
-        <div
-          className={cn(
-            "form-container",
-            "w-fit",
-            "border-2 border-main-light p-4 pl-8 pr-8 rounded-md"
-          )}
-        >
-          <h2 className="text-3xl text-center">
-            {isLoginForm ? "Login" : "Sign Up"}
-          </h2>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className={cn("mt-4 flex flex-col items-center")}
+        <>
+          <h2 className="text-2xl">{`${startCase(
+            from
+          )} has invited you to ${board_name}`}</h2>
+          {!isEmpty(extra) && <h2 className="opacity-70">{extra}</h2>}
+          {isAuthenticated === true ? (
+            <Button
+              onClick={() => handleInviteAccept()}
+              className={cn(
+                "h-20 active:scale-95 transition-all",
+                "rounded-lg border-b-green-400 ",
+                "border-x-transparent border-t-transparent border-2",
+                "bg-main-active-dark py-3 px-12 text-xl"
+              )}
+              disabled={isLoading}
             >
+              {isLoading ? <h2>Please Wait...</h2> : <h2>Accept Invitation</h2>}
+              {isLoading && <Loader />}
+            </Button>
+          ) : (
+            <div
+              className={cn(
+                "form-container",
+                "w-fit",
+                "border-2 border-main-light p-4 pl-8 pr-8 rounded-md"
+              )}
+            >
+              <h2 className="text-3xl text-center">
+                {isLoginForm ? "Login" : "Sign Up"}
+              </h2>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className={cn("mt-4 flex flex-col items-center")}
+                >
+                  <div
+                    className={cn(
+                      "mt-4 w-full fields-comtainer",
+                      isLoginForm
+                        ? "grid grid-cols-[100%] gap-6"
+                        : "lg:grid grid-cols-[50%_50%] gap-4"
+                    )}
+                  >
+                    {fields.map((f) => (
+                      <FormField
+                        key={f.name}
+                        control={form.control}
+                        disabled={isLoading}
+                        name={f.name}
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>{startCase(f.label)}</FormLabel>
+                            <FormControl>
+                              <Input
+                                customOnChange={f.customOnChange}
+                                type={f.type}
+                                placeholder={f.placeholder}
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    ))}
+                  </div>
+                  <MotionDiv
+                    className="self-center mt-4"
+                    initial={{
+                      width: "50%",
+                    }}
+                    animate={{
+                      width: "100%",
+                    }}
+                  >
+                    <Button
+                      disabled={isLoading}
+                      type="submit"
+                      className={cn(
+                        "flex flex-row items-center gap-3",
+                        "w-full border-main-light border-2"
+                      )}
+                    >
+                      {isLoading && <Loader />}
+                      {isLoading ? (
+                        <h1 className="animate-fadeIn">Submitting ...</h1>
+                      ) : (
+                        <h1 className="animate-fadeIn">
+                          Accept invite and submit
+                        </h1>
+                      )}
+                    </Button>
+                  </MotionDiv>
+                </form>
+              </Form>
+
               <div
                 className={cn(
-                  "mt-4 w-full fields-comtainer",
-                  isLoginForm
-                    ? "grid grid-cols-[100%] gap-6"
-                    : "lg:grid grid-cols-[50%_50%] gap-4"
+                  isLoading && "pointer-events-none opacity-60",
+                  "flex flex-row mt-4 justify-center gap-2"
                 )}
               >
-                {fields.map((f) => (
-                  <FormField
-                    key={f.name}
-                    control={form.control}
-                    disabled={form.formState.isSubmitting}
-                    name={f.name}
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormLabel>{startCase(f.label)}</FormLabel>
-                        <FormControl>
-                          <Input
-                            customOnChange={f.customOnChange}
-                            type={f.type}
-                            placeholder={f.placeholder}
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                ))}
-              </div>
-              <MotionDiv
-                className="self-center mt-4"
-                initial={{
-                  width: "50%",
-                }}
-                animate={{
-                  width: "100%",
-                }}
-              >
-                <Button
-                  disabled={form.formState.isSubmitting}
-                  type="submit"
-                  className={cn(
-                    "flex flex-row items-center gap-3",
-                    "w-full border-main-light border-2"
-                  )}
+                <h2 className="">
+                  {isLoginForm
+                    ? "New to monday.io?"
+                    : "Already have an account?"}
+                </h2>
+                <h2
+                  className="text-blue-400 underline cursor-pointer"
+                  onClick={() => {
+                    if (isLoginForm) {
+                      setFormType("SIGNUP");
+                    } else {
+                      setFormType("LOGIN");
+                    }
+                  }}
                 >
-                  {form.formState.isSubmitting && <Loader />}
-                  {form.formState.isSubmitting ? (
-                    <h1 className="animate-fadeIn">Submitting ...</h1>
-                  ) : (
-                    <h1 className="animate-fadeIn">Accept invite and submit</h1>
-                  )}
-                </Button>
-              </MotionDiv>
-            </form>
-          </Form>
-
-          <div
-            className={cn(
-              form.formState.isSubmitting && "pointer-events-none opacity-60",
-              "flex flex-row mt-4 justify-center gap-2"
-            )}
-          >
-            <h2 className="">
-              {isLoginForm ? "New to monday.io?" : "Already have an account?"}
-            </h2>
-            <h2
-              className="text-blue-400 underline cursor-pointer"
-              onClick={() => {
-                if (isLoginForm) {
-                  setFormType("SIGNUP");
-                } else {
-                  setFormType("LOGIN");
-                }
-              }}
-            >
-              {isLoginForm ? "Create new account" : "Log-in here"}
-            </h2>
-          </div>
-        </div>
+                  {isLoginForm ? "Create new account" : "Log-in here"}
+                </h2>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
