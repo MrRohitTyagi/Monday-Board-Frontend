@@ -81,7 +81,7 @@ const SingleChatBox = ({
           variant={"ghost"}
           size={"sm"}
           className={cn(
-            "overflow-hidden py-0",
+          "overflow-hidden py-0 rounded-[1px] transition-all duration-200",
             "grow gap-3 flex flex-row items-center m-1"
           )}
         >
@@ -89,12 +89,12 @@ const SingleChatBox = ({
           <h1 className="text-base">Like</h1>
         </Button>
 
-        <Divider horizontal />
+        <Divider horizontal className="w-1" />
         <Button
           size={"sm"}
           variant={"ghost"}
           className={cn(
-            "overflow-hidden py-0",
+          "overflow-hidden py-0 rounded-[1px] transition-all duration-200",
             "grow gap-3 flex flex-row items-center m-1"
           )}
         >

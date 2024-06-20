@@ -21,7 +21,8 @@ import Assigned from "./PulseBlocks/Assigned";
 import PulseTitle from "./PulseBlocks/PulseTitle";
 import { updatePulse } from "@/gateways/pulse-gateway";
 import PulseTag from "./PulseBlocks/PulseTag";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import CustomDiv from "@/components/core/CustomDiv";
 
 type PulseProps = {
   pulse: PulseType;
@@ -64,6 +65,7 @@ const Pulse = ({
   const [pulse, setPulse] = useState<PulseType>(mainPulse);
   const debounceRef = useRef<any>();
   const router = useRouter();
+  const params = useParams();
 
   const debouncePulseUpdate = (data: any) => {
     clearTimeout(debounceRef.current);
@@ -117,6 +119,8 @@ const Pulse = ({
     setPulse(mainPulse);
   }, [mainPulse]);
 
+  const isPulseChatOpen = params?.pulse_id === pulse._id;
+
   return (
     <PulseContext.Provider
       value={{
@@ -135,7 +139,8 @@ const Pulse = ({
           "bg-main-light pl-2",
           "border-pulse-divider border-[1px]",
           "hover:bg-main-fg transition-all duration-150",
-          "active:bg-main-active-dark transition-all duration-150"
+          "active:bg-main-active-dark transition-all duration-150",
+          isPulseChatOpen && "!bg-main-fg"
         )}
       >
         {/* Pulse title  */}
@@ -172,7 +177,14 @@ const Pulse = ({
                 "cursor-pointer"
               )}
             >
-              <MessageCircleMore size={"24px"} />
+              <CustomDiv lvl={20} disabled={isFake}>
+                <MessageCircleMore
+                  size={"24px"}
+                  className={
+                    isPulseChatOpen ? "text-highlighter" : "text-white"
+                  }
+                />
+              </CustomDiv>
             </div>
             {/* ----------------------------------------------------------------------- */}
             {isFake === true ? (

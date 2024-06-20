@@ -11,7 +11,7 @@ const config = {
     "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
-
+  safelist: ["opacity-20"],
   theme: {
     container: {
       center: true,
@@ -38,6 +38,7 @@ const config = {
       },
       colors: {
         "border-light": "#524f4f",
+        highlighter: "#0073ea",
         "pulse-divider": "#747171",
         "main-active": "#0073EA",
         "main-active-dark": "#133774",
