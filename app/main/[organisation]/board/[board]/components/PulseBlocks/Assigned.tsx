@@ -89,14 +89,6 @@ const Assigned = ({ board, pulse }: AssignedProps) => {
     );
   }, [membersAndAdmins, pulse.assigned]);
 
-  console.log(`%c {board,pulse} `, "color: orange;border:2px solid cyan", {
-    board,
-    pulse,
-    allUsers,
-    assignedUsers,
-    membersAndAdmins,
-  });
-
   return (
     <PopoverComp
       trigger={

@@ -22,8 +22,7 @@ import Space from "@/components/core/Space";
 import { Input } from "@/components/ui/input";
 import { isEmpty } from "lodash";
 import Loader from "@/components/core/Loader";
-import { cn, waitfor } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 import useNavigate from "@/hooks/useNavigate";
 
 type BoardSettingsProps = {
@@ -89,8 +88,6 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
       admins: [_id],
     };
 
-    console.log(`%c payload `, "color: green;border:1px solid green", payload);
-    // await waitfor();
     let board;
     if (params.boardID === "new") {
       board = await createBoard(payload);

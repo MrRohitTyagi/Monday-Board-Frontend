@@ -28,6 +28,7 @@ import { uploadImage } from "@/utils/imageupload";
 import { getSchema, getfields } from "../(auth-routes)/login/utils";
 import { acceptInvitation, getInvitation } from "@/gateways/invitation-gateway";
 import { InvitationConfigType } from "@/types";
+import { AlertTriangle } from "lucide-react";
 
 type InviteProps = {};
 
@@ -97,7 +98,7 @@ const Invite = ({}: InviteProps) => {
 
     // await waitfor();
 
-    const { board, token, user: receivedUser } = response;
+    const { board, token } = response;
 
     if (token) {
       setToken(token);
@@ -112,14 +113,6 @@ const Invite = ({}: InviteProps) => {
     if (isAuthenticated) router.push(`/main/${user.org}`);
     if (isEmpty(values)) setIsLoading(false);
   }
-
-  console.log(`%c query `, "color: yellow;border:1px solid lightgreen", {
-    invitationConfig,
-    isAuthenticated,
-    formType,
-    isLoginForm,
-    isSignupForm,
-  });
 
   const onSubmit = async (values: any) => {
     setIsLoading(true);
@@ -159,7 +152,13 @@ const Invite = ({}: InviteProps) => {
       {initialLoading ? (
         <Loader />
       ) : invalid.isTrue === true ? (
-        <h1 className="text-3xl animate-fadeIn">{invalid.message}</h1>
+        <div className="flex flex-col items-center gap-7">
+          <AlertTriangle color="orange" size={100} />
+
+          <h1 className="text-3xl animate-fadeIn text-center text-red-300">
+            {invalid.message}
+          </h1>
+        </div>
       ) : (
         <>
           <h2 className="text-2xl">{`${startCase(

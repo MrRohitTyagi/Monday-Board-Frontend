@@ -73,8 +73,6 @@ const EditSprintForm = ({
     [board._id, addSprintToCurrentBoard]
   );
 
-  console.log(`%c params `, "color: green;border:1px solid green", board);
-
   return (
     <Form {...form}>
       <form

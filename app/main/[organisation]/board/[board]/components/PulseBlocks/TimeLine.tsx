@@ -23,8 +23,8 @@ const Timeline = ({ board, pulse }: TimelineProps) => {
       key: "selection",
     },
   ]);
+
   const handleOnChange = (item: any) => {
-    console.log(`%c item `, "color: red;border:2px dotted red", item);
     setState([item.selection]);
   };
 

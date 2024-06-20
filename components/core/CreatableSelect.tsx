@@ -44,8 +44,6 @@ const CreatableSelect = ({ data, setData, name }: CreatableSelectProps) => {
     []
   );
 
-  console.log(`%c data `, "color: red;border:2px dotted red", data);
-
   return (
     <div
       key={name}

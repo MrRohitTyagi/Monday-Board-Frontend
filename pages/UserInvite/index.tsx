@@ -43,7 +43,6 @@ const UserInvite = ({ board, onClose }: UserInviteProps) => {
       toast.success(res.message || "Invitation sent successfully");
       onClose();
     }
-    console.log(`%c res `, "color: lightblue;border:1px solid lightblue", res);
   };
 
   return (

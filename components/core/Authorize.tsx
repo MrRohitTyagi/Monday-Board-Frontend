@@ -38,15 +38,6 @@ const Authorize = ({ children }: AuthorizeTypes) => {
     }
   }, []);
 
-  useMemo(() => {
-    console.log(`%c {isLoading} `, "color: red;border:2px dotted red", {
-      user,
-      pathname,
-      isLoading,
-      isAuthenticated,
-    });
-  }, [user]);
-
   return (
     <MainLayout>
       {isLoading === true ? (

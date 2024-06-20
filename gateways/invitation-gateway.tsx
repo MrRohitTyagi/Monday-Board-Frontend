@@ -10,7 +10,6 @@ async function acceptInvitation(payload: any) {
       `${INVITATION_BASE_URL}/invite-accept`,
       payload
     );
-    console.log("data", data);
     return {
       response: data.response,
       message: data.message,
@@ -29,14 +28,13 @@ async function getInvitation(id: string) {
     const { data } = await axiosInstance().get(
       `${INVITATION_BASE_URL}/get/${id}`
     );
-    console.log("data", data);
     return {
       response: data.response,
       message: data.message,
       success: data.success,
     };
   } catch (error: any) {
-    toast.error(error.message);
+    // toast.error(error.message);
     return {
       message: error.message,
       success: error.success,
