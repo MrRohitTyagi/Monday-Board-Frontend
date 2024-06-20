@@ -55,7 +55,7 @@ const SingleChatBox = ({
                 "border-[1px] border-main-active",
                 "shadow-black shadow-lg"
               )}
-              title={<div className="p-2 px-4">{userFriendlyDate}</div>}
+              title={<div className="p-2 px-4 text-sm opacity-90">{userFriendlyDate}</div>}
             >
               <div className="flex flex-row gap-2 items-center opacity-60 cursor-pointer">
                 <Timer size={15} color="white" />

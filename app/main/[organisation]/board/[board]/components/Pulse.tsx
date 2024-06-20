@@ -140,7 +140,7 @@ const Pulse = ({
           "border-pulse-divider border-[1px]",
           "hover:bg-main-fg transition-all duration-150",
           "active:bg-main-active-dark transition-all duration-150",
-          isPulseChatOpen && "!bg-main-fg"
+          isPulseChatOpen && "!bg-main-active-dark"
         )}
       >
         {/* Pulse title  */}

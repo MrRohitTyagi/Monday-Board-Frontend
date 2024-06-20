@@ -39,15 +39,15 @@ interface TimeDifference {
   userFriendlyDate: string;
 }
 
-function timeBetween(dateString: string): TimeDifference {
+function timeBetween(dateString: string, secondDate = null): TimeDifference {
   // Parse the given date string
   const pastDate = new Date(dateString);
 
   // Get the current date
-  const currentDate = new Date();
+  const anotherDate = secondDate ? new Date(secondDate) : new Date();
 
   // Calculate the difference in time in milliseconds
-  let differenceInTime = currentDate.getTime() - pastDate.getTime();
+  let differenceInTime = anotherDate.getTime() - pastDate.getTime();
 
   // Calculate days
   const days = Math.floor(differenceInTime / (1000 * 60 * 60 * 24));
