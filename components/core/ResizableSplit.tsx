@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -16,17 +16,11 @@ type ResizableSplitProps = {
     rightPanel?: string;
   };
   id?: string;
+  onLeftPannelClick?: () => void;
+  closed?: boolean;
   // rest: any;
 };
-const tempLeftPannel = (
-  <div
-    className={cn(
-      "resizable-left-side h-full w-full",
-      // "opacity-50 pointer-events-none",
-      "animate-change-bg-transparency"
-    )}
-  />
-);
+
 const ResizableSplit = ({
   leftPannel,
   rightPannel,
@@ -34,19 +28,39 @@ const ResizableSplit = ({
   childMode,
   classNames,
   id,
+  onLeftPannelClick,
+  closed = false,
   ...rest
 }: ResizableSplitProps) => {
+  const tempLeftPannel = useMemo(() => {
+    return (
+      <div
+        className={cn(
+          "resizable-left-side h-full w-full",
+          "animate-change-bg-transparency",
+          closed === true && "!bg-transparent"
+        )}
+      />
+    );
+  }, [closed]);
+
   return childMode === true ? (
     <ResizablePanelGroup direction="horizontal" autoSaveId={id} {...rest}>
-      <ResizablePanel className={cn(classNames?.leftPanel)}>
+      <ResizablePanel
+        className={cn(classNames?.leftPanel)}
+        onClick={onLeftPannelClick}
+      >
         {leftPannel ? leftPannel : tempLeftPannel}
       </ResizablePanel>
       <ResizableHandle withHandle className="cursor-ew-resize" />
-      <ResizablePanel minSize={30}>{children}</ResizablePanel>
+      <ResizablePanel minSize={40}>{children}</ResizablePanel>
     </ResizablePanelGroup>
   ) : (
     <ResizablePanelGroup direction="horizontal" autoSaveId={id}>
-      <ResizablePanel className={cn(classNames?.rightPanel)}>
+      <ResizablePanel
+        className={cn(classNames?.rightPanel)}
+        onClick={onLeftPannelClick}
+      >
         {leftPannel ? leftPannel : tempLeftPannel}
       </ResizablePanel>
       <ResizableHandle withHandle />

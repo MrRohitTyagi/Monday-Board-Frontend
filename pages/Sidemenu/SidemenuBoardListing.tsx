@@ -26,12 +26,12 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
   return (
     <div className="flex flex-col gap-2 animate-fadeIn w-full">
       {isCollapsed === false &&
-        boards.map((board) => {
+        boards.map((board, i) => {
           const isActive = pathname?.includes(board._id);
 
           return (
             <div
-              key={board._id + "fdsfds"}
+              key={board._id + "side-board" + i}
               onClick={() => navigate(`board/${board._id}`)}
               className={cn(
                 "flex flex-row gap-2 items-center ",

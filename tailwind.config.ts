@@ -93,20 +93,48 @@ const config = {
         },
         //resizable Split layer animations
         "pulse-layer": {
-          "0%": { left: "100%" },
-          "100%": { left: "0%" },
+          from: { left: "100%" },
+          to: { left: "0%" },
+        },
+        "pulse-layer-close": {
+          from: { left: "0%" },
+          to: { left: "100%" },
+        },
+
+        "chat-cont-scroll": {
+          from: { "overflow-y": "hidden" },
+          to: { "overflow-y": "auto" },
+        },
+        "chat-cont-heading": {
+          from: {
+            overflow: "hidden",
+            height: "3rem",
+          },
+          to: {
+            overflow: "auto",
+            height: "fit-content",
+          },
         },
         "change-bg-transparency": {
           "0%": { backgroundColor: "transparent" },
           "90%": { backgroundColor: "transparent" },
-          "100%": { backgroundColor: "black",opacity:'50%' },
+          "100%": { backgroundColor: "black", opacity: "50%" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
+
         "accordion-up": "accordion-up 0.2s ease-out",
+
         fadeIn: "fadeIn 500ms ease-in-out",
+
         "pulse-layer": "pulse-layer 500ms ease-in-out forwards",
+        "pulse-layer-close": "pulse-layer-close 300ms ease-in-out forwards",
+
+        "chat-cont-scroll": "chat-cont-scroll 500ms ease-in-out forwards",
+
+        "chat-cont-heading": "chat-cont-heading 500ms ease-in-out forwards",
+
         "change-bg-transparency":
           "change-bg-transparency 500ms ease-in-out forwards",
       },

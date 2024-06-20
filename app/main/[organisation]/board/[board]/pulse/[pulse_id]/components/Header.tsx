@@ -1,0 +1,59 @@
+"use client";
+
+import React from "react";
+
+import PopoverComp from "@/components/core/PopoverComp";
+import { Button } from "@/components/ui/button";
+import { Copy, Settings2, X } from "lucide-react";
+import { PulseType } from "@/zstore";
+import { StateSetter } from "@/types";
+import Divider from "@/components/core/Divider";
+import { cn } from "@/lib/utils";
+import usePulseChat from "@/hooks/usePulseChat";
+
+type HeaderProps = {
+  pulse: PulseType;
+  setPulse: StateSetter<PulseType>;
+};
+const Header = ({ pulse }: HeaderProps) => {
+  const { handleLayerClose } = usePulseChat();
+  return (
+    <div className={cn("animate-chat-cont-heading", "flex flex-col shrink-0")}>
+      <div className={cn("header flex flex-row justify-between items-start")}>
+        <h1 className={cn("", "text-md overflow-hidden text-ellipsis mt-1")}>
+          {pulse.title}
+        </h1>
+        {/* // settings  */}
+        <div className="pulse-chat-action-items flex flex-row">
+          <PopoverComp
+            additional={{ content: { align: "end" } }}
+            classNames={{ content: "bg-main-bg w-fit p-2" }}
+            content={
+              <>
+                <Button
+                  variant={"ghost"}
+                  className="flex flex-row items-center gap-3"
+                >
+                  <Copy />
+                  <h1>Copt item link</h1>
+                </Button>
+              </>
+            }
+            trigger={
+              <Button variant={"ghost"} className="py-0">
+                <Settings2 />
+              </Button>
+            }
+          />
+          {/* CLOSE BUTTON */}
+          <Button variant={"ghost"} onClick={handleLayerClose} className="py-0">
+            <X />
+          </Button>
+        </div>
+      </div>
+      <Divider />
+    </div>
+  );
+};
+
+export default Header;

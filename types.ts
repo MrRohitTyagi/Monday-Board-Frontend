@@ -1,7 +1,7 @@
 export type ChildrenType = {
   children: React.ReactNode;
 };
-export type stateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
+export type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 export type InvitationConfigType = {
   board_id: string;
   to: string;

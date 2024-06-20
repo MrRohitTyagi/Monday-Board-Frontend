@@ -18,7 +18,7 @@ import { BoardType, PulseType, UserType } from "@/zstore";
 import PopoverComp from "@/components/core/PopoverComp";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { stateSetter } from "@/types";
+import { StateSetter } from "@/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import AvatarGroup from "@/components/core/AvatarGroup";
@@ -28,7 +28,7 @@ import { Trash, Trash2 } from "lucide-react";
 type AssignedProps = {
   board: BoardType;
   pulse: PulseType;
-  setPulse?: stateSetter<PulseType>;
+  setPulse?: StateSetter<PulseType>;
 };
 
 const Assigned = ({ board, pulse }: AssignedProps) => {
@@ -180,9 +180,10 @@ const AssignedSelector = ({
         {usersToPreview.length === 0 ? (
           <Button className="text-center">No one here</Button>
         ) : (
-          usersToPreview.map((user) => {
+          usersToPreview.map((user, i) => {
             return (
               <Button
+                key={user._id + i}
                 onClick={() => {
                   if (inpRef.current?.value) inpRef.current.value = "";
                   if (inpRef.current?.value) inpRef.current.focus();
