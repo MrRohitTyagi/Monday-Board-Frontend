@@ -24,7 +24,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
   } = useAuth();
 
   const [isEditing, setIsEditing] = useState(haveDraft);
-  const { createNewChat } = useChat({});
+  const { createNewChat } = useChat();
   const [text, settext] = useState(content);
   const [isSaving, setIsSaving] = useState(false);
 
