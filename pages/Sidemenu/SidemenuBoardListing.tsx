@@ -5,7 +5,7 @@ import useNavigate from "@/hooks/useNavigate";
 import { startCase } from "lodash";
 import { usePathname, useRouter } from "next/navigation";
 
-import { ClipboardEdit, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/zstore";
@@ -26,36 +26,38 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col gap-2 animate-fadeIn w-full">
-      {isCollapsed === false &&
-        boards.map((board, i) => {
-          const isActive = pathname?.includes(board._id);
+    <div className="flex flex-col gap-2 animate-fadeIn w-full transition-all">
+      {boards.map((board, i) => {
+        const isActive = pathname?.includes(board._id);
 
-          return (
-            <div
-              key={board._id + "side-board" + i}
-              onClick={() => navigate(`board/${board._id}`)}
-              className={cn(
-                "flex flex-row gap-2 items-center ",
-                "cursor-pointer p-2 rounded text-sm",
-                "hover:bg-main-active-dark",
-                isActive ? "bg-main-active-dark" : ""
-              )}
-            >
-              <AvatarComp
-                className="shrink-0 h-6 w-6"
-                src={board.picture}
-                fallback={generatePictureFallback(board.title)}
-              />
+        return (
+          <div
+            key={board._id + "side-board" + i}
+            onClick={() => navigate(`board/${board._id}`)}
+            className={cn(
+              "single-board-row",
+              "flex flex-row gap-2 items-center justify-center",
+              "cursor-pointer p-2 rounded text-sm",
+              "hover:bg-main-active-dark",
+              isActive ? "bg-main-active-dark" : ""
+            )}
+          >
+            <AvatarComp
+              className="shrink-0 h-6 w-6"
+              src={board.picture}
+              fallback={generatePictureFallback(board.title)}
+            />
+            {isCollapsed === false && (
               <h2
                 className="text-ellipsis text-nowrap overflow-hidden"
                 key={board._id + "board-listing"}
               >
                 {startCase(board.title)}
               </h2>
-            </div>
-          );
-        })}
+            )}
+          </div>
+        );
+      })}
 
       <TooltipComp title={"Create new board"} side="right">
         <Button

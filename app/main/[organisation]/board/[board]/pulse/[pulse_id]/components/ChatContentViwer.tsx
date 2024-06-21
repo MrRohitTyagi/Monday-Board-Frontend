@@ -2,9 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { StateSetter } from "@/types";
 import { ChatType } from "@/zstore";
 import React, { useEffect, useMemo, useState } from "react";
-type ChatContentViwerProps = { chat: ChatType };
+
+type ChatContentViwerProps = {
+  chat: ChatType;
+};
 const ChatContentViwer = ({ chat }: ChatContentViwerProps) => {
   const isLong = useMemo(() => {
     return chat.content.split(" ").length > 120;

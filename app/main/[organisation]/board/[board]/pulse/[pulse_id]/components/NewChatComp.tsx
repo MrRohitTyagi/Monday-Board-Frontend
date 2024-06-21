@@ -3,7 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { StateSetter } from "@/types";
 import { ChatType, PulseType, useAuth } from "@/zstore";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import SaveAndCancelButton from "./SaveAndCancelButton";
 import useLoacalStorageChat from "@/hooks/useLoacalStorageChat";
 import useChat from "@/hooks/useChat";
@@ -26,87 +26,104 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
   const [isEditing, setIsEditing] = useState(haveDraft);
   const { createNewChat } = useChat({});
   const [text, settext] = useState(content);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     settext(content);
   }, []);
 
   const handleCreateNew = useCallback(async () => {
+    setIsSaving(true);
     const payload = {
       content: content,
       createdBy: user_id,
       pulseId: pulse._id,
     };
+
     const newChat = await createNewChat(payload);
     setChats((ps) => [newChat, ...ps]);
     deleteLocal();
     setIsEditing(false);
     settext("");
+    setIsSaving(false);
   }, [user_id, pulse._id, createNewChat, content]);
 
+  const prevKeyRef = useRef("");
+
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {},
-    []
+    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === "Enter" && prevKeyRef.current === "Control") {
+        handleCreateNew();
+      } else {
+        prevKeyRef.current = e.key;
+      }
+    },
+    [handleCreateNew]
   );
 
   return (
-    <div
-      className={cn(
-        "max-w-[40rem] w-full",
-        "h-fit shrink-0 animate-fadeIn",
-        "border-main-light border-2 rounded-lg"
-      )}
-    >
-      {isEditing ? (
-        <div className=" p-2 animate-fadeIn">
-          <Textarea
-            onKeyDown={handleKeyDown}
-            ref={(e) => {
-              e?.focus();
-            }}
-            value={text}
-            onChange={(e) => {
-              settext(e.target.value);
-              saveToLocal(e.target.value);
-            }}
-            placeholder="Write an update ..."
-            className={cn(
-              "w-full opacity-80",
-              "h-fit shrink-0",
-              "border-highlighter border"
-              // " border-highlighter border"
-            )}
-          />
-        </div>
-      ) : (
-        <Input
-          onClick={() => setIsEditing(true)}
-          className={cn(
-            "bg-transparent  border-none"
-            // "border-highlighter border"
-          )}
-          placeholder="Write an update..."
-        />
-      )}
-      {(haveDraft === true || isEditing === true) && (
-        <>
-          <Space />
-          <div className="w-row justify-end px-2">
-            <h2 className="text-sm opacity-80">Draft</h2>
+    <>
+      <div
+        className={cn(
+          "max-w-[40rem] w-full",
+          "h-fit shrink-0 animate-fadeIn",
+          "border-main-light border-2 rounded-lg"
+        )}
+      >
+        {isEditing ? (
+          <div className=" p-2 animate-fadeIn">
+            <Textarea
+              disabled={isSaving}
+              onKeyDown={handleKeyDown}
+              ref={(e) => {
+                e?.focus();
+              }}
+              value={text}
+              onChange={(e) => {
+                settext(e.target.value);
+                saveToLocal(e.target.value);
+              }}
+              placeholder="Write an update ..."
+              className={cn(
+                "w-full opacity-80",
+                "h-fit shrink-0",
+                "border-highlighter border"
+                // " border-highlighter border"
+              )}
+            />
           </div>
-        </>
-      )}
-      {isEditing === true && (
-        <SaveAndCancelButton
-          onCancelClick={() => {
-            settext("");
-            setIsEditing(false);
-            deleteLocal();
-          }}
-          onSaveClick={handleCreateNew}
-        />
-      )}
-    </div>
+        ) : (
+          <Input
+            onClick={() => setIsEditing(true)}
+            className={cn(
+              "bg-transparent  border-none"
+              // "border-highlighter border"
+            )}
+            placeholder="Write an update..."
+          />
+        )}
+        {(haveDraft === true || isEditing === true) && (
+          <>
+            <Space />
+            <div className="w-row justify-end px-2">
+              <h2 className="text-sm opacity-80">Draft</h2>
+            </div>
+          </>
+        )}
+        {isEditing === true && (
+          <SaveAndCancelButton
+            loading={isSaving}
+            disabled={isSaving}
+            onCancelClick={() => {
+              settext("");
+              setIsEditing(false);
+              deleteLocal();
+            }}
+            onSaveClick={handleCreateNew}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import Divider from "@/components/core/Divider";
 import TooltipComp from "@/components/core/TooltipComp";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
+import { cn, waitfor } from "@/lib/utils";
 import { generatePictureFallback, timeBetween } from "@/utils/helperFunctions";
 import { ChatType, PulseType } from "@/zstore";
 import { isEmpty, isEqual, startCase } from "lodash";
@@ -16,21 +16,26 @@ import PopoverComp from "@/components/core/PopoverComp";
 import ChatActions from "./ChatActions";
 import useChat from "@/hooks/useChat";
 import SaveAndCancelButton from "./SaveAndCancelButton";
+import { StateSetter } from "@/types";
 
 type SingleChatBoxProps = {
   chat: ChatType;
   pulse?: PulseType;
+  setChats: StateSetter<ChatType[]>;
 };
-const SingleChatBox = ({ chat: masterChat }: SingleChatBoxProps) => {
+const saveStateConfig = {
+  DELETING: "DELETING",
+  SAVING: "SAVING",
+};
+const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
   //
   const [chat, setchat] = useState<ChatType>({} as ChatType);
   const [isEditing, setIsEditing] = useState(!isEmpty(masterChat.draft));
   const [isLoading, setIsLoading] = useState(true);
+  const [saveState, setSaveState] = useState("");
 
-  const { updateChatContent, updateChatDraft } = useChat({
+  const { updateChatContent, updateChatDraft, deleteSingleChat } = useChat({
     chat_id: masterChat._id,
-    setchat,
-    setIsEditing,
   });
 
   const { userFriendlyDate, displayText } = useMemo(() => {
@@ -49,15 +54,30 @@ const SingleChatBox = ({ chat: masterChat }: SingleChatBoxProps) => {
     setIsLoading(false);
   }, [masterChat]);
 
-  const onSaveClick = useCallback(() => {
-    if (!isEqual(chat, masterChat)) updateChatContent(chat.content);
-    setchat((ps) => ({ ...ps, content: masterChat.content }));
+  const onSaveClick = useCallback(async () => {
+    setSaveState(saveStateConfig.SAVING);
+    
+    console.log("ssssssssssssssssssssss", chat.content);
+
+    await updateChatContent(chat.content);
+    await waitfor();
     setIsEditing(false);
-  }, [chat, masterChat]);
+    setSaveState("");
+  }, [chat.content]);
 
   const onCancelClick = useCallback(() => {
-    updateChatContent(chat.draft);
-  }, [chat.draft]);
+    updateChatContent(masterChat.draft);
+    setchat((pc) => ({ ...pc, draft: "", content: masterChat.content }));
+  }, [masterChat.draft]);
+
+  const deleteChat = useCallback(async (_id: string) => {
+    setSaveState(saveStateConfig.DELETING);
+    await deleteSingleChat(_id);
+    setSaveState("");
+    setChats((ps) => {
+      return ps.filter((c) => c._id !== _id);
+    });
+  }, []);
 
   return isLoading === true ? (
     <div className="w-full">
@@ -108,18 +128,27 @@ const SingleChatBox = ({ chat: masterChat }: SingleChatBoxProps) => {
                   <Settings color="white" size={15} />
                 </Button>
               }
-              content={<ChatActions setIsEditing={setIsEditing} />}
+              content={
+                <ChatActions
+                  isDeleting={saveState === saveStateConfig.DELETING}
+                  chat={chat}
+                  deleteChat={deleteChat}
+                  setIsEditing={setIsEditing}
+                />
+              }
             />
           </div>
         </div>
         {isEditing === true ? (
           <Textarea
+            disabled={saveState === saveStateConfig.SAVING}
             value={chat.draft ? chat.draft : chat.content}
             rows={chat.content.split(" ").length / 10}
             className="border-highlighter border-[1px] h-fit"
             placeholder="White an update ..."
             onChange={(e) => {
               const value = e.target.value;
+              setchat((pc) => ({ ...pc, content: value, draft: value }));
               updateChatDraft(value);
             }}
           />
@@ -130,6 +159,8 @@ const SingleChatBox = ({ chat: masterChat }: SingleChatBoxProps) => {
       <ViewedBy viewers={chat.seenBy} />
       {isEditing === true ? (
         <SaveAndCancelButton
+          disabled={saveState === saveStateConfig.SAVING}
+          loading={saveState === saveStateConfig.SAVING}
           onCancelClick={onCancelClick}
           onSaveClick={onSaveClick}
         />

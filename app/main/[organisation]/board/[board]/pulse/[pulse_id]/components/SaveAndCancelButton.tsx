@@ -4,14 +4,19 @@ import { Save, Trash2 } from "lucide-react";
 import Divider from "@/components/core/Divider";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Loader from "@/components/core/Loader";
 
 type SaveAndCancelButtonProps = {
   onSaveClick: (e: any) => void;
   onCancelClick: (e: any) => void;
+  disabled?: boolean;
+  loading?: boolean;
 };
 const SaveAndCancelButton = ({
   onCancelClick,
   onSaveClick,
+  disabled,
+  loading,
 }: SaveAndCancelButtonProps) => {
   return (
     <div
@@ -22,6 +27,7 @@ const SaveAndCancelButton = ({
       )}
     >
       <Button
+        disabled={disabled}
         onClick={onCancelClick}
         size={"sm"}
         variant={"ghost"}
@@ -35,6 +41,7 @@ const SaveAndCancelButton = ({
       </Button>
       <Divider horizontal className="w-1" />
       <Button
+        disabled={disabled}
         onClick={onSaveClick}
         size={"sm"}
         variant={"ghost"}
@@ -43,8 +50,8 @@ const SaveAndCancelButton = ({
           "grow gap-3 flex flex-row items-center m-1"
         )}
       >
-        <Save color="white" size={16} />
-        <h1 className="text-base">Save</h1>
+        {loading === true ? <Loader /> : <Save color="white" size={16} />}
+        <h1 className="text-base">{loading === true ? "Saving..." : "Save"}</h1>
       </Button>
     </div>
   );

@@ -71,10 +71,10 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
             {chats.map((chat, i) => {
               return (
                 <SingleChatBox
-                  key={chat._id}
+                  key={(chat._id = "chat")}
                   chat={chat}
                   pulse={pulse}
-                  // setChats={setChats}
+                  setChats={setChats}
                   // setPulse={setPulse}
                 />
               );

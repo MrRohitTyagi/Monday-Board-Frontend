@@ -1,28 +1,22 @@
-import { createChat, updateChat } from "@/gateways/chat-gateway";
-import { StateSetter } from "@/types";
+import { createChat, deleteChat, updateChat } from "@/gateways/chat-gateway";
 import { ChatType } from "@/zstore";
 import { useCallback, useRef } from "react";
 
 type UseChatProps = {
   chat_id?: string;
-  setchat?: StateSetter<ChatType>;
-  setIsEditing?: StateSetter<boolean>;
 };
 
 type UseChatreturnType = {
-  updateChatContent: (e: string) => void;
-  updateChatDraft: (e: string) => void;
+  updateChatContent: (e: string) => Promise<any>;
+  updateChatDraft: (e: string) => Promise<any>;
+  deleteSingleChat: (e: string) => Promise<any>;
   createNewChat: (
     payload: any,
     loading?: (e: boolean) => void
   ) => Promise<ChatType>;
 };
 
-const useChat = ({
-  chat_id,
-  setchat,
-  setIsEditing,
-}: UseChatProps): UseChatreturnType => {
+const useChat = ({ chat_id }: UseChatProps): UseChatreturnType => {
   const debounceRef = useRef<any>(null);
 
   const debounceWrapper = useCallback((cb: (e: any) => void, payload: any) => {
@@ -33,15 +27,13 @@ const useChat = ({
   }, []);
 
   const updateChatContent = useCallback(
-    (content: string) => {
+    async (content: string) => {
       const payload = {
         _id: chat_id,
         centent: content,
         draft: "",
       };
-      updateChat(payload);
-      setchat?.((ps) => ({ ...ps, centent: content, draft: "" }));
-      setIsEditing?.(false);
+      await updateChat(payload);
     },
     [chat_id]
   );
@@ -57,19 +49,25 @@ const useChat = ({
   );
 
   const updateChatDraft = useCallback(
-    (draft: string) => {
-      setchat?.((p) => ({ ...p, content: draft, draft: draft }));
+    async (draft: string) => {
       const payload = { _id: chat_id, draft: draft };
       debounceWrapper(updateChat, payload);
     },
     [chat_id]
   );
 
+  const deleteSingleChat = useCallback(
+    async (single_chat_id: string) => {
+      await deleteChat(single_chat_id);
+    },
+    [chat_id]
+  );
+
   return {
-    //
     createNewChat,
     updateChatContent,
     updateChatDraft,
+    deleteSingleChat,
   };
 };
 
