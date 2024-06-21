@@ -2,13 +2,9 @@ import { createChat, deleteChat, updateChat } from "@/gateways/chat-gateway";
 import { ChatType } from "@/zstore";
 import { useCallback, useRef } from "react";
 
-type UseChatProps = {
-  chat_id?: string;
-};
-
 type UseChatreturnType = {
-  updateChatContent: (e: string) => Promise<any>;
-  updateChatDraft: (e: string) => Promise<any>;
+  updateChatContent: (e: string, _id: string) => Promise<any>;
+  updateChatDraft: (e: string, _id: string) => Promise<any>;
   deleteSingleChat: (e: string) => Promise<any>;
   createNewChat: (
     payload: any,
@@ -16,7 +12,7 @@ type UseChatreturnType = {
   ) => Promise<ChatType>;
 };
 
-const useChat = ({ chat_id }: UseChatProps): UseChatreturnType => {
+const useChat = (): UseChatreturnType => {
   const debounceRef = useRef<any>(null);
 
   const debounceWrapper = useCallback((cb: (e: any) => void, payload: any) => {
@@ -27,15 +23,15 @@ const useChat = ({ chat_id }: UseChatProps): UseChatreturnType => {
   }, []);
 
   const updateChatContent = useCallback(
-    async (content: string) => {
+    async (content: string, _id: string) => {
       const payload = {
-        _id: chat_id,
-        centent: content,
+        _id: _id,
+        content: content,
         draft: "",
       };
       await updateChat(payload);
     },
-    [chat_id]
+    []
   );
 
   const createNewChat = useCallback(
@@ -45,23 +41,17 @@ const useChat = ({ chat_id }: UseChatProps): UseChatreturnType => {
       if (loading) loading(false);
       return newChat;
     },
-    [chat_id]
+    []
   );
 
-  const updateChatDraft = useCallback(
-    async (draft: string) => {
-      const payload = { _id: chat_id, draft: draft };
-      debounceWrapper(updateChat, payload);
-    },
-    [chat_id]
-  );
+  const updateChatDraft = useCallback(async (draft: string, _id: string) => {
+    const payload = { _id: _id, draft: draft };
+    debounceWrapper(updateChat, payload);
+  }, []);
 
-  const deleteSingleChat = useCallback(
-    async (single_chat_id: string) => {
-      await deleteChat(single_chat_id);
-    },
-    [chat_id]
-  );
+  const deleteSingleChat = useCallback(async (single_chat_id: string) => {
+    await deleteChat(single_chat_id);
+  }, []);
 
   return {
     createNewChat,

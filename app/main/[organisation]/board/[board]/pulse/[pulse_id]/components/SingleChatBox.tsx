@@ -34,18 +34,16 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [saveState, setSaveState] = useState("");
 
-  const { updateChatContent, updateChatDraft, deleteSingleChat } = useChat({
-    chat_id: masterChat._id,
-  });
+  const { updateChatContent, updateChatDraft, deleteSingleChat } = useChat();
 
   const { userFriendlyDate, displayText } = useMemo(() => {
-    if (!chat._id)
+    if (!masterChat._id)
       return {
         userFriendlyDate: null,
         displayText: null,
       };
-    return timeBetween(chat.createdAt);
-  }, [chat]);
+    return timeBetween(masterChat.createdAt);
+  }, [masterChat.createdAt]);
 
   console.log(`%c chat `, "color: pink;border:1px solid pink", chat);
 
@@ -54,30 +52,32 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
     setIsLoading(false);
   }, [masterChat]);
 
+  // save the chat content
   const onSaveClick = useCallback(async () => {
     setSaveState(saveStateConfig.SAVING);
-    
-    console.log("ssssssssssssssssssssss", chat.content);
-
-    await updateChatContent(chat.content);
-    await waitfor();
+    await updateChatContent(chat.content, masterChat._id);
     setIsEditing(false);
     setSaveState("");
-  }, [chat.content]);
+  }, [chat, updateChatContent, masterChat._id]);
 
+  // cancel the chat draft
   const onCancelClick = useCallback(() => {
-    updateChatContent(masterChat.draft);
     setchat((pc) => ({ ...pc, draft: "", content: masterChat.content }));
+    setIsEditing(false);
   }, [masterChat.draft]);
 
-  const deleteChat = useCallback(async (_id: string) => {
-    setSaveState(saveStateConfig.DELETING);
-    await deleteSingleChat(_id);
-    setSaveState("");
-    setChats((ps) => {
-      return ps.filter((c) => c._id !== _id);
-    });
-  }, []);
+  // Delete Chat
+  const deleteChat = useCallback(
+    async (_id: string) => {
+      setSaveState(saveStateConfig.DELETING);
+      await deleteSingleChat(_id);
+      setChats((ps) => {
+        return ps.filter((c) => c._id !== _id);
+      });
+      setSaveState("");
+    },
+    [deleteSingleChat]
+  );
 
   return isLoading === true ? (
     <div className="w-full">
@@ -149,7 +149,7 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
             onChange={(e) => {
               const value = e.target.value;
               setchat((pc) => ({ ...pc, content: value, draft: value }));
-              updateChatDraft(value);
+              updateChatDraft(value, masterChat._id);
             }}
           />
         ) : (

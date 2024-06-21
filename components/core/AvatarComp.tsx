@@ -6,12 +6,26 @@ type AvatarCompProps = {
   src?: string;
   fallback?: React.ReactNode | string;
   className?: string;
+  defaultBorder?: boolean;
 };
-const AvatarComp = ({ src, fallback = "CN", className }: AvatarCompProps) => {
+const AvatarComp = ({
+  src,
+  fallback = "CN",
+  className,
+  defaultBorder = false,
+}: AvatarCompProps) => {
   return (
-    <Avatar className={cn(className)}>
+    <Avatar
+      className={cn(
+        className,
+        "cursor-pointer transition-all duration-300",
+        defaultBorder && "hover:border border-highlighter"
+      )}
+    >
       <AvatarImage src={src} />
-      <AvatarFallback>{fallback || "NA"}</AvatarFallback>
+      <AvatarFallback className="bg-main-fg text-sm cursor-pointer">
+        {fallback || "NA"}
+      </AvatarFallback>
     </Avatar>
   );
 };

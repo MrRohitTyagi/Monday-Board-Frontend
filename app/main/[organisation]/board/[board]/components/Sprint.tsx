@@ -89,7 +89,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
                     className="px-2 border-none"
                     onClick={() => setIsExpanded((p) => !p)}
                   >
-                    <TooltipComp title={"Edit Sprint"}>
+                    <TooltipComp title={"Edit Sprint"} className="px-3 py-2">
                       <Edit size={20} color="white" />
                     </TooltipComp>
                   </Button>
@@ -100,7 +100,10 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
                   className="px-2 border-none"
                   onClick={() => setIsExpanded((p) => !p)}
                 >
-                  <TooltipComp title={isExpanded ? "Expand" : "Collapse"}>
+                  <TooltipComp
+                    title={isExpanded ? "Expand" : "Collapse"}
+                    className="px-3 py-2"
+                  >
                     {isExpanded ? (
                       <ChevronUp size={20} color="white" />
                     ) : (

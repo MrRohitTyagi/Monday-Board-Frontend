@@ -99,7 +99,7 @@ const BoardComp = ({ board }: { board: BoardType }) => {
           <div className="board-actions space-x-2">
             {/* StarBoard  */}
             <Button variant="ghost" className="p-0">
-              <TooltipComp title={"Star board"}>
+              <TooltipComp className="px-3 py-2" title={"Star board"}>
                 <Star size="18px" color="white" />
               </TooltipComp>
             </Button>
@@ -116,7 +116,7 @@ const BoardComp = ({ board }: { board: BoardType }) => {
                 });
               }}
             >
-              <TooltipComp title={"Edit board"}>
+              <TooltipComp className="px-3 py-2" title={"Edit board"}>
                 <Edit size="18px" color="white" />
               </TooltipComp>
             </Button>

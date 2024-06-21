@@ -35,7 +35,7 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
               variant={"ghost"}
               onClick={() => router.push("/main/board-settings/" + board._id)}
             >
-              <TooltipComp title="Edit board" side="right">
+              <TooltipComp title="Edit board" side="right" className="px-3 py-2">
                 <Edit size={15} color="white" />
               </TooltipComp>
             </Button>

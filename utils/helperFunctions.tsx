@@ -15,18 +15,15 @@ function formatDate(date: Date): string {
   const formattedDate: string = date
     .toLocaleDateString("en-GB", options)
     .replace(",", "");
-  const [day, month, year, time]: string[] = formattedDate.split(" ");
-  const [hourString, minute = ""]: string[] = time.split(":");
+  const [day, month, year, prefix, time]: string[] = formattedDate.split(" ");
 
-  const hour: number = parseInt(hourString, 10);
-  const period: string = hour >= 12 ? "PM" : "AM";
+  const [hrs, min] = time.split(":");
 
-  // Adjust hour for 12-hour format
-  const adjustedHour: number = hour % 12 || 12;
+  console.log(`%c {hrs} `, "color: red;border:2px dotted red", { time });
+  const period: string = parseInt(hrs) >= 12 ? "PM" : "AM";
+  const hrs12format = parseInt(hrs) % 12;
 
-  return `${day}-${month}-${year} ${adjustedHour}${
-    !!minute ? `:${minute}` : ""
-  } ${period}`;
+  return `${day}-${month}-${year}  ${prefix} ${hrs12format}:${min} ${period}`;
 }
 
 // Get the formatted date string

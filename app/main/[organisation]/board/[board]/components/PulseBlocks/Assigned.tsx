@@ -1,8 +1,6 @@
 import React, {
   ChangeEvent,
-  LegacyRef,
   ReactNode,
-  RefObject,
   memo,
   useCallback,
   useContext,
@@ -23,7 +21,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import AvatarGroup from "@/components/core/AvatarGroup";
 import AvatarComp from "@/components/core/AvatarComp";
-import { Trash, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 type AssignedProps = {
   board: BoardType;
@@ -200,6 +198,7 @@ const AssignedSelector = ({
                 <div className="gap-3 flex flex-row items-center justify-center">
                   <AvatarComp
                     className={cn(
+                      'border-main-light border-2',
                       "hover:scale-105 w-9 h-9",
                       "transition-all duration-150"
                     )}

@@ -38,12 +38,10 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
     init();
   }, []);
 
-  console.log(`%c chats `, "color: green;border:1px solid green", chats);
-  console.log(
-    `%c pulse `,
-    "color: burlywood;border:2px solid burlywood",
-    pulse
-  );
+  console.log(`%c pulse chats`, "color: burlywood;border:2px solid burlywood", {
+    pulse,
+    chats,
+  });
 
   return (
     <div
@@ -59,7 +57,7 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
           <Header pulse={pulse} setPulse={setPulse} />
           <div
             className={cn(
-              "chat-scroll-area",
+              "chat-scroll-area animate-fadeIn",
               // "animate-chat-cont-scroll",
               "overflow-y-auto scrollbar-thin",
               "h-full p-4 pt-0 items-center",
@@ -71,7 +69,7 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
             {chats.map((chat, i) => {
               return (
                 <SingleChatBox
-                  key={(chat._id = "chat")}
+                  key={chat._id + "chat"}
                   chat={chat}
                   pulse={pulse}
                   setChats={setChats}

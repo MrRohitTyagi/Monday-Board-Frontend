@@ -2,6 +2,9 @@ import React, { memo } from "react";
 import Image from "next/image";
 import { UserType } from "@/zstore";
 import TooltipComp from "./TooltipComp";
+import { generatePictureFallback } from "@/utils/helperFunctions";
+import AvatarComp from "./AvatarComp";
+import { cn } from "@/lib/utils";
 
 type AvatarGroupProps = { users: UserType[]; max?: number };
 
@@ -15,17 +18,31 @@ const AvatarGroup = ({ users, max = 3 }: AvatarGroupProps) => {
       {first3.map((user, i) => (
         <div className="avatar border-[1px]" key={user.username + i + user._id}>
           <div className="w-8">
-            <TooltipComp title={user.username} side="top">
-              <Image
-                height={12}
-                width={12}
-                src={
-                  user.picture ||
-                  "https://res.cloudinary.com/derplm8c6/image/upload/v1718526303/dkm7ezl1whano6p8osei.png"
-                }
-                alt="pic"
-                unoptimized
-              />
+            <TooltipComp title={user.username} side="top" className="px-3 py-2">
+              {user.picture ? (
+                <Image
+                  height={12}
+                  width={12}
+                  src={user.picture}
+                  alt={generatePictureFallback(user.username)}
+                  unoptimized
+                />
+              ) : (
+                <div
+                  className={cn(
+                    "h-full w-full flex flex-row items-center",
+                    "text-center justify-center"
+                    ,'bg-slate-800'
+                  )}
+                >
+                  {generatePictureFallback(user.username)}
+                </div>
+              )}
+              {/* <AvatarComp
+                className="w-full h-full"
+                src={user.picture}
+                fallback={generatePictureFallback(user.username)}
+              /> */}
             </TooltipComp>
           </div>
         </div>

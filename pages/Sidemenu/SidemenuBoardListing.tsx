@@ -42,11 +42,13 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
               isActive ? "bg-main-active-dark" : ""
             )}
           >
-            <AvatarComp
-              className="shrink-0 h-6 w-6"
-              src={board.picture}
-              fallback={generatePictureFallback(board.title)}
-            />
+            <TooltipComp title={board.title}>
+              <AvatarComp
+                className="shrink-0 h-6 w-6"
+                src={board.picture}
+                fallback={generatePictureFallback(board.title)}
+              />
+            </TooltipComp>
             {isCollapsed === false && (
               <h2
                 className="text-ellipsis text-nowrap overflow-hidden"
@@ -59,7 +61,7 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
         );
       })}
 
-      <TooltipComp title={"Create new board"} side="right">
+      <TooltipComp title={"Create new board"} side="right" className="px-3 py-2">
         <Button
           disabled={isAuthenticated === false}
           onClick={() => {

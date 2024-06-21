@@ -45,6 +45,7 @@ const Navbar = ({}: Props) => {
                 variant="ghost"
               >
                 <TooltipComp
+                  className="px-3 py-2"
                   title={`Invite members to ${currentBoard.title}`}
                   side="left"
                 >
