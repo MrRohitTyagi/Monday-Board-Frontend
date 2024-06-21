@@ -17,6 +17,8 @@ import ChatActions from "./ChatActions";
 import useChat from "@/hooks/useChat";
 import SaveAndCancelButton from "./SaveAndCancelButton";
 import { StateSetter } from "@/types";
+import SingleThread from "./Threads/SingleThread";
+import Threads from "./Threads/Threads";
 
 type SingleChatBoxProps = {
   chat: ChatType;
@@ -78,6 +80,8 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
     },
     [deleteSingleChat]
   );
+
+  const hasThread = chat?.thread?.length > 0;
 
   return isLoading === true ? (
     <div className="w-full">
@@ -165,7 +169,13 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
           onSaveClick={onSaveClick}
         />
       ) : (
-        <div className="h-fit flex flex-row border-transparent border-t-main-light border-2">
+        <div
+          className={cn(
+            "h-fit flex flex-row border-transparent border-t-main-light border-2",
+            hasThread &&
+              "border-b-2 border-x-transparent border-main-light rounded-md"
+          )}
+        >
           <Button
             variant={"ghost"}
             size={"sm"}
@@ -192,6 +202,8 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
           </Button>
         </div>
       )}
+
+      {hasThread === true && <Threads thread={chat.thread} />}
     </div>
   );
 };
