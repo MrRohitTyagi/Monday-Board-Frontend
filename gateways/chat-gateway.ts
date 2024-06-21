@@ -24,4 +24,12 @@ async function updateChat(payload: any): Promise<ChatType> {
   return data.response;
 }
 
-export { getChats, deleteChat, updateChat };
+async function createChat(payload: any): Promise<ChatType> {
+  const { data } = await axiosInstance().post(
+    `${CHAT_BASE_URL}/create/`,
+    payload
+  );
+  return data.response;
+}
+
+export { getChats, deleteChat, updateChat, createChat };

@@ -67,7 +67,7 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
             )}
           >
             <Space />
-            <NewChatComp setChats={setChats} />
+            <NewChatComp setChats={setChats} pulse={pulse} />
             {chats.map((chat, i) => {
               return (
                 <SingleChatBox

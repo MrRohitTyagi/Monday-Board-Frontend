@@ -22,7 +22,7 @@ const SaveAndCancelButton = ({
       )}
     >
       <Button
-        onClick={onSaveClick}
+        onClick={onCancelClick}
         size={"sm"}
         variant={"ghost"}
         className={cn(
@@ -35,7 +35,7 @@ const SaveAndCancelButton = ({
       </Button>
       <Divider horizontal className="w-1" />
       <Button
-        onClick={onCancelClick}
+        onClick={onSaveClick}
         size={"sm"}
         variant={"ghost"}
         className={cn(

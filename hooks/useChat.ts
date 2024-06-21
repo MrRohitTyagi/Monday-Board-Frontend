@@ -1,15 +1,21 @@
-import { updateChat } from "@/gateways/chat-gateway";
+import { createChat, updateChat } from "@/gateways/chat-gateway";
 import { StateSetter } from "@/types";
 import { ChatType } from "@/zstore";
 import { useCallback, useRef } from "react";
+
 type UseChatProps = {
-  chat_id: string;
-  setchat: StateSetter<ChatType>;
-  setIsEditing: StateSetter<boolean>;
+  chat_id?: string;
+  setchat?: StateSetter<ChatType>;
+  setIsEditing?: StateSetter<boolean>;
 };
+
 type UseChatreturnType = {
   updateChatContent: (e: string) => void;
   updateChatDraft: (e: string) => void;
+  createNewChat: (
+    payload: any,
+    loading?: (e: boolean) => void
+  ) => Promise<ChatType>;
 };
 
 const useChat = ({
@@ -34,15 +40,25 @@ const useChat = ({
         draft: "",
       };
       updateChat(payload);
-      setchat((ps) => ({ ...ps, ...payload }));
-      setIsEditing(false);
+      setchat?.((ps) => ({ ...ps, centent: content, draft: "" }));
+      setIsEditing?.(false);
+    },
+    [chat_id]
+  );
+
+  const createNewChat = useCallback(
+    async (payload: any, loading?: (e: boolean) => void) => {
+      if (loading) loading(true);
+      const newChat = await createChat(payload);
+      if (loading) loading(false);
+      return newChat;
     },
     [chat_id]
   );
 
   const updateChatDraft = useCallback(
     (draft: string) => {
-      setchat((p) => ({ ...p, content: draft, draft: draft }));
+      setchat?.((p) => ({ ...p, content: draft, draft: draft }));
       const payload = { _id: chat_id, draft: draft };
       debounceWrapper(updateChat, payload);
     },
@@ -51,6 +67,7 @@ const useChat = ({
 
   return {
     //
+    createNewChat,
     updateChatContent,
     updateChatDraft,
   };
