@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 import PulseChatSkeletonLoader from "./components/PulseChatSkeletonLoader";
 import SingleChatBox from "./components/SingleChatBox";
 import Space from "@/components/core/Space";
-import { Textarea } from "@/components/ui/textarea";
 import { getChats } from "@/gateways/chat-gateway";
+import NewChatComp from "./components/NewChatComp";
 
 type PulseChatMainType = {
   params: {
@@ -67,18 +67,15 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
             )}
           >
             <Space />
-            <Textarea
-              placeholder="Write an update ..."
-              className={cn("max-w-[40rem] w-full", "h-fit shrink-0")}
-            />
+            <NewChatComp setChats={setChats} />
             {chats.map((chat, i) => {
               return (
                 <SingleChatBox
-                  key={chat._id + i}
+                  key={chat._id}
                   chat={chat}
                   pulse={pulse}
-                  setChats={setChats}
-                  setPulse={setPulse}
+                  // setChats={setChats}
+                  // setPulse={setPulse}
                 />
               );
             })}

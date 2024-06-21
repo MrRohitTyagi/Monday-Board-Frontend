@@ -1,7 +1,7 @@
 import AvatarComp from "@/components/core/AvatarComp";
 import TooltipComp from "@/components/core/TooltipComp";
 import { cn } from "@/lib/utils";
-import { generateUserPictureFallback } from "@/utils/helperFunctions";
+import { generatePictureFallback } from "@/utils/helperFunctions";
 import { UserType } from "@/zstore";
 import { startCase } from "lodash";
 import { Eye } from "lucide-react";
@@ -38,7 +38,7 @@ const ViededBy = ({ viewers }: ViededByProps) => {
                   <AvatarComp
                     className="h-8 w-8"
                     src={viewer.picture}
-                    fallback={generateUserPictureFallback(viewer.username)}
+                    fallback={generatePictureFallback(viewer.username)}
                   />
                 </div>
               );

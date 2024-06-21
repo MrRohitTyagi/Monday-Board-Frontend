@@ -26,6 +26,9 @@ const config = {
           width: "8px", // Adjust the width here as needed
         },
       },
+      borderWidth: {
+        1: "1px",
+      },
       height: {
         "main-content-height": `calc(100vh - ${navbarHeight})`,
         "navbar-height": navbarHeight,
@@ -151,6 +154,16 @@ const config = {
     require("daisyui"),
     function ({ addUtilities }: { addUtilities: any }) {
       addUtilities({
+        ".w-row": {
+          display: "flex",
+          "flex-direction": "row",
+          "align-items": "center",
+        },
+        ".w-col": {
+          display: "flex",
+          "flex-direction": "row",
+          "align-items": "center",
+        },
         ".mask-bottom-blur": {
           "mask-image":
             "linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255 , 20%), rgba(255, 255, 255, 0))",

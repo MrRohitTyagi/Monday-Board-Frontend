@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/zstore";
 import { Button } from "@/components/ui/button";
 import TooltipComp from "@/components/core/TooltipComp";
+import AvatarComp from "@/components/core/AvatarComp";
+import { generatePictureFallback } from "@/utils/helperFunctions";
 
 type SidemenuBoardListingProps = { isCollapsed: boolean };
 
@@ -40,7 +42,11 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
                 isActive ? "bg-main-active-dark" : ""
               )}
             >
-              <ClipboardEdit size="15px" />
+              <AvatarComp
+                className="shrink-0 h-6 w-6"
+                src={board.picture}
+                fallback={generatePictureFallback(board.title)}
+              />
               <h2
                 className="text-ellipsis text-nowrap overflow-hidden"
                 key={board._id + "board-listing"}

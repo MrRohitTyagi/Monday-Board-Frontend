@@ -18,7 +18,7 @@ type HeaderProps = {
 const Header = ({ pulse }: HeaderProps) => {
   const { handleLayerClose } = usePulseChat();
   return (
-    <div className={cn("animate-chat-cont-heading", "flex flex-col shrink-0")}>
+    <div className={cn("animate-chat-cont-heading", "flex flex-col shrink-0 animate-fadeIn")}>
       <div
         className={cn(
           "header flex flex-row justify-between items-start px-4 pt-3"

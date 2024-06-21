@@ -16,8 +16,11 @@ async function deleteChat(id: string) {
 }
 
 async function updateChat(payload: any): Promise<ChatType> {
-  const { id } = payload;
-  const { data } = await axiosInstance().put(`${CHAT_BASE_URL}/update/${id}`);
+  const { _id } = payload;
+  const { data } = await axiosInstance().put(
+    `${CHAT_BASE_URL}/update/${_id}`,
+    payload
+  );
   return data.response;
 }
 

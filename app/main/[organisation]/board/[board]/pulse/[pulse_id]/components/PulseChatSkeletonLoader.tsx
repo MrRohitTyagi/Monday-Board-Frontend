@@ -5,22 +5,29 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 
-type PulseChatSkeletonLoaderProps = {};
-const PulseChatSkeletonLoader = ({}: PulseChatSkeletonLoaderProps) => {
+type PulseChatSkeletonLoaderProps = { onlyChat?: boolean };
+
+const PulseChatSkeletonLoader = ({
+  onlyChat = false,
+}: PulseChatSkeletonLoaderProps) => {
   return (
     <div className={cn("flex flex-col gap-3 animate-pulse", "items-center")}>
-      <div className="flex flex-row gap-3 w-full px-4 pt-3">
-        <Skeleton className="h-8 w-full" />
-        <Skeleton className="h-8 w-10" />
-        <Skeleton className="h-8 w-10" />
-      </div>
-      <Divider />
-      <Textarea
-        className="bg-main-light animate-pulse-layer max-w-[40rem] w-full"
-        disabled={true}
-        placeholder="Write an update..."
-      />
-      {[1, 2].map((e) => (
+      {onlyChat === false && (
+        <>
+          <div className="flex flex-row gap-3 w-full px-4 pt-3">
+            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-8 w-10" />
+            <Skeleton className="h-8 w-10" />
+          </div>
+          <Divider />
+          <Textarea
+            className="bg-main-light animate-pulse-layer max-w-[40rem] w-full"
+            disabled={true}
+            placeholder="Write an update..."
+          />
+        </>
+      )}
+      {(onlyChat === true ? [1] : [1, 2]).map((e) => (
         <div
           key={"loader+i" + e}
           className={cn(

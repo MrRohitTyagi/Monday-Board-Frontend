@@ -1,4 +1,4 @@
-function generateUserPictureFallback(str = "") {
+function generatePictureFallback(str = "") {
   return str.charAt(0) + str.charAt(str.length - 1);
 }
 
@@ -87,4 +87,4 @@ function timeBetween(dateString: string, secondDate = null): TimeDifference {
   };
 }
 
-export { generateUserPictureFallback, timeBetween };
+export { generatePictureFallback, timeBetween };
