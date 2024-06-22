@@ -4,7 +4,7 @@ import React, { memo, useEffect, useState } from "react";
 import Divider from "@/components/core/Divider";
 import { Button } from "@/components/ui/button";
 import { getThreads } from "@/gateways/thread-gateway";
-import { cn } from "@/lib/utils";
+import { cn, waitfor } from "@/lib/utils";
 import { Reply, ThumbsUp } from "lucide-react";
 import NewThread from "./NewThread";
 import { ThreadType } from "@/types/threadType";
@@ -23,6 +23,7 @@ const Threads = ({}: ThreadsProps) => {
   useEffect(() => {
     async function init() {
       const threads = await getThreads(chat._id);
+      await waitfor(10000);
       setThreads(threads);
     }
     init();
@@ -72,7 +73,13 @@ const Threads = ({}: ThreadsProps) => {
         />
       )}
       {threads.map((thread) => {
-        return <SingleThread key={thread._id} mainThread={thread} />;
+        return (
+          <SingleThread
+            key={thread._id}
+            mainThread={thread}
+            setThreads={setThreads}
+          />
+        );
       })}
     </div>
   );

@@ -21,13 +21,10 @@ async function deleteThread(id: string) {
   await axiosInstance().delete(`${THREAD_BASE_URL}/delete/${id}`);
 }
 
-async function updateThread(payload: any): Promise<ThreadType> {
+async function updateThread(payload: any) {
   const { _id } = payload;
-  const { data } = await axiosInstance().put(
-    `${THREAD_BASE_URL}/update/${_id}`,
-    payload
-  );
-  return data.response;
+  await axiosInstance().put(`${THREAD_BASE_URL}/update/${_id}`, payload);
+  // return data.response;
 }
 
 async function createThread(payload: any): Promise<ThreadType> {
