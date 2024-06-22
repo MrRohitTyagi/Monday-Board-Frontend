@@ -2,29 +2,29 @@
 
 import ResizableSplit from "@/components/core/ResizableSplit";
 import React, { memo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { PulseChatContext } from "@/hooks/usePulseChat";
 import Loader from "@/components/core/Loader";
 import { ChildrenType } from "@/types/genericTypes";
+import useNavigate from "@/hooks/useNavigate";
 
-type layoutProps = {
-  params: { pulse_id: string };
-} & ChildrenType;
+type layoutProps = {} & ChildrenType;
 
 const transitionStates = {
   OPEN: "OPEN",
   CLOSING: "CLOSING",
 };
 
-const layout = ({ params, children }: layoutProps) => {
-  const router = useRouter();
+const layout = ({ children }: layoutProps) => {
   const [openState, setOpenState] = useState(transitionStates.OPEN);
+  const navigate = useNavigate();
+  const params = useParams<{ pulse_id: string; board: string }>();
 
   const handleLayerClose = () => {
     setOpenState(transitionStates.CLOSING);
     const id = setTimeout(() => {
-      router.back();
+      navigate(`board/${params?.board}`);
       clearTimeout(id);
     }, 300);
   };
@@ -48,7 +48,7 @@ const layout = ({ params, children }: layoutProps) => {
         <ResizableSplit
           closed={isClosing}
           childMode={true}
-          id={params.pulse_id}
+          id={params?.pulse_id}
           onLeftPannelClick={handleLayerClose}
         >
           {isClosing ? (
