@@ -33,6 +33,7 @@ import { PulseType } from "@/types/pulseTypes";
 // Extra
 import { generatePictureFallback, timeBetween } from "@/utils/helperFunctions";
 import { StateSetter } from "@/types/genericTypes";
+import { SingleChatContext } from "@/hooks/useSingleChat";
 
 type SingleChatBoxProps = {
   chat: ChatType;
@@ -93,130 +94,98 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
     [deleteSingleChat]
   );
 
-  const hasThread = chat?.threadCount > 0;
-
   return isLoading === true ? (
     <div className="w-full">
       <PulseChatSkeletonLoader onlyChat={true} />
     </div>
   ) : (
-    <div
-      className={cn(
-        "max-w-[40rem] w-full",
-        "transition-all duration-300",
-        "flex flex-col shrink-0 animate-fadeIn",
-        "single-chat-cont rounded-lg border-2 border-main-light"
-      )}
-    >
-      <div className="single-chat-editor flex flex-col min-h-32 p-4 pb-2 gap-3">
-        <div className="chat-avatar gap-3 flex flex-row items-center justify-between">
-          <div className="flex items-center gap-3">
-            <AvatarComp
-              src={chat.createdBy.picture}
-              fallback={generatePictureFallback(chat?.createdBy?.username)}
-            />
-            <h1>{startCase(chat?.createdBy?.username)}</h1>
-          </div>
-          <div className="chat-actions flex flex-row">
-            <TooltipComp
-              className={cn(
-                "border-[1px] border-main-active",
-                "shadow-black shadow-lg"
-              )}
-              title={
-                <div className="p-2 px-4 text-sm opacity-90">
-                  {userFriendlyDate}
-                </div>
-              }
-            >
-              <div className="flex flex-row gap-2 items-center opacity-60 cursor-pointer">
-                <Timer size={15} color="white" />
-                <h1 className="text-sm">{displayText}</h1>
-              </div>
-            </TooltipComp>
-            <PopoverComp
-              additional={{ content: { align: "end" } }}
-              classNames={{
-                content: "bg-main-fg shadow-lg shadow-black w-fit",
-              }}
-              trigger={
-                <Button variant={"ghost"} size={"sm"}>
-                  <Settings color="white" size={15} />
-                </Button>
-              }
-              content={
-                <ChatActions
-                  isDeleting={saveState === saveStateConfig.DELETING}
-                  chat={chat}
-                  deleteChat={deleteChat}
-                  setIsEditing={setIsEditing}
-                />
-              }
-            />
-          </div>
-        </div>
-        {isEditing === true ? (
-          <Textarea
-            disabled={saveState === saveStateConfig.SAVING}
-            value={chat.draft ? chat.draft : chat.content}
-            dynamicHeight={true}
-            className="border-highlighter border-[1px]"
-            placeholder="White an update ..."
-            onChange={(e) => {
-              const value = e.target.value;
-              setchat((pc) => ({ ...pc, content: value, draft: value }));
-              updateChatDraft(value, masterChat._id);
-            }}
-          />
-        ) : (
-          <ChatContentViwer chat={chat} />
+    <SingleChatContext.Provider value={{ chat: chat, isEditing: isEditing }}>
+      <div
+        className={cn(
+          "max-w-[40rem] w-full",
+          "transition-all duration-300",
+          "flex flex-col shrink-0 animate-fadeIn",
+          "single-chat-cont rounded-lg border-2 border-main-light"
         )}
-      </div>
-      <ViewedBy viewers={chat.seenBy} />
-      {isEditing === true ? (
-        <SaveAndCancelButton
-          disabled={saveState === saveStateConfig.SAVING}
-          loading={saveState === saveStateConfig.SAVING}
-          onCancelClick={onCancelClick}
-          onSaveClick={onSaveClick}
-        />
-      ) : (
-        <div
-          className={cn(
-            "h-fit flex flex-row border-transparent border-t-main-light border-2",
-            hasThread &&
-              "border-b-2 border-x-transparent border-main-light rounded-md"
+      >
+        <div className="single-chat-editor flex flex-col min-h-32 p-4 pb-2 gap-3">
+          <div className="chat-avatar gap-3 flex flex-row items-center justify-between">
+            <div className="flex items-center gap-3">
+              <AvatarComp
+                src={chat.createdBy.picture}
+                fallback={generatePictureFallback(chat?.createdBy?.username)}
+              />
+              <h1>{startCase(chat?.createdBy?.username)}</h1>
+            </div>
+            <div className="chat-actions flex flex-row">
+              <TooltipComp
+                className={cn(
+                  "border-[1px] border-main-active",
+                  "shadow-black shadow-lg"
+                )}
+                title={
+                  <div className="p-2 px-4 text-sm opacity-90">
+                    {userFriendlyDate}
+                  </div>
+                }
+              >
+                <div className="flex flex-row gap-2 items-center opacity-60 cursor-pointer">
+                  <Timer size={15} color="white" />
+                  <h1 className="text-sm">{displayText}</h1>
+                </div>
+              </TooltipComp>
+              <PopoverComp
+                additional={{ content: { align: "end" } }}
+                classNames={{
+                  content: "bg-main-fg shadow-lg shadow-black w-fit",
+                }}
+                trigger={
+                  <Button variant={"ghost"} size={"sm"}>
+                    <Settings color="white" size={15} />
+                  </Button>
+                }
+                content={
+                  <ChatActions
+                    isDeleting={saveState === saveStateConfig.DELETING}
+                    chat={chat}
+                    deleteChat={deleteChat}
+                    setIsEditing={setIsEditing}
+                  />
+                }
+              />
+            </div>
+          </div>
+          {isEditing === true ? (
+            <Textarea
+              disabled={saveState === saveStateConfig.SAVING}
+              value={chat.draft ? chat.draft : chat.content}
+              dynamicHeight={true}
+              className="border-highlighter border-[1px]"
+              placeholder="White an update ..."
+              onChange={(e) => {
+                const value = e.target.value;
+                setchat((pc) => ({ ...pc, content: value, draft: value }));
+                updateChatDraft(value, masterChat._id);
+              }}
+            />
+          ) : (
+            <ChatContentViwer chat={chat} />
           )}
-        >
-          <Button
-            variant={"ghost"}
-            size={"sm"}
-            className={cn(
-              "overflow-hidden py-0 rounded-[1px] transition-all duration-200",
-              "grow gap-3 flex flex-row items-center m-1"
-            )}
-          >
-            <ThumbsUp color="white" size={16} />
-            <h1 className="text-base">Like</h1>
-          </Button>
-
-          <Divider horizontal className="w-1" />
-          <Button
-            size={"sm"}
-            variant={"ghost"}
-            className={cn(
-              "overflow-hidden py-0 rounded-[1px] transition-all duration-200",
-              "grow gap-3 flex flex-row items-center m-1"
-            )}
-          >
-            <Reply color="white" size={16} />
-            <h1 className="text-base">Reply</h1>
-          </Button>
         </div>
-      )}
+        <ViewedBy viewers={chat.seenBy} />
 
-      {hasThread === true && <Threads chat={chat} />}
-    </div>
+        {isEditing === true && (
+          <SaveAndCancelButton
+            disabled={saveState === saveStateConfig.SAVING}
+            loading={saveState === saveStateConfig.SAVING}
+            onCancelClick={onCancelClick}
+            onSaveClick={onSaveClick}
+          />
+        )}
+
+        <Threads />
+      </div>
+    </SingleChatContext.Provider>
   );
 };
 

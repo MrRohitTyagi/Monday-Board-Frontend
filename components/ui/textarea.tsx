@@ -7,14 +7,37 @@ export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   maxHeight?: boolean;
   dynamicHeight?: boolean;
+  handleCtrlEnter?: () => void;
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
-    { className, maxHeight = true, dynamicHeight, value = "", ...props },
+    {
+      className,
+      maxHeight = true,
+      dynamicHeight,
+      value = "",
+      handleCtrlEnter,
+      ...props
+    },
     ref
   ) => {
+    const keyRecordRef = React.useRef("");
     //
+    const handleKeyDown = React.useCallback(
+      (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        const key = e.key;
+        console.log("key", key);
+        if (key === "Enter" && keyRecordRef.current === "Control") {
+          handleCtrlEnter?.();
+          keyRecordRef.current = key;
+        } else {
+          keyRecordRef.current = key;
+        }
+      },
+      [handleCtrlEnter]
+    );
+
     const rows = React.useMemo(() => {
       if (typeof value === "string") {
         return value.split("\n").length;
@@ -23,6 +46,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     return (
       <textarea
+        onKeyDown={handleKeyDown}
         rows={dynamicHeight === true ? rows : undefined}
         value={value}
         className={cn(

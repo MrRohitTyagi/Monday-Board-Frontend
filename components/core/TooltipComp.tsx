@@ -31,7 +31,7 @@ const TooltipComp = ({
             align={align}
             side={side}
             className={cn(
-              "TooltipContent z-10 animate",
+              "TooltipContent z-100 animate",
               "bg-main-fg overflow-hidden",
               "text-white border-main-light border-[1px]",
               "rounded-lg transition-all",

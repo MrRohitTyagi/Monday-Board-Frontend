@@ -1,9 +1,10 @@
 "use client";
 
+import Textrenderer from "@/components/core/Textrenderer";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ChatType } from "@/types/chatTypes";
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { Fragment, memo, useEffect, useMemo, useState } from "react";
 
 type ChatContentViwerProps = {
   chat: ChatType;
@@ -19,21 +20,6 @@ const ChatContentViwer = ({ chat }: ChatContentViwerProps) => {
     setViewFull(!isLong);
   }, [isLong]);
 
-  const BodyRenderer = memo(({ str = "" }: { str: string }) => {
-    const stringWithBreaks = str.split("\n");
-    return (
-      <>
-        {stringWithBreaks.map((l = "") => {
-          return (
-            <>
-              {l} <br />
-            </>
-          );
-        })}
-      </>
-    );
-  });
-
   return (
     <div className="relative animate-fadeIn">
       <div
@@ -45,7 +31,7 @@ const ChatContentViwer = ({ chat }: ChatContentViwerProps) => {
           viewFull == false && "overflow-hidden"
         )}
       >
-        <BodyRenderer str={chat.content} />
+        <Textrenderer str={chat.content} />
       </div>
       {viewFull === false && (
         <Button

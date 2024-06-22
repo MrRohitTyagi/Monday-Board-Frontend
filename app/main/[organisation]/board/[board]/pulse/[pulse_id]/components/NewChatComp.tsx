@@ -50,18 +50,9 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     setIsSaving(false);
   }, [user_id, pulse._id, createNewChat, content]);
 
-  const prevKeyRef = useRef("");
-
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === "Enter" && prevKeyRef.current === "Control") {
-        handleCreateNew();
-      } else {
-        prevKeyRef.current = e.key;
-      }
-    },
-    [handleCreateNew]
-  );
+  const handleKeyDown = useCallback(() => {
+    handleCreateNew();
+  }, [handleCreateNew]);
 
   return (
     <>
@@ -77,7 +68,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
             <Textarea
               dynamicHeight={true}
               disabled={isSaving}
-              onKeyDown={handleKeyDown}
+              handleCtrlEnter={handleKeyDown}
               ref={(e) => {
                 e?.focus();
               }}
@@ -91,7 +82,6 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
                 "w-full opacity-80",
                 "h-fit shrink-0",
                 "border-highlighter border"
-                // " border-highlighter border"
               )}
             />
           </div>

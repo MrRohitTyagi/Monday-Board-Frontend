@@ -40,6 +40,7 @@ const config = {
         "card-width": "20rem",
       },
       colors: {
+        "main-delete": "#dc5e5ef0",
         "border-light": "#524f4f",
         highlighter: "#0073ea",
         "pulse-divider": "#747171",
