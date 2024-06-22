@@ -23,11 +23,10 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     ref
   ) => {
     const keyRecordRef = React.useRef("");
-    //
+
     const handleKeyDown = React.useCallback(
       (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         const key = e.key;
-        console.log("key", key);
         if (key === "Enter" && keyRecordRef.current === "Control") {
           handleCtrlEnter?.();
           keyRecordRef.current = key;

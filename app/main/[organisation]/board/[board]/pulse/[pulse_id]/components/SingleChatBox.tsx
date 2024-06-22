@@ -4,7 +4,6 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 
 //core
 import AvatarComp from "@/components/core/AvatarComp";
-import Divider from "@/components/core/Divider";
 import TooltipComp from "@/components/core/TooltipComp";
 import PopoverComp from "@/components/core/PopoverComp";
 
@@ -34,6 +33,7 @@ import { PulseType } from "@/types/pulseTypes";
 import { generatePictureFallback, timeBetween } from "@/utils/helperFunctions";
 import { StateSetter } from "@/types/genericTypes";
 import { SingleChatContext } from "@/hooks/useSingleChat";
+import Divider from "@/components/core/Divider";
 
 type SingleChatBoxProps = {
   chat: ChatType;
@@ -50,6 +50,7 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
   const [isEditing, setIsEditing] = useState(!isEmpty(masterChat.draft));
   const [isLoading, setIsLoading] = useState(true);
   const [saveState, setSaveState] = useState("");
+  const [openNewChatBox, setOpenNewChatBox] = useState(false);
 
   const { updateChatContent, updateChatDraft, deleteSingleChat } = useChat();
 
@@ -94,12 +95,28 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
     [deleteSingleChat]
   );
 
+  const updateThreadCount = useCallback((state: "ADD" | "SUB") => {
+    setchat((pc) => {
+      const threadCount =
+        state === "ADD" ? pc.threadCount + 1 : pc.threadCount - 1;
+      return { ...pc, threadCount: threadCount };
+    });
+  }, []);
+
   return isLoading === true ? (
     <div className="w-full">
       <PulseChatSkeletonLoader onlyChat={true} />
     </div>
   ) : (
-    <SingleChatContext.Provider value={{ chat: chat, isEditing: isEditing }}>
+    <SingleChatContext.Provider
+      value={{
+        chat: chat,
+        isEditing: isEditing,
+        openNewChatBox,
+        setOpenNewChatBox,
+        updateThreadCount,
+      }}
+    >
       <div
         className={cn(
           "max-w-[40rem] w-full",
@@ -182,8 +199,42 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
             onSaveClick={onSaveClick}
           />
         )}
+        {isEditing === false && (
+          <div
+            className={cn(
+              "h-fit flex flex-row border-transparent border-t-main-light border-2",
 
-        <Threads />
+              "border-b-2 border-x-transparent border-main-light"
+            )}
+          >
+            <Button
+              variant={"ghost"}
+              size={"sm"}
+              className={cn(
+                "overflow-hidden py-0 rounded-[1px] transition-all duration-200",
+                "grow gap-3 flex flex-row items-center m-1"
+              )}
+            >
+              <ThumbsUp color="white" size={16} />
+              <h1 className="text-base">Like</h1>
+            </Button>
+
+            <Divider horizontal className="w-1" />
+            <Button
+              onClick={() => setOpenNewChatBox(true)}
+              size={"sm"}
+              variant={"ghost"}
+              className={cn(
+                "overflow-hidden py-0 rounded-[1px] transition-all duration-200",
+                "grow gap-3 flex flex-row items-center m-1"
+              )}
+            >
+              <Reply color="white" size={16} />
+              <h1 className="text-base">Reply</h1>
+            </Button>
+          </div>
+        )}
+        {(chat.threadCount > 0 || openNewChatBox === true) && <Threads />}
       </div>
     </SingleChatContext.Provider>
   );

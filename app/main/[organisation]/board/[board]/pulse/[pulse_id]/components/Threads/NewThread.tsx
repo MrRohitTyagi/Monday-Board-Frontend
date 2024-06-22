@@ -4,7 +4,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { createThread } from "@/gateways/thread-gateway";
 import useSingleChat from "@/hooks/useSingleChat";
 import { cn } from "@/lib/utils";
-import { ChatType } from "@/types/chatTypes";
 import { StateSetter } from "@/types/genericTypes";
 import { ThreadType } from "@/types/threadType";
 import { useAuth } from "@/zstore";
@@ -21,17 +20,17 @@ const NewThread = ({ setThreads, setOpenNewChatBox }: NewThreadProps) => {
   const [value, setvalue] = useState("");
 
   const { user } = useAuth();
-  const { chat } = useSingleChat();
+  const { chat, updateThreadCount } = useSingleChat();
 
   const handleAddNewThread = useCallback(async () => {
     const payload = { content: value, chatId: chat._id };
     const newThread = await createThread(payload);
     setThreads((pt) => [...pt, newThread]);
     setOpenNewChatBox(false);
+    updateThreadCount("ADD");
   }, [user._id, chat._id, value]);
 
   const handleCtrlEnter = useCallback(() => {
-    console.log("aya");
     handleAddNewThread();
   }, [handleAddNewThread]);
 

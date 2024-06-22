@@ -14,6 +14,7 @@ import useLoading from "@/hooks/useLoading";
 import AsyncButton from "@/components/core/AsyncButton";
 import { StateSetter } from "@/types/genericTypes";
 import ThreadActions from "./ThreadActions";
+import useSingleChat from "@/hooks/useSingleChat";
 
 type SingleThreadProps = {
   mainThread: ThreadType;
@@ -21,6 +22,8 @@ type SingleThreadProps = {
 };
 const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
   const [thread, setthread] = useState<ThreadType>({} as ThreadType);
+  const { updateThreadCount } = useSingleChat();
+
   const {
     isLoading,
     isEditing,
@@ -52,6 +55,7 @@ const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
       return pts.filter((t) => t._id !== mainThread._id);
     });
     triggerDeleting(false);
+    updateThreadCount("SUB");
   }, [mainThread._id]);
 
   return isLoading === true ? (
