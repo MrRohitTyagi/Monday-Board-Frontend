@@ -90,18 +90,15 @@ const Notification = ({
           </div>
         ) : (
           <div
-            className={cn(
-              "noti-main-container",
-              "bg-main-fg w-full h-full p-3"
-            )}
+            className={cn("noti-main-container", "bg-main-fg w-full h-full flex flex-col")}
           >
             <NotificationHeader
               handleMarkAllAsRead={handleMarkAllAsRead}
               handleDeleteAll={handleDeleteAll}
               handleLayerClose={handleLayerClose}
             />
-            <Space />
-            <div className="full flex-col flex gap-2">
+            {/* <Space /> */}
+            <div className="flex flex-col gap-2 h-full overflow-y-auto p-2">
               {notifications.map((notification) => {
                 return (
                   <NotificationCard

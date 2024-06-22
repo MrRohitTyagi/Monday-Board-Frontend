@@ -39,12 +39,18 @@ const NotificationCard = ({
         "notification-card-cont transition-all animate-fadeIn",
         "min-h-16 h-fit w-full rounded-lg",
         "flex flex-row py-4 px-3",
-        "shrink-0 border border-main-light",
-        notification.seen === false
-          ? "hover:bg-main-active-dark"
-          : "hover:border-highlighter border",
-        notification.seen === false && "bg-main-active-dark",
-        "relative group opacity-0"
+        "shrink-0 relative group opacity-0",
+        notification.seen === true && "bg-main-bg",
+        notification.seen === false && "bg-main-active",
+        notification.seen === false && "hover:bg-main-active",
+
+        "border border-main-light",
+        "hover:!border-highlighter"
+
+        // notification.seen === false
+        //   ? "hover:bg-main-active-dark"
+        //   : "hover:border-highlighter border",
+        // notification.seen === false && "bg-main-active-dark"
       )}
     >
       <TooltipComp title={"Mark as read"} className="z-[9999] px-3 py-2">

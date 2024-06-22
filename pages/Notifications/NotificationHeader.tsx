@@ -20,7 +20,7 @@ const NotificationHeader = ({
   return (
     <div
       className={cn(
-        "animate-chat-cont-heading",
+        "animate-chat-cont-heading p-2 pb-0",
         "flex flex-col shrink-0 animate-fadeIn"
       )}
     >
