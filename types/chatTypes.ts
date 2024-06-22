@@ -6,7 +6,7 @@ export type ChatType = {
   createdAt: string;
   updatedAt: string;
   createdBy: UserType;
-  thread: ChatType[];
+  threadCount: number;
   seenBy: UserType[];
   content: string;
   draft: string;
