@@ -4,14 +4,14 @@ import React, { memo, useMemo, useState } from "react";
 import { Bell, UserRoundPlus } from "lucide-react";
 
 import { Button } from "../ui/button";
-import UserProfile from "@/pages/UserProfile";
+import UserProfile from "@/components/pages/UserProfile";
 import { useAuth } from "@/zstore";
 import { cn } from "@/lib/utils";
 import TooltipComp from "./TooltipComp";
 import { useParams } from "next/navigation";
 import DialogueComp from "./DialogueComp";
-import UserInvite from "@/pages/UserInvite";
-import Notification from "@/components/pages/Notifications";
+import UserInvite from "@/components/pages/UserInvite";
+import Notification from "@/components/pages/Notifications/Notifications";
 
 type Props = {};
 

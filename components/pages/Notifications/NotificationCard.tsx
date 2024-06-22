@@ -28,10 +28,7 @@ const NotificationCard = ({
     return timeBetween(notification.createdAt);
   }, [notification.createdAt]);
 
-  console.log("notification", notification.createdAt);
   const navigate = useNavigate();
-
-  if (!notification._id) return null;
 
   return (
     <Button
