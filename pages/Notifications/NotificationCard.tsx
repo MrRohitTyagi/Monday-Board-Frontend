@@ -18,7 +18,7 @@ type NotificationCardProps = {
   handleLayerClose: () => void;
 };
 const NotificationCard = ({
-  notification,
+  notification = {} as NotificationType,
   // setNotifications,
   handleMarkAsRead,
   handleLayerClose,
@@ -41,7 +41,7 @@ const NotificationCard = ({
         "flex flex-row py-4 px-3",
         "shrink-0 relative group opacity-0",
         notification.seen === true && "bg-main-bg",
-        notification.seen === false && "bg-main-active",
+        notification.seen === false && "bg-main-active-dark",
         notification.seen === false && "hover:bg-main-active",
 
         "border border-main-light",
@@ -53,17 +53,23 @@ const NotificationCard = ({
         // notification.seen === false && "bg-main-active-dark"
       )}
     >
-      <TooltipComp title={"Mark as read"} className="z-[9999] px-3 py-2">
-        <div className="absolute right-0 bottom-0 group-hover:opacity-100">
-          <Button
-            onClick={() => handleMarkAsRead(notification._id)}
-            className="flex z-50 flex-row gap-2 hover:bg-transparent"
-            variant={"ghost"}
-          >
-            <CheckCircle size={20} />
-          </Button>
-        </div>
-      </TooltipComp>
+      {notification.seen === false && (
+        <TooltipComp title={"Mark as read"} className="z-[9999] px-3 py-2">
+          <div className="absolute right-0 bottom-0 group-hover:opacity-100">
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleMarkAsRead(notification._id);
+              }}
+              className="flex z-50 flex-row gap-2 hover:bg-transparent"
+              variant={"ghost"}
+            >
+              <CheckCircle size={20} />
+            </Button>
+          </div>
+        </TooltipComp>
+      )}
 
       {/* // */}
       <div className="noti-profile flex flex-row justify-center min-w-20 max-w-20 shrink-0">
