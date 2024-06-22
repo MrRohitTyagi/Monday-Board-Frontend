@@ -1,14 +1,14 @@
 "use client";
 
 import React, { memo, useEffect, useState } from "react";
-import Header from "./components/Header";
+import Header from "./components/chat/Header";
 import { getPulse } from "@/gateways/pulse-gateway";
 import { cn } from "@/lib/utils";
-import PulseChatSkeletonLoader from "./components/PulseChatSkeletonLoader";
-import SingleChatBox from "./components/SingleChatBox";
+import PulseChatSkeletonLoader from "./components/chat/PulseChatSkeletonLoader";
+import SingleChatBox from "./components/chat/SingleChatBox";
 import Space from "@/components/core/Space";
 import { getChats } from "@/gateways/chat-gateway";
-import NewChatComp from "./components/NewChatComp";
+import NewChatComp from "./components/chat/NewChatComp";
 import { PulseType } from "@/types/pulseTypes";
 import { ChatType } from "@/types/chatTypes";
 

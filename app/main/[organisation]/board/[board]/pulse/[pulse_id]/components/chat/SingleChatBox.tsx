@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 import ViewedBy from "./ViewedBy";
 import ChatContentViwer from "./ChatContentViwer";
 import PulseChatSkeletonLoader from "./PulseChatSkeletonLoader";
-import Threads from "./Threads/Threads";
+import Threads from "../Threads/Threads";
 import ChatActions from "./ChatActions";
 import SaveAndCancelButton from "./SaveAndCancelButton";
 
