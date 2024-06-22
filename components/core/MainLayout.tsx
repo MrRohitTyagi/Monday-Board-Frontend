@@ -1,13 +1,13 @@
 "use client";
 import React, { memo } from "react";
 // types
-import { ChildrenType } from "@/types";
 
 // Components
 import Navbar from "./Navbar";
 import SideMenu from "@/pages/Sidemenu";
 import { cn } from "@/lib/utils";
 import { useAuth, useSideMenu } from "@/zstore";
+import { ChildrenType } from "@/types/genericTypes";
 
 type MainLayoutProps = ChildrenType & {};
 

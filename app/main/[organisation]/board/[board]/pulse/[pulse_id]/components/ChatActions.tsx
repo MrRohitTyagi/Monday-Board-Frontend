@@ -2,8 +2,8 @@
 
 import Loader from "@/components/core/Loader";
 import { Button } from "@/components/ui/button";
-import { StateSetter } from "@/types";
 import { ChatType } from "@/types/chatTypes";
+import { StateSetter } from "@/types/genericTypes";
 import { useAuth } from "@/zstore";
 import { Edit, Pin, Trash2 } from "lucide-react";
 import React, { memo } from "react";

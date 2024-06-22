@@ -1,6 +1,6 @@
 "use client";
 
-import { ChildrenType } from "@/types";
+import { ChildrenType } from "@/types/genericTypes";
 import { getToken } from "@/utils/cookie";
 import { useAuth } from "@/zstore";
 import { useRouter } from "next/navigation";

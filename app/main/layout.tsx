@@ -1,10 +1,10 @@
 "use client";
 import React, { memo, useEffect } from "react";
 
-import { ChildrenType } from "@/types";
 import { getToken } from "@/utils/cookie";
 import { useAuth } from "@/zstore";
 import { useRouter } from "next/navigation";
+import { ChildrenType } from "@/types/genericTypes";
 
 type MainEntryPointProps = ChildrenType;
 const MainEntryPoint = ({ children }: MainEntryPointProps) => {

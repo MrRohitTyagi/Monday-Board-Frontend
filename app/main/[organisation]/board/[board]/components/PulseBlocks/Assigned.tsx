@@ -15,7 +15,6 @@ import { PulseContext, baseCssMiniItems } from "../Pulse";
 import PopoverComp from "@/components/core/PopoverComp";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { StateSetter } from "@/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import AvatarGroup from "@/components/core/AvatarGroup";
@@ -24,6 +23,7 @@ import { Trash2 } from "lucide-react";
 import { BoardType } from "@/types/boardTypes";
 import { PulseType } from "@/types/pulseTypes";
 import { UserType } from "@/types/userTypes";
+import { StateSetter } from "@/types/genericTypes";
 
 type AssignedProps = {
   board: BoardType;

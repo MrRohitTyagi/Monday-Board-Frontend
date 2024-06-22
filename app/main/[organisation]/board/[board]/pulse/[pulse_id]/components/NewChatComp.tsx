@@ -1,7 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { StateSetter } from "@/types";
 import { useAuth } from "@/zstore";
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import SaveAndCancelButton from "./SaveAndCancelButton";
@@ -10,6 +9,7 @@ import useChat from "@/hooks/useChat";
 import Space from "@/components/core/Space";
 import { ChatType } from "@/types/chatTypes";
 import { PulseType } from "@/types/pulseTypes";
+import { StateSetter } from "@/types/genericTypes";
 
 type NewChatCompProps = { setChats: StateSetter<ChatType[]>; pulse: PulseType };
 

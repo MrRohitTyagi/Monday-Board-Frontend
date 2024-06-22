@@ -17,9 +17,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { cn, waitfor } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { login, signup } from "@/gateways/auth-gateway";
 import { toast } from "sonner";
 import { useAuth } from "@/zstore";
 import { setToken } from "@/utils/cookie";
@@ -27,8 +26,8 @@ import Loader from "@/components/core/Loader";
 import { uploadImage } from "@/utils/imageupload";
 import { getSchema, getfields } from "../(auth-routes)/login/utils";
 import { acceptInvitation, getInvitation } from "@/gateways/invitation-gateway";
-import { InvitationConfigType } from "@/types";
 import { AlertTriangle } from "lucide-react";
+import { InvitationConfigType } from "@/types/genericTypes";
 
 type InviteProps = {};
 

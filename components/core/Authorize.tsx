@@ -1,12 +1,12 @@
 "use client";
 import React, { memo, useEffect, useMemo, useState } from "react";
-import { ChildrenType } from "@/types";
 import MainLayout from "./MainLayout";
 import { useAuth } from "@/zstore";
 import { cn } from "@/lib/utils";
 import { getToken } from "@/utils/cookie";
 import useNavigate from "@/hooks/useNavigate";
 import { usePathname, useRouter } from "next/navigation";
+import { ChildrenType } from "@/types/genericTypes";
 
 type AuthorizeTypes = ChildrenType & {};
 

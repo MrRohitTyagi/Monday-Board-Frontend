@@ -3,10 +3,10 @@
 import ResizableSplit from "@/components/core/ResizableSplit";
 import React, { memo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChildrenType } from "@/types";
 import { cn } from "@/lib/utils";
 import { PulseChatContext } from "@/hooks/usePulseChat";
 import Loader from "@/components/core/Loader";
+import { ChildrenType } from "@/types/genericTypes";
 
 type layoutProps = {
   params: { pulse_id: string };

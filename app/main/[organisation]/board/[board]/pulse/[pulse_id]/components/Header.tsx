@@ -5,11 +5,11 @@ import React, { memo } from "react";
 import PopoverComp from "@/components/core/PopoverComp";
 import { Button } from "@/components/ui/button";
 import { Copy, Settings2, X } from "lucide-react";
-import { StateSetter } from "@/types";
 import Divider from "@/components/core/Divider";
 import { cn } from "@/lib/utils";
 import usePulseChat from "@/hooks/usePulseChat";
 import { PulseType } from "@/types/pulseTypes";
+import { StateSetter } from "@/types/genericTypes";
 
 type HeaderProps = {
   pulse: PulseType;

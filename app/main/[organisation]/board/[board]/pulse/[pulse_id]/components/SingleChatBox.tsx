@@ -27,12 +27,12 @@ import SaveAndCancelButton from "./SaveAndCancelButton";
 import useChat from "@/hooks/useChat";
 
 //types
-import { StateSetter } from "@/types";
 import { ChatType } from "@/types/chatTypes";
 import { PulseType } from "@/types/pulseTypes";
 
 // Extra
 import { generatePictureFallback, timeBetween } from "@/utils/helperFunctions";
+import { StateSetter } from "@/types/genericTypes";
 
 type SingleChatBoxProps = {
   chat: ChatType;
