@@ -22,8 +22,7 @@ const SaveAndCancelButton = ({
     <div
       className={cn(
         "h-fit flex flex-row border-transparent",
-        "border-t-main-light border-2",
-        "animate-fadeIn"
+        "border-y-main-light border-2"
       )}
     >
       <Button
@@ -36,7 +35,7 @@ const SaveAndCancelButton = ({
           "grow gap-3 flex flex-row items-center m-1"
         )}
       >
-        <Trash2 color="white" size={16} />
+        <Trash2 color="white" size={16} className="stroke-main-delete" />
         <h1 className="text-base">Cancel</h1>
       </Button>
       <Divider horizontal className="w-1" />
@@ -50,7 +49,11 @@ const SaveAndCancelButton = ({
           "grow gap-3 flex flex-row items-center m-1"
         )}
       >
-        {loading === true ? <Loader /> : <Save color="white" size={16} />}
+        {loading === true ? (
+          <Loader className="h-4 w-4" />
+        ) : (
+          <Save className="stroke-highlighter" size={16} />
+        )}
         <h1 className="text-base">{loading === true ? "Saving..." : "Save"}</h1>
       </Button>
     </div>

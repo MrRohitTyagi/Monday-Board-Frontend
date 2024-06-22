@@ -83,4 +83,13 @@ function timeBetween(dateString: string, secondDate = null): TimeDifference {
   };
 }
 
+export function areDatesEqual(dateStr1: string, dateStr2: string) {
+  // Parse the date strings into Date objects
+  const date1 = new Date(dateStr1);
+  const date2 = new Date(dateStr2);
+
+  // Compare the time values of the two dates
+  return date1.getTime() === date2.getTime();
+}
+
 export { generatePictureFallback, timeBetween };

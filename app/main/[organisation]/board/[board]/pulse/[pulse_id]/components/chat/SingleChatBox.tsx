@@ -35,6 +35,7 @@ import { StateSetter } from "@/types/genericTypes";
 import { SingleChatContext } from "@/hooks/useSingleChat";
 import Divider from "@/components/core/Divider";
 import useLoading from "@/hooks/useLoading";
+import ChatInfo from "./ChatInfo";
 
 type SingleChatBoxProps = {
   chat: ChatType;
@@ -80,7 +81,12 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
   // save the chat content
   const onSaveClick = useCallback(async () => {
     triggerSaving(true);
-    await updateChatContent(chat.content, masterChat._id);
+    const updatedChat = await updateChatContent(chat.content, masterChat._id);
+    console.log(
+      `%c updatedChat `,
+      "color: orange;border:2px solid cyan",
+      updatedChat
+    );
     triggerEditing(false);
     triggerSaving(false);
   }, [chat, updateChatContent, masterChat._id]);
@@ -143,30 +149,19 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
               />
               <h1>{startCase(chat?.createdBy?.username)}</h1>
             </div>
-            <div className="chat-actions flex flex-row">
-              <TooltipComp
-                className={cn(
-                  "border-[1px] border-main-active",
-                  "shadow-black shadow-lg"
-                )}
-                title={
-                  <div className="p-2 px-4 text-sm opacity-90">
-                    {userFriendlyDate}
-                  </div>
-                }
-              >
-                <div className="flex flex-row gap-2 items-center opacity-60 cursor-pointer">
-                  <Timer size={15} color="white" />
-                  <h1 className="text-sm">{displayText}</h1>
-                </div>
-              </TooltipComp>
+            <div className="chat-actions flex flex-row gap-3">
+              <ChatInfo chat={masterChat} />
               <PopoverComp
                 additional={{ content: { align: "end" } }}
                 classNames={{
                   content: "bg-main-fg shadow-lg shadow-black w-fit",
                 }}
                 trigger={
-                  <Button variant={"ghost"} size={"sm"}>
+                  <Button
+                    variant={"ghost"}
+                    size={"sm"}
+                    className="p-0 opacity-80 hover:bg-transparent"
+                  >
                     <Settings color="white" size={15} />
                   </Button>
                 }

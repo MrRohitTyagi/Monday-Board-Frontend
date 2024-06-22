@@ -24,14 +24,14 @@ const TooltipComp = ({
 }: TooltipCompProps) => {
   return (
     <Tooltip.Provider>
-      <Tooltip.Root open={open} delayDuration={100}>
+      <Tooltip.Root open={open} delayDuration={delayDuration}>
         <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
         <Tooltip.Portal>
           <Tooltip.Content
             align={align}
             side={side}
             className={cn(
-              "TooltipContent z-100 animate",
+              "TooltipContent z-99999 animate",
               "bg-main-fg overflow-hidden",
               "text-white border-main-light border-[1px]",
               "rounded-lg transition-all",

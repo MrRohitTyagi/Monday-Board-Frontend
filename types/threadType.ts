@@ -5,4 +5,6 @@ export type ThreadType = {
   chatId: string;
   createdBy: UserType;
   content: string;
+  createdAt: string;
+  updatedAt: string;
 };

@@ -40,7 +40,7 @@ const ThreadSkeletonLoader = ({ count = 3 }: ThreadSkeletonLoaderProps) => {
                 </h1>
 
                 <h1 className="opacity-80 text-sm">
-                  <Skeleton className="h-20 w-full" />
+                  <Skeleton className="h-12 w-full" />
                 </h1>
               </div>
             </div>

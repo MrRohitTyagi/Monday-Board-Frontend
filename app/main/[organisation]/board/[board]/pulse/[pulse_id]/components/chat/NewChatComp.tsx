@@ -1,12 +1,10 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/zstore";
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import SaveAndCancelButton from "./SaveAndCancelButton";
 import useLoacalStorageChat from "@/hooks/useLoacalStorageChat";
 import useChat from "@/hooks/useChat";
-import Space from "@/components/core/Space";
 import { ChatType } from "@/types/chatTypes";
 import { PulseType } from "@/types/pulseTypes";
 import { StateSetter } from "@/types/genericTypes";
@@ -22,10 +20,6 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     deleteLocal,
   } = useLoacalStorageChat(pulse._id);
 
-  const {
-    user: { _id: user_id },
-  } = useAuth();
-
   const [isEditing, setIsEditing] = useState(haveDraft);
   const { createNewChat } = useChat();
   const [text, settext] = useState(content);
@@ -39,7 +33,6 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     setIsSaving(true);
     const payload = {
       content: content,
-      createdBy: user_id,
       pulseId: pulse._id,
     };
 
@@ -49,7 +42,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     setIsEditing(false);
     settext("");
     setIsSaving(false);
-  }, [user_id, pulse._id, createNewChat, content]);
+  }, [pulse._id, createNewChat, content]);
 
   const handleKeyDown = useCallback(() => {
     handleCreateNew();
@@ -99,14 +92,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
             placeholder="Write an update..."
           />
         )}
-        {(haveDraft === true || isEditing === true) && (
-          <>
-            <Space />
-            <div className="w-row justify-end px-2">
-              <h2 className="text-sm opacity-80">Draft</h2>
-            </div>
-          </>
-        )}
+
         {isEditing === true && (
           <SaveAndCancelButton
             loading={isSaving}

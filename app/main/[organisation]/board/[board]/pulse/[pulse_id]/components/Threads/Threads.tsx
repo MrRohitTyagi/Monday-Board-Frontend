@@ -25,7 +25,7 @@ const Threads = ({}: ThreadsProps) => {
   useEffect(() => {
     async function init() {
       const threads = await getThreads(chat._id);
-      await waitfor();
+      // await waitfor();
       setThreads(threads);
       triggerLoading(false);
     }

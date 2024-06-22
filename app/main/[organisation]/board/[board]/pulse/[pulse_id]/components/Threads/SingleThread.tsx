@@ -15,6 +15,8 @@ import AsyncButton from "@/components/core/AsyncButton";
 import { StateSetter } from "@/types/genericTypes";
 import ThreadActions from "./ThreadActions";
 import useSingleChat from "@/hooks/useSingleChat";
+import ThreadInfo from "./ThreadInfo";
+import Space from "@/components/core/Space";
 
 type SingleThreadProps = {
   mainThread: ThreadType;
@@ -43,7 +45,9 @@ const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
   const handleThreadSave = useCallback(async () => {
     triggerSaving(true);
     const payload = { _id: thread._id, content: thread.content };
-    await updateThread(payload);
+    const updatedThread = await updateThread(payload);
+
+    setthread(updatedThread);
     triggerSaving(false);
     triggerEditing(false);
   }, [thread._id, thread.content, triggerSaving]);
@@ -61,16 +65,23 @@ const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
   return isLoading === true ? (
     <Loader />
   ) : (
-    <div className={cn("new-thread-cont", "flex flex-col gap-1", "p-3")}>
+    <div
+      className={cn(
+        "new-thread-cont",
+        "flex flex-col gap-1",
+        "p-3 animate-fadeIn"
+      )}
+    >
       <div className="flex flex-row gap-2 w-full">
-        <div className="new-thread-left w-10 shrink-0 py-2 items-end content-end">
+        <div className="new-thread-left w-10 shrink-0 py-2 items-start justify-end flex flex-col">
           <AvatarComp src={thread.createdBy.picture} className="h-8 w-8" />
+          <Space h={4} />
         </div>
 
         <div
           className={cn(
             "new-thread-right chat chat-start",
-            "flex flex-col gap-1 grow  w-full"
+            "flex flex-col grow  w-full gap-1"
           )}
         >
           <div
@@ -111,8 +122,11 @@ const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
               </h1>
             )}
           </div>
+
+          <ThreadInfo thread={thread} />
         </div>
       </div>
+
       {/* submitbuttons  */}
       {isEditing === true && (
         <div
