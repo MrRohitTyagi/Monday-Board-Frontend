@@ -1,7 +1,7 @@
 "use client";
 import useLoading from "@/hooks/useLoading";
 import { useAuth } from "@/zstore";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import NotificationSkeletonLoader from "./NotificationSkeletonLoader";
 import { cn, waitfor } from "@/lib/utils";
 import {
@@ -18,15 +18,20 @@ import Space from "@/components/core/Space";
 type NotificationProps = {
   openNotification: string;
   handleLayerClose: () => void;
-  transitionStates: {
+  transitionStates?: {
     [key: string]: string;
   };
+};
+const transitionStates = {
+  OPEN: "OPEN",
+  CLOSING: "CLOSING",
+  CLOSED: "CLOSED",
 };
 const Notification = ({
   openNotification,
   handleLayerClose,
-  transitionStates,
-}: NotificationProps) => {
+}: // transitionStates,
+NotificationProps) => {
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
   const { user } = useAuth();
   const { isLoading, triggerLoading } = useLoading({ defaultLoading: true });
@@ -82,7 +87,7 @@ const Notification = ({
         id={"Notification-slider"}
         onLeftPannelClick={handleLayerClose}
       >
-        {isLoading ? (
+        {isLoading === true ? (
           <div
             className={cn("noti-main-container bg-main-fg w-full h-full p-3")}
           >
@@ -90,7 +95,10 @@ const Notification = ({
           </div>
         ) : (
           <div
-            className={cn("noti-main-container", "bg-main-fg w-full h-full flex flex-col")}
+            className={cn(
+              "noti-main-container",
+              "bg-main-fg w-full h-full flex flex-col"
+            )}
           >
             <NotificationHeader
               handleMarkAllAsRead={handleMarkAllAsRead}
@@ -118,4 +126,4 @@ const Notification = ({
   );
 };
 
-export default Notification;
+export default memo(Notification);

@@ -11,7 +11,7 @@ import TooltipComp from "./TooltipComp";
 import { useParams } from "next/navigation";
 import DialogueComp from "./DialogueComp";
 import UserInvite from "@/pages/UserInvite";
-import Notification from "@/pages/Notifications";
+import Notification from "@/components/pages/Notifications";
 
 type Props = {};
 

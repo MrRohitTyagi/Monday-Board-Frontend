@@ -1,5 +1,5 @@
-import React from "react";
-
+"use client";
+import React, { memo, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { StateSetter } from "@/types/genericTypes";
 import { NotificationType } from "@/types/notificationTypes";
@@ -24,8 +24,14 @@ const NotificationCard = ({
   handleLayerClose,
 }: NotificationCardProps) => {
   //
-  const { displayText } = timeBetween(notification.createdAt);
+  const { displayText = "" } = useMemo(() => {
+    return timeBetween(notification.createdAt);
+  }, [notification.createdAt]);
+
+  console.log("notification", notification.createdAt);
   const navigate = useNavigate();
+
+  if (!notification._id) return null;
 
   return (
     <Button
@@ -75,7 +81,7 @@ const NotificationCard = ({
       <div className="noti-profile flex flex-row justify-center min-w-20 max-w-20 shrink-0">
         <AvatarComp
           className="h-12 w-12"
-          src={notification.createdBy.picture}
+          src={notification?.createdBy?.picture}
         />
       </div>
 
@@ -84,7 +90,7 @@ const NotificationCard = ({
           <div
             className="w-full opacity-80 text-ellipsis overflow-hidden"
             dangerouslySetInnerHTML={{
-              __html: `<h1 style="text-align:start;">${notification.createdBy.username} <strong class='noti-prefix'>${notification.prefix_text}</strong> ${notification.postfix_text}.</h1>`,
+              __html: `<h1 style="text-align:start;">${notification?.createdBy?.username} <strong class='noti-prefix'>${notification?.prefix_text}</strong> ${notification.postfix_text}.</h1>`,
             }}
           />
         </div>
@@ -94,11 +100,11 @@ const NotificationCard = ({
         </LowOpacityText>
 
         <LowOpacityText className="noti-footer text-gray-400 text-start">
-          {`${displayText} ▸ ${notification.attachedPulse.title}`}
+          {`${displayText} ▸ ${notification?.attachedPulse?.title}`}
         </LowOpacityText>
       </div>
     </Button>
   );
 };
 
-export default NotificationCard;
+export default memo(NotificationCard);

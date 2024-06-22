@@ -1,8 +1,8 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import React from "react";
-
 type NotificationSkeletonLoaderProps = {};
 const NotificationSkeletonLoader = (props: NotificationSkeletonLoaderProps) => {
   //

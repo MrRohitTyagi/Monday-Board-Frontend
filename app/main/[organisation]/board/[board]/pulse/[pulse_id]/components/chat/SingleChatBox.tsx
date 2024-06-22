@@ -81,12 +81,8 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
   // save the chat content
   const onSaveClick = useCallback(async () => {
     triggerSaving(true);
-    const updatedChat = await updateChatContent(chat.content, masterChat._id);
-    console.log(
-      `%c updatedChat `,
-      "color: orange;border:2px solid cyan",
-      updatedChat
-    );
+    await updateChatContent(chat.content, masterChat._id);
+
     triggerEditing(false);
     triggerSaving(false);
   }, [chat, updateChatContent, masterChat._id]);

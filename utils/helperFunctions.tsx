@@ -15,9 +15,9 @@ function formatDate(date: Date): string {
   const formattedDate: string = date
     .toLocaleDateString("en-GB", options)
     .replace(",", "");
-  const [day, month, year, prefix, time]: string[] = formattedDate.split(" ");
+  const [day, month, year, prefix, time]: string[] = formattedDate?.split(" ");
 
-  const [hrs, min] = time.split(":");
+  const [hrs='', min=''] = time?.split(":");
 
   const period: string = parseInt(hrs) >= 12 ? "PM" : "AM";
   const hrs12format = parseInt(hrs) % 12;

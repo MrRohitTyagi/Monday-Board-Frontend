@@ -1,5 +1,5 @@
+"use client";
 import React from "react";
-
 import Divider from "@/components/core/Divider";
 import PopoverComp from "@/components/core/PopoverComp";
 import { Button } from "@/components/ui/button";
