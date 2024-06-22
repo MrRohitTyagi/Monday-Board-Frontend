@@ -28,5 +28,18 @@ async function deleteNotifications(_id: string) {
     };
   }
 }
+async function updateNotification(payload: any) {
+  try {
+    await axiosInstance().put(
+      `${NOTIFICATION_BASE_URL}/update/${payload._id}`,
+      payload
+    );
+  } catch (error: any) {
+    return {
+      message: error.message,
+      success: error.success,
+    };
+  }
+}
 
-export { getNotifications, deleteNotifications };
+export { getNotifications, deleteNotifications, updateNotification };

@@ -1,15 +1,19 @@
 "use client";
 import useLoading from "@/hooks/useLoading";
 import { useAuth } from "@/zstore";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import NotificationSkeletonLoader from "./NotificationSkeletonLoader";
 import { cn, waitfor } from "@/lib/utils";
-import { getNotifications } from "@/gateways/notification-gateway";
+import {
+  getNotifications,
+  updateNotification,
+} from "@/gateways/notification-gateway";
 import { NotificationType } from "@/types/notificationTypes";
 import NotificationCard from "./NotificationCard";
 import ResizableSplit from "@/components/core/ResizableSplit";
 import { StateSetter } from "@/types/genericTypes";
 import NotificationHeader from "./NotificationHeader";
+import Space from "@/components/core/Space";
 
 type NotificationProps = {
   openNotification: string;
@@ -28,6 +32,30 @@ const Notification = ({
   const { isLoading, triggerLoading } = useLoading({ defaultLoading: true });
 
   const isClosing = openNotification === transitionStates.CLOSING;
+
+  const handleMarkAllAsRead = useCallback(() => {}, []);
+
+  const handleMarkAsRead = useCallback((_id: string) => {
+    setNotifications((pn) => {
+      return pn.map((n) => {
+        if (n._id === _id) return { ...n, seen: true };
+        else return n;
+      });
+    });
+    const payload = {
+      _id: _id,
+      seen: true,
+    };
+    updateNotification(payload);
+  }, []);
+
+  const handleDeleteAll = useCallback(() => {}, []);
+
+  console.log(
+    `%c notifications `,
+    "color: yellow;border:1px solid lightgreen",
+    notifications
+  );
 
   useEffect(() => {
     async function init() {
@@ -64,15 +92,21 @@ const Notification = ({
           <div
             className={cn(
               "noti-main-container",
-              "bg-main-fg w-full h-full",
-              "p-3"
+              "bg-main-fg w-full h-full p-3"
             )}
           >
-            <NotificationHeader handleLayerClose={handleLayerClose} />
+            <NotificationHeader
+              handleMarkAllAsRead={handleMarkAllAsRead}
+              handleDeleteAll={handleDeleteAll}
+              handleLayerClose={handleLayerClose}
+            />
+            <Space />
             <div className="full flex-col flex gap-2">
               {notifications.map((notification) => {
                 return (
                   <NotificationCard
+                    handleLayerClose={handleLayerClose}
+                    handleMarkAsRead={handleMarkAsRead}
                     key={notification._id}
                     notification={notification}
                     setNotifications={setNotifications}

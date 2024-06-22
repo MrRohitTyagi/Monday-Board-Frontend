@@ -80,7 +80,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
               placeholder="Write an update ..."
               className={cn(
                 "w-full opacity-80",
-                "h-fit shrink-0",
+                "shrink-0",
                 "border-highlighter border"
               )}
             />

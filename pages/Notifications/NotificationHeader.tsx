@@ -6,8 +6,17 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CheckCircle, Settings2, Trash2, X } from "lucide-react";
 
-type NotificationHeaderProps = { handleLayerClose: () => void };
-const NotificationHeader = ({ handleLayerClose }: NotificationHeaderProps) => {
+type NotificationHeaderProps = {
+  handleLayerClose: () => void;
+  handleMarkAllAsRead: () => void;
+  handleDeleteAll: () => void;
+};
+
+const NotificationHeader = ({
+  handleLayerClose,
+  handleDeleteAll,
+  handleMarkAllAsRead,
+}: NotificationHeaderProps) => {
   return (
     <div
       className={cn(
@@ -27,16 +36,16 @@ const NotificationHeader = ({ handleLayerClose }: NotificationHeaderProps) => {
             additional={{ content: { align: "end" } }}
             classNames={{ content: "bg-main-bg w-fit p-3" }}
             content={
-              <div className=" flex flex-col gap-1 items-center">
+              <div className=" flex flex-col gap-2 items-center">
                 <Button
-                  //   variant={"ghost"}
+                  onClick={handleMarkAllAsRead}
                   className="w-row w-full text-start items-start justify-start gap-3"
                 >
                   <CheckCircle />
                   <h1>Mark all are read</h1>
                 </Button>
                 <Button
-                  //   variant={"ghost"}
+                  onClick={handleDeleteAll}
                   className="w-row w-full text-start items-start justify-start gap-3"
                 >
                   <Trash2 />
