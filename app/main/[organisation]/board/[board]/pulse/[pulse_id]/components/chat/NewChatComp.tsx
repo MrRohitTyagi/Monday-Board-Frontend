@@ -10,6 +10,7 @@ import Space from "@/components/core/Space";
 import { ChatType } from "@/types/chatTypes";
 import { PulseType } from "@/types/pulseTypes";
 import { StateSetter } from "@/types/genericTypes";
+import OutsideClickBox from "@/components/core/OutsideClickBox";
 
 type NewChatCompProps = { setChats: StateSetter<ChatType[]>; pulse: PulseType };
 
@@ -56,7 +57,10 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
 
   return (
     <>
-      <div
+      <OutsideClickBox
+        onOutsideClick={() => {
+          setIsEditing(false);
+        }}
         className={cn(
           "max-w-[40rem] w-full shrink-0",
           "h-fit shrink-0 transition-all duration-300",
@@ -115,7 +119,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
             onSaveClick={handleCreateNew}
           />
         )}
-      </div>
+      </OutsideClickBox>
     </>
   );
 };

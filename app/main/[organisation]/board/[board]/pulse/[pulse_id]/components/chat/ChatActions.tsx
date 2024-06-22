@@ -3,20 +3,19 @@
 import Loader from "@/components/core/Loader";
 import { Button } from "@/components/ui/button";
 import { ChatType } from "@/types/chatTypes";
-import { StateSetter } from "@/types/genericTypes";
 import { useAuth } from "@/zstore";
 import { Edit, Pin, Trash2 } from "lucide-react";
 import React, { memo } from "react";
 
 type ChatActionsProps = {
-  setIsEditing: StateSetter<boolean>;
+  triggerEditing: (e: boolean) => void;
   deleteChat: (e: string) => void;
   chat: ChatType;
   isDeleting?: boolean;
 };
 
 const ChatActions = ({
-  setIsEditing,
+  triggerEditing,
   deleteChat,
   chat,
   isDeleting,
@@ -40,7 +39,7 @@ const ChatActions = ({
         <Button
           className="w-row gap-3 justify-start opacity-80"
           size={"sm"}
-          onClick={() => setIsEditing(true)}
+          onClick={() => triggerEditing(true)}
         >
           <Edit color="white" size={18} />
           <h1>Edit update</h1>

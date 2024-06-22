@@ -12,7 +12,10 @@ const ThreadSkeletonLoader = ({ count = 3 }: ThreadSkeletonLoaderProps) => {
     <div className={cn("new-thread-cont", "flex flex-col gap-1", "p-3")}>
       {threadsCount.map((_, i) => {
         return (
-          <div className="flex flex-row gap-2 w-full">
+          <div
+            className="flex flex-row gap-2 w-full"
+            key={i + "THREAD SKELETON LOADER"}
+          >
             <div className="new-thread-left w-10 shrink-0 py-2 items-end content-end">
               <Skeleton className="h-10 w-10 rounded-full" />
             </div>

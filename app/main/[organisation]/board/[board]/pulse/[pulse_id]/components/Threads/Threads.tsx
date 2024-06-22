@@ -20,7 +20,7 @@ const Threads = ({}: ThreadsProps) => {
   const { chat, openNewChatBox, setOpenNewChatBox } = useSingleChat();
 
   const [threads, setThreads] = useState<ThreadType[]>([]);
-  const { isLoading, triggerLoading } = useLoading({});
+  const { isLoading, triggerLoading } = useLoading({ defaultLoading: true });
 
   useEffect(() => {
     async function init() {

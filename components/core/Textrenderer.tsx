@@ -1,14 +1,14 @@
-import { memo } from "react";
+import { Fragment, memo } from "react";
 
 const BodyRenderer = ({ str = "" }: { str: string }) => {
   const stringWithBreaks = str.split("\n");
   return (
     <>
-      {stringWithBreaks.map((l = "") => {
+      {stringWithBreaks.map((l = "", i) => {
         return (
-          <>
+          <Fragment key={l + i}>
             {l} <br />
-          </>
+          </Fragment>
         );
       })}
     </>

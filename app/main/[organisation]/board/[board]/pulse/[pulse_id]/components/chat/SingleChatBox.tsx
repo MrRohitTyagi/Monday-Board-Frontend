@@ -34,23 +34,32 @@ import { generatePictureFallback, timeBetween } from "@/utils/helperFunctions";
 import { StateSetter } from "@/types/genericTypes";
 import { SingleChatContext } from "@/hooks/useSingleChat";
 import Divider from "@/components/core/Divider";
+import useLoading from "@/hooks/useLoading";
 
 type SingleChatBoxProps = {
   chat: ChatType;
   pulse?: PulseType;
   setChats: StateSetter<ChatType[]>;
 };
-const saveStateConfig = {
-  DELETING: "DELETING",
-  SAVING: "SAVING",
-};
+
 const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
   //
   const [chat, setchat] = useState<ChatType>({} as ChatType);
-  const [isEditing, setIsEditing] = useState(!isEmpty(masterChat.draft));
-  const [isLoading, setIsLoading] = useState(true);
-  const [saveState, setSaveState] = useState("");
   const [openNewChatBox, setOpenNewChatBox] = useState(false);
+
+  const {
+    isLoading,
+    triggerLoading,
+    isEditing,
+    triggerEditing,
+    isDeleting,
+    isSaving,
+    triggerDeleting,
+    triggerSaving,
+  } = useLoading({
+    defaultLoading: true,
+    defaultEditing: !isEmpty(masterChat.draft),
+  });
 
   const { updateChatContent, updateChatDraft, deleteSingleChat } = useChat();
 
@@ -65,32 +74,32 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
 
   useEffect(() => {
     setchat(masterChat);
-    setIsLoading(false);
+    triggerLoading(false);
   }, [masterChat]);
 
   // save the chat content
   const onSaveClick = useCallback(async () => {
-    setSaveState(saveStateConfig.SAVING);
+    triggerSaving(true);
     await updateChatContent(chat.content, masterChat._id);
-    setIsEditing(false);
-    setSaveState("");
+    triggerEditing(false);
+    triggerSaving(false);
   }, [chat, updateChatContent, masterChat._id]);
 
   // cancel the chat draft
   const onCancelClick = useCallback(() => {
     setchat((pc) => ({ ...pc, draft: "", content: masterChat.content }));
-    setIsEditing(false);
+    triggerEditing(false);
   }, [masterChat.draft]);
 
   // Delete Chat
   const deleteChat = useCallback(
     async (_id: string) => {
-      setSaveState(saveStateConfig.DELETING);
+      triggerDeleting(true);
       await deleteSingleChat(_id);
       setChats((ps) => {
         return ps.filter((c) => c._id !== _id);
       });
-      setSaveState("");
+      triggerDeleting(false);
     },
     [deleteSingleChat]
   );
@@ -163,10 +172,10 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
                 }
                 content={
                   <ChatActions
-                    isDeleting={saveState === saveStateConfig.DELETING}
+                    isDeleting={isDeleting}
                     chat={chat}
                     deleteChat={deleteChat}
-                    setIsEditing={setIsEditing}
+                    triggerEditing={triggerEditing}
                   />
                 }
               />
@@ -174,7 +183,7 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
           </div>
           {isEditing === true ? (
             <Textarea
-              disabled={saveState === saveStateConfig.SAVING}
+              disabled={isSaving}
               value={chat.draft ? chat.draft : chat.content}
               dynamicHeight={true}
               className="border-highlighter border-[1px]"
@@ -193,8 +202,8 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
 
         {isEditing === true && (
           <SaveAndCancelButton
-            disabled={saveState === saveStateConfig.SAVING}
-            loading={saveState === saveStateConfig.SAVING}
+            disabled={isSaving}
+            loading={isSaving}
             onCancelClick={onCancelClick}
             onSaveClick={onSaveClick}
           />

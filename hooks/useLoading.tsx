@@ -4,15 +4,17 @@ import { useCallback, useMemo, useRef, useState } from "react";
 
 const useLoading = ({
   defaultLoading = false,
+  defaultEditing = false,
 }: {
   defaultLoading?: boolean;
+  defaultEditing?: boolean;
 }) => {
   const [loadingState, setLoadingState] = useState(() => {
     return {
       LOADING: defaultLoading === true ? true : false,
+      EDITING: defaultEditing === true ? true : false,
       DELETING: false,
       SAVING: false,
-      EDITING: false,
     };
   });
 
