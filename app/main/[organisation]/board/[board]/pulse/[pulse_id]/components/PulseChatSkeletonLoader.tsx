@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import Divider from "@/components/core/Divider";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -52,4 +52,4 @@ const PulseChatSkeletonLoader = ({
   );
 };
 
-export default PulseChatSkeletonLoader;
+export default memo(PulseChatSkeletonLoader);

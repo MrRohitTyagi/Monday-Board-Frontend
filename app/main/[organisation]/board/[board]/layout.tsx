@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, memo, useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { BoardType, SprintType } from "@/zstore";
@@ -103,4 +103,4 @@ const Board = ({ params, children }: pageProps) => {
     </div>
   );
 };
-export default Board;
+export default memo(Board);

@@ -1,6 +1,6 @@
 "use client";
 import { startCase } from "lodash";
-import { useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
@@ -185,4 +185,4 @@ const LoginComponent = () => {
   );
 };
 
-export default LoginComponent;
+export default memo(LoginComponent);

@@ -7,7 +7,7 @@ import { sendInvitation } from "@/gateways/email-gateway";
 import { BoardType, useAuth } from "@/zstore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SendHorizonal } from "lucide-react";
-import React from "react";
+import React, { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -88,4 +88,4 @@ const UserInvite = ({ board, onClose }: UserInviteProps) => {
   );
 };
 
-export default UserInvite;
+export default memo(UserInvite);

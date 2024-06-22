@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { memo } from "react";
 import { startCase } from "lodash";
 import Image from "next/image";
 import { Edit, Star } from "lucide-react";
@@ -128,4 +128,4 @@ const BoardComp = ({ board }: { board: BoardType }) => {
   );
 };
 
-export default Organisation;
+export default memo(Organisation);

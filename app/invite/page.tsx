@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import { isEmpty, startCase } from "lodash";
 import { useCallback, useMemo, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -288,4 +288,4 @@ const Invite = ({}: InviteProps) => {
   );
 };
 
-export default Invite;
+export default memo(Invite);

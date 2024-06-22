@@ -3,7 +3,6 @@ import Image from "next/image";
 import { UserType } from "@/zstore";
 import TooltipComp from "./TooltipComp";
 import { generatePictureFallback } from "@/utils/helperFunctions";
-import AvatarComp from "./AvatarComp";
 import { cn } from "@/lib/utils";
 
 type AvatarGroupProps = { users: UserType[]; max?: number };
@@ -31,8 +30,8 @@ const AvatarGroup = ({ users, max = 3 }: AvatarGroupProps) => {
                 <div
                   className={cn(
                     "h-full w-full flex flex-row items-center",
-                    "text-center justify-center"
-                    ,'bg-slate-800'
+                    "text-center justify-center",
+                    "bg-slate-800"
                   )}
                 >
                   {generatePictureFallback(user.username)}

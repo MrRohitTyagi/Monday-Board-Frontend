@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 type SingleThreadProps = {};
 const SingleThread = (props: SingleThreadProps) => {
   return <div>SingleThread</div>;
 };
 
-export default SingleThread;
+export default memo(SingleThread);

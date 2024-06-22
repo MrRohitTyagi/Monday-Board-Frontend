@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 
 import PopoverComp from "@/components/core/PopoverComp";
 import { Button } from "@/components/ui/button";
@@ -60,4 +60,4 @@ const Header = ({ pulse }: HeaderProps) => {
   );
 };
 
-export default Header;
+export default memo(Header);

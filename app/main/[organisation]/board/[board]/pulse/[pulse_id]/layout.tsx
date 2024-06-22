@@ -1,7 +1,7 @@
 "use client";
 
 import ResizableSplit from "@/components/core/ResizableSplit";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChildrenType } from "@/types";
 import { cn } from "@/lib/utils";
@@ -64,4 +64,4 @@ const layout = ({ params, children }: layoutProps) => {
   );
 };
 
-export default layout;
+export default memo(layout);

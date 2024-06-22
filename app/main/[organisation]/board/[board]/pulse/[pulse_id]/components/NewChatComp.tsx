@@ -3,7 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { StateSetter } from "@/types";
 import { ChatType, PulseType, useAuth } from "@/zstore";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import SaveAndCancelButton from "./SaveAndCancelButton";
 import useLoacalStorageChat from "@/hooks/useLoacalStorageChat";
 import useChat from "@/hooks/useChat";
@@ -65,13 +65,13 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     <>
       <div
         className={cn(
-          "max-w-[40rem] w-full",
-          "h-fit shrink-0 animate-fadeIn",
+          "max-w-[40rem] w-full shrink-0",
+          "h-fit shrink-0 transition-all duration-300",
           "border-main-light border-2 rounded-lg"
         )}
       >
         {isEditing ? (
-          <div className=" p-2 animate-fadeIn">
+          <div className=" p-2">
             <Textarea
               disabled={isSaving}
               onKeyDown={handleKeyDown}
@@ -127,4 +127,4 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
   );
 };
 
-export default NewChatComp;
+export default memo(NewChatComp);

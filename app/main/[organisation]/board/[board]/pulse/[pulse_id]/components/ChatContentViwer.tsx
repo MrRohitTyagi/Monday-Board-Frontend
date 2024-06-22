@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { StateSetter } from "@/types";
 import { ChatType } from "@/zstore";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 
 type ChatContentViwerProps = {
   chat: ChatType;
@@ -20,10 +20,24 @@ const ChatContentViwer = ({ chat }: ChatContentViwerProps) => {
     setViewFull(!isLong);
   }, [isLong]);
 
+  const BodyRenderer = memo(({ str = "" }: { str: string }) => {
+    const stringWithBreaks = str.split("\n");
+    return (
+      <>
+        {stringWithBreaks.map((l = "") => {
+          return (
+            <>
+              {l} <br />
+            </>
+          );
+        })}
+      </>
+    );
+  });
+
   return (
     <div className="relative animate-fadeIn">
       <div
-        dangerouslySetInnerHTML={{ __html: chat.content }}
         className={cn(
           viewFull === false && "mask-bottom-blur",
           "chat-content-viewer",
@@ -31,7 +45,9 @@ const ChatContentViwer = ({ chat }: ChatContentViwerProps) => {
           viewFull === false ? "h-60" : "h-fit",
           viewFull == false && "overflow-hidden"
         )}
-      />
+      >
+        <BodyRenderer str={chat.content} />
+      </div>
       {viewFull === false && (
         <Button
           onClick={() => setViewFull(true)}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Save, Trash2 } from "lucide-react";
 
 import Divider from "@/components/core/Divider";
@@ -57,4 +57,4 @@ const SaveAndCancelButton = ({
   );
 };
 
-export default SaveAndCancelButton;
+export default memo(SaveAndCancelButton);

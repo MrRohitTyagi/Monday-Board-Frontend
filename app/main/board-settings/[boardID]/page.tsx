@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { BaseSyntheticEvent, useEffect, useState } from "react";
+import React, { BaseSyntheticEvent, memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -190,4 +190,4 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
   );
 };
 
-export default BoardSettings;
+export default memo(BoardSettings);

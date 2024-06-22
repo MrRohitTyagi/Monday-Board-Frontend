@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import Header from "./components/Header";
 import { ChatType, PulseType } from "@/zstore";
 import { getPulse } from "@/gateways/pulse-gateway";
@@ -84,4 +84,4 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
   );
 };
 
-export default PulseChatMain;
+export default memo(PulseChatMain);

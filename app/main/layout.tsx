@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 
 import { ChildrenType } from "@/types";
 import { getToken } from "@/utils/cookie";
@@ -24,4 +24,4 @@ const MainEntryPoint = ({ children }: MainEntryPointProps) => {
   return children;
 };
 
-export default MainEntryPoint;
+export default memo(MainEntryPoint);

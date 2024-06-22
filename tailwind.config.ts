@@ -96,10 +96,12 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+
         fadeIn: {
           "0%": { opacity: "0.3", filter: `blur(0.4px)` },
           "100%": { opacity: "1", filter: `blur(0px)` },
         },
+
         //resizable Split layer animations
         "pulse-layer": {
           from: { left: "100%" },
@@ -135,7 +137,7 @@ const config = {
 
         "accordion-up": "accordion-up 0.2s ease-out",
 
-        fadeIn: "fadeIn 500ms ease-in-out",
+        fadeIn: "fadeIn 500ms ease-in-out forwards",
 
         "pulse-layer": "pulse-layer 300ms ease-in-out forwards",
         "pulse-layer-close": "pulse-layer-close 300ms ease-in-out forwards",
