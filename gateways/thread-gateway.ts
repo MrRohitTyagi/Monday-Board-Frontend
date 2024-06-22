@@ -4,15 +4,15 @@ import axiosInstance from "@/utils/axiosinstance";
 const THREAD_BASE_URL = ((process.env.NEXT_PUBLIC_BACKEND_URL as string) +
   process.env.NEXT_PUBLIC_THREAD_BASE_URL) as string;
 
-async function getThreads(pulse_id: string): Promise<ThreadType[]> {
+async function getThreads(chat_id: string): Promise<ThreadType[]> {
   const { data } = await axiosInstance().get(
-    `${THREAD_BASE_URL}/get/${pulse_id}`
+    `${THREAD_BASE_URL}/get/${chat_id}`
   );
   return data.response;
 }
-async function getSingleThread(pulse_id: string): Promise<ThreadType> {
+async function getSingleThread(thread_id: string): Promise<ThreadType> {
   const { data } = await axiosInstance().get(
-    `${THREAD_BASE_URL}/get-single/${pulse_id}`
+    `${THREAD_BASE_URL}/get-single/${thread_id}`
   );
   return data.response;
 }

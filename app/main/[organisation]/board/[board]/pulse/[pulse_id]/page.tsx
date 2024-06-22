@@ -39,11 +39,6 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
     init();
   }, []);
 
-  console.log(`%c pulse chats`, "color: burlywood;border:2px solid burlywood", {
-    pulse,
-    chats,
-  });
-
   return (
     <div
       className={cn(

@@ -19,7 +19,6 @@ function formatDate(date: Date): string {
 
   const [hrs, min] = time.split(":");
 
-  console.log(`%c {hrs} `, "color: red;border:2px dotted red", { time });
   const period: string = parseInt(hrs) >= 12 ? "PM" : "AM";
   const hrs12format = parseInt(hrs) % 12;
 

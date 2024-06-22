@@ -61,8 +61,6 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
     return timeBetween(masterChat.createdAt);
   }, [masterChat.createdAt]);
 
-  console.log(`%c chat `, "color: pink;border:1px solid pink", chat);
-
   useEffect(() => {
     setchat(masterChat);
     setIsLoading(false);
@@ -95,7 +93,7 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
     [deleteSingleChat]
   );
 
-  const hasThread = chat?.thread?.length > 0;
+  const hasThread = chat?.threadCount > 0;
 
   return isLoading === true ? (
     <div className="w-full">
@@ -217,7 +215,7 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
         </div>
       )}
 
-      {hasThread === true && <Threads thread={chat.thread} />}
+      {hasThread === true && <Threads chat={chat} />}
     </div>
   );
 };
