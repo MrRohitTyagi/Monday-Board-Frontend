@@ -12,7 +12,6 @@ import React, {
 
 import { cn } from "@/lib/utils";
 import { PulseContext, baseCssMiniItems } from "../Pulse";
-import { BoardType, PulseType, UserType } from "@/zstore";
 import PopoverComp from "@/components/core/PopoverComp";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +21,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AvatarGroup from "@/components/core/AvatarGroup";
 import AvatarComp from "@/components/core/AvatarComp";
 import { Trash2 } from "lucide-react";
+import { BoardType } from "@/types/boardTypes";
+import { PulseType } from "@/types/pulseTypes";
+import { UserType } from "@/types/userTypes";
 
 type AssignedProps = {
   board: BoardType;
@@ -198,7 +200,7 @@ const AssignedSelector = ({
                 <div className="gap-3 flex flex-row items-center justify-center">
                   <AvatarComp
                     className={cn(
-                      'border-main-light border-2',
+                      "border-main-light border-2",
                       "hover:scale-105 w-9 h-9",
                       "transition-all duration-150"
                     )}

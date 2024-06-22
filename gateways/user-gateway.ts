@@ -1,5 +1,5 @@
+import { UserType } from "@/types/userTypes";
 import axiosInstance from "@/utils/axiosinstance";
-import { UserType } from "@/zstore";
 
 const USER_BASE_URL = ((process.env.NEXT_PUBLIC_BACKEND_URL as string) +
   process.env.NEXT_PUBLIC_USER_BASE_URL) as string;

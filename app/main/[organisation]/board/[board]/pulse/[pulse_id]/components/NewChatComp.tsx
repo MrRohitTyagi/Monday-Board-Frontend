@@ -2,12 +2,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { StateSetter } from "@/types";
-import { ChatType, PulseType, useAuth } from "@/zstore";
+import { useAuth } from "@/zstore";
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import SaveAndCancelButton from "./SaveAndCancelButton";
 import useLoacalStorageChat from "@/hooks/useLoacalStorageChat";
 import useChat from "@/hooks/useChat";
 import Space from "@/components/core/Space";
+import { ChatType } from "@/types/chatTypes";
+import { PulseType } from "@/types/pulseTypes";
 
 type NewChatCompProps = { setChats: StateSetter<ChatType[]>; pulse: PulseType };
 
@@ -73,6 +75,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
         {isEditing ? (
           <div className=" p-2">
             <Textarea
+              dynamicHeight={true}
               disabled={isSaving}
               onKeyDown={handleKeyDown}
               ref={(e) => {

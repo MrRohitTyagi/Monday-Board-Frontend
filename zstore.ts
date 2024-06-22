@@ -2,82 +2,13 @@ import { create } from "zustand";
 import { getUser } from "./gateways/user-gateway";
 import { deleteToken } from "./utils/cookie";
 
+import { UserType } from "./types/userTypes";
+import { BoardType } from "./types/boardTypes";
+
 type SideMenuStoreType = {
   isCollapsed: boolean;
   toggleSideMenu: (c: any) => void;
 };
-
-type ValueType = {
-  id: string;
-  title: string;
-  color: string;
-  textColor: string;
-};
-
-export type PriorityType = {
-  [key: string]: ValueType;
-};
-export type StatusesType = {
-  [key: string]: ValueType;
-};
-
-export type UserType = {
-  _id: string;
-  username: string;
-  email: string;
-  org: string;
-  picture: string;
-  boards: BoardType[];
-};
-export type ChatType = {
-  _id: string;
-  pulseId: string;
-  createdAt: string;
-  updatedAt: string;
-  createdBy: UserType;
-  thread: ChatType[];
-  seenBy: UserType[];
-  content: string;
-  draft: string;
-};
-
-export type SprintType = {
-  _id: string;
-  title: string;
-  color: string;
-  pulses: PulseType[];
-};
-
-export type BoardType = {
-  _id: string;
-  title: string;
-  picture: string;
-  description: string;
-  admins: UserType[];
-  members: UserType[];
-  statuses: StatusesType;
-  priority: PriorityType;
-  sprints: string[];
-};
-
-export type PulseType = {
-  _id: string;
-  title: string;
-  assigned: string[];
-  timeline: { start?: string; end?: string };
-  tag: string;
-  status: string;
-  priority: string;
-};
-
-export const useSideMenu = create<SideMenuStoreType>((setState) => ({
-  isCollapsed: false,
-  toggleSideMenu: (c: any) => {
-    setState(({ isCollapsed }) => ({
-      isCollapsed: typeof c == "boolean" ? c : !isCollapsed,
-    }));
-  },
-}));
 
 type AuthStoreType = {
   isAuthenticated: boolean;
@@ -88,6 +19,15 @@ type AuthStoreType = {
   addNewBoard: (board: BoardType) => void;
   updateBoardState: (board: BoardType) => void;
 };
+
+export const useSideMenu = create<SideMenuStoreType>((setState) => ({
+  isCollapsed: false,
+  toggleSideMenu: (c: any) => {
+    setState(({ isCollapsed }) => ({
+      isCollapsed: typeof c == "boolean" ? c : !isCollapsed,
+    }));
+  },
+}));
 
 const emptyUser: UserType = {
   _id: "",

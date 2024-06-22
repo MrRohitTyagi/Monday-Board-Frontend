@@ -2,7 +2,6 @@
 import React, { createContext, memo, useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
-import { BoardType, SprintType } from "@/zstore";
 
 import BoardTitle from "./components/BoardTitle";
 import Sprint from "./components/Sprint";
@@ -14,6 +13,8 @@ import DialogueComp from "@/components/core/DialogueComp";
 import EditSprintForm from "./components/EditSprintForm";
 import { BoardContext } from "@/hooks/useBoardContext";
 import BoardFilter from "./components/BoardFilter";
+import { BoardType } from "@/types/boardTypes";
+import { SprintType } from "@/types/sprintTypes";
 
 type pageProps = {
   params: { board: string; organisation: string };

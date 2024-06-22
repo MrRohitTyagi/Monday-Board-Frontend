@@ -1,4 +1,4 @@
-import { BoardType } from "@/zstore";
+import { BoardType } from "@/types/boardTypes";
 import React, { createContext, useContext } from "react";
 
 type BoardContenxtProps = {

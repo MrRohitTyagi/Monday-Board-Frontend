@@ -2,8 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { StateSetter } from "@/types";
-import { ChatType } from "@/zstore";
+import { ChatType } from "@/types/chatTypes";
 import React, { memo, useEffect, useMemo, useState } from "react";
 
 type ChatContentViwerProps = {

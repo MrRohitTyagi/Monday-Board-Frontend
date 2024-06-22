@@ -1,5 +1,5 @@
 import { createChat, deleteChat, updateChat } from "@/gateways/chat-gateway";
-import { ChatType } from "@/zstore";
+import { ChatType } from "@/types/chatTypes";
 import { useCallback, useRef } from "react";
 
 type UseChatreturnType = {

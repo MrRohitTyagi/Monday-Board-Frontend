@@ -5,11 +5,11 @@ import React, { memo } from "react";
 import PopoverComp from "@/components/core/PopoverComp";
 import { Button } from "@/components/ui/button";
 import { Copy, Settings2, X } from "lucide-react";
-import { PulseType } from "@/zstore";
 import { StateSetter } from "@/types";
 import Divider from "@/components/core/Divider";
 import { cn } from "@/lib/utils";
 import usePulseChat from "@/hooks/usePulseChat";
+import { PulseType } from "@/types/pulseTypes";
 
 type HeaderProps = {
   pulse: PulseType;
@@ -18,7 +18,12 @@ type HeaderProps = {
 const Header = ({ pulse }: HeaderProps) => {
   const { handleLayerClose } = usePulseChat();
   return (
-    <div className={cn("animate-chat-cont-heading", "flex flex-col shrink-0 animate-fadeIn")}>
+    <div
+      className={cn(
+        "animate-chat-cont-heading",
+        "flex flex-col shrink-0 animate-fadeIn"
+      )}
+    >
       <div
         className={cn(
           "header flex flex-row justify-between items-start px-4 pt-3"
@@ -50,7 +55,11 @@ const Header = ({ pulse }: HeaderProps) => {
             }
           />
           {/* CLOSE BUTTON */}
-          <Button variant={"ghost"} onClick={handleLayerClose} className="py-0 px-2">
+          <Button
+            variant={"ghost"}
+            onClick={handleLayerClose}
+            className="py-0 px-2"
+          >
             <X />
           </Button>
         </div>

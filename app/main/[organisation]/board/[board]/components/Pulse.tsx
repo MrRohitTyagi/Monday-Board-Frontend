@@ -11,7 +11,6 @@ import React, {
 import { startCase } from "lodash";
 import { MessageCircleMore } from "lucide-react";
 
-import { BoardType, PulseType, SprintType, UserType } from "@/zstore";
 import { cn } from "@/lib/utils";
 import Status from "./PulseBlocks/Status";
 
@@ -23,6 +22,11 @@ import { updatePulse } from "@/gateways/pulse-gateway";
 import PulseTag from "./PulseBlocks/PulseTag";
 import { useParams, useRouter } from "next/navigation";
 import CustomDiv from "@/components/core/CustomDiv";
+
+import { PulseType } from "@/types/pulseTypes";
+import { SprintType } from "@/types/sprintTypes";
+import { BoardType } from "@/types/boardTypes";
+import { UserType } from "@/types/userTypes";
 
 type PulseProps = {
   pulse: PulseType;

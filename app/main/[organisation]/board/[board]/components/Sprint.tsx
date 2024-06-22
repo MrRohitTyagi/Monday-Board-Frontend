@@ -4,7 +4,6 @@ import React, {
   SetStateAction,
   memo,
   useCallback,
-  useContext,
   useEffect,
   useState,
 } from "react";
@@ -12,7 +11,6 @@ import { startCase } from "lodash";
 
 import Space from "@/components/core/Space";
 
-import { BoardType, PulseType, SprintType } from "@/zstore";
 import { cn } from "@/lib/utils";
 
 import Pulse from "./Pulse";
@@ -36,6 +34,8 @@ import { toast } from "sonner";
 import useBoardContext from "@/hooks/useBoardContext";
 import SprintSkeletonLoader from "./SprintSkeletonLoader";
 import CustomDiv from "@/components/core/CustomDiv";
+import { BoardType } from "@/types/boardTypes";
+import { SprintType } from "@/types/sprintTypes";
 
 const tempPulse = {
   _id: "temp-pulse",

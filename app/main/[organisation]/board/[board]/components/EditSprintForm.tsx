@@ -11,10 +11,11 @@ import { Form } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import CustomDiv from "@/components/core/CustomDiv";
 
-import { BoardType, SprintType } from "@/zstore";
 import { createSprint, updateSprint } from "@/gateways/sprint-gateway";
 import Loader from "@/components/core/Loader";
 import { cn } from "@/lib/utils";
+import { SprintType } from "@/types/sprintTypes";
+import { BoardType } from "@/types/boardTypes";
 
 const sprintSchema = z.object({
   title: z.string().min(5).max(100),

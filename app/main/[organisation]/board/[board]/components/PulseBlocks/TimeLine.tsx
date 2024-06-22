@@ -5,10 +5,11 @@ import { DateRange, Range } from "react-date-range";
 import "./css/dateRange.css";
 
 import PopoverComp from "@/components/core/PopoverComp";
-import { BoardType, PulseType } from "@/zstore";
 
 import { baseCssMiniItems } from "../Pulse";
 import { cn } from "@/lib/utils";
+import { BoardType } from "@/types/boardTypes";
+import { PulseType } from "@/types/pulseTypes";
 
 type TimelineProps = {
   board: BoardType;

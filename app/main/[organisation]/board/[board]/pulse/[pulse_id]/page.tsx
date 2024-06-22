@@ -2,7 +2,6 @@
 
 import React, { memo, useEffect, useState } from "react";
 import Header from "./components/Header";
-import { ChatType, PulseType } from "@/zstore";
 import { getPulse } from "@/gateways/pulse-gateway";
 import { cn } from "@/lib/utils";
 import PulseChatSkeletonLoader from "./components/PulseChatSkeletonLoader";
@@ -10,6 +9,8 @@ import SingleChatBox from "./components/SingleChatBox";
 import Space from "@/components/core/Space";
 import { getChats } from "@/gateways/chat-gateway";
 import NewChatComp from "./components/NewChatComp";
+import { PulseType } from "@/types/pulseTypes";
+import { ChatType } from "@/types/chatTypes";
 
 type PulseChatMainType = {
   params: {

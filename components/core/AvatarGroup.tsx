@@ -1,9 +1,9 @@
 import React, { memo } from "react";
 import Image from "next/image";
-import { UserType } from "@/zstore";
 import TooltipComp from "./TooltipComp";
 import { generatePictureFallback } from "@/utils/helperFunctions";
 import { cn } from "@/lib/utils";
+import { UserType } from "@/types/userTypes";
 
 type AvatarGroupProps = { users: UserType[]; max?: number };
 

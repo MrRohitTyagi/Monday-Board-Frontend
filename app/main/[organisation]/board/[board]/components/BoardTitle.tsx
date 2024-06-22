@@ -2,7 +2,6 @@
 
 import React, { memo } from "react";
 import { startCase } from "lodash";
-import { BoardType } from "@/zstore";
 import { ChevronDown, Edit } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AvatarGroup from "@/components/core/AvatarGroup";
@@ -11,6 +10,7 @@ import Space from "@/components/core/Space";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import TooltipComp from "@/components/core/TooltipComp";
+import { BoardType } from "@/types/boardTypes";
 
 type BoardTitleProps = {
   board: BoardType;
@@ -35,7 +35,11 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
               variant={"ghost"}
               onClick={() => router.push("/main/board-settings/" + board._id)}
             >
-              <TooltipComp title="Edit board" side="right" className="px-3 py-2">
+              <TooltipComp
+                title="Edit board"
+                side="right"
+                className="px-3 py-2"
+              >
                 <Edit size={15} color="white" />
               </TooltipComp>
             </Button>

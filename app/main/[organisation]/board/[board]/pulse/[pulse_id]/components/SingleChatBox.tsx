@@ -1,24 +1,38 @@
+import { isEmpty, startCase } from "lodash";
+import { Reply, Settings, ThumbsUp, Timer } from "lucide-react";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+
+//core
 import AvatarComp from "@/components/core/AvatarComp";
 import Divider from "@/components/core/Divider";
 import TooltipComp from "@/components/core/TooltipComp";
-import { Button } from "@/components/ui/button";
+import PopoverComp from "@/components/core/PopoverComp";
+
+// UI
 import { Textarea } from "@/components/ui/textarea";
-import { cn, waitfor } from "@/lib/utils";
-import { generatePictureFallback, timeBetween } from "@/utils/helperFunctions";
-import { ChatType, PulseType } from "@/zstore";
-import { isEmpty, isEqual, startCase } from "lodash";
-import { Reply, Save, Settings, ThumbsUp, Timer, Trash2 } from "lucide-react";
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
+
+// Utils
+import { cn } from "@/lib/utils";
+
+//components
 import ViewedBy from "./ViewedBy";
 import ChatContentViwer from "./ChatContentViwer";
 import PulseChatSkeletonLoader from "./PulseChatSkeletonLoader";
-import PopoverComp from "@/components/core/PopoverComp";
-import ChatActions from "./ChatActions";
-import useChat from "@/hooks/useChat";
-import SaveAndCancelButton from "./SaveAndCancelButton";
-import { StateSetter } from "@/types";
-import SingleThread from "./Threads/SingleThread";
 import Threads from "./Threads/Threads";
+import ChatActions from "./ChatActions";
+import SaveAndCancelButton from "./SaveAndCancelButton";
+
+//hooks
+import useChat from "@/hooks/useChat";
+
+//types
+import { StateSetter } from "@/types";
+import { ChatType } from "@/types/chatTypes";
+import { PulseType } from "@/types/pulseTypes";
+
+// Extra
+import { generatePictureFallback, timeBetween } from "@/utils/helperFunctions";
 
 type SingleChatBoxProps = {
   chat: ChatType;
@@ -147,8 +161,8 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
           <Textarea
             disabled={saveState === saveStateConfig.SAVING}
             value={chat.draft ? chat.draft : chat.content}
-            rows={chat.content.split(" ").length / 10}
-            className="border-highlighter border-[1px] h-fit"
+            dynamicHeight={true}
+            className="border-highlighter border-[1px]"
             placeholder="White an update ..."
             onChange={(e) => {
               const value = e.target.value;

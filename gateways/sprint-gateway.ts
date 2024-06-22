@@ -1,5 +1,5 @@
+import { SprintType } from "@/types/sprintTypes";
 import axiosInstance from "@/utils/axiosinstance";
-import { SprintType } from "@/zstore";
 
 const SPRINT_BASE_URL = ((process.env.NEXT_PUBLIC_BACKEND_URL as string) +
   process.env.NEXT_PUBLIC_SPRINT_BASE_URL) as string;

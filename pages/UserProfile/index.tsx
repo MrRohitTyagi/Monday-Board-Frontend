@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { deleteToken } from "@/utils/cookie";
 import Image from "next/image";
 import { useAuth } from "@/zstore";
 import { useRouter } from "next/navigation";

@@ -1,9 +1,8 @@
 import AvatarComp from "@/components/core/AvatarComp";
 import TooltipComp from "@/components/core/TooltipComp";
 import { cn } from "@/lib/utils";
+import { UserType } from "@/types/userTypes";
 import { generatePictureFallback } from "@/utils/helperFunctions";
-import { UserType } from "@/zstore";
-import { startCase } from "lodash";
 import { Eye } from "lucide-react";
 import React, { memo } from "react";
 

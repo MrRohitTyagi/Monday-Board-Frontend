@@ -1,5 +1,5 @@
+import { PulseType } from "@/types/pulseTypes";
 import axiosInstance from "@/utils/axiosinstance";
-import { PulseType } from "@/zstore";
 
 const PULSE_BASE_URL = ((process.env.NEXT_PUBLIC_BACKEND_URL as string) +
   process.env.NEXT_PUBLIC_PULSE_BASE_URL) as string;

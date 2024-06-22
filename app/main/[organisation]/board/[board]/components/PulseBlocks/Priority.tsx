@@ -1,10 +1,11 @@
 import PopoverComp from "@/components/core/PopoverComp";
-import { BoardType, PulseType } from "@/zstore";
 import React, { memo, useContext, useMemo, useState } from "react";
 import { PulseContext, baseCssMiniItems } from "../Pulse";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { BoardType } from "@/types/boardTypes";
+import { PulseType } from "@/types/pulseTypes";
 type PriorityProps = {
   board: BoardType;
   pulse: PulseType;

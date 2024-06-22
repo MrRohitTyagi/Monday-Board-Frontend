@@ -15,7 +15,7 @@ import CreatableSelect, {
   cleanCreatableSelectPayload,
 } from "@/components/core/CreatableSelect";
 import { createBoard, getBoard, updateBoard } from "@/gateways/board-gateway";
-import { PriorityType, StatusesType, useAuth } from "@/zstore";
+import { useAuth } from "@/zstore";
 import { uploadImage } from "@/utils/imageupload";
 import { toast } from "sonner";
 import Space from "@/components/core/Space";
@@ -24,6 +24,7 @@ import { isEmpty } from "lodash";
 import Loader from "@/components/core/Loader";
 import { cn } from "@/lib/utils";
 import useNavigate from "@/hooks/useNavigate";
+import { PriorityType, StatusesType } from "@/types/pulseTypes";
 
 type BoardSettingsProps = {
   params: {

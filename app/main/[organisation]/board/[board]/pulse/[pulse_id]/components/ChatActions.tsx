@@ -3,9 +3,11 @@
 import Loader from "@/components/core/Loader";
 import { Button } from "@/components/ui/button";
 import { StateSetter } from "@/types";
-import { ChatType, useAuth } from "@/zstore";
+import { ChatType } from "@/types/chatTypes";
+import { useAuth } from "@/zstore";
 import { Edit, Pin, Trash2 } from "lucide-react";
 import React, { memo } from "react";
+
 type ChatActionsProps = {
   setIsEditing: StateSetter<boolean>;
   deleteChat: (e: string) => void;

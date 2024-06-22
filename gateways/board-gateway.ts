@@ -1,5 +1,5 @@
+import { BoardType } from "@/types/boardTypes";
 import axiosInstance from "@/utils/axiosinstance";
-import { BoardType } from "@/zstore";
 
 const BOARD_BASE_URL = ((process.env.NEXT_PUBLIC_BACKEND_URL as string) +
   process.env.NEXT_PUBLIC_BOARD_BASE_URL) as string;

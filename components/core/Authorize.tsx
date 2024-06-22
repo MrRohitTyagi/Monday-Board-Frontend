@@ -2,7 +2,7 @@
 import React, { memo, useEffect, useMemo, useState } from "react";
 import { ChildrenType } from "@/types";
 import MainLayout from "./MainLayout";
-import { useAuth, useSideMenu } from "@/zstore";
+import { useAuth } from "@/zstore";
 import { cn } from "@/lib/utils";
 import { getToken } from "@/utils/cookie";
 import useNavigate from "@/hooks/useNavigate";

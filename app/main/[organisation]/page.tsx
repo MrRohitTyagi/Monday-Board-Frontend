@@ -9,11 +9,12 @@ import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 // utils
-import { BoardType, useAuth } from "@/zstore";
+import { useAuth } from "@/zstore";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import useNavigate from "@/hooks/useNavigate";
 import TooltipComp from "@/components/core/TooltipComp";
+import { BoardType } from "@/types/boardTypes";
 
 type pageProps = {};
 const Organisation = (props: pageProps) => {

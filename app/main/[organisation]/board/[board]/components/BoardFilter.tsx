@@ -1,6 +1,5 @@
 import useBoardContext from "@/hooks/useBoardContext";
 import { cn } from "@/lib/utils";
-import { BoardType } from "@/zstore";
 import React from "react";
 
 type BoardFilterProps = {};

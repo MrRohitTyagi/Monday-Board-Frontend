@@ -1,4 +1,4 @@
-import { ChatType } from "@/zstore";
+import { ChatType } from "@/types/chatTypes";
 import React, { memo } from "react";
 
 type ThreadsProps = {

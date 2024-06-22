@@ -1,5 +1,5 @@
+import { ChatType } from "@/types/chatTypes";
 import axiosInstance from "@/utils/axiosinstance";
-import { ChatType } from "@/zstore";
 
 const CHAT_BASE_URL = ((process.env.NEXT_PUBLIC_BACKEND_URL as string) +
   process.env.NEXT_PUBLIC_CHAT_BASE_URL) as string;
@@ -7,6 +7,12 @@ const CHAT_BASE_URL = ((process.env.NEXT_PUBLIC_BACKEND_URL as string) +
 async function getChats(pulse_id: string): Promise<ChatType[]> {
   const { data } = await axiosInstance().get(
     `${CHAT_BASE_URL}/get/${pulse_id}`
+  );
+  return data.response;
+}
+async function getSingleChat(pulse_id: string): Promise<ChatType> {
+  const { data } = await axiosInstance().get(
+    `${CHAT_BASE_URL}/get-single/${pulse_id}`
   );
   return data.response;
 }
@@ -32,4 +38,4 @@ async function createChat(payload: any): Promise<ChatType> {
   return data.response;
 }
 
-export { getChats, deleteChat, updateChat, createChat };
+export { getChats, deleteChat, updateChat, createChat, getSingleChat };
