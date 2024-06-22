@@ -27,7 +27,7 @@ import { uploadImage } from "@/utils/imageupload";
 import { getSchema, getfields } from "../(auth-routes)/login/utils";
 import { acceptInvitation, getInvitation } from "@/gateways/invitation-gateway";
 import { AlertTriangle } from "lucide-react";
-import { InvitationConfigType } from "@/types/genericTypes";
+import { InvitationConfigType } from "@/types/invitationTypes";
 
 type InviteProps = {};
 
