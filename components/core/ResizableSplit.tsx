@@ -37,7 +37,7 @@ const ResizableSplit = ({
       <div
         className={cn(
           "resizable-left-side h-full w-full",
-          "animate-change-bg-transparency",
+          "animate-change-bg-transparency z-[9999]",
           closed === true && "!bg-transparent"
         )}
       />

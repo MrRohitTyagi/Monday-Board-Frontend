@@ -8,6 +8,7 @@ import { StateSetter } from "@/types/genericTypes";
 import { ThreadType } from "@/types/threadType";
 import { useAuth } from "@/zstore";
 import { Save, Trash2 } from "lucide-react";
+import { useParams } from "next/navigation";
 import React, { memo, useCallback, useState } from "react";
 
 type NewThreadProps = {
@@ -21,14 +22,20 @@ const NewThread = ({ setThreads, setOpenNewChatBox }: NewThreadProps) => {
 
   const { user } = useAuth();
   const { chat, updateThreadCount } = useSingleChat();
+  const params = useParams();
 
   const handleAddNewThread = useCallback(async () => {
-    const payload = { content: value, chatId: chat._id };
+    const payload = {
+      content: value,
+      chatId: chat._id,
+      pulseId: params?.pulse_id,
+      boardId: params?.board,
+    };
     const newThread = await createThread(payload);
     setThreads((pt) => [...pt, newThread]);
     setOpenNewChatBox(false);
     updateThreadCount("ADD");
-  }, [user._id, chat._id, value]);
+  }, [user._id, chat._id, value, params]);
 
   const handleCtrlEnter = useCallback(() => {
     handleAddNewThread();

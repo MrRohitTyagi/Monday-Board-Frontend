@@ -11,13 +11,21 @@ import TooltipComp from "./TooltipComp";
 import { useParams } from "next/navigation";
 import DialogueComp from "./DialogueComp";
 import UserInvite from "@/pages/UserInvite";
+import Notification from "@/pages/Notifications";
 
 type Props = {};
 
+const transitionStates = {
+  OPEN: "OPEN",
+  CLOSING: "CLOSING",
+  CLOSED: "CLOSED",
+};
 const Navbar = ({}: Props) => {
   //
   const [openUserInviteForm, setopenUserInviteForm] = useState(false);
-
+  const [openNotification, setOpenNotification] = useState(
+    transitionStates.CLOSED
+  );
   const params = useParams();
 
   const { isAuthenticated, user } = useAuth();
@@ -25,6 +33,14 @@ const Navbar = ({}: Props) => {
   const currentBoard = useMemo(() => {
     return user.boards.find((b) => b._id === params?.board);
   }, [params, user]);
+
+  const handleLayerClose = () => {
+    setOpenNotification(transitionStates.CLOSING);
+    const id = setTimeout(() => {
+      setOpenNotification(transitionStates.CLOSED);
+      clearTimeout(id);
+    }, 300);
+  };
 
   return (
     <div
@@ -34,7 +50,7 @@ const Navbar = ({}: Props) => {
         isAuthenticated ? "" : "pointer-events-none opacity-50"
       )}
     >
-      <Link href="/">TaskBoard.io</Link>
+      <Link href="/">Logo here TODO</Link>
       <div className="right-side-navbar-stuff gap-4 flex flex-row items-center">
         {!!currentBoard && (
           <DialogueComp
@@ -62,11 +78,35 @@ const Navbar = ({}: Props) => {
             />
           </DialogueComp>
         )}
-        <Button className="p-0 m-0" variant="ghost">
-          <Bell />
+
+        {/* /Notification */}
+        <Button
+          onClick={() => {
+            if (openNotification === transitionStates.CLOSED) {
+              setOpenNotification(transitionStates.OPEN);
+            } else handleLayerClose();
+          }}
+          className="p-0 m-0"
+          variant="ghost"
+        >
+          <Bell
+            className={cn(
+              openNotification !== transitionStates.CLOSED &&
+                "stroke-highlighter"
+            )}
+          />
         </Button>
+
+        {/* // userprofile */}
         <UserProfile />
       </div>
+      {openNotification !== transitionStates.CLOSED && (
+        <Notification
+          openNotification={openNotification}
+          transitionStates={transitionStates}
+          handleLayerClose={handleLayerClose}
+        />
+      )}
     </div>
   );
 };

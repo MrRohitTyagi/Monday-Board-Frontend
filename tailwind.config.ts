@@ -31,7 +31,7 @@ const config = {
       },
       height: {
         "main-content-height": `calc(100vh - ${navbarHeight})`,
-        "navbar-height": navbarHeight,
+        "navbar-height": `var(--navbar-height)`,
         "card-height": "13rem",
       },
       width: {

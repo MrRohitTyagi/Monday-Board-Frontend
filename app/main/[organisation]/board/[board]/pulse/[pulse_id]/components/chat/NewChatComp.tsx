@@ -9,6 +9,7 @@ import { ChatType } from "@/types/chatTypes";
 import { PulseType } from "@/types/pulseTypes";
 import { StateSetter } from "@/types/genericTypes";
 import OutsideClickBox from "@/components/core/OutsideClickBox";
+import { useParams } from "next/navigation";
 
 type NewChatCompProps = { setChats: StateSetter<ChatType[]>; pulse: PulseType };
 
@@ -22,6 +23,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
 
   const [isEditing, setIsEditing] = useState(haveDraft);
   const { createNewChat } = useChat();
+  const params = useParams();
   const [text, settext] = useState(content);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -34,6 +36,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     const payload = {
       content: content,
       pulseId: pulse._id,
+      boardId: params?.board,
     };
 
     const newChat = await createNewChat(payload);
@@ -42,7 +45,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     setIsEditing(false);
     settext("");
     setIsSaving(false);
-  }, [pulse._id, createNewChat, content]);
+  }, [pulse._id, createNewChat, content, params]);
 
   const handleKeyDown = useCallback(() => {
     handleCreateNew();

@@ -98,18 +98,21 @@ const Pulse = ({
     setPulse((prev) => ({ ...prev, tag: tag }));
   }, []);
 
-  const updateAssigned = useCallback((user: UserType, action = "add") => {
-    setPulse((prev) => {
-      let assigned = [];
-      if (action == "remove") {
-        assigned = prev.assigned.filter((a) => a !== user._id);
-      } else {
-        assigned = [user._id, ...prev.assigned];
-      }
-      debouncePulseUpdate({ assigned });
-      return { ...prev, assigned };
-    });
-  }, []);
+  const updateAssigned = useCallback(
+    (user: UserType, action = "add") => {
+      setPulse((prev) => {
+        let assigned = [];
+        if (action == "remove") {
+          assigned = prev.assigned.filter((a) => a !== user._id);
+        } else {
+          assigned = [user._id, ...prev.assigned];
+        }
+        debouncePulseUpdate({ assigned: assigned, boardId: params?.board });
+        return { ...prev, assigned };
+      });
+    },
+    [params]
+  );
 
   const updateTimeline = useCallback(
     (timeline: { start: string; end: string }) => {

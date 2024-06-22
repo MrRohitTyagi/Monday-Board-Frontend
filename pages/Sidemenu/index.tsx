@@ -20,9 +20,7 @@ import {
   HomeIcon,
   LucideIcon,
 } from "lucide-react";
-import SelectComp from "@/components/core/Select";
 import SidemenuBoardListing from "./SidemenuBoardListing";
-import { boardFilterOptions } from "@/constants/constants";
 
 export const gertNavConfig = (org: string = "") => {
   return [
@@ -81,7 +79,7 @@ const SideMenu = ({}: SideMenuProps) => {
             disabled={isAuthenticated === false}
             onClick={toggleSideMenu}
             className={cn(
-              "rounded-tr-lg",
+              " z-[200] rounded-tr-lg",
               "transition-[width] duration-500",
               "rounded-none rounded-bl-md bg-main-light transition-all",
               isCollapsed ? "relative" : "absolute",
