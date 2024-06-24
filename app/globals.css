@@ -34,7 +34,18 @@
 
     --radius: 0.5rem;
 
+    /* custom  */
+
     --navbar-height: 3rem;
+    --main-bg: #292f4c;
+    --main-fg: #1c1f3b;
+    --main-delete: #dc5e5ef0;
+    --border-light: #524f4f;
+    --highlighter: #0073ea;
+    --pulse-divider: #747171;
+    --main-active: #0073ea;
+    --main-active-dark: #133774;
+    --main-light: #30324e;
   }
 
   .dark {

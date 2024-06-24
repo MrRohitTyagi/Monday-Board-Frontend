@@ -37,6 +37,8 @@ import Divider from "@/components/core/Divider";
 import useLoading from "@/hooks/useLoading";
 import ChatInfo from "./ChatInfo";
 import useWriteAI from "@/hooks/useWriteAI";
+import HTMLEditor from "@/components/core/HTMLEditor";
+import { convert } from "html-to-text";
 
 type SingleChatBoxProps = {
   chat: ChatType;
@@ -76,9 +78,11 @@ const SingleChatBox = ({
   }, [masterChat]);
 
   const handleWriteAI = useCallback(async () => {
+    const cleanContent = convert(chat.draft ? chat.draft : chat.content);
+
     const data = await writeWithAI({
       pulseID: pulse?._id || "",
-      prompt: chat.draft ? chat.draft : chat.content,
+      prompt: cleanContent,
       setchat: setchat,
     });
     updateChatContent(data, masterChat._id);
@@ -180,14 +184,23 @@ const SingleChatBox = ({
             </div>
           </div>
           {isEditing === true ? (
-            <Textarea
-              disabled={isSaving}
-              value={chat.draft ? chat.draft : chat.content}
-              dynamicHeight={true}
-              className="border-highlighter border-[1px]"
+            // <Textarea
+            //   disabled={isSaving}
+            //   value={chat.draft ? chat.draft : chat.content}
+            //   dynamicHeight={true}
+            //   className="border-highlighter border-[1px]"
+            //   onChange={(e) => {
+            //     const value = e.target.value;
+            //     setchat((pc) => ({ ...pc, content: value, draft: value }));
+            //     updateChatDraft(value, masterChat._id);
+            //   }}
+            // />
+            <HTMLEditor
               placeholder="White an update ..."
-              onChange={(e) => {
-                const value = e.target.value;
+              key={chat._id + String(isWritting)}
+              initialContent={chat.draft ? chat.draft : chat.content}
+              onContentChange={(e) => {
+                const value = e;
                 setchat((pc) => ({ ...pc, content: value, draft: value }));
                 updateChatDraft(value, masterChat._id);
               }}

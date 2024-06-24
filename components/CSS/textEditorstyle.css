@@ -1,26 +1,20 @@
-/* TextEditor.css */
-
-/* Customize the wrapper */
-.demo-wrapper {
-  border: 1px solid #f1f1f1;
-  padding: 20px;
-  border-radius: 10px;
-}
-
 /* Customize the editor */
 .demo-editor {
-  min-height: 200px;
-  padding: 10px;
+  min-height: 100px;
+  padding:0px 10px;
   /* border: 1px solid #ccc; */
-  border-radius: 10px;
+  /* border-radius: 10px; */
+  height: fit-content !important;
   background-color: transparent;
 }
 
 /* Customize the toolbar */
 .rdw-editor-toolbar {
   background-color: transparent !important;
-  border: none;
+  border: none !important;
   border-radius: 5px;
+  /* justify-content: center !important; */
+  border-bottom: 1px solid var(--highlighter) !important;
 }
 
 /* Customize toolbar buttons */
@@ -29,21 +23,19 @@
   background-color: #444;
   border: none;
 }
-
-.rdw-option-wrapper:hover {
-  background-color: #555;
+.rdw-editor-wrapper {
+  padding: 0 !important;
+  border-radius: 5px !important;
+  border: 1px solid var(--highlighter);
 }
 
 .rdw-option-active {
   background-color: #666;
 }
 
-/* Customize other toolbar options if needed */
-.rdw-dropdown-wrapper {
-  background-color: #444;
-  border: none;
-}
-
-.rdw-dropdown-active {
-  background-color: #666;
+.rdw-colorpicker-modal {
+  background-color: var(--main-fg) !important;
+  box-shadow: none !important;
+  border: 1px solid grey !important;
+  padding: 10px !important;
 }

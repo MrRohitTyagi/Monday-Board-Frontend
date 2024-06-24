@@ -14,6 +14,7 @@ import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 import useLoading from "@/hooks/useLoading";
 import useWriteAI from "@/hooks/useWriteAI";
 import HTMLEditor from "@/components/core/HTMLEditor";
+import { convert } from "html-to-text";
 
 type NewChatCompProps = { setChats: StateSetter<ChatType[]>; pulse: PulseType };
 
@@ -66,13 +67,17 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
   }, [pulse._id, createNewChat, text, params]);
 
   const handleWriteAI = useCallback(async () => {
-    const data = await writeWithAI({ pulseID: pulse._id, prompt: text });
+    const cleanContent = convert(text);
+    const data = await writeWithAI({
+      pulseID: pulse._id,
+      prompt: cleanContent,
+    });
     settext(data);
   }, [pulse._id, text]);
 
-  const handleKeyDown = useCallback(() => {
-    handleCreateNew();
-  }, [handleCreateNew]);
+  // const handleKeyDown = useCallback(() => {
+  //   handleCreateNew();
+  // }, [handleCreateNew]);
 
   console.log(`%c text `, "color: pink;border:1px solid pink", text);
   return (
@@ -88,8 +93,9 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
         )}
       >
         {isEditing ? (
-          <div className=" p-2">
+          <div className=" animate-fadeIn">
             <HTMLEditor
+              key={"new-chat" + String(isWritting)}
               initialContent={text}
               onContentChange={(e) => {
                 console.log(`%c e `, "color: red;border:2px dotted red", e);

@@ -1,17 +1,23 @@
 "use client";
-import React, { useState } from "react";
-import { EditorState, convertToRaw, ContentState } from "draft-js";
+import React, { memo, useCallback, useState } from "react";
+import { EditorState, convertToRaw, ContentState, EditorProps } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
+import { toolbaroptions } from "@/constants/htmlConstants";
 
-type TextEditor = {
+type HTMLEditor = {
   initialContent: string;
+  placeholder?: string;
   onContentChange: (e: string) => void;
 };
 
-const TextEditor = ({ initialContent = "", onContentChange }: TextEditor) => {
+const HTMLEditor = ({
+  initialContent = "",
+  onContentChange,
+  placeholder,
+}: HTMLEditor) => {
   const [editorState, setEditorState] = useState(() => {
     if (initialContent) {
       const contentBlock = htmlToDraft(initialContent);
@@ -25,45 +31,32 @@ const TextEditor = ({ initialContent = "", onContentChange }: TextEditor) => {
     return EditorState.createEmpty();
   });
 
-  const onEditorStateChange = (newEditorState: EditorState) => {
-    setEditorState(newEditorState);
+  const onEditorStateChange = useCallback(
+    (newEditorState: EditorState) => {
+      setEditorState(newEditorState);
 
-    const htmlContent = draftToHtml(
-      convertToRaw(newEditorState.getCurrentContent())
-    );
+      const htmlContent = draftToHtml(
+        convertToRaw(newEditorState.getCurrentContent())
+      );
 
-    // Call the callback function with the HTML content
-    if (onContentChange) {
-      onContentChange(htmlContent);
-    }
-  };
+      // Call the callback function with the HTML content
+      if (onContentChange) {
+        onContentChange(htmlContent);
+      }
+    },
+    [onContentChange]
+  );
 
   return (
-    <div>
-      <Editor
-        editorState={editorState}
-        wrapperClassName="demo-wrapper"
-        editorClassName="demo-editor"
-        onEditorStateChange={onEditorStateChange}
-        toolbar={{
-          options: [
-            "inline",
-            // "blockType",
-            // "fontSize",
-            "list",
-            // "textAlign",
-            "history",
-          ],
-          inline: { options: ["bold", "italic", "underline", "strikethrough"] },
-          list: { options: ["unordered", "ordered"] },
-        }}
-      />
-      {/* <textarea
-        disabled
-        value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
-      /> */}
-    </div>
+    <Editor
+      placeholder={placeholder}
+      editorState={editorState}
+      wrapperClassName="demo-wrapper"
+      editorClassName="demo-editor"
+      onEditorStateChange={onEditorStateChange}
+      toolbar={toolbaroptions}
+    />
   );
 };
 
-export default TextEditor;
+export default memo(HTMLEditor);
