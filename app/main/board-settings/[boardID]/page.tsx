@@ -26,6 +26,8 @@ import { cn } from "@/lib/utils";
 import useNavigate from "@/hooks/useNavigate";
 import { PriorityType, StatusesType } from "@/types/pulseTypes";
 import CustomDiv from "@/components/core/CustomDiv";
+import useLoading from "@/hooks/useLoading";
+import BoardSkeletonLoader from "./components/BoardSkeletonLoader";
 
 type BoardSettingsProps = {
   params: {
@@ -45,6 +47,12 @@ const boardSchema = z.object({
     .optional(),
 });
 const BoardSettings = ({ params }: BoardSettingsProps) => {
+  const [statuses, setstatuses] = useState<StatusesType>({});
+  const [priority, setpriority] = useState<PriorityType>({});
+  const [picture, setPicture] = useState<BaseSyntheticEvent | null | string>(
+    ""
+  );
+
   const {
     user: { _id },
     addNewBoard,
@@ -53,24 +61,25 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
 
   const navigate = useNavigate();
 
-  const [picture, setPicture] = useState<BaseSyntheticEvent | null | string>(
-    ""
-  );
-  const [statuses, setstatuses] = useState<StatusesType>({});
-  const [priority, setpriority] = useState<PriorityType>({});
-
   const form = useForm({
     resolver: zodResolver(boardSchema),
   });
 
+  const { isLoading, triggerLoading } = useLoading({ defaultLoading: true });
+
   useEffect(() => {
-    if (params.boardID === "new") return;
+    if (params.boardID === "new") {
+      triggerLoading(false);
+      return;
+    }
+
     (async function () {
       const board = await getBoard(params.boardID);
       form.reset(board);
       if (board.picture) setPicture(board.picture);
       if (!isEmpty(board.statuses)) setstatuses(board.statuses as StatusesType);
       if (!isEmpty(board.priority)) setpriority(board.priority as PriorityType);
+      triggerLoading(false);
     })();
   }, []);
 
@@ -106,7 +115,9 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
     navigate(`/`);
   };
 
-  return (
+  return isLoading === true ? (
+    <BoardSkeletonLoader />
+  ) : (
     <div className="board-settings-conatiner p-4 pr-8">
       <h1 className="text-2xl font-bold">
         {params.boardID === "new"
