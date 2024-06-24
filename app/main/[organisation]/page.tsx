@@ -57,7 +57,7 @@ const CreateNewBoard = () => {
       <Button
         variant={"default"}
         onClick={() => {
-          router.push("main/board-settings/new");
+          router.push("/main/board-settings/new");
         }}
       >
         Create New Board

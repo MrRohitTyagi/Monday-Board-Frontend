@@ -29,6 +29,7 @@ const ResizableHandle = ({
 }) => (
   <ResizablePrimitive.PanelResizeHandle
     className={cn(
+      "pointer-events-auto",
       "relative flex w-2 items-center justify-center bg-main-bg ",
       "after:absolute after:inset-y-0 after:left-1/2 after:w-1 ",
       "after:-translate-x-1/2 focus-visible:outline-none focus-visible:ring-1 ",

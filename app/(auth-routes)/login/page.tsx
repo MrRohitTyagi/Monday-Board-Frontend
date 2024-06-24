@@ -86,7 +86,6 @@ const LoginComponent = () => {
     >
       <div
         className={cn(
-          "form-container",
           "w-fit",
           "border-2 border-main-light p-4 pl-8 pr-8 rounded-md"
         )}
@@ -118,6 +117,10 @@ const LoginComponent = () => {
                       <FormLabel>{startCase(f.label)}</FormLabel>
                       <FormControl>
                         <Input
+                          className={cn(
+                            f.type === "file" && "file-input-sm",
+                            "bg-transparent !mt-0"
+                          )}
                           customOnChange={f.customOnChange}
                           type={f.type}
                           placeholder={f.placeholder}

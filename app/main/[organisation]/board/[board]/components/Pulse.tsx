@@ -145,7 +145,7 @@ const Pulse = ({
           "flex flex-row items-center justify-start h-full",
           "bg-main-light pl-2",
           "border-pulse-divider border-[1px]",
-          "hover:bg-main-fg transition-all duration-150",
+          isFake === false && "hover:bg-main-fg transition-all duration-150",
           "active:bg-main-active-dark transition-all duration-150",
           isPulseChatOpen && "!bg-main-active-dark"
         )}
@@ -204,13 +204,7 @@ const Pulse = ({
 
             {/*  PRIORITY ----------------------------------------------------------------------- */}
             {isFake === true ? (
-              <div
-                className={cn(
-                  baseCssMiniItems(),
-                  "priority",
-                  "hover:opacity-60"
-                )}
-              >
+              <div className={cn(baseCssMiniItems(), "priority")}>
                 {pulse.priority}
               </div>
             ) : (

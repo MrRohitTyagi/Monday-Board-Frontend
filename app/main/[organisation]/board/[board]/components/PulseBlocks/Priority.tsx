@@ -34,7 +34,7 @@ const Priority = ({ board, pulse }: PriorityProps) => {
             background: board?.priority?.[pulse?.priority]?.color,
             color: board?.priority?.[pulse?.priority]?.textColor,
           }}
-          className={cn(baseCssMiniItems(), "priority", "hover:opacity-60")}
+          className={cn(baseCssMiniItems(), "priority")}
         >
           {board?.priority?.[pulse?.priority]?.title || "NA"}
         </h1>
@@ -53,8 +53,7 @@ const Priority = ({ board, pulse }: PriorityProps) => {
                 style={{ background: p.color, color: p.textColor }}
                 className={cn(
                   "w-full h-10 text-center flex items-center justify-center",
-                  "cursor-pointer",
-                  "hover:opacity-60"
+                  "cursor-pointer"
                 )}
               >
                 {p.title}
@@ -64,7 +63,11 @@ const Priority = ({ board, pulse }: PriorityProps) => {
 
           <div className="divider m-0" />
 
-          <Button className="flex w-full flex-row items-center gap-2 border-2 border-main-light ">
+          <Button
+            disabled
+            className="flex w-full flex-row items-center gap-2 border-2 border-main-light "
+          >
+            {/* /TODO */}
             <Plus size={20} />
             <h1>Create New</h1>
           </Button>

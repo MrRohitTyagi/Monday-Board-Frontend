@@ -40,7 +40,7 @@ const layout = ({ children }: layoutProps) => {
       <div
         className={cn(
           "transition-all",
-          "fixed right-0 top-0 bottom-0 ",
+          "fixed right-0 top-0 bottom-0 z-[4]",
           isClosing && "animate-pulse-layer-close overflow-hidden",
           openState === transitionStates.OPEN && "animate-pulse-layer"
         )}

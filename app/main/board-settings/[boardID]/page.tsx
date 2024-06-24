@@ -25,6 +25,7 @@ import Loader from "@/components/core/Loader";
 import { cn } from "@/lib/utils";
 import useNavigate from "@/hooks/useNavigate";
 import { PriorityType, StatusesType } from "@/types/pulseTypes";
+import CustomDiv from "@/components/core/CustomDiv";
 
 type BoardSettingsProps = {
   params: {
@@ -154,23 +155,31 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
             </div>
           </div>
           {/* // Priority */}
-          <div className="priority space-y-1">
+          <CustomDiv
+            disabled={form.formState.isSubmitting}
+            lvl={60}
+            className="priority space-y-1"
+          >
             <Label>• Priority </Label>
             <CreatableSelect
               data={priority}
               setData={setpriority}
               name="priority"
             />
-          </div>
+          </CustomDiv>
           {/* Statuses */}
-          <div className="statuses space-y-1">
+          <CustomDiv
+            disabled={form.formState.isSubmitting}
+            lvl={60}
+            className="statuses space-y-1"
+          >
             <Label>• Statuses </Label>
             <CreatableSelect
               data={statuses}
               setData={setstatuses}
               name="statuses"
             />
-          </div>
+          </CustomDiv>
           <Button
             disabled={form.formState.isSubmitting}
             className={cn(
