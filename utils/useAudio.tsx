@@ -1,12 +1,17 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 type useAudioProps = {};
 
 const useAudio = () => {
-  const notiFicationAudio = new Audio("../assets/new-nitification-tone.mp3");
+  const notiFicationAudioRef = useRef<HTMLAudioElement>();
+  useEffect(() => {
+    notiFicationAudioRef.current = new Audio(
+      "../assets/new-nitification-tone.mp3"
+    );
+  }, []);
 
-  return { notiFicationAudio };
+  return { notiFicationAudio: notiFicationAudioRef.current };
 };
 
 export default useAudio;

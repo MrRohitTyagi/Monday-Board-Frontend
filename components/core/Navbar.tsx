@@ -50,7 +50,7 @@ const Navbar = ({}: Props) => {
   useEffect(() => {
     notificationChannel.subscribe(user._id, (res) => {
       console.log("res", res);
-      notiFicationAudio.play();
+      if (notiFicationAudio) notiFicationAudio.play();
       setNotiCount((pc) => (pc || 0) + 1);
     });
   }, [user._id]);
