@@ -13,7 +13,7 @@ import DialogueComp from "./DialogueComp";
 import UserInvite from "@/components/pages/UserInvite";
 import Notification from "@/components/pages/Notifications/Notifications";
 import useRealtimeChannels from "@/hooks/useRealtimeChannels";
-import { notiFicationAudio } from "@/utils/audios";
+import useAudio from "@/utils/useAudio";
 
 type Props = {};
 
@@ -28,12 +28,12 @@ const Navbar = ({}: Props) => {
   const [openNotification, setOpenNotification] = useState(
     transitionStates.CLOSED
   );
-
   const [notiCount, setNotiCount] = useState<number>(0);
-  const params = useParams();
 
+  const params = useParams();
   const { isAuthenticated, user } = useAuth();
   const { notificationChannel } = useRealtimeChannels();
+  const { notiFicationAudio } = useAudio();
 
   const currentBoard = useMemo(() => {
     return user.boards.find((b) => b._id === params?.board);
