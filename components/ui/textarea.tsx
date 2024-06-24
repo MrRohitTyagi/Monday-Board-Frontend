@@ -39,7 +39,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     const rows = React.useMemo(() => {
       if (typeof value === "string") {
-        return value.split("\n").length;
+        return value.split("\n").length + 1;
       } else return 5;
     }, [value]);
 

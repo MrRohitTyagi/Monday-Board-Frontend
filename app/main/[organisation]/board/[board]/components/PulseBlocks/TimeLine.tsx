@@ -12,6 +12,7 @@ import { BoardType } from "@/types/boardTypes";
 import { PulseType } from "@/types/pulseTypes";
 import { StateSetter } from "@/types/genericTypes";
 import { timeBetween } from "@/utils/helperFunctions";
+import { isEmpty } from "lodash";
 
 type TimelineProps = {
   board: BoardType;
@@ -61,10 +62,14 @@ const Timeline = ({ board, pulse, setPulse }: TimelineProps) => {
     [setPulse, updateTimeline]
   );
 
-  const { twoDates, days } = timeBetween(
-    pulse.timeline.start || "",
-    pulse.timeline.end || ""
-  );
+  const { twoDates, days } = useMemo(() => {
+    if (isEmpty(pulse.timeline)) return { twoDates: "", days: "" };
+    const { twoDates, days } = timeBetween(
+      pulse?.timeline?.start || "",
+      pulse?.timeline?.end || ""
+    );
+    return { twoDates, days: days ? days + "d" : "" };
+  }, [pulse.timeline]);
 
   return (
     <PopoverComp
@@ -74,7 +79,13 @@ const Timeline = ({ board, pulse, setPulse }: TimelineProps) => {
           "bg-main-fg p-2 shadow-lg shadow-foreground w-full rounded-sm overflow-hidden",
       }}
       trigger={
-        <div className={cn(baseCssMiniItems(), "timeline-block", "px-2 group swap")}>
+        <div
+          className={cn(
+            baseCssMiniItems(),
+            "timeline-block",
+            "px-2 group swap"
+          )}
+        >
           <h1
             className={cn(
               "between-dates group-hover:hidden",
@@ -90,7 +101,7 @@ const Timeline = ({ board, pulse, setPulse }: TimelineProps) => {
               "text-ellipsis overflow-hidden text-center"
             )}
           >
-            {`${days}d`}
+            {days}
           </h1>
         </div>
       }

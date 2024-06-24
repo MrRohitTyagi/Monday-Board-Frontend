@@ -11,6 +11,8 @@ import { StateSetter } from "@/types/genericTypes";
 import OutsideClickBox from "@/components/core/OutsideClickBox";
 import { useParams } from "next/navigation";
 import useRealtimeChannels from "@/hooks/useRealtimeChannels";
+import useLoading from "@/hooks/useLoading";
+import useWriteAI from "@/hooks/useWriteAI";
 
 type NewChatCompProps = { setChats: StateSetter<ChatType[]>; pulse: PulseType };
 
@@ -23,23 +25,28 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
   } = useLoacalStorageChat(pulse._id);
 
   //states
-  const [isEditing, setIsEditing] = useState(haveDraft);
+  // const [isEditing, setIsEditing] = useState(haveDraft);
+  // const [isSaving, setIsSaving] = useState(false);
   const [text, settext] = useState(content);
-  const [isSaving, setIsSaving] = useState(false);
+
+  const { isSaving, isEditing, triggerSaving, triggerEditing } = useLoading({
+    defaultEditing: haveDraft,
+  });
 
   //Hooks
   const params = useParams();
   const { createNewChat } = useChat();
   const { notificationChannel } = useRealtimeChannels();
+  const { isWritting, writeWithAI } = useWriteAI();
 
   useEffect(() => {
     settext(content);
   }, []);
 
   const handleCreateNew = useCallback(async () => {
-    setIsSaving(true);
+    triggerSaving(true);
     const payload = {
-      content: content,
+      content: text,
       pulseId: pulse._id,
       boardId: params?.board,
     };
@@ -52,10 +59,15 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
 
     setChats((ps) => [newChat, ...ps]);
     deleteLocal();
-    setIsEditing(false);
+    triggerEditing(false);
     settext("");
-    setIsSaving(false);
-  }, [pulse._id, createNewChat, content, params]);
+    triggerSaving(false);
+  }, [pulse._id, createNewChat, text, params]);
+
+  const handleWriteAI = useCallback(async () => {
+    const data = await writeWithAI({ pulseID: pulse._id, prompt: text });
+    settext(data);
+  }, [pulse._id, text]);
 
   const handleKeyDown = useCallback(() => {
     handleCreateNew();
@@ -65,7 +77,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     <>
       <OutsideClickBox
         onOutsideClick={() => {
-          setIsEditing(false);
+          triggerEditing(false);
         }}
         className={cn(
           "max-w-[40rem] w-full shrink-0",
@@ -97,7 +109,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
           </div>
         ) : (
           <Input
-            onClick={() => setIsEditing(true)}
+            onClick={() => triggerEditing(true)}
             className={cn(
               "bg-transparent  border-none"
               // "border-highlighter border"
@@ -108,11 +120,13 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
 
         {isEditing === true && (
           <SaveAndCancelButton
+            handleWriteAI={handleWriteAI}
+            isWritting={isWritting}
             loading={isSaving}
             disabled={isSaving}
             onCancelClick={() => {
               settext("");
-              setIsEditing(false);
+              triggerEditing(false);
               deleteLocal();
             }}
             onSaveClick={handleCreateNew}

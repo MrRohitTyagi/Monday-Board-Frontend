@@ -32,12 +32,6 @@ const Threads = ({}: ThreadsProps) => {
 
   return (
     <div>
-      {openNewChatBox === true && (
-        <NewThread
-          setThreads={setThreads}
-          setOpenNewChatBox={setOpenNewChatBox}
-        />
-      )}
       {chat.threadCount === 0 ? null : isLoading ? (
         <ThreadSkeletonLoader count={chat.threadCount} />
       ) : (
@@ -50,6 +44,13 @@ const Threads = ({}: ThreadsProps) => {
             />
           );
         })
+      )}
+      
+      {openNewChatBox === true && (
+        <NewThread
+          setThreads={setThreads}
+          setOpenNewChatBox={setOpenNewChatBox}
+        />
       )}
     </div>
   );

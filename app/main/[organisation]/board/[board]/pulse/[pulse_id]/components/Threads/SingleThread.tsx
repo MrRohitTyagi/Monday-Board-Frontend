@@ -17,6 +17,7 @@ import ThreadActions from "./ThreadActions";
 import useSingleChat from "@/hooks/useSingleChat";
 import ThreadInfo from "./ThreadInfo";
 import Space from "@/components/core/Space";
+import { useAuth } from "@/zstore";
 
 type SingleThreadProps = {
   mainThread: ThreadType;
@@ -25,6 +26,7 @@ type SingleThreadProps = {
 const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
   const [thread, setthread] = useState<ThreadType>({} as ThreadType);
   const { updateThreadCount } = useSingleChat();
+  const { user } = useAuth();
 
   const {
     isLoading,
@@ -93,7 +95,7 @@ const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
                 "animate-pulse skeleton"
             )}
           >
-            {isEditing === false && (
+            {isEditing === false && thread.createdBy._id === user._id && (
               <ThreadActions
                 handleDeleteThread={handleDeleteThread}
                 isDeleting={isDeleting}

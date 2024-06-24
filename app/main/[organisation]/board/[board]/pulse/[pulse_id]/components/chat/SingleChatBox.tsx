@@ -30,12 +30,13 @@ import { ChatType } from "@/types/chatTypes";
 import { PulseType } from "@/types/pulseTypes";
 
 // Extra
-import { generatePictureFallback, timeBetween } from "@/utils/helperFunctions";
+import { generatePictureFallback } from "@/utils/helperFunctions";
 import { StateSetter } from "@/types/genericTypes";
 import { SingleChatContext } from "@/hooks/useSingleChat";
 import Divider from "@/components/core/Divider";
 import useLoading from "@/hooks/useLoading";
 import ChatInfo from "./ChatInfo";
+import useWriteAI from "@/hooks/useWriteAI";
 
 type SingleChatBoxProps = {
   chat: ChatType;
@@ -65,22 +66,23 @@ const SingleChatBox = ({
     defaultLoading: true,
     defaultEditing: !isEmpty(masterChat.draft),
   });
+  const { isWritting, writeWithAI } = useWriteAI();
 
   const { updateChatContent, updateChatDraft, deleteSingleChat } = useChat();
-
-  const { userFriendlyDate, displayText } = useMemo(() => {
-    if (!masterChat._id)
-      return {
-        userFriendlyDate: null,
-        displayText: null,
-      };
-    return timeBetween(masterChat.createdAt);
-  }, [masterChat.createdAt]);
 
   useEffect(() => {
     setchat(masterChat);
     triggerLoading(false);
   }, [masterChat]);
+
+  const handleWriteAI = useCallback(async () => {
+    const data = await writeWithAI({
+      pulseID: pulse?._id || "",
+      prompt: chat.draft ? chat.draft : chat.content,
+      setchat: setchat,
+    });
+    updateChatContent(data, masterChat._id);
+  }, [pulse?._id, chat.draft, chat.content]);
 
   // save the chat content
   const onSaveClick = useCallback(async () => {
@@ -198,6 +200,8 @@ const SingleChatBox = ({
 
         {isEditing === true && (
           <SaveAndCancelButton
+            isWritting={isWritting}
+            handleWriteAI={handleWriteAI}
             disabled={isSaving}
             loading={isSaving}
             onCancelClick={onCancelClick}
