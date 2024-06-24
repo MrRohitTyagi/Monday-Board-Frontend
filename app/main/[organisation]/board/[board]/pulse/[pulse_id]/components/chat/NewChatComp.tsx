@@ -13,6 +13,7 @@ import { useParams } from "next/navigation";
 import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 import useLoading from "@/hooks/useLoading";
 import useWriteAI from "@/hooks/useWriteAI";
+import HTMLEditor from "@/components/core/HTMLEditor";
 
 type NewChatCompProps = { setChats: StateSetter<ChatType[]>; pulse: PulseType };
 
@@ -73,11 +74,12 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     handleCreateNew();
   }, [handleCreateNew]);
 
+  console.log(`%c text `, "color: pink;border:1px solid pink", text);
   return (
     <>
       <OutsideClickBox
         onOutsideClick={() => {
-          triggerEditing(false);
+          // triggerEditing(false);
         }}
         className={cn(
           "max-w-[40rem] w-full shrink-0",
@@ -87,7 +89,15 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
       >
         {isEditing ? (
           <div className=" p-2">
-            <Textarea
+            <HTMLEditor
+              initialContent={text}
+              onContentChange={(e) => {
+                console.log(`%c e `, "color: red;border:2px dotted red", e);
+                settext(e);
+                saveToLocal(e);
+              }}
+            />
+            {/* <Textarea
               dynamicHeight={true}
               disabled={isSaving}
               handleCtrlEnter={handleKeyDown}
@@ -105,7 +115,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
                 "shrink-0",
                 "border-highlighter border"
               )}
-            />
+            /> */}
           </div>
         ) : (
           <Input

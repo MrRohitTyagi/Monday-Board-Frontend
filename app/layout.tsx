@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./globals.css";
 import "./nprogress.css";
+import "../components/CSS/textEditorstyle.css";
 
 import Authorize from "@/components/core/Authorize";
 import { Toaster } from "@/components/ui/sonner";
