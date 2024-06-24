@@ -10,6 +10,7 @@ import { PulseType } from "@/types/pulseTypes";
 import { StateSetter } from "@/types/genericTypes";
 import OutsideClickBox from "@/components/core/OutsideClickBox";
 import { useParams } from "next/navigation";
+import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 
 type NewChatCompProps = { setChats: StateSetter<ChatType[]>; pulse: PulseType };
 
@@ -21,11 +22,15 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     deleteLocal,
   } = useLoacalStorageChat(pulse._id);
 
+  //states
   const [isEditing, setIsEditing] = useState(haveDraft);
-  const { createNewChat } = useChat();
-  const params = useParams();
   const [text, settext] = useState(content);
   const [isSaving, setIsSaving] = useState(false);
+
+  //Hooks
+  const params = useParams();
+  const { createNewChat } = useChat();
+  const { notificationChannel } = useRealtimeChannels();
 
   useEffect(() => {
     settext(content);
@@ -40,6 +45,11 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     };
 
     const newChat = await createNewChat(payload);
+
+    pulse.assigned.forEach((assignedUserId) => {
+      notificationChannel.publish(assignedUserId, { type: "NEW_CHAT" });
+    });
+
     setChats((ps) => [newChat, ...ps]);
     deleteLocal();
     setIsEditing(false);

@@ -43,7 +43,11 @@ type SingleChatBoxProps = {
   setChats: StateSetter<ChatType[]>;
 };
 
-const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
+const SingleChatBox = ({
+  chat: masterChat,
+  setChats,
+  pulse,
+}: SingleChatBoxProps) => {
   //
   const [chat, setchat] = useState<ChatType>({} as ChatType);
   const [openNewChatBox, setOpenNewChatBox] = useState(false);
@@ -126,6 +130,7 @@ const SingleChatBox = ({ chat: masterChat, setChats }: SingleChatBoxProps) => {
         openNewChatBox,
         setOpenNewChatBox,
         updateThreadCount,
+        pulse: pulse as PulseType,
       }}
     >
       <div

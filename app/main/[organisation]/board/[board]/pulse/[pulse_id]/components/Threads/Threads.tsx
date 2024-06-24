@@ -4,8 +4,6 @@ import React, { memo, useEffect, useState } from "react";
 import Divider from "@/components/core/Divider";
 import { Button } from "@/components/ui/button";
 import { getThreads } from "@/gateways/thread-gateway";
-import { cn, waitfor } from "@/lib/utils";
-import { Reply, ThumbsUp } from "lucide-react";
 import NewThread from "./NewThread";
 import { ThreadType } from "@/types/threadType";
 import useSingleChat from "@/hooks/useSingleChat";

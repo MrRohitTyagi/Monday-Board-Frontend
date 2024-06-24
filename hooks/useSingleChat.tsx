@@ -1,5 +1,6 @@
 import { ChatType } from "@/types/chatTypes";
 import { StateSetter } from "@/types/genericTypes";
+import { PulseType } from "@/types/pulseTypes";
 import React, { createContext, useContext, useMemo } from "react";
 
 type SingleChatContextType = {
@@ -8,6 +9,7 @@ type SingleChatContextType = {
   openNewChatBox: boolean;
   setOpenNewChatBox: StateSetter<boolean>;
   updateThreadCount: (s: "ADD" | "SUB") => void;
+  pulse: PulseType;
 };
 
 const SingleChatContext = createContext<SingleChatContextType>(

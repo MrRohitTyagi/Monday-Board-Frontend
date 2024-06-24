@@ -2,6 +2,7 @@ import AvatarComp from "@/components/core/AvatarComp";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { createThread } from "@/gateways/thread-gateway";
+import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 import useSingleChat from "@/hooks/useSingleChat";
 import { cn } from "@/lib/utils";
 import { StateSetter } from "@/types/genericTypes";
@@ -21,7 +22,8 @@ const NewThread = ({ setThreads, setOpenNewChatBox }: NewThreadProps) => {
   const [value, setvalue] = useState("");
 
   const { user } = useAuth();
-  const { chat, updateThreadCount } = useSingleChat();
+  const { chat, updateThreadCount, pulse } = useSingleChat();
+  const { notificationChannel } = useRealtimeChannels();
   const params = useParams();
 
   const handleAddNewThread = useCallback(async () => {
@@ -32,6 +34,11 @@ const NewThread = ({ setThreads, setOpenNewChatBox }: NewThreadProps) => {
       boardId: params?.board,
     };
     const newThread = await createThread(payload);
+
+    pulse.assigned.forEach((assignedUserId) => {
+      notificationChannel.publish(assignedUserId, { type: "NEW_THREAD" });
+    });
+
     setThreads((pt) => [...pt, newThread]);
     setOpenNewChatBox(false);
     updateThreadCount("ADD");
