@@ -16,7 +16,7 @@ const useRealtimeChannels = () => {
     ablyClient.connection.on("closed", () => {
       console.log("Ably CLOSED!");
     });
-    return () => ablyClient.close();
+    // return () => ablyClient.close();
   }, []);
 
   return { notificationChannel };
