@@ -1,11 +1,10 @@
 "use client";
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 import MainLayout from "./MainLayout";
 import { useAuth } from "@/zstore";
 import { cn } from "@/lib/utils";
 import { getToken } from "@/utils/cookie";
-import useNavigate from "@/hooks/useNavigate";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ChildrenType } from "@/types/genericTypes";
 
 type AuthorizeTypes = ChildrenType & {};
@@ -13,14 +12,12 @@ type AuthorizeTypes = ChildrenType & {};
 const Authorize = ({ children }: AuthorizeTypes) => {
   const { isLoading, fetchUser, notAuthenticated, isAuthenticated, user } =
     useAuth();
-  const navigate = useNavigate();
   const router = useRouter();
-  const pathname = usePathname();
 
-  function logout(data: any) {
+  const logout = useCallback((data: any) => {
     router.replace("/login");
     notAuthenticated();
-  }
+  }, []);
 
   useEffect(() => {
     document.addEventListener("LOGOUT", logout);

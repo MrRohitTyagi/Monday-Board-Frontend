@@ -27,6 +27,7 @@ import { PulseType } from "@/types/pulseTypes";
 import { SprintType } from "@/types/sprintTypes";
 import { BoardType } from "@/types/boardTypes";
 import { UserType } from "@/types/userTypes";
+import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 
 type PulseProps = {
   pulse: PulseType;
@@ -67,6 +68,9 @@ const Pulse = ({
   board,
 }: PulseProps) => {
   const [pulse, setPulse] = useState<PulseType>(mainPulse);
+
+  const { notificationChannel } = useRealtimeChannels();
+
   const debounceRef = useRef<any>();
   const router = useRouter();
   const params = useParams();
@@ -105,13 +109,14 @@ const Pulse = ({
         if (action == "remove") {
           assigned = prev.assigned.filter((a) => a !== user._id);
         } else {
+          notificationChannel.publish(user._id, { type: "ASSIGNED" });
           assigned = [user._id, ...prev.assigned];
         }
         debouncePulseUpdate({ assigned: assigned, boardId: params?.board });
         return { ...prev, assigned };
       });
     },
-    [params]
+    [params, notificationChannel]
   );
 
   const updateTimeline = useCallback(

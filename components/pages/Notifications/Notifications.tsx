@@ -11,9 +11,7 @@ import {
 import { NotificationType } from "@/types/notificationTypes";
 import NotificationCard from "./NotificationCard";
 import ResizableSplit from "@/components/core/ResizableSplit";
-import { StateSetter } from "@/types/genericTypes";
 import NotificationHeader from "./NotificationHeader";
-import Space from "@/components/core/Space";
 
 type NotificationProps = {
   openNotification: string;

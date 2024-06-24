@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Bell, UserRoundPlus } from "lucide-react";
 
 import { Button } from "../ui/button";
@@ -12,6 +12,8 @@ import { useParams } from "next/navigation";
 import DialogueComp from "./DialogueComp";
 import UserInvite from "@/components/pages/UserInvite";
 import Notification from "@/components/pages/Notifications/Notifications";
+import useRealtimeChannels from "@/hooks/useRealtimeChannels";
+import { notiFicationAudio } from "@/utils/audios";
 
 type Props = {};
 
@@ -26,9 +28,12 @@ const Navbar = ({}: Props) => {
   const [openNotification, setOpenNotification] = useState(
     transitionStates.CLOSED
   );
+
+  const [notiCount, setNotiCount] = useState<number>(0);
   const params = useParams();
 
   const { isAuthenticated, user } = useAuth();
+  const { notificationChannel } = useRealtimeChannels();
 
   const currentBoard = useMemo(() => {
     return user.boards.find((b) => b._id === params?.board);
@@ -42,12 +47,20 @@ const Navbar = ({}: Props) => {
     }, 300);
   };
 
+  useEffect(() => {
+    notificationChannel.subscribe(user._id, (res) => {
+      console.log("res", res);
+      notiFicationAudio.play();
+      setNotiCount((pc) => (pc || 0) + 1);
+    });
+  }, [user._id]);
+
   return (
     <div
       className={cn(
         "p-2 pr-8 items-center w-full h-navbar-height",
         " flex flex-row justify-between",
-        isAuthenticated ? "" : "pointer-events-none opacity-50"
+        isAuthenticated === false && "pointer-events-none opacity-50"
       )}
     >
       <Link href="/">Logo here TODO</Link>
@@ -85,16 +98,30 @@ const Navbar = ({}: Props) => {
             if (openNotification === transitionStates.CLOSED) {
               setOpenNotification(transitionStates.OPEN);
             } else handleLayerClose();
+            if (notiCount > 0) setNotiCount(0);
           }}
           className="p-0 m-0"
           variant="ghost"
         >
-          <Bell
-            className={cn(
-              openNotification !== transitionStates.CLOSED &&
-                "stroke-highlighter"
+          <div className="indicator">
+            {notiCount !== null && notiCount > 0 && (
+              <div
+                className={cn(
+                  "opacity-100",
+                  "indicator-item bg-highlighter",
+                  " rounded-full h-5 w-5 items-center justify-center flex"
+                )}
+              >
+                {notiCount}
+              </div>
             )}
-          />
+            <Bell
+              className={cn(
+                openNotification !== transitionStates.CLOSED &&
+                  "stroke-highlighter"
+              )}
+            />
+          </div>
         </Button>
 
         {/* // userprofile */}

@@ -24,6 +24,7 @@ import { BoardType } from "@/types/boardTypes";
 import { PulseType } from "@/types/pulseTypes";
 import { UserType } from "@/types/userTypes";
 import { StateSetter } from "@/types/genericTypes";
+import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 
 type AssignedProps = {
   board: BoardType;
