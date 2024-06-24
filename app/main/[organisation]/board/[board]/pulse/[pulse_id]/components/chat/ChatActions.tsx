@@ -4,7 +4,7 @@ import Loader from "@/components/core/Loader";
 import { Button } from "@/components/ui/button";
 import { ChatType } from "@/types/chatTypes";
 import { useAuth } from "@/zstore";
-import { Edit, Pin, Trash2 } from "lucide-react";
+import { Edit, Pin, PinIcon, Trash2 } from "lucide-react";
 import React, { memo } from "react";
 
 type ChatActionsProps = {
@@ -27,13 +27,30 @@ const ChatActions = ({
   return (
     <div className="flex flex-col gap-3">
       <Button
-        onClick={() => deleteChat(chat._id)}
+      disabled
+        // onClick={() => deleteChat(chat._id)}
         className="w-row gap-3 justify-start opacity-80"
         size={"sm"}
       >
-        {isDeleting === true ? <Loader /> : <Trash2 color="white" size={18} />}
-        {isDeleting === true ? <h2>Deleting...</h2> : <h1>Delete update</h1>}
+        <PinIcon color="white" size={18} />
+        <h1>Pin Item</h1>
       </Button>
+
+      {user_id === chat.createdBy._id && (
+        <Button
+          onClick={() => deleteChat(chat._id)}
+          className="w-row gap-3 justify-start opacity-80"
+          size={"sm"}
+        >
+          {isDeleting === true ? (
+            <Loader />
+          ) : (
+            <Trash2 color="white" size={18} />
+          )}
+          {isDeleting === true ? <h2>Deleting...</h2> : <h1>Delete update</h1>}
+        </Button>
+      )}
+
       {/* // */}
       {user_id === chat.createdBy._id && (
         <Button
@@ -45,10 +62,6 @@ const ChatActions = ({
           <h1>Edit update</h1>
         </Button>
       )}
-      <Button className="w-row gap-3 justify-start opacity-80" size={"sm"}>
-        <Pin color="white" size={18} />
-        <h1>Pin to top</h1>
-      </Button>
     </div>
   );
 };

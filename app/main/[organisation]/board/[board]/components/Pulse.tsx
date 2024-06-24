@@ -204,7 +204,7 @@ const Pulse = ({
                 {pulse.timeline.start}
               </div>
             ) : (
-              <TimeLine pulse={pulse} board={board} />
+              <TimeLine pulse={pulse} board={board} setPulse={setPulse} />
             )}
 
             {/*  PRIORITY ----------------------------------------------------------------------- */}
