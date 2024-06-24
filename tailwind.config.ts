@@ -132,6 +132,10 @@ const config = {
           "90%": { backgroundColor: "transparent" },
           "100%": { backgroundColor: "black", opacity: "50%" },
         },
+        "unmount-box": {
+          from: { height: "4rem", transition: "all 500ms ease-in-out" },
+          to: { height: "0rem", transition: "all 500ms ease-in-out" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -139,6 +143,7 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
 
         fadeIn: "fadeIn 500ms ease-in-out forwards",
+        "unmount-box": "unmount-box 500ms ease-in-out forwards",
 
         "pulse-layer": "pulse-layer 300ms ease-in-out forwards",
         "pulse-layer-close": "pulse-layer-close 300ms ease-in-out forwards",

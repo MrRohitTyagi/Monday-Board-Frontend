@@ -5,13 +5,17 @@ import React, { memo, useCallback, useEffect, useState } from "react";
 import NotificationSkeletonLoader from "./NotificationSkeletonLoader";
 import { cn, waitfor } from "@/lib/utils";
 import {
+  deleteAllNotification,
+  deleteSingleNotification,
   getNotifications,
+  markAllNotificationsAsRead,
   updateNotification,
 } from "@/gateways/notification-gateway";
 import { NotificationType } from "@/types/notificationTypes";
 import NotificationCard from "./NotificationCard";
 import ResizableSplit from "@/components/core/ResizableSplit";
 import NotificationHeader from "./NotificationHeader";
+import Space from "@/components/core/Space";
 
 type NotificationProps = {
   openNotification: string;
@@ -36,8 +40,6 @@ NotificationProps) => {
 
   const isClosing = openNotification === transitionStates.CLOSING;
 
-  const handleMarkAllAsRead = useCallback(() => {}, []);
-
   const handleMarkAsRead = useCallback((_id: string) => {
     setNotifications((pn) => {
       return pn.map((n) => {
@@ -52,13 +54,33 @@ NotificationProps) => {
     updateNotification(payload);
   }, []);
 
-  const handleDeleteAll = useCallback(() => {}, []);
+  const handleMarkAllAsRead = useCallback(() => {
+    setNotifications((pn) => pn.map((n) => ({ ...n, seen: true })));
+    markAllNotificationsAsRead(user._id);
+  }, [user._id]);
 
-  console.log(
-    `%c notifications `,
-    "color: yellow;border:1px solid lightgreen",
-    notifications
-  );
+  const handleDeleteAll = useCallback(async () => {
+    for await (const __ of notifications) {
+      await waitfor(50);
+      setNotifications((pn) => {
+        let clone = [...pn];
+        clone.pop();
+        return clone;
+      });
+    }
+    deleteAllNotification(user._id);
+  }, [notifications, user._id]);
+
+  const handleDeleteOne = useCallback(async (_id: string) => {
+    setNotifications((pn) => {
+      return pn.map((n) => {
+        if (n._id === _id) {
+          return { ...n, isDeleted: true };
+        } else return n;
+      });
+    });
+    await deleteSingleNotification(_id);
+  }, []);
 
   useEffect(() => {
     async function init() {
@@ -104,11 +126,12 @@ NotificationProps) => {
               handleLayerClose={handleLayerClose}
             />
             {/* <Space /> */}
-            <div className="flex flex-col gap-2 h-full overflow-y-auto p-2">
+            <div className="flex flex-col h-full overflow-y-auto p-2">
               {notifications.map((notification) => {
                 return (
                   <NotificationCard
                     handleLayerClose={handleLayerClose}
+                    handleDeleteOne={handleDeleteOne}
                     handleMarkAsRead={handleMarkAsRead}
                     key={notification._id}
                     notification={notification}
@@ -116,6 +139,7 @@ NotificationProps) => {
                   />
                 );
               })}
+              <Space />
             </div>
           </div>
         )}

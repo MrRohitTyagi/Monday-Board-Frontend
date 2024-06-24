@@ -8,13 +8,16 @@ import LowOpacityText from "@/components/core/LowOpacityText";
 import { timeBetween } from "@/utils/helperFunctions";
 import { Button } from "@/components/ui/button";
 import useNavigate from "@/hooks/useNavigate";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Trash2 } from "lucide-react";
 import TooltipComp from "@/components/core/TooltipComp";
+import useLoading from "@/hooks/useLoading";
+import Loader from "@/components/core/Loader";
 
 type NotificationCardProps = {
   notification: NotificationType;
   setNotifications?: StateSetter<NotificationType[]>;
   handleMarkAsRead: (e: string) => void;
+  handleDeleteOne: (e: string) => void;
   handleLayerClose: () => void;
 };
 const NotificationCard = ({
@@ -22,15 +25,19 @@ const NotificationCard = ({
   // setNotifications,
   handleMarkAsRead,
   handleLayerClose,
+  handleDeleteOne,
 }: NotificationCardProps) => {
   //
   const { displayText = "" } = useMemo(() => {
     return timeBetween(notification.createdAt);
   }, [notification.createdAt]);
+  const { isDeleting, triggerDeleting } = useLoading({});
 
   const navigate = useNavigate();
 
-  return (
+  return notification.isDeleted === true ? (
+    <div className="animate-unmount-box w-full" />
+  ) : (
     <Button
       onClick={() => {
         navigate(notification.redirect_url);
@@ -41,7 +48,7 @@ const NotificationCard = ({
       className={cn(
         "notification-card-cont transition-all animate-fadeIn",
         "min-h-16 h-fit w-full rounded-lg",
-        "flex flex-row py-4 px-3",
+        "flex flex-row py-4 px-3 mt-2",
         "shrink-0 relative group opacity-0",
         notification.seen === true && "bg-main-bg",
         notification.seen === false && "bg-main-active-dark",
@@ -56,23 +63,44 @@ const NotificationCard = ({
         // notification.seen === false && "bg-main-active-dark"
       )}
     >
-      {notification.seen === false && (
-        <TooltipComp title={"Mark as read"} className="z-[9999] px-3 py-2">
-          <div className="absolute right-0 bottom-0 group-hover:opacity-100">
+      <div
+        className={cn(
+          "flex flex-row",
+          "absolute right-0 bottom-0 group-hover:opacity-100"
+        )}
+      >
+        {notification.seen === false && (
+          <TooltipComp title={"Mark as read"} className="z-[20] px-3 py-2">
             <Button
+              size={"sm"}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 handleMarkAsRead(notification._id);
               }}
-              className="flex z-50 flex-row gap-2 hover:bg-transparent"
+              className="px-2 flex z-50 flex-row gap-2 hover:bg-transparent"
               variant={"ghost"}
             >
               <CheckCircle size={20} />
             </Button>
-          </div>
+          </TooltipComp>
+        )}
+        <TooltipComp title={"Delete notification"} className="z-[20] px-3 py-2">
+          <Button
+            size={"sm"}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              triggerDeleting(true);
+              handleDeleteOne(notification._id);
+            }}
+            className="px-2 flex z-50 flex-row gap-2 hover:bg-transparent"
+            variant={"ghost"}
+          >
+            {isDeleting ? <Loader className="h-6 w-6" /> : <Trash2 size={20} />}
+          </Button>
         </TooltipComp>
-      )}
+      </div>
 
       {/* // */}
       <div className="noti-profile flex flex-row justify-center min-w-20 max-w-20 shrink-0">

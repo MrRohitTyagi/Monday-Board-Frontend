@@ -2,6 +2,7 @@ import { PulseType } from "./pulseTypes";
 import { UserType } from "./userTypes";
 
 export type NotificationType = {
+  isDeleted: boolean;
   _id: string;
   seen: boolean;
   createdBy: UserType;
