@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { BoardType } from "@/types/boardTypes";
 import { PulseType } from "@/types/pulseTypes";
 import { StateSetter } from "@/types/genericTypes";
+import { timeBetween } from "@/utils/helperFunctions";
 
 type TimelineProps = {
   board: BoardType;
@@ -41,9 +42,6 @@ const Timeline = ({ board, pulse, setPulse }: TimelineProps) => {
     return [obj];
   }, [pulse.timeline]);
 
-  console.log(`%c state `, "color: orange;border:2px solid cyan", state);
-  console.log(`%c pulse `, "color: pink;border:1px solid pink", pulse);
-
   const handleOnChange = useCallback(
     (item: any) => {
       const { startDate, endDate } = item.selection;
@@ -63,6 +61,11 @@ const Timeline = ({ board, pulse, setPulse }: TimelineProps) => {
     [setPulse, updateTimeline]
   );
 
+  const { twoDates, days } = timeBetween(
+    pulse.timeline.start || "",
+    pulse.timeline.end || ""
+  );
+
   return (
     <PopoverComp
       classNames={{
@@ -71,9 +74,25 @@ const Timeline = ({ board, pulse, setPulse }: TimelineProps) => {
           "bg-main-fg p-2 shadow-lg shadow-foreground w-full rounded-sm overflow-hidden",
       }}
       trigger={
-        <h1 className={cn(baseCssMiniItems(), "timeline-block")}>
-          {"TimeLine"}
-        </h1>
+        <div className={cn(baseCssMiniItems(), "timeline-block", "px-2 group swap")}>
+          <h1
+            className={cn(
+              "between-dates group-hover:hidden",
+              "text-ellipsis overflow-hidden text-center"
+            )}
+          >
+            {twoDates}
+          </h1>
+
+          <h1
+            className={cn(
+              "only-days hidden group-hover:flex",
+              "text-ellipsis overflow-hidden text-center"
+            )}
+          >
+            {`${days}d`}
+          </h1>
+        </div>
       }
       content={
         <>

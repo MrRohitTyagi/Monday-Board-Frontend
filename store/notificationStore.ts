@@ -74,6 +74,13 @@ export const useNotificationStore = create<NotificationStoreType>(
           }),
         };
       });
+      let id = setTimeout(() => {
+        setState((ps) => ({
+          ...ps,
+          notifications: ps.notifications.filter((n) => !n.isDeleted),
+        }));
+        clearTimeout(id);
+      }, 500);
       deleteSingleNotification(_id);
     },
     //

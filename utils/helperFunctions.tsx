@@ -2,7 +2,7 @@ function generatePictureFallback(str = "") {
   return str.charAt(0) + str.charAt(str.length - 1);
 }
 
-function formatDate(date: Date): string {
+function formatDate(date: Date, onlyDate?: boolean): string {
   const options: Intl.DateTimeFormatOptions = {
     day: "2-digit",
     month: "long",
@@ -17,12 +17,15 @@ function formatDate(date: Date): string {
     .replace(",", "");
   const [day, month, year, prefix, time]: string[] = formattedDate?.split(" ");
 
-  const [hrs='', min=''] = time?.split(":");
+  const [hrs = "", min = ""] = time?.split(":");
 
   const period: string = parseInt(hrs) >= 12 ? "PM" : "AM";
   const hrs12format = parseInt(hrs) % 12;
-
-  return `${day}-${month}-${year}  ${prefix} ${hrs12format}:${min} ${period}`;
+  if (onlyDate === true) {
+    return `${day} - ${month}`;
+  } else {
+    return `${day} - ${month}  ${prefix} ${hrs12format}:${min} ${period}`;
+  }
 }
 
 // Get the formatted date string
@@ -33,9 +36,10 @@ interface TimeDifference {
   seconds: number;
   displayText: string;
   userFriendlyDate: string;
+  twoDates: string;
 }
 
-function timeBetween(dateString: string, secondDate = null): TimeDifference {
+function timeBetween(dateString: string, secondDate = ""): TimeDifference {
   // Parse the given date string
   const pastDate = new Date(dateString);
 
@@ -73,6 +77,9 @@ function timeBetween(dateString: string, secondDate = null): TimeDifference {
       ? `${seconds} seconds ago`
       : "now";
 
+  const date1 = formatDate(pastDate, true);
+  const date2 = formatDate(anotherDate, true);
+  const twoDates = `${date1} - ${date2}`;
   return {
     days,
     hours,
@@ -80,6 +87,7 @@ function timeBetween(dateString: string, secondDate = null): TimeDifference {
     seconds,
     displayText,
     userFriendlyDate,
+    twoDates,
   };
 }
 

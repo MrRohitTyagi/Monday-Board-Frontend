@@ -133,8 +133,8 @@ const config = {
           "100%": { backgroundColor: "black", opacity: "50%" },
         },
         "unmount-box": {
-          from: { height: "4rem", transition: "all 500ms ease-in-out" },
-          to: { height: "0rem", transition: "all 500ms ease-in-out" },
+          from: { height: "4.5rem" },
+          to: { height: "0rem" },
         },
       },
       animation: {
