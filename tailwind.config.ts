@@ -142,10 +142,10 @@ const config = {
 
         "accordion-up": "accordion-up 0.2s ease-out",
 
-        fadeIn: "fadeIn 500ms ease-in-out forwards",
+        fadeIn: "fadeIn 300ms ease-in-out forwards",
         "unmount-box": "unmount-box 500ms ease-in-out forwards",
 
-        "pulse-layer": "pulse-layer 300ms ease-in-out forwards",
+        "pulse-layer": "pulse-layer 150ms ease-in-out forwards",
         "pulse-layer-close": "pulse-layer-close 300ms ease-in-out forwards",
 
         "chat-cont-scroll": "chat-cont-scroll 300ms ease-in-out forwards",

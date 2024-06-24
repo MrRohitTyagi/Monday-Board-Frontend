@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { Bell, UserRoundPlus } from "lucide-react";
 
 import { Button } from "../ui/button";
@@ -14,6 +14,7 @@ import UserInvite from "@/components/pages/UserInvite";
 import Notification from "@/components/pages/Notifications/Notifications";
 import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 import useAudio from "@/utils/useAudio";
+import { useNotificationStore } from "@/store/notificationStore";
 
 type Props = {};
 
@@ -34,6 +35,7 @@ const Navbar = ({}: Props) => {
   const { isAuthenticated, user } = useAuth();
   const { notificationChannel } = useRealtimeChannels();
   const { notiFicationAudio } = useAudio();
+  const { setHasNew } = useNotificationStore();
 
   const currentBoard = useMemo(() => {
     return user.boards.find((b) => b._id === params?.board);
@@ -52,6 +54,7 @@ const Navbar = ({}: Props) => {
       console.log("res", res);
       if (notiFicationAudio) notiFicationAudio.play();
       setNotiCount((pc) => (pc || 0) + 1);
+      setHasNew(true);
     });
   }, [user._id]);
 

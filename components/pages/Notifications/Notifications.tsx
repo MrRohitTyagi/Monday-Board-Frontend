@@ -1,21 +1,14 @@
 "use client";
 import useLoading from "@/hooks/useLoading";
-import { useAuth } from "@/zstore";
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { memo, useEffect } from "react";
 import NotificationSkeletonLoader from "./NotificationSkeletonLoader";
-import { cn, waitfor } from "@/lib/utils";
-import {
-  deleteAllNotification,
-  deleteSingleNotification,
-  getNotifications,
-  markAllNotificationsAsRead,
-  updateNotification,
-} from "@/gateways/notification-gateway";
-import { NotificationType } from "@/types/notificationTypes";
+import { cn } from "@/lib/utils";
+
 import NotificationCard from "./NotificationCard";
 import ResizableSplit from "@/components/core/ResizableSplit";
 import NotificationHeader from "./NotificationHeader";
 import Space from "@/components/core/Space";
+import { useNotificationStore } from "@/store/notificationStore";
 
 type NotificationProps = {
   openNotification: string;
@@ -34,63 +27,27 @@ const Notification = ({
   handleLayerClose,
 }: // transitionStates,
 NotificationProps) => {
-  const [notifications, setNotifications] = useState<NotificationType[]>([]);
-  const { user } = useAuth();
+  // const [notifications, setNotifications] = useState<NotificationType[]>([]);
+  const {
+    getNotifications,
+    notifications,
+    handleDeleteAll,
+    handleDeleteOne,
+    handleMarkAllAsRead,
+    handleMarkAsRead,
+    setHasNew,
+  } = useNotificationStore();
   const { isLoading, triggerLoading } = useLoading({ defaultLoading: true });
 
   const isClosing = openNotification === transitionStates.CLOSING;
 
-  const handleMarkAsRead = useCallback((_id: string) => {
-    setNotifications((pn) => {
-      return pn.map((n) => {
-        if (n._id === _id) return { ...n, seen: true };
-        else return n;
-      });
-    });
-    const payload = {
-      _id: _id,
-      seen: true,
-    };
-    updateNotification(payload);
-  }, []);
-
-  const handleMarkAllAsRead = useCallback(() => {
-    setNotifications((pn) => pn.map((n) => ({ ...n, seen: true })));
-    markAllNotificationsAsRead(user._id);
-  }, [user._id]);
-
-  const handleDeleteAll = useCallback(async () => {
-    for await (const __ of notifications) {
-      await waitfor(50);
-      setNotifications((pn) => {
-        let clone = [...pn];
-        clone.pop();
-        return clone;
-      });
-    }
-    deleteAllNotification(user._id);
-  }, [notifications, user._id]);
-
-  const handleDeleteOne = useCallback(async (_id: string) => {
-    setNotifications((pn) => {
-      return pn.map((n) => {
-        if (n._id === _id) {
-          return { ...n, isDeleted: true };
-        } else return n;
-      });
-    });
-    await deleteSingleNotification(_id);
-  }, []);
-
   useEffect(() => {
     async function init() {
-      const notis = await getNotifications(user._id);
-      // await waitfor(501110);
-      setNotifications(notis);
+      await getNotifications();
       triggerLoading(false);
     }
     init();
-  }, [user._id]);
+  }, []);
 
   return (
     <div
@@ -135,7 +92,6 @@ NotificationProps) => {
                     handleMarkAsRead={handleMarkAsRead}
                     key={notification._id}
                     notification={notification}
-                    setNotifications={setNotifications}
                   />
                 );
               })}

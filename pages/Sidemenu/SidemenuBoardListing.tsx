@@ -36,7 +36,8 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
             onClick={() => navigate(`board/${board._id}`)}
             className={cn(
               "single-board-row",
-              "flex flex-row gap-2 items-center justify-center",
+              "flex flex-row gap-2 items-center ",
+              isCollapsed ? "justify-center" : "justify-start",
               "cursor-pointer p-2 rounded text-sm",
               "hover:bg-main-active-dark",
               isActive ? "bg-main-active-dark" : ""
@@ -61,7 +62,11 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
         );
       })}
 
-      <TooltipComp title={"Create new board"} side="right" className="px-3 py-2">
+      <TooltipComp
+        title={"Create new board"}
+        side="right"
+        className="px-3 py-2"
+      >
         <Button
           disabled={isAuthenticated === false}
           onClick={() => {

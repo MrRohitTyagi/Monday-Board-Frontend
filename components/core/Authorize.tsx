@@ -6,12 +6,14 @@ import { cn } from "@/lib/utils";
 import { getToken } from "@/utils/cookie";
 import { useRouter } from "next/navigation";
 import { ChildrenType } from "@/types/genericTypes";
+import { useNotificationStore } from "@/store/notificationStore";
 
 type AuthorizeTypes = ChildrenType & {};
 
 const Authorize = ({ children }: AuthorizeTypes) => {
   const { isLoading, fetchUser, notAuthenticated, isAuthenticated, user } =
     useAuth();
+  const { getNotifications } = useNotificationStore();
   const router = useRouter();
 
   const logout = useCallback((data: any) => {
