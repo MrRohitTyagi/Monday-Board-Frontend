@@ -4,7 +4,8 @@ import Textrenderer from "@/components/core/Textrenderer";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ChatType } from "@/types/chatTypes";
-import React, { Fragment, memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
+import parse from "html-react-parser";
 
 type ChatContentViwerProps = {
   chat: ChatType;
@@ -31,7 +32,8 @@ const ChatContentViwer = ({ chat }: ChatContentViwerProps) => {
           viewFull == false && "overflow-hidden"
         )}
       >
-        <Textrenderer str={chat.content} />
+        {/* <Textrenderer str={chat.content} /> */}
+        {parse(chat.content)}
       </div>
       {viewFull === false && (
         <Button
@@ -50,4 +52,4 @@ const ChatContentViwer = ({ chat }: ChatContentViwerProps) => {
   );
 };
 
-export default ChatContentViwer;
+export default memo(ChatContentViwer);
