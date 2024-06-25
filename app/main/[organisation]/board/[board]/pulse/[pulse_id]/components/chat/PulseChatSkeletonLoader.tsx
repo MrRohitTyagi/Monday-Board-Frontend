@@ -11,7 +11,7 @@ const PulseChatSkeletonLoader = ({
   onlyChat = false,
 }: PulseChatSkeletonLoaderProps) => {
   return (
-    <div className={cn("flex flex-col gap-3 animate-pulse", "items-center")}>
+    <div className={cn("flex flex-col gap-3 animate-pulse", "items-center p-4")}>
       {onlyChat === false && (
         <>
           <div className="flex flex-row gap-3 w-full px-4 pt-3">

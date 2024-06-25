@@ -119,7 +119,9 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
       <Space />
 
       {/* pulses */}
-      <div className={cn("overflow-x-auto", "grid grid-cols-[20rem_1fr]")}>
+      <ScrollWrapper
+        className={cn("overflow-x-auto", "grid grid-cols-[20rem_1fr]", "scrollbar-none")}
+      >
         <div className="pulse-container-left flex flex-row z-10 sticky left-0">
           <div
             style={{ background: sprint.color }}
@@ -190,7 +192,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
             );
           })}
         </div>
-      </div>
+      </ScrollWrapper>
     </div>
   );
 };

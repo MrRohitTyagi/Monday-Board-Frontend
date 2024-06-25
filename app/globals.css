@@ -145,6 +145,11 @@ li.toast {
   scrollbar-width: thin; /* For WebKit browsers */
   scrollbar-width: 5px; /* Adjust as needed */
 }
+.scrollbar-none {
+  scrollbar-width: none; /* For WebKit browsers */
+  scrollbar-width: 0px; /* Adjust as needed */
+}
+
 * {
   scrollbar-width: thin; /* For WebKit browsers */
   scrollbar-width: 5px; /* Adjust as needed */

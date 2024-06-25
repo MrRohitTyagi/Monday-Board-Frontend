@@ -1,11 +1,12 @@
 "use client";
 import React, { memo, useCallback, useState } from "react";
-import { EditorState, convertToRaw, ContentState, EditorProps } from "draft-js";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import { toolbaroptions } from "@/constants/htmlConstants";
+import { isEqual } from "lodash";
 
 type HTMLEditor = {
   initialContent: string;
@@ -31,6 +32,12 @@ const HTMLEditor = ({
     return EditorState.createEmpty();
   });
 
+  console.log(
+    `%c initialContent `,
+    "color: orange;border:2px solid cyan",
+    initialContent
+  );
+
   const onEditorStateChange = useCallback(
     (newEditorState: EditorState) => {
       setEditorState(newEditorState);
@@ -40,15 +47,19 @@ const HTMLEditor = ({
       );
 
       // Call the callback function with the HTML content
-      if (onContentChange) {
+      if (onContentChange && !isEqual(initialContent, htmlContent)) {
         onContentChange(htmlContent);
       }
     },
-    [onContentChange]
+    [onContentChange, initialContent]
   );
 
   return (
     <Editor
+      onFocus={() => {}}
+      onBlur={() => {}}
+      mention={{}}
+      
       placeholder={placeholder}
       editorState={editorState}
       wrapperClassName="demo-wrapper"

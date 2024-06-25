@@ -68,14 +68,12 @@ function timeBetween(dateString: string, secondDate = ""): TimeDifference {
 
   const displayText =
     days > 0
-      ? `${days} days ago`
+      ? `${days} ${days > 1 ? "Days ago" : "Day ago"}`
       : hours > 0
-      ? `${hours} hours ago`
+      ? `${hours} ${hours > 1 ? "Hours ago" : "Hour ago"}`
       : minutes > 0
-      ? `${minutes} minutes ago`
-      : seconds > 0
-      ? `${seconds} seconds ago`
-      : "now";
+      ? `${minutes} ${minutes > 1 ? "Minutes ago" : "Minute ago"}`
+      : "Now";
 
   const date1 = formatDate(pastDate, true);
   const date2 = formatDate(anotherDate, true);

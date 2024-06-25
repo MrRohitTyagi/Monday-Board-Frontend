@@ -1,7 +1,7 @@
 "use client";
 
 import ResizableSplit from "@/components/core/ResizableSplit";
-import React, { memo, useState } from "react";
+import React, { Suspense, memo, useState } from "react";
 import { useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { PulseChatContext } from "@/hooks/usePulseChat";
@@ -45,20 +45,22 @@ const layout = ({ children }: layoutProps) => {
           openState === transitionStates.OPEN && "animate-pulse-layer"
         )}
       >
-        <ResizableSplit
-          closed={isClosing}
-          childMode={true}
-          id={params?.pulse_id}
-          onLeftPannelClick={handleLayerClose}
-        >
-          {isClosing ? (
-            <div className="bg-main-fg flex flex-row items-center justify-center h-full w-full">
-              <Loader />
-            </div>
-          ) : (
-            children
-          )}
-        </ResizableSplit>
+        {/* <Suspense fallback='Loading'> */}
+          <ResizableSplit
+            closed={isClosing}
+            childMode={true}
+            id={params?.pulse_id}
+            onLeftPannelClick={handleLayerClose}
+          >
+            {isClosing ? (
+              <div className="bg-main-fg flex flex-row items-center justify-center h-full w-full">
+                <Loader />
+              </div>
+            ) : (
+              children
+            )}
+          </ResizableSplit>
+        {/* </Suspense> */}
       </div>
     </PulseChatContext.Provider>
   );

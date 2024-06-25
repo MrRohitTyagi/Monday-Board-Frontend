@@ -46,7 +46,7 @@ const ThreadInfo = ({ thread }: ThreadInfoProps) => {
         }
       >
         <LowOpacityText className="text-xs flex flex-row items-center justify-start gap-1 hover:underline cursor-pointer">
-          <Timer size={14} className="stroke-highlighter" />
+          <Timer size={14} className="stroke-text-color" />
           {displayText}
         </LowOpacityText>
       </TooltipComp>

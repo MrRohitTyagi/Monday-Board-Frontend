@@ -23,7 +23,10 @@ const config = {
     extend: {
       scrollbar: {
         thin: {
-          width: "8px", // Adjust the width here as needed
+          width: "8px",
+        },
+        none: {
+          width: "0px",
         },
       },
       borderWidth: {

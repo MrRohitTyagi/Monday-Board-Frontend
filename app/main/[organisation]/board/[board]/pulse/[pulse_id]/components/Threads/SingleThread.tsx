@@ -18,6 +18,7 @@ import useSingleChat from "@/hooks/useSingleChat";
 import ThreadInfo from "./ThreadInfo";
 import Space from "@/components/core/Space";
 import { useAuth } from "@/zstore";
+import Divider from "@/components/core/Divider";
 
 type SingleThreadProps = {
   mainThread: ThreadType;
@@ -86,11 +87,12 @@ const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
             "flex flex-col grow  w-full gap-1"
           )}
         >
+          <h1 className="text-xs"> {thread.createdBy.username}</h1>
           <div
             className={cn(
               "thread-content-box chat-bubble",
               " bg-main-bg p-3 rounded-xl w-full before:w-4 relative",
-              "group max-w-full",
+              "group max-w-full min-h-16",
               (isDeleting === true || isSaving === true) &&
                 "animate-pulse skeleton"
             )}
@@ -104,9 +106,6 @@ const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
               />
             )}
 
-            <h1 className="text-highlighter text-sm opacity-80 w-fit">
-              {thread.createdBy.username}
-            </h1>
             {isEditing === true || isSaving === true ? (
               <Textarea
                 disabled={isSaving}

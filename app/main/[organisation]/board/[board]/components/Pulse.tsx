@@ -154,7 +154,7 @@ const Pulse = ({
           "bg-main-bg pl-2",
           "border-border-light border-[1px]",
           isFake === false && "hover:bg-main-fg transition-all duration-150",
-          "active:bg-highlighter-dark transition-all duration-150",
+          "transition-all duration-150",
           isPulseChatOpen && "!bg-highlighter-dark"
         )}
       >
@@ -195,11 +195,10 @@ const Pulse = ({
               <CustomDiv lvl={20} disabled={isFake}>
                 <MessageCircleMore
                   size={"24px"}
-                  className={
-                    isPulseChatOpen
-                      ? "text-highlighter"
-                      : "stroke-highlighter-dark"
-                  }
+                  className={cn(
+                    "stroke-text-color",
+                    isPulseChatOpen && "text-highlighter"
+                  )}
                 />
               </CustomDiv>
             </div>
