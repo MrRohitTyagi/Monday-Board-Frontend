@@ -6,7 +6,7 @@ type BoardFilterProps = {};
 
 const BoardFilter = ({}: BoardFilterProps) => {
   const { board, setCurrentBoard } = useBoardContext();
-  return <div className={cn("h-10", "")}>BoardFilters TODO</div>;
+  return <div className={cn("h-0", "")}></div>;
 };
 
 export default BoardFilter;

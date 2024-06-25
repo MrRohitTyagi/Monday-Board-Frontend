@@ -1,6 +1,6 @@
 "use client";
 import { LogOut, User, UserCog } from "lucide-react";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import {
   Popover,
   PopoverContent,
@@ -16,14 +16,16 @@ import { usePathname, useRouter } from "next/navigation";
 type UserProfileProps = {};
 
 const UserProfile = (props: UserProfileProps) => {
+  const [open, setopen] = useState(false);
+
   const { user, notAuthenticated, isAuthenticated } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setopen}>
       <PopoverTrigger>
-        <div className="h-8 w-8 overflow-hidden border-2 border-main-fg rounded-full">
+        <div className="h-8 w-8 overflow-hidden rounded-full">
           <Image
             width={8}
             height={8}
@@ -37,12 +39,13 @@ const UserProfile = (props: UserProfileProps) => {
           />
         </div>
       </PopoverTrigger>
-      <PopoverContent align="end" className="bg-main-bg w-fit">
+      <PopoverContent align="end" className="bg-main-bg w-fit border-2 border-highlighter-dark">
         <div className="flex flex-col gap-2">
           {isAuthenticated && (
             <Button
               onClick={() => {
                 router.push(`/profile?redirect_url=${pathname}`);
+                setopen(false);
               }}
               className={cn(
                 "user-settings",
@@ -58,6 +61,7 @@ const UserProfile = (props: UserProfileProps) => {
             onClick={() => {
               router.replace("/login");
               notAuthenticated();
+              setopen(false);
             }}
             className={cn(
               "logout ",

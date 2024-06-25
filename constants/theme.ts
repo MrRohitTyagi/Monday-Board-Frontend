@@ -35,7 +35,7 @@ const themeConfig = [
     _id: "6",
     description:
       "A rich and luxurious color scheme inspired by precious gemstones.",
-    colors: ["#05263b", "#02111B", "#096bac", "#05303a", "#055f9b", "#ffffff"],
+    colors: ["#053554", "#02111B", "#096bac", "#05303a", "#055f9b", "#ffffff"],
   },
 ];
 export { themeConfig };
