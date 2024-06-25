@@ -12,6 +12,7 @@ import { CheckCircle, Trash2 } from "lucide-react";
 import TooltipComp from "@/components/core/TooltipComp";
 import useLoading from "@/hooks/useLoading";
 import Loader from "@/components/core/Loader";
+import parse from "html-react-parser";
 
 type NotificationCardProps = {
   notification: NotificationType;
@@ -33,7 +34,7 @@ const NotificationCard = ({
   }, [notification.createdAt]);
   const { isDeleting, triggerDeleting } = useLoading({});
 
-  const {navigate} = useNavigate();
+  const { navigate } = useNavigate();
 
   return notification.isDeleted === true ? (
     <div className="animate-unmount-box w-full" />
@@ -121,7 +122,7 @@ const NotificationCard = ({
         </div>
 
         <LowOpacityText className="noti-content overflow-hidden text-ellipsis text-start">
-          {notification.content}
+          {parse(notification.content)}
         </LowOpacityText>
 
         <LowOpacityText className="noti-footer text-gray-400 text-start">
