@@ -18,7 +18,7 @@ const transitionStates = {
 
 const layout = ({ children }: layoutProps) => {
   const [openState, setOpenState] = useState(transitionStates.OPEN);
-  const navigate = useNavigate();
+  const { navigate } = useNavigate();
   const params = useParams<{ pulse_id: string; board: string }>();
 
   const handleLayerClose = () => {

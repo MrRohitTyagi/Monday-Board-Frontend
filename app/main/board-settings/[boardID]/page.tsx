@@ -59,7 +59,7 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
     updateBoardState,
   } = useAuth();
 
-  const navigate = useNavigate();
+  const { navigate } = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(boardSchema),

@@ -17,7 +17,7 @@ import { generatePictureFallback } from "@/utils/helperFunctions";
 type SidemenuBoardListingProps = { isCollapsed: boolean };
 
 const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
-  const navigate = useNavigate();
+  const { navigate } = useNavigate();
   const {
     user: { boards },
     isAuthenticated,

@@ -67,7 +67,7 @@ const CreateNewBoard = () => {
 };
 
 const BoardComp = ({ board }: { board: BoardType }) => {
-  const navigate = useNavigate();
+  const { navigate } = useNavigate();
   const router = useRouter();
   return (
     <Card

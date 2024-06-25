@@ -40,6 +40,7 @@ const config = {
         "card-width": "20rem",
       },
       colors: {
+        "layer-bg": `var(--layer-bg)`,
         "main-delete": `var(--main-delete)`,
         "border-light": `var(--border-light)`,
         highlighter: `var(--highlighter)`,

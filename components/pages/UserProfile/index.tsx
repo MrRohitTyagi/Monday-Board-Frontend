@@ -10,15 +10,16 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useAuth } from "@/zstore";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 // import { Button } from "@/components/ui/button";
 
 type UserProfileProps = {};
 
 const UserProfile = (props: UserProfileProps) => {
-  const { user, notAuthenticated } = useAuth();
+  const { user, notAuthenticated, isAuthenticated } = useAuth();
   const router = useRouter();
-  // TODO
+  const pathname = usePathname();
+
   return (
     <Popover>
       <PopoverTrigger>
@@ -38,16 +39,21 @@ const UserProfile = (props: UserProfileProps) => {
       </PopoverTrigger>
       <PopoverContent align="end" className="bg-main-light w-fit">
         <div className="flex flex-col gap-2">
-          <Button
-            className={cn(
-              "user-settings",
-              "flex flex-row items-center ",
-              " justify-start gap-3 w-full"
-            )}
-          >
-            <UserCog color="white" size={20} />
-            <h2>User Profile</h2>
-          </Button>
+          {isAuthenticated && (
+            <Button
+              onClick={() => {
+                router.push(`/profile?redirect_url=${pathname}`);
+              }}
+              className={cn(
+                "user-settings",
+                "flex flex-row items-center ",
+                " justify-start gap-3 w-full"
+              )}
+            >
+              <UserCog color="white" size={20} />
+              <h2>User Profile</h2>
+            </Button>
+          )}
           <Button
             onClick={() => {
               router.replace("/login");

@@ -33,7 +33,7 @@ const NotificationCard = ({
   }, [notification.createdAt]);
   const { isDeleting, triggerDeleting } = useLoading({});
 
-  const navigate = useNavigate();
+  const {navigate} = useNavigate();
 
   return notification.isDeleted === true ? (
     <div className="animate-unmount-box w-full" />

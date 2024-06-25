@@ -9,7 +9,7 @@ const Divider = ({ className, horizontal }: DividerProps) => {
     <div
       className={cn(
         className,
-        "divider m-0",
+        "divider m-0 p-0",
         horizontal && "divider-horizontal"
       )}
     />
