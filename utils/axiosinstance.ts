@@ -5,7 +5,7 @@ import { deleteToken, getToken } from "@/utils/cookie";
 import NProgress from "nprogress";
 import { toast } from "sonner";
 import { handleLogout } from "./customEvents";
-NProgress.configure({ showSpinner: false });
+NProgress.configure({ showSpinner: false, easing: "ease", speed: 500 });
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export type MyErrorType = {
