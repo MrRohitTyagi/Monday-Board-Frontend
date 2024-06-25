@@ -242,7 +242,7 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
         )}
       >
         <h2>
-          {isSubmitting ? "Creating new pulse item ..." : "Ceate New Pulse"}
+          {isSubmitting ? "Creating new pulse item ..." : "Create New Pulse"}
         </h2>
         {isSubmitting ? <Loader /> : <Plus color="white" size={20} />}
       </div>

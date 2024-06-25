@@ -77,13 +77,14 @@ const Board = ({ params, children }: pageProps) => {
                   open={openSprintForm}
                   trigger={
                     <Button
+                    className="border-2 border-main-bg"
                       onClick={() => {
                         setOpenSprintForm(true);
                       }}
                     >
                       <div className="flex flex-row gap-2 items-center">
                         <Plus size={"15px"} />
-                        <h2>Ceate New Sprint</h2>
+                        <h2>Create New Sprint</h2>
                       </div>
                     </Button>
                   }

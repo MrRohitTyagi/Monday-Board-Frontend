@@ -35,7 +35,7 @@ const ProfileSideMenu = (props: ProfileSideMenuProps) => {
             onClick={() => navigateWithQuery(menu.href, true)}
             key={menu.href}
             variant={"ghost"}
-            className={cn(className, isActive && "bg-highlighter")}
+            className={cn(className, isActive && "bg-highlighter-dark")}
           >
             <h1>{menu.label}</h1>
           </Button>

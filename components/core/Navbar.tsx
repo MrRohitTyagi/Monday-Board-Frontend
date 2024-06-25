@@ -81,7 +81,7 @@ const Navbar = ({}: Props) => {
                   title={`Invite members to ${currentBoard.title}`}
                   side="left"
                 >
-                  <UserRoundPlus />
+                  <UserRoundPlus  className="stroke-text-color"/>
                 </TooltipComp>
               </Button>
             }
@@ -119,7 +119,7 @@ const Navbar = ({}: Props) => {
               </div>
             )}
             <Bell
-              className={cn(
+              className={cn('stroke-text-color',
                 openNotification !== transitionStates.CLOSED &&
                   "stroke-highlighter"
               )}

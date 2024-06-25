@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* --background: 0 0% 100%; */
+    /* --foreground: 222.2 84% 4.9%; */
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -40,6 +40,7 @@
     --navbar-height: 3rem;
     --main-delete: #dc5e5ef0;
 
+    --text-color: #ffffff;
     --main-bg: #292f4c;
     --main-fg: #1c1f3b;
     --border-light: #747171;
@@ -95,7 +96,7 @@ a,
 label,
 input,
 textarea {
-  color: rgba(255, 255, 255, 0.865);
+  color: var(--text-color);
 }
 html {
   max-width: 100dvw;

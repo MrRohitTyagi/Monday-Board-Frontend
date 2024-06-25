@@ -6,8 +6,14 @@ const useTheme = () => {
   //
   const applyTheme = useCallback((_id: string) => {
     const root = document.documentElement;
-    const [main_bg, main_fg, border_light, highlighter, highlight_dark] =
-      themeConfig.find((t) => t._id === _id)?.colors || themeConfig[0].colors;
+    const [
+      main_bg,
+      main_fg,
+      border_light,
+      highlighter,
+      highlight_dark,
+      text_color,
+    ] = themeConfig.find((t) => t._id === _id)?.colors || themeConfig[0].colors;
 
     localStorage.setItem("theme-preference", _id);
 
@@ -16,6 +22,7 @@ const useTheme = () => {
     root.style.setProperty("--border-light", border_light);
     root.style.setProperty("--highlighter", highlighter);
     root.style.setProperty("--highlighter-dark", highlight_dark);
+    root.style.setProperty("--text-color", text_color);
   }, []);
 
   const getTheme = useCallback(() => {

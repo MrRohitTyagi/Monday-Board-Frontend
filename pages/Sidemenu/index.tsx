@@ -149,25 +149,25 @@ const NavLink = ({
   isAuthenticated,
 }: NavLinkProps) => {
   return (
-    <Button
-      variant={"ghost"}
-      className="p-0 m-0 w-full"
-      disabled={isAuthenticated === false}
+    <Link
+      className={cn(
+        "transition-all duration-300 ",
+        selected ? "" : "hover:bg-main-bg",
+        "rounded-sm w-full",
+        "whitespace-nowrap",
+        isCollapsed ? "flex flex-row justify-center" : "flex flex-row",
+        selected ? "bg-highlighter-dark" : ""
+      )}
+      href={href}
     >
-      <Link
-        className={cn(
-          "transition-all duration-300 ",
-          selected ? "" : "hover:bg-main-bg",
-          " p-2 rounded-sm w-full",
-          "whitespace-nowrap",
-          isCollapsed ? "flex flex-row justify-center" : "flex flex-row",
-          selected ? "bg-highlighter" : ""
-        )}
-        href={href}
+      <Button
+        variant={"ghost"}
+        className="p-0 m-0 w-full flex flex-row justify-start pl-3"
+        disabled={isAuthenticated === false}
       >
         {isCollapsed ? <Icon size={"20px"} /> : label}
-      </Link>
-    </Button>
+      </Button>
+    </Link>
   );
 };
 

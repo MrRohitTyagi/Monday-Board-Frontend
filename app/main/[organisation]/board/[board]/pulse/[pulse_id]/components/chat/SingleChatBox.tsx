@@ -167,7 +167,7 @@ const SingleChatBox = ({
                   <Button
                     variant={"ghost"}
                     size={"sm"}
-                    className="p-0 opacity-80 hover:bg-transparent"
+                    className="p-0 hover:bg-transparent"
                   >
                     <Settings color="white" size={15} />
                   </Button>

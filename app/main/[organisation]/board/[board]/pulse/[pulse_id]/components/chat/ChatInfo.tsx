@@ -34,11 +34,11 @@ const ChatInfo = ({ chat }: ChatInfoProps) => {
         "shadow-black shadow-lg"
       )}
       title={
-        <div className="p-2 px-4 text-sm opacity-90">{userFriendlyDate}</div>
+        <div className="p-2 px-4 text-sm">{userFriendlyDate}</div>
       }
     >
-      <div className="flex flex-row gap-2 items-center opacity-60 cursor-pointer">
-        <Timer size={15} className="stroke-highlighter" />
+      <div className="flex flex-row gap-2 items-center cursor-pointer">
+        <Timer size={15} className="stroke-text-color" />
         <h1 className="text-sm hover:underline">{displayText}</h1>
       </div>
     </TooltipComp>

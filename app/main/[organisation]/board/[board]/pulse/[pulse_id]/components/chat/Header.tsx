@@ -50,7 +50,7 @@ const Header = ({ pulse }: HeaderProps) => {
             }
             trigger={
               <Button variant={"ghost"} className="py-0 px-2">
-                <Settings2 size={20} />
+                <Settings2 size={20} className="stroke-text-color" />
               </Button>
             }
           />

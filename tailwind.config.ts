@@ -46,7 +46,7 @@ const config = {
         highlighter: `var(--highlighter)`,
         "highlighter-dark": `var(--highlighter-dark)`,
         "main-bg": `var(--main-bg)`,
-        "main-bg": `var(--main-bg)`,
+        "text-color": `var(--text-color)`,
         "main-fg": `var(--main-fg)`,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

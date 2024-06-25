@@ -193,7 +193,7 @@ const Pulse = ({
                 <MessageCircleMore
                   size={"24px"}
                   className={
-                    isPulseChatOpen ? "text-highlighter" : "text-white"
+                    isPulseChatOpen ? "text-highlighter" : "stroke-highlighter-dark"
                   }
                 />
               </CustomDiv>
