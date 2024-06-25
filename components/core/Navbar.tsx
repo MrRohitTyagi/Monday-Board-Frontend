@@ -121,7 +121,7 @@ const Navbar = ({}: Props) => {
             <Bell
               className={cn('stroke-text-color',
                 openNotification !== transitionStates.CLOSED &&
-                  "stroke-highlighter"
+                  "stroke-highlighter-dark"
               )}
             />
           </div>

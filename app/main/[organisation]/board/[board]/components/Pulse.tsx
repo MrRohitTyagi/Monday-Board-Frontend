@@ -28,6 +28,7 @@ import { SprintType } from "@/types/sprintTypes";
 import { BoardType } from "@/types/boardTypes";
 import { UserType } from "@/types/userTypes";
 import useRealtimeChannels from "@/hooks/useRealtimeChannels";
+import { useAuth } from "@/zstore";
 
 type PulseProps = {
   pulse: PulseType;
@@ -68,7 +69,7 @@ const Pulse = ({
   board,
 }: PulseProps) => {
   const [pulse, setPulse] = useState<PulseType>(mainPulse);
-
+  const { user } = useAuth();
   const { notificationChannel } = useRealtimeChannels();
 
   const debounceRef = useRef<any>();
@@ -103,20 +104,22 @@ const Pulse = ({
   }, []);
 
   const updateAssigned = useCallback(
-    (user: UserType, action = "add") => {
+    (assignedUser: UserType, action = "add") => {
       setPulse((prev) => {
         let assigned = [];
         if (action == "remove") {
-          assigned = prev.assigned.filter((a) => a !== user._id);
+          assigned = prev.assigned.filter((a) => a !== assignedUser._id);
         } else {
-          notificationChannel.publish(user._id, { type: "ASSIGNED" });
-          assigned = [user._id, ...prev.assigned];
+          if (assignedUser._id !== user._id) {
+            notificationChannel.publish(assignedUser._id, { type: "ASSIGNED" });
+          }
+          assigned = [assignedUser._id, ...prev.assigned];
         }
         debouncePulseUpdate({ assigned: assigned, boardId: params?.board });
         return { ...prev, assigned };
       });
     },
-    [params, notificationChannel]
+    [params, notificationChannel, user._id]
   );
 
   const updateTimeline = useCallback(
@@ -193,7 +196,9 @@ const Pulse = ({
                 <MessageCircleMore
                   size={"24px"}
                   className={
-                    isPulseChatOpen ? "text-highlighter" : "stroke-highlighter-dark"
+                    isPulseChatOpen
+                      ? "text-highlighter"
+                      : "stroke-highlighter-dark"
                   }
                 />
               </CustomDiv>
