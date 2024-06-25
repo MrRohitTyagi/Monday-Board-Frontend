@@ -17,8 +17,8 @@ const SprintSkeletonLoader = () => {
               "animate-pulse duration-1000",
               "skeleton-loader-item !h-10",
               "flex flex-row items-center justify-start h-full",
-              "bg-main-light pl-2",
-              "border-pulse-divider border-[1px]"
+              "bg-main-bg pl-2",
+              "border-border-light border-[1px]"
             )}
           >
             {/* Pulse title  */}

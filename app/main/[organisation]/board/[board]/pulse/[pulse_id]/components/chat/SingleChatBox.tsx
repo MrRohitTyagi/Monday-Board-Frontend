@@ -144,7 +144,7 @@ const SingleChatBox = ({
           "max-w-[40rem] w-full",
           "transition-all duration-300",
           "flex flex-col shrink-0 animate-fadeIn",
-          "single-chat-cont rounded-lg border-2 border-main-light"
+          "single-chat-cont rounded-lg border-2 border-main-bg"
         )}
       >
         <div className="single-chat-editor flex flex-col min-h-32 p-4 pb-2 gap-3">
@@ -224,9 +224,9 @@ const SingleChatBox = ({
         {isEditing === false && (
           <div
             className={cn(
-              "h-fit flex flex-row border-transparent border-t-main-light border-2",
+              "h-fit flex flex-row border-transparent border-t-main-bg border-2",
 
-              "border-b-2 border-x-transparent border-main-light"
+              "border-b-2 border-x-transparent border-main-bg"
             )}
           >
             <Button

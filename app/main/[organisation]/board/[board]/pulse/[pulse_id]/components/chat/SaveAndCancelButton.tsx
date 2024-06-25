@@ -26,7 +26,7 @@ const SaveAndCancelButton = ({
     <div
       className={cn(
         "h-fit flex flex-row border-transparent",
-        "border-y-main-light border-2"
+        "border-y-main-bg border-2"
       )}
     >
       <Button

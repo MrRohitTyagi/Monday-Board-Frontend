@@ -33,7 +33,7 @@ const TooltipComp = ({
             className={cn(
               "TooltipContent z-99999 animate",
               "bg-main-fg overflow-hidden",
-              "text-white border-main-light border-[1px]",
+              "text-white border-main-bg border-[1px]",
               "rounded-lg transition-all",
               className
             )}

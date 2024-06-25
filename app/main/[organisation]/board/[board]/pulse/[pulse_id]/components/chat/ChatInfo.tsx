@@ -30,7 +30,7 @@ const ChatInfo = ({ chat }: ChatInfoProps) => {
   return (
     <TooltipComp
       className={cn(
-        "border-[1px] border-main-active",
+        "border-[1px] border-highlighter",
         "shadow-black shadow-lg"
       )}
       title={

@@ -39,8 +39,8 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
               "flex flex-row gap-2 items-center ",
               isCollapsed ? "justify-center" : "justify-start",
               "cursor-pointer p-2 rounded text-sm",
-              "hover:bg-main-active-dark",
-              isActive ? "bg-main-active-dark" : ""
+              "hover:bg-highlighter-dark",
+              isActive ? "bg-highlighter-dark" : ""
             )}
           >
             <TooltipComp title={board.title}>
@@ -73,7 +73,7 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
             router.push("/main/board-settings/new");
           }}
           className={cn(
-            "border-main-light border-2 gap-1",
+            "border-main-bg border-2 gap-1",
             "flex flex-row items-center",
             "text-ellipsis overflow-hidden text-nowrap",
             "bg-transparent px-2"

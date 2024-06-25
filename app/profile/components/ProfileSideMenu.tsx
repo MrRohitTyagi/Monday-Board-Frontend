@@ -17,6 +17,10 @@ const sideMenuButtons = [
     label: "Password",
     href: "profile/password",
   },
+  {
+    label: "Theme",
+    href: "profile/theme",
+  },
 ];
 const ProfileSideMenu = (props: ProfileSideMenuProps) => {
   const pathname = usePathname();

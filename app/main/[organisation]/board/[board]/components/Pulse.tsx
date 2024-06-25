@@ -45,7 +45,7 @@ export const baseCssMiniItems = (w = 40) =>
     "text-sm text-center tracking-wider",
     `max-w-${w} min-w-${w} h-full`,
     "content-around shrink-0 text-center tracking-wider text-nowrap",
-    "border-pulse-divider border-r-[1px] cursor-pointer"
+    "border-border-light border-r-[1px] cursor-pointer"
   );
 
 type PulseContextType = {
@@ -148,11 +148,11 @@ const Pulse = ({
       <div
         className={cn(
           "flex flex-row items-center justify-start h-full",
-          "bg-main-light pl-2",
-          "border-pulse-divider border-[1px]",
+          "bg-main-bg pl-2",
+          "border-border-light border-[1px]",
           isFake === false && "hover:bg-main-fg transition-all duration-150",
-          "active:bg-main-active-dark transition-all duration-150",
-          isPulseChatOpen && "!bg-main-active-dark"
+          "active:bg-highlighter-dark transition-all duration-150",
+          isPulseChatOpen && "!bg-highlighter-dark"
         )}
       >
         {/* Pulse title  */}

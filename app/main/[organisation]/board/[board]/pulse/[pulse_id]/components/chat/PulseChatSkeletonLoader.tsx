@@ -21,7 +21,7 @@ const PulseChatSkeletonLoader = ({
           </div>
           <Divider />
           <Textarea
-            className="bg-main-light animate-pulse-layer max-w-[40rem] w-full"
+            className="bg-main-bg animate-pulse-layer max-w-[40rem] w-full"
             disabled={true}
             placeholder="Write an update..."
           />
@@ -33,14 +33,14 @@ const PulseChatSkeletonLoader = ({
           className={cn(
             "max-w-[40rem] w-full",
             "flex flex-col mt-4",
-            "single-chat-cont rounded-lg border-2 border-main-light"
+            "single-chat-cont rounded-lg border-2 border-main-bg"
           )}
         >
           <div className="h-40 p-4 flex flex-row  gap-4">
             <Skeleton className="rounded-full h-10 w-10" />
             <Skeleton className="w-1/2 h-6" />
           </div>
-          <div className="h-9 flex flex-row border-transparent border-t-main-light border-2">
+          <div className="h-9 flex flex-row border-transparent border-t-main-bg border-2">
             <Skeleton className="grow m-1 mx-4" />
 
             <Divider horizontal />

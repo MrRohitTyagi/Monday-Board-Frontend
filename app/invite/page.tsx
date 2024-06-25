@@ -171,7 +171,7 @@ const Invite = ({}: InviteProps) => {
                 "h-20 active:scale-95 transition-all",
                 "rounded-lg border-b-green-400 ",
                 "border-x-transparent border-t-transparent border-2",
-                "bg-main-active-dark py-3 px-12 text-xl"
+                "bg-highlighter-dark py-3 px-12 text-xl"
               )}
               disabled={isLoading}
             >
@@ -183,7 +183,7 @@ const Invite = ({}: InviteProps) => {
               className={cn(
                 "form-container",
                 "w-fit",
-                "border-2 border-main-light p-4 pl-8 pr-8 rounded-md"
+                "border-2 border-main-bg p-4 pl-8 pr-8 rounded-md"
               )}
             >
               <h2 className="text-3xl text-center">
@@ -239,7 +239,7 @@ const Invite = ({}: InviteProps) => {
                       type="submit"
                       className={cn(
                         "flex flex-row items-center gap-3",
-                        "w-full border-main-light border-2"
+                        "w-full border-main-bg border-2"
                       )}
                     >
                       {isLoading && <Loader />}

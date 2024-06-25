@@ -38,7 +38,7 @@ const ThreadInfo = ({ thread }: ThreadInfoProps) => {
     <div className="flex flex-row items-center justify-start h-4 gap-3">
       <TooltipComp
         className={cn(
-          "border-[1px] border-main-active",
+          "border-[1px] border-highlighter",
           "shadow-black shadow-lg"
         )}
         title={

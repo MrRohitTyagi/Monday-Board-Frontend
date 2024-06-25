@@ -33,9 +33,9 @@ const SelectComp = ({ options = [], onChange }: SelectProps) => {
             key={i + "select-option"}
             value={o.value}
             className="bg-transparent 
-            hover:bg-main-active
-            focus:bg-main-active
-            active:bg-main-active
+            hover:bg-highlighter
+            focus:bg-highlighter
+            active:bg-highlighter
             cursor-pointer
             "
           >

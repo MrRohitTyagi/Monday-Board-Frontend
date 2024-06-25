@@ -42,7 +42,7 @@ const ChatContentViwer = ({ chat }: ChatContentViwerProps) => {
           className={cn(
             "animate-in duration-300",
             "absolute bottom-2 left-1/2 -translate-x-1/2",
-            "text-[#05e4ee] border-2 border-main-light"
+            "text-[#05e4ee] border-2 border-main-bg"
           )}
         >
           View Full Content

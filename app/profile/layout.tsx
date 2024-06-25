@@ -31,7 +31,7 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
         <div
           className={cn(
             "lower-body-cont",
-            "border-main-light border-2",
+            "border-main-bg border-2",
             "h-full w-full shrink-0",
             "grid grid-cols-[12rem_1fr]"
           )}

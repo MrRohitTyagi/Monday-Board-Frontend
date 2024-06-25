@@ -51,16 +51,16 @@ const NotificationCard = ({
         "flex flex-row py-4 px-3 mt-2",
         "shrink-0 relative group opacity-0",
         notification.seen === true && "bg-main-bg",
-        notification.seen === false && "bg-main-active-dark",
-        notification.seen === false && "hover:bg-main-active",
+        notification.seen === false && "bg-highlighter-dark",
+        notification.seen === false && "hover:bg-highlighter",
 
-        "border border-main-light",
+        "border border-main-bg",
         "hover:!border-highlighter"
 
         // notification.seen === false
-        //   ? "hover:bg-main-active-dark"
+        //   ? "hover:bg-highlighter-dark"
         //   : "hover:border-highlighter border",
-        // notification.seen === false && "bg-main-active-dark"
+        // notification.seen === false && "bg-highlighter-dark"
       )}
     >
       <div

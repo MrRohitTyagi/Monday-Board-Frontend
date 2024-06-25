@@ -65,7 +65,7 @@ const Priority = ({ board, pulse }: PriorityProps) => {
 
           <Button
             disabled
-            className="flex w-full flex-row items-center gap-2 border-2 border-main-light "
+            className="flex w-full flex-row items-center gap-2 border-2 border-main-bg "
           >
             {/* /TODO */}
             <Plus size={20} />

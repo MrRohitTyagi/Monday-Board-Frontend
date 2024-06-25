@@ -37,7 +37,7 @@ const ThreadActions = ({
         noTitle={true}
         isSaving={isDeleting}
         className={cn(
-          "cursor-pointer border border-main-light p-2",
+          "cursor-pointer border border-main-bg p-2",
           "hover:bg-main-bg"
         )}
       />
@@ -45,7 +45,7 @@ const ThreadActions = ({
         onClick={() => triggerEditing?.(true)}
         size={"sm"}
         className={cn(
-          "cursor-pointer border border-main-light p-2",
+          "cursor-pointer border border-main-bg p-2",
           "hover:bg-main-bg"
         )}
         variant={"ghost"}

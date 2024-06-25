@@ -31,7 +31,7 @@ const Organisation = (props: pageProps) => {
       <div className="divider" />
       <div
         className={cn(
-          "user-boards bg-main-light p-4 pt-8 pb-8 ",
+          "user-boards bg-main-bg p-4 pt-8 pb-8 ",
           "rounded-tl-lg rounded-bl-lg space-y-4"
         )}
       >

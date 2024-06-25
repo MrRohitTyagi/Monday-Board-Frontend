@@ -57,7 +57,7 @@ const NewThread = ({ setThreads, setOpenNewChatBox }: NewThreadProps) => {
         <div
           className={cn(
             "p-3 rounded-xl",
-            "thread-content-box bg-main-light",
+            "thread-content-box bg-main-bg",
             "border-2 border-main-bg"
           )}
         >

@@ -38,15 +38,13 @@
 
     --layer-bg: rgba(0, 0, 0, 0.5);
     --navbar-height: 3rem;
+    --main-delete: #dc5e5ef0;
+
     --main-bg: #292f4c;
     --main-fg: #1c1f3b;
-    --main-delete: #dc5e5ef0;
-    --border-light: #524f4f;
+    --border-light: #747171;
     --highlighter: #0073ea;
-    --pulse-divider: #747171;
-    --main-active: #0073ea;
-    --main-active-dark: #133774;
-    --main-light: #30324e;
+    --highlighter-dark: #133774;
   }
 
   .dark {

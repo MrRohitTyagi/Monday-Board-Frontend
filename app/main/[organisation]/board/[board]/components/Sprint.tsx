@@ -71,7 +71,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
       <div
         className={cn(
           "cursor-pointer",
-          "hover:bg-main-light w-fit rounded-sm pr-4 pl-2",
+          "hover:bg-main-bg w-fit rounded-sm pr-4 pl-2",
           "sprint-title flex flex-row gap-3 items-center"
         )}
       >
@@ -221,10 +221,10 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
     <CustomDiv
       className={cn(
         "flex flex-row items-center justify-start h-full",
-        "bg-main-light pl-2 opacity-80",
-        "border-pulse-divider border-[1px]",
+        "bg-main-bg pl-2 opacity-80",
+        "border-border-light border-[1px]",
         "hover:bg-main-fg transition-all duration-150",
-        "active:bg-main-active-dark transition-all duration-150",
+        "active:bg-highlighter-dark transition-all duration-150",
         " rounded-br-lg animate-fadeIn"
       )}
       onClick={handleCreateNewpulse}
@@ -257,7 +257,7 @@ const PulseWrapper = ({ children }: { children: React.ReactNode }) => {
         "h-10 w-full animate-fadeIn",
         "transition-all duration-300",
         "hover:bg-main-bg",
-        "active:bg-main-active-dark"
+        "active:bg-highlighter-dark"
       )}
     >
       {children}

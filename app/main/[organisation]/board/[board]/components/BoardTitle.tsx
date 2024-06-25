@@ -24,7 +24,7 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
       additional={{ content: { align: "start" } }}
       classNames={{
         content:
-          "bg-main-light border-[#696767] p-2 pl-4 pr-4 shadow-lg shadow-foreground",
+          "bg-main-bg border-[#696767] p-2 pl-4 pr-4 shadow-lg shadow-foreground",
       }}
       content={
         <>
@@ -72,7 +72,7 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
         <h2
           className={cn(
             "cursor-pointer text-xl flex gap-2 items-center",
-            "hover:bg-main-light rounded"
+            "hover:bg-main-bg rounded"
           )}
         >
           {startCase(board.title)}

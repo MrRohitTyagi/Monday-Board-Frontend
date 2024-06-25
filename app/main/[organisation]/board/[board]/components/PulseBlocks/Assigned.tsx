@@ -193,7 +193,7 @@ const AssignedSelector = ({
                 variant={"ghost"}
                 className={cn(
                   "animate-fadeIn",
-                  "hover:bg-main-light p-2 px-4 flex-grow w-full",
+                  "hover:bg-main-bg p-2 px-4 flex-grow w-full",
                   "pl-0 py-2 flex flex-row gap-4 justify-start items-center",
                   className
                 )}
@@ -201,7 +201,7 @@ const AssignedSelector = ({
                 <div className="gap-3 flex flex-row items-center justify-center">
                   <AvatarComp
                     className={cn(
-                      "border-main-light border-2",
+                      "border-main-bg border-2",
                       "hover:scale-105 w-9 h-9",
                       "transition-all duration-150"
                     )}

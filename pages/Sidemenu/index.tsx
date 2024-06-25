@@ -81,7 +81,7 @@ const SideMenu = ({}: SideMenuProps) => {
             className={cn(
               " z-[200] rounded-tr-lg",
               "transition-[width] duration-500",
-              "rounded-none rounded-bl-md bg-main-light transition-all",
+              "rounded-none rounded-bl-md bg-main-bg transition-all",
               isCollapsed ? "relative" : "absolute",
               "h-10 place-content-center top-0 right-0 overflow-hidden p-1",
               `${
@@ -157,11 +157,11 @@ const NavLink = ({
       <Link
         className={cn(
           "transition-all duration-300 ",
-          selected ? "" : "hover:bg-main-light",
+          selected ? "" : "hover:bg-main-bg",
           " p-2 rounded-sm w-full",
           "whitespace-nowrap",
           isCollapsed ? "flex flex-row justify-center" : "flex flex-row",
-          selected ? "bg-main-active" : ""
+          selected ? "bg-highlighter" : ""
         )}
         href={href}
       >

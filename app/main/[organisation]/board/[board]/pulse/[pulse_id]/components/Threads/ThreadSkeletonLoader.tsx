@@ -29,7 +29,7 @@ const ThreadSkeletonLoader = ({ count = 3 }: ThreadSkeletonLoaderProps) => {
               <div
                 className={cn(
                   "thread-content-box chat-bubble",
-                  " bg-main-light p-3 rounded-xl w-full before:w-4 relative",
+                  " bg-main-bg p-3 rounded-xl w-full before:w-4 relative",
                   "group max-w-full",
 
                   "animate-pulse skeleton"

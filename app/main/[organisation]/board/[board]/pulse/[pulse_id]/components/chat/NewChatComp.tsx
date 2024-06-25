@@ -89,7 +89,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
         className={cn(
           "max-w-[40rem] w-full shrink-0",
           "h-fit shrink-0 transition-all duration-300",
-          "border-main-light border-2 rounded-lg"
+          "border-main-bg border-2 rounded-lg"
         )}
       >
         {isEditing ? (

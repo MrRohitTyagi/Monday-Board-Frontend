@@ -106,7 +106,7 @@ const EditSprintForm = ({
           disabled={form.formState.isSubmitting}
           className={cn(
             "flex flex-row items-center gap-3",
-            "w-full border-main-light border-2"
+            "w-full border-main-bg border-2"
           )}
         >
           {form.formState.isSubmitting && <Loader />}

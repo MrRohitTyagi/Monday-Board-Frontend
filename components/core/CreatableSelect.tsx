@@ -227,7 +227,7 @@ const PreviewColor = ({
         }
         trigger={
           <div
-            className="h-4 border-[1px] w-full border-main-light rounded-sm"
+            className="h-4 border-[1px] w-full border-main-bg rounded-sm"
             style={{ backgroundColor: value[valueKey] }}
           />
         }

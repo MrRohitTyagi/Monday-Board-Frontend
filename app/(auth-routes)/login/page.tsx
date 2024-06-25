@@ -87,7 +87,7 @@ const LoginComponent = () => {
       <div
         className={cn(
           "w-fit",
-          "border-2 border-main-light p-4 pl-8 pr-8 rounded-md"
+          "border-2 border-main-bg p-4 pl-8 pr-8 rounded-md"
         )}
       >
         <h2 className="text-3xl text-center">
@@ -147,7 +147,7 @@ const LoginComponent = () => {
                 type="submit"
                 className={cn(
                   "flex flex-row items-center gap-3",
-                  "w-full border-main-light border-2"
+                  "w-full border-main-bg border-2"
                 )}
               >
                 {form.formState.isSubmitting && <Loader />}

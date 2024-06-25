@@ -67,7 +67,7 @@ const Status = ({ board, pulse }: PriorityProps) => {
 
           <div className="divider m-0" />
 
-          <Button className="flex w-full flex-row items-center gap-2 border-2 border-main-light ">
+          <Button className="flex w-full flex-row items-center gap-2 border-2 border-main-bg ">
             <Plus size={20} />
             <h1>Create New</h1>
           </Button>

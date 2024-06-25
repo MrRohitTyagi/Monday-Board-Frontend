@@ -37,7 +37,7 @@ const UserProfile = (props: UserProfileProps) => {
           />
         </div>
       </PopoverTrigger>
-      <PopoverContent align="end" className="bg-main-light w-fit">
+      <PopoverContent align="end" className="bg-main-bg w-fit">
         <div className="flex flex-col gap-2">
           {isAuthenticated && (
             <Button
