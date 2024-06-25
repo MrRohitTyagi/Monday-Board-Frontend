@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import useNavigate from "@/hooks/useNavigate";
 import { cn } from "@/lib/utils";

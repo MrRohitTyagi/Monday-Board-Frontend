@@ -7,7 +7,7 @@ const themeConfig = [
   },
   {
     //green
-    name: "Lavish Green",
+  name: "Lavish Green",
     _id: "2",
     description: "A bold and energetic color scheme that adds a pop of color.",
     colors: ["#0d4e2c", "#0c3214", "#1f906e", "#053a0a", "#0e6c1d", "#ffffff"],
