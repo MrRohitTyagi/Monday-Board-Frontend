@@ -119,12 +119,13 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
       <Space />
 
       {/* pulses */}
-      <div className="grid grid-cols-[20rem_1fr]">
-        <div className="pulse-container-left flex flex-row">
+      <div className={cn("overflow-x-auto", "grid grid-cols-[20rem_1fr]")}>
+        <div className="pulse-container-left flex flex-row z-10 sticky left-0">
           <div
             style={{ background: sprint.color }}
             className={cn(
-              "left-color w-2 h-full shrink-0",
+              "sprint-color-div",
+              " left-color w-2 h-full shrink-0",
               "rounded-tl-md",
               "rounded-bl-md"
             )}
@@ -164,8 +165,8 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
         </div>
 
         {/* RIGHT PART  */}
-        <ScrollWrapper className="pulse-container-right flex flex-col w-full overflow-x-auto">
-          <PulseWrapper>
+        <div className="pulse-container-right flex flex-col w-full">
+          <PulseWrapper isRight={true}>
             <Pulse
               board={board}
               pulse={tempPulse}
@@ -176,7 +177,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
           </PulseWrapper>
           {sprint.pulses.map((pulse, i) => {
             return (
-              <PulseWrapper key={pulse._id + i + "right"}>
+              <PulseWrapper key={pulse._id + i + "right"} isRight={true}>
                 <Pulse
                   setSprint={setSprint}
                   board={board}
@@ -188,7 +189,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
               </PulseWrapper>
             );
           })}
-        </ScrollWrapper>
+        </div>
       </div>
     </div>
   );
@@ -250,11 +251,18 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
   );
 };
 
-const PulseWrapper = ({ children }: { children: React.ReactNode }) => {
+type PulseWrapperType = {
+  children: React.ReactNode;
+  isRight?: boolean;
+};
+const PulseWrapper = ({ children, isRight }: PulseWrapperType) => {
   return (
     <div
       className={cn(
-        "h-10 w-full animate-fadeIn",
+        "h-10",
+        // isRight ? "w-fit" :
+        "w-full",
+        "animate-fadeIn",
         "transition-all duration-300",
         "hover:bg-main-bg",
         "active:bg-highlighter-dark"

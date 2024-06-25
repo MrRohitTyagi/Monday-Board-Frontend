@@ -23,11 +23,11 @@ function ThemePallets() {
             <h3 className="text-lg font-semibold">{theme.name}</h3>
           </div>
           <p className="text-muted-foreground mb-4">{theme.description}</p>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             {theme.colors.map((color, idx) => (
               <div
                 key={idx}
-                className="w-10 h-10 rounded-full border"
+                className="w-10 h-10 shrink-0 rounded-full border"
                 style={{ backgroundColor: color }}
               />
             ))}
