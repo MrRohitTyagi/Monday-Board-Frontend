@@ -15,6 +15,7 @@ import useLoading from "@/hooks/useLoading";
 import useWriteAI from "@/hooks/useWriteAI";
 import HTMLEditor from "@/components/core/HTMLEditor";
 import { convert } from "html-to-text";
+import { useAuth } from "@/zstore";
 
 type NewChatCompProps = { setChats: StateSetter<ChatType[]>; pulse: PulseType };
 
@@ -25,10 +26,9 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     haveDraft,
     deleteLocal,
   } = useLoacalStorageChat(pulse._id);
+  const { user } = useAuth();
+  const mentionRef = useRef([]);
 
-  //states
-  // const [isEditing, setIsEditing] = useState(haveDraft);
-  // const [isSaving, setIsSaving] = useState(false);
   const [text, settext] = useState(content);
 
   const { isSaving, isEditing, triggerSaving, triggerEditing } = useLoading({
@@ -56,8 +56,10 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     const newChat = await createNewChat(payload);
 
     pulse.assigned.forEach((assignedUserId) => {
+      if (assignedUserId === user._id) return;
       notificationChannel.publish(assignedUserId, { type: "NEW_CHAT" });
     });
+    
 
     setChats((ps) => [newChat, ...ps]);
     deleteLocal();
@@ -79,7 +81,6 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
   //   handleCreateNew();
   // }, [handleCreateNew]);
 
-  console.log(`%c text `, "color: pink;border:1px solid pink", text);
   return (
     <>
       <OutsideClickBox
@@ -97,8 +98,8 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
             <HTMLEditor
               key={"new-chat" + String(isWritting)}
               initialContent={text}
-              onContentChange={(e) => {
-                console.log(`%c e `, "color: red;border:2px dotted red", e);
+              onContentChange={(e, mentions) => {
+                mentionRef.current = mentions;
                 settext(e);
                 saveToLocal(e);
               }}

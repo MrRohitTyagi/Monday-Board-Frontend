@@ -1,7 +1,7 @@
 /* Customize the editor */
 .demo-editor {
-  min-height: 100px;
-  padding:0px 10px;
+  min-height: 200px;
+  padding: 0px 10px;
   /* border: 1px solid #ccc; */
   /* border-radius: 10px; */
   height: fit-content !important;
@@ -38,4 +38,11 @@
   box-shadow: none !important;
   border: 1px solid grey !important;
   padding: 10px !important;
+}
+
+.rdw-suggestion-dropdown {
+  background: transparent !important;
+  font-size: 12px !important;
+  z-index: 999999999 !important;
+  border-radius: 5px !important;
 }

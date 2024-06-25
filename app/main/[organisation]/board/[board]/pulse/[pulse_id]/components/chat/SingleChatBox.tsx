@@ -199,7 +199,7 @@ const SingleChatBox = ({
               placeholder="White an update ..."
               key={chat._id + String(isWritting)}
               initialContent={chat.draft ? chat.draft : chat.content}
-              onContentChange={(e) => {
+              onContentChange={(e, mentions) => {
                 const value = e;
                 setchat((pc) => ({ ...pc, content: value, draft: value }));
                 updateChatDraft(value, masterChat._id);
