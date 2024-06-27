@@ -113,7 +113,7 @@ const Pulse = ({
           assigned = prev.assigned.filter((a) => a !== assignedUser._id);
         } else {
           if (assignedUser._id !== user._id) {
-            // notificationChannel.publish(assignedUser._id, { type: "ASSIGNED" });
+            notificationChannel.publish(assignedUser._id, { type: "ASSIGNED" });
           }
           assigned = [assignedUser._id, ...prev.assigned];
         }

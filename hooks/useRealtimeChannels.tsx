@@ -4,20 +4,19 @@ import { useEffect } from "react";
 
 type useRealtimeChannelsProps = {};
 
-// const ablyClient = new Ably.Realtime(process.env.NEXT_PUBLIC_ABLY_KEY || "");
+const ablyClient = new Ably.Realtime(process.env.NEXT_PUBLIC_ABLY_KEY || "");
 
 const useRealtimeChannels = () => {
-  const notificationChannel = { subscribe: () => {} };
-  //  ablyClient.channels.get("NOTIFICATION");
+  const notificationChannel = ablyClient.channels.get("NOTIFICATION");
 
   useEffect(() => {
-    // ablyClient.connection.on("connected", () => {
-    //   console.log("Connected to Ably!");
-    // });
-    // ablyClient.connection.on("closed", () => {
-    //   console.log("Ably CLOSED!");
-    // });
-    // return () => ablyClient.close();
+    ablyClient.connection.on("connected", () => {
+      console.log("Connected to Ably!");
+    });
+    ablyClient.connection.on("closed", () => {
+      console.log("Ably CLOSED!");
+    });
+    return () => ablyClient.close();
   }, []);
 
   return { notificationChannel };

@@ -36,7 +36,7 @@ const NewThread = ({ setThreads, setOpenNewChatBox }: NewThreadProps) => {
     const newThread = await createThread(payload);
 
     pulse.assigned.forEach((assignedUserId) => {
-      // notificationChannel.publish(assignedUserId, { type: "NEW_THREAD" });
+      notificationChannel.publish(assignedUserId, { type: "NEW_THREAD" });
     });
 
     setThreads((pt) => [...pt, newThread]);
