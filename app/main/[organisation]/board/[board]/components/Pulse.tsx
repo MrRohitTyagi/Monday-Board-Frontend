@@ -5,10 +5,11 @@ import React, {
   memo,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
-import { startCase } from "lodash";
+import { debounce, startCase } from "lodash";
 import { MessageCircleMore } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -141,6 +142,8 @@ const Pulse = ({
     filters: { [board._id]: filterPerBoard },
   } = useConfig();
 
+  const hideRef = useRef(false);
+
   const {
     priority: configPriority = "",
     status: configStatus = "",
@@ -148,32 +151,27 @@ const Pulse = ({
     user: configUser = "",
   } = filterPerBoard || {};
 
-  if (!pulse.isNew && !isFake) {
-    console.log("in");
-    if (configPriority !== "" && pulse.priority !== configPriority) {
-      return null;
-    }
-    if (configStatus !== "" && pulse.status !== configStatus) {
-      return null;
-    }
-    if (
-      configSearch !== "" &&
-      !pulse.title.toLowerCase().includes(configSearch)
-    ) {
-      return null;
-    }
-    if (configUser !== "" && !pulse.assigned.includes(configUser)) {
-      return null;
-    }
-  }
+  hideRef.current = useMemo(() => {
+    return excludePulse({
+      configPriority,
+      configSearch,
+      configStatus,
+      configUser,
+      isFake,
+      pulse,
+    });
+  }, [configPriority, configSearch, configStatus, configUser, isFake, pulse]);
 
   return (
     <div
       className={cn(
-        "h-10",
+        // "h-10",
         "w-full",
-        "animate-fadeIn",
-        "transition-all duration-300",
+
+        // isFake === false && hideRef.current === true
+        //   ? "animate-pulse-height-rev"
+        //   : "animate-pulse-height",
+        // "transition-all duration-150",
         "hover:bg-main-bg",
         "active:bg-highlighter-dark"
       )}
@@ -191,6 +189,9 @@ const Pulse = ({
       >
         <div
           className={cn(
+            isFake === false && hideRef.current === true
+              ? "animate-pulse-height-rev"
+              : "animate-pulse-height",
             "flex flex-row items-center justify-start h-full",
             "bg-main-bg pl-2",
             "border-border-light border-[1px]",
@@ -299,5 +300,37 @@ const Pulse = ({
     </div>
   );
 };
+
+function excludePulse({
+  configSearch,
+  configUser,
+  configStatus,
+  isFake,
+  pulse,
+  configPriority,
+}: any) {
+  let exclude = false;
+  if (!pulse.isNew && !isFake) {
+    if (configPriority !== "" && pulse.priority !== configPriority) {
+      exclude = true;
+    }
+    if (configStatus !== "" && pulse.status !== configStatus) {
+      exclude = true;
+      // return null;
+    }
+    if (
+      configSearch !== "" &&
+      !pulse.title.toLowerCase().includes(configSearch)
+    ) {
+      exclude = true;
+      // return null;
+    }
+    if (configUser !== "" && !pulse.assigned.includes(configUser)) {
+      exclude = true;
+      // return null;
+    }
+  }
+  return exclude;
+}
 export { PulseContext };
 export default memo(Pulse);

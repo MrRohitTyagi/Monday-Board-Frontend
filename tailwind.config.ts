@@ -138,6 +138,39 @@ const config = {
           from: { height: "4.5rem" },
           to: { height: "0rem" },
         },
+        "pulse-height": {
+          "0%": {
+            "max-height": "0rem",
+            "min-height": "0rem",
+            opacity: "0",
+          },
+
+          "80%": {
+            opacity: "0.2",
+          },
+          "100%": {
+            opacity: "1",
+            "max-height": "var(--pulse-height)",
+            "min-height": "var(--pulse-height)",
+          },
+        },
+
+        "pulse-height-rev": {
+          "0%": {
+            "max-height": "var(--pulse-height)",
+            "min-height": "var(--pulse-height)",
+            overflow: "hidden",
+            opacity: "0",
+          },
+
+          "100%": {
+            overflow: "hidden",
+            "max-height": "0rem",
+            "min-height": "0rem",
+            display: "none",
+            opacity: "0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -156,6 +189,9 @@ const config = {
 
         "change-bg-transparency":
           "change-bg-transparency 300ms ease-in-out forwards",
+
+        "pulse-height": "pulse-height 50ms ease-in-out forwards",
+        "pulse-height-rev": "pulse-height-rev 50ms ease-in-out forwards",
       },
     },
   },
