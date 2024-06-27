@@ -7,14 +7,19 @@ import useBoardContext from "@/hooks/useBoardContext";
 import { cn } from "@/lib/utils";
 import { useConfig } from "@/store/configStore";
 import { baseCssMiniItems } from "../Pulse";
-import TooltipComp from "@/components/core/TooltipComp";
 
 type FilterPriorityProps = {};
 
 const FilterPriority = (props: FilterPriorityProps) => {
   const [open, setOpen] = useState(false);
-  const { priority: selectedPriority, setPriority } = useConfig();
   const { board } = useBoardContext();
+
+  const {
+    filters: { [board._id]: filterPerBoard },
+    setPriority,
+  } = useConfig();
+
+  const { priority: selectedPriority = "" } = filterPerBoard || {};
 
   const priority = useMemo(
     () => Object.values(board.priority || {}),
@@ -58,7 +63,7 @@ const FilterPriority = (props: FilterPriorityProps) => {
             return (
               <Button
                 onClick={() => {
-                  setPriority(p.id);
+                  setPriority(p.id, board._id);
                   setOpen(false);
                 }}
                 variant="ghost"
@@ -75,7 +80,7 @@ const FilterPriority = (props: FilterPriorityProps) => {
           })}
           <Button
             onClick={() => {
-              setPriority("");
+              setPriority("", board._id);
               setOpen(false);
             }}
             variant="ghost"

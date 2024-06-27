@@ -5,11 +5,20 @@ import { Input } from "@/components/ui/input";
 import { useConfig } from "@/store/configStore";
 import { ChangeEvent, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import useBoardContext from "@/hooks/useBoardContext";
 
 const BoardSearch = () => {
-  const { search, setSearch } = useConfig();
-  const [isSearching, setIsSearching] = useState(!!search);
+  const { board } = useBoardContext();
+  const {
+    filters: { [board._id]: filterPerBoard },
+    setSearch,
+  } = useConfig();
+
+  const { search = "" } = filterPerBoard || {};
+
   const [inp, setinp] = useState(search);
+  const [isSearching, setIsSearching] = useState(!!search);
+
   const dbRef = useRef<any>();
 
   const handleOnchange = (e: ChangeEvent<HTMLInputElement> | string) => {
@@ -18,7 +27,7 @@ const BoardSearch = () => {
 
     clearTimeout(dbRef.current);
     dbRef.current = setTimeout(() => {
-      setSearch(val);
+      setSearch(val, board._id);
     }, 300);
   };
 

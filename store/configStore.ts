@@ -1,6 +1,20 @@
-import { getConfig, updateConfig } from "@/gateways/config-gateway";
+import {
+  getConfig,
+  updateConfig,
+  updateConfigDeep,
+} from "@/gateways/config-gateway";
 import { ConfigStoreType } from "@/types/configTypes";
+import { isEmpty } from "lodash";
 import { create } from "zustand";
+
+function tempBoardFilter() {
+  return {
+    search: "",
+    priority: "",
+    status: "",
+    user: "",
+  };
+}
 
 export const useConfig = create<ConfigStoreType>((setState, getState) => {
   return {
@@ -9,50 +23,80 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
     staredBoards: [],
     likedChats: [],
     likedThreads: [],
-    search: "",
-    priority: "",
-    status: "",
-    user: "",
+    filters: {},
+    // search: "",
+    // priority: "",
+    // status: "",
+    // user: "",
 
-    setUser: (e) => {
-      setState((ps) => ({ ...ps, user: e }));
+    setUser: (user_id, boardID) => {
+      setState((ps) => {
+        const upDatedPS = { ...ps };
+        if (isEmpty(ps.filters[boardID])) {
+          ps.filters[boardID] = tempBoardFilter();
+        }
+        ps.filters[boardID].user = user_id;
+        return upDatedPS;
+      });
       const { _id } = getState();
-      updateConfig({ user: e, _id });
+      updateConfigDeep({ boardID: boardID, user: user_id, _id });
     },
 
-    setPriority: (e) => {
-      setState((ps) => ({ ...ps, priority: e }));
+    setPriority: (priority_id, boardID) => {
+      setState((ps) => {
+        const upDatedPS = { ...ps };
+        if (isEmpty(ps.filters[boardID])) {
+          ps.filters[boardID] = tempBoardFilter();
+        }
+        ps.filters[boardID].priority = priority_id;
+        return upDatedPS;
+      });
       const { _id } = getState();
-      updateConfig({ priority: e, _id });
+      updateConfigDeep({ boardID: boardID, priority: priority_id, _id });
     },
 
-    setStatus: (e) => {
+    setStatus: (status_id, boardID) => {
+      setState((ps) => {
+        const upDatedPS = { ...ps };
+        if (isEmpty(ps.filters[boardID])) {
+          ps.filters[boardID] = tempBoardFilter();
+        }
+        ps.filters[boardID].status = status_id;
+        return upDatedPS;
+      });
       const { _id } = getState();
-      updateConfig({ status: e, _id });
-      setState((ps) => ({ ...ps, status: e }));
+      updateConfigDeep({ boardID: boardID, status: status_id, _id });
     },
 
-    setSearch: (val) => {
+    setSearch: (val, boardID) => {
+      setState((ps) => {
+        const upDatedPS = { ...ps };
+        if (isEmpty(ps.filters[boardID])) {
+          ps.filters[boardID] = tempBoardFilter();
+        }
+        ps.filters[boardID].search = val;
+        return upDatedPS;
+      });
+
       const { _id } = getState();
-      updateConfig({ search: val, _id });
-      setState((ps) => ({ ...ps, search: val }));
+      updateConfigDeep({ boardID: boardID, search: val, _id });
     },
 
     getConfig: async () => {
       const config = await getConfig();
       setState((ps) => ({ ...ps, ...config }));
     },
-    starBoard: (board_id) => {
+    starBoard: (boardID) => {
       setState((pc) => {
-        const boards = [...pc.staredBoards, board_id];
+        const boards = [...pc.staredBoards, boardID];
         const { _id } = getState();
         updateConfig({ staredBoards: boards, _id });
         return { ...pc, staredBoards: boards };
       });
     },
-    unstarBoard: (board_id) => {
+    unstarBoard: (boardID) => {
       setState((pc) => {
-        const boards = pc.staredBoards.filter((b) => b !== board_id);
+        const boards = pc.staredBoards.filter((b) => b !== boardID);
         const { _id } = getState();
         updateConfig({ staredBoards: boards, _id });
         return { ...pc, staredBoards: boards };

@@ -57,11 +57,19 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
   const [isloading, setIsloading] = useState(true);
 
   const {
-    priority: configPriority,
-    status: configStatus,
-    search: configSearch,
-    user: configUser,
+    filters: { [board._id]: filterPerBoard },
   } = useConfig();
+  console.log(
+    `%c filterPerBoard `,
+    "color: orange;border:2px solid cyan",
+    filterPerBoard
+  );
+  const {
+    priority: configPriority = "",
+    status: configStatus = "",
+    search: configSearch = "",
+    user: configUser = "",
+  } = filterPerBoard || {};
 
   useEffect(() => {
     (async function init() {

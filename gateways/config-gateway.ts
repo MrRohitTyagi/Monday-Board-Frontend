@@ -16,5 +16,13 @@ async function updateConfig(payload: any) {
   );
   return data.response;
 }
+async function updateConfigDeep(payload: any) {
+  const { _id, ...rest } = payload;
+  const { data } = await axiosInstance().put(
+    `${CONFIG_BASE_URL}/update-deep/${_id}`,
+    rest
+  );
+  return data.response;
+}
 
-export { getConfig, updateConfig };
+export { getConfig, updateConfig, updateConfigDeep };

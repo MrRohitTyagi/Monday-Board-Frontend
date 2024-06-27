@@ -13,7 +13,13 @@ import React, { useMemo } from "react";
 type FilterUserProps = {};
 const FilterUser = (props: FilterUserProps) => {
   const { board } = useBoardContext();
-  const { user, setUser } = useConfig();
+  // const { user, setUser } = useConfig();
+  const {
+    filters: { [board._id]: filterPerBoard },
+    setUser,
+  } = useConfig();
+
+  const { user = "" } = filterPerBoard || {};
 
   const membersAndAdmins: UserType[] = useMemo(
     () => [...(board.admins || []), ...(board.members || [])],
@@ -39,7 +45,7 @@ const FilterUser = (props: FilterUserProps) => {
             return (
               <Button
                 variant={"ghost"}
-                onClick={() => setUser(viewer._id)}
+                onClick={() => setUser(viewer._id, board._id)}
                 className="per-viewer shrink-0 p-2 animate-fadeIn"
                 key={viewer._id + i}
               >
@@ -68,7 +74,7 @@ const FilterUser = (props: FilterUserProps) => {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  setUser("");
+                  setUser("", board._id);
                 }}
               >
                 <X size={18} />

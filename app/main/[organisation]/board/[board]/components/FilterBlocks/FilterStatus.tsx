@@ -13,8 +13,15 @@ type FilterStatusProps = {};
 
 const FilterStatus = (props: FilterStatusProps) => {
   const [open, setOpen] = useState(false);
-  const { status: selectedStatus, setStatus } = useConfig();
+  // const { status: selectedStatus, setStatus } = useConfig();
   const { board } = useBoardContext();
+
+  const {
+    filters: { [board._id]: filterPerBoard },
+    setStatus,
+  } = useConfig();
+
+  const { status: selectedStatus = "" } = filterPerBoard || {};
 
   const statuses = useMemo(
     () => Object.values(board.statuses || {}),
@@ -58,7 +65,7 @@ const FilterStatus = (props: FilterStatusProps) => {
             return (
               <Button
                 onClick={() => {
-                  setStatus(p.id);
+                  setStatus(p.id, board._id);
                   setOpen(false);
                 }}
                 variant="ghost"
@@ -75,7 +82,7 @@ const FilterStatus = (props: FilterStatusProps) => {
           })}
           <Button
             onClick={() => {
-              setStatus("");
+              setStatus("", board._id);
               setOpen(false);
             }}
             variant="ghost"
