@@ -1,8 +1,8 @@
 "use client";
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import { startCase } from "lodash";
 import Image from "next/image";
-import { Edit, Star } from "lucide-react";
+import { Edit, Star, StarOff } from "lucide-react";
 
 // UI elements
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
@@ -15,12 +15,28 @@ import { useRouter } from "next/navigation";
 import useNavigate from "@/hooks/useNavigate";
 import TooltipComp from "@/components/core/TooltipComp";
 import { BoardType } from "@/types/boardTypes";
+import { useConfig } from "@/store/configStore";
 
 type pageProps = {};
 const Organisation = (props: pageProps) => {
+  const { staredBoards } = useConfig();
   const {
     user: { boards, username },
   } = useAuth();
+
+  const sortedBoards = useMemo(() => {
+    const stared = [];
+    const rest = [];
+
+    for (const board of boards) {
+      if (staredBoards.includes(board._id)) {
+        stared.push(board);
+      } else {
+        rest.push(board);
+      }
+    }
+    return [...stared, ...rest];
+  }, [boards, staredBoards]);
 
   return (
     <div>
@@ -37,10 +53,10 @@ const Organisation = (props: pageProps) => {
       >
         <h1 className="font-bold text-2xl">Your Boards</h1>
         <div className="boards-listing flex flex-row gap-4 flex-wrap">
-          {boards.length === 0 ? (
+          {sortedBoards.length === 0 ? (
             <CreateNewBoard />
           ) : (
-            boards.map((board) => {
+            sortedBoards.map((board) => {
               return <BoardComp key={board._id + "board"} board={board} />;
             })
           )}
@@ -67,6 +83,9 @@ const CreateNewBoard = () => {
 };
 
 const BoardComp = ({ board }: { board: BoardType }) => {
+  const { starBoard, unstarBoard, staredBoards } = useConfig();
+
+  const isStared = staredBoards.includes(board._id);
   const { navigate } = useNavigate();
   const router = useRouter();
   return (
@@ -99,11 +118,31 @@ const BoardComp = ({ board }: { board: BoardType }) => {
           <h3 className="text-ellipsis font-bold">{startCase(board.title)}</h3>
           <div className="board-actions space-x-2">
             {/* StarBoard  */}
-            <Button variant="ghost" className="p-0">
-              <TooltipComp className="px-3 py-2" title={"Star board"}>
-                <Star size="18px" color="white" />
-              </TooltipComp>
-            </Button>
+            <TooltipComp
+              className="px-3 py-2"
+              title={isStared ? "Remove form favourites" : "Add to favourites"}
+            >
+              <Button
+                variant="ghost"
+                className="p-0"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (isStared) {
+                    unstarBoard(board._id);
+                  } else {
+                    starBoard(board._id);
+                  }
+                }}
+              >
+                <Star
+                  size="18px"
+                  fill={isStared ? "gold" : "none"}
+                  color="white"
+                  className=" transition-all duration-300"
+                />
+              </Button>
+            </TooltipComp>
 
             {/* {EditBoard} */}
             <Button

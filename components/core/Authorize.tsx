@@ -7,12 +7,14 @@ import { getToken } from "@/utils/cookie";
 import { useRouter } from "next/navigation";
 import { ChildrenType } from "@/types/genericTypes";
 import useTheme from "@/hooks/useTheme";
+import { useConfig } from "@/store/configStore";
 
 type AuthorizeTypes = ChildrenType & {};
 
 const Authorize = ({ children }: AuthorizeTypes) => {
-  const { isLoading, fetchUser, notAuthenticated, isAuthenticated, user } =
-    useAuth();
+  const { isLoading, fetchUser, notAuthenticated } = useAuth();
+  const { ...all } = useConfig();
+  console.log(`%c all `, "color: green;border:1px solid green", all);
   const router = useRouter();
   const { getTheme, applyTheme } = useTheme();
 

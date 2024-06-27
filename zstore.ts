@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { getUser } from "./gateways/user-gateway";
 import { deleteToken } from "./utils/cookie";
+import { useConfig } from "./store/configStore";
 
 import { UserType } from "./types/userTypes";
 import { BoardType } from "./types/boardTypes";
@@ -71,7 +72,10 @@ export const useAuth = create<AuthStoreType>((setState) => ({
     });
   },
   fetchUser: async (id = "", cb) => {
+    const { getConfig } = useConfig.getState();
+
     await getUser(id || "").then((user) => {
+      getConfig();
       const userObj = { ...user, org: user.org ? user.org : user.username };
       setState((ps) => ({
         user: { ...ps.user, ...userObj },

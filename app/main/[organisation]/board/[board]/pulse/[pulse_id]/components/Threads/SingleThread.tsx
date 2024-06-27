@@ -18,7 +18,6 @@ import useSingleChat from "@/hooks/useSingleChat";
 import ThreadInfo from "./ThreadInfo";
 import Space from "@/components/core/Space";
 import { useAuth } from "@/zstore";
-import Divider from "@/components/core/Divider";
 
 type SingleThreadProps = {
   mainThread: ThreadType;

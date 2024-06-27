@@ -3,10 +3,12 @@
 import Divider from "@/components/core/Divider";
 import LowOpacityText from "@/components/core/LowOpacityText";
 import TooltipComp from "@/components/core/TooltipComp";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useConfig } from "@/store/configStore";
 import { ThreadType } from "@/types/threadType";
 import { areDatesEqual, timeBetween } from "@/utils/helperFunctions";
-import { Clock, Timer } from "lucide-react";
+import { Clock, ThumbsUp, Timer } from "lucide-react";
 import React, { memo, useEffect, useMemo, useState } from "react";
 
 type ThreadInfoProps = {
@@ -15,6 +17,9 @@ type ThreadInfoProps = {
 
 const ThreadInfo = ({ thread }: ThreadInfoProps) => {
   const [reRender, setreRender] = useState(Math.random());
+
+  const { likedThreads, likeThread, unlikeThread } = useConfig();
+  const isLiked = likedThreads.includes(thread._id);
 
   useEffect(() => {
     function calc() {
@@ -53,6 +58,22 @@ const ThreadInfo = ({ thread }: ThreadInfoProps) => {
 
       {isEdited && <Divider horizontal />}
       <LowOpacityText>{isEdited ? "Edited" : ""}</LowOpacityText>
+      <Button
+        onClick={() => {
+          if (isLiked) unlikeThread(thread._id);
+          else likeThread(thread._id);
+        }}
+        variant={"ghost"}
+        className={cn(
+          "hover:bg-transparent",
+          "p-0 m-0 flex flex-row gap-2 items-center"
+        )}
+      >
+        <ThumbsUp color="white" size={12} fill={isLiked ? "gold" : "none"} />
+        <LowOpacityText className="text-xs">
+          {isLiked ? "Liked" : "Like"}
+        </LowOpacityText>
+      </Button>
     </div>
   );
 };

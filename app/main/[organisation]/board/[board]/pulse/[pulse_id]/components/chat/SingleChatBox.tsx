@@ -39,6 +39,7 @@ import ChatInfo from "./ChatInfo";
 import useWriteAI from "@/hooks/useWriteAI";
 import HTMLEditor from "@/components/core/HTMLEditor";
 import { convert } from "html-to-text";
+import { useConfig } from "@/store/configStore";
 
 type SingleChatBoxProps = {
   chat: ChatType;
@@ -71,6 +72,9 @@ const SingleChatBox = ({
   const { isWritting, writeWithAI } = useWriteAI();
 
   const { updateChatContent, updateChatDraft, deleteSingleChat } = useChat();
+
+  const { likedChats, likeChat, unlikeChat } = useConfig();
+  const isLiked = likedChats.includes(chat._id);
 
   useEffect(() => {
     setchat(masterChat);
@@ -184,17 +188,6 @@ const SingleChatBox = ({
             </div>
           </div>
           {isEditing === true ? (
-            // <Textarea
-            //   disabled={isSaving}
-            //   value={chat.draft ? chat.draft : chat.content}
-            //   dynamicHeight={true}
-            //   className="border-highlighter border-[1px]"
-            //   onChange={(e) => {
-            //     const value = e.target.value;
-            //     setchat((pc) => ({ ...pc, content: value, draft: value }));
-            //     updateChatDraft(value, masterChat._id);
-            //   }}
-            // />
             <HTMLEditor
               placeholder="White an update ..."
               key={chat._id + String(isWritting)}
@@ -234,11 +227,22 @@ const SingleChatBox = ({
               size={"sm"}
               className={cn(
                 "overflow-hidden py-0 rounded-[1px] transition-all duration-200",
-                "grow gap-3 flex flex-row items-center m-1"
+                "grow gap-3 flex flex-row m-1 items-center"
               )}
+              onClick={() => {
+                if (isLiked) {
+                  unlikeChat(chat._id);
+                } else {
+                  likeChat(chat._id);
+                }
+              }}
             >
-              <ThumbsUp color="white" size={16} />
-              <h1 className="text-base">Like</h1>
+              <ThumbsUp
+                color="white"
+                size={16}
+                fill={isLiked ? "gold" : "none"}
+              />
+              <h1 className="text-base">{isLiked ? "Liked" : "Like"}</h1>
             </Button>
 
             <Divider horizontal className="w-1" />
