@@ -30,13 +30,10 @@ const FilterPriority = (props: FilterPriorityProps) => {
       }}
       classNames={{
         trigger: "h-full",
-        content: "w-44 bg-main-fg p-4 shadow-lg shadow-foreground",
+        content:
+          "w-44 bg-main-fg p-4 shadow-lg shadow-black border-2 border-highlighter-dark",
       }}
       trigger={
-        // <TooltipComp
-        //   className="px-3 py-2 border-2 border-highlighter-dark"
-        //   title="Filter by priority"
-        // >
         <Button
           variant={"ghost"}
           onClick={(e) => {
@@ -54,7 +51,6 @@ const FilterPriority = (props: FilterPriorityProps) => {
         >
           <h1>{board?.priority?.[selectedPriority]?.title || "Priority"}</h1>
         </Button>
-        // </TooltipComp>
       }
       content={
         <div className="flex flex-col gap-2">

@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import TooltipComp from "@/components/core/TooltipComp";
 import { BoardType } from "@/types/boardTypes";
+import { timeBetween } from "@/utils/helperFunctions";
 
 type BoardTitleProps = {
   board: BoardType;
@@ -18,6 +19,7 @@ type BoardTitleProps = {
 
 const BoardTitle = ({ board }: BoardTitleProps) => {
   const router = useRouter();
+  const { userFriendlyDate } = timeBetween(board.createdAt);
 
   return (
     <PopoverComp
@@ -64,7 +66,7 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
           {/* Created On */}
           <div className="flex items-center flex-row gap-4 overflow-hidden">
             <h4 className="text-sm w-20 text-nowrap opacity-80">Created On</h4>
-            <h4 className="text-sm opacity-80">{board._id}</h4>
+            <h4 className="text-sm opacity-80">{userFriendlyDate}</h4>
           </div>
         </>
       }

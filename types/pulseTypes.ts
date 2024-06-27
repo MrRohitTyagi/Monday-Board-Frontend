@@ -1,4 +1,5 @@
 export type PulseType = {
+  isNew?: boolean;
   _id: string;
   title: string;
   assigned: string[];

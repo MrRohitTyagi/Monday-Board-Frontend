@@ -30,13 +30,10 @@ const FilterStatus = (props: FilterStatusProps) => {
       }}
       classNames={{
         trigger: "h-full",
-        content: "w-44 bg-main-fg p-4 shadow-lg shadow-foreground",
+        content:
+          "w-44 bg-main-fg p-4 shadow-lg shadow-black border-2 border-highlighter-dark",
       }}
       trigger={
-        // <TooltipComp
-        //   title="Filter by status"
-        //   className="px-3 py-2 border-2 border-highlighter-dark"
-        // >
         <Button
           variant={"ghost"}
           onClick={(e) => {
@@ -54,7 +51,6 @@ const FilterStatus = (props: FilterStatusProps) => {
         >
           <h1>{board?.statuses?.[selectedStatus]?.title || "Status"}</h1>
         </Button>
-        // </TooltipComp>
       }
       content={
         <div className="flex flex-col gap-2">

@@ -16,6 +16,8 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
 
     setUser: (e) => {
       setState((ps) => ({ ...ps, user: e }));
+      const { _id } = getState();
+      updateConfig({ user: e, _id });
     },
 
     setPriority: (e) => {

@@ -60,6 +60,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
     priority: configPriority,
     status: configStatus,
     search: configSearch,
+    user: configUser,
   } = useConfig();
 
   useEffect(() => {
@@ -75,15 +76,18 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
     const obj = { ...sprint };
     obj.pulses = obj.pulses.filter((p) => {
       if (
-        (configPriority === "" || p.priority === configPriority) &&
-        (configStatus === "" || p.status === configStatus) &&
-        (configSearch === "" || p.title.toLowerCase().includes(configSearch))
+        p.isNew === true ||
+        ((configPriority === "" || p.priority === configPriority) &&
+          (configStatus === "" || p.status === configStatus) &&
+          (configSearch === "" ||
+            p.title.toLowerCase().includes(configSearch)) &&
+          (configUser === "" || p.assigned.includes(configUser)))
       ) {
         return true;
       } else return false;
     });
     return obj;
-  }, [sprint, configPriority, configStatus, configSearch]);
+  }, [sprint, configPriority, configStatus, configSearch, configUser]);
 
   return isloading === true ? (
     <SprintSkeletonLoader />
@@ -236,7 +240,7 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
       const pulse = await createPulse({ ...newPulse, sprint: sprint._id });
 
       setSprint((ps) => {
-        return { ...ps, pulses: [...ps.pulses, pulse] };
+        return { ...ps, pulses: [...ps.pulses, { ...pulse, isNew: true }] };
       });
       setIsSubmitting(false);
     } catch (error: any) {

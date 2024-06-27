@@ -15,8 +15,6 @@ const Authorize = ({ children }: AuthorizeTypes) => {
   const { isLoading, fetchUser, notAuthenticated } = useAuth();
   const router = useRouter();
   const { getTheme, applyTheme } = useTheme();
-  const { ...config } = useConfig();
-  console.log(`%c config `, "color: orange;border:2px solid cyan", config);
 
   const logout = useCallback((data: any) => {
     router.replace("/login");

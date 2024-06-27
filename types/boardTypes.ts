@@ -2,6 +2,7 @@ import { PriorityType, StatusesType } from "./pulseTypes";
 import { UserType } from "./userTypes";
 
 export type BoardType = {
+  createdAt: string;
   _id: string;
   title: string;
   picture: string;

@@ -20,7 +20,7 @@ const BoardFilter = ({}: BoardFilterProps) => {
       )}
     >
       <FilterSearch />
-      {/* <FilterUser /> */}
+      <FilterUser />
       <FilterStatus />
       <FilterPriority />
     </div>
