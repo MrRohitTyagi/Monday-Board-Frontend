@@ -29,6 +29,7 @@ import { BoardType } from "@/types/boardTypes";
 import { UserType } from "@/types/userTypes";
 import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 import { useAuth } from "@/zstore";
+import { useConfig } from "@/store/configStore";
 
 type PulseProps = {
   pulse: PulseType;
@@ -111,7 +112,7 @@ const Pulse = ({
           assigned = prev.assigned.filter((a) => a !== assignedUser._id);
         } else {
           if (assignedUser._id !== user._id) {
-            notificationChannel.publish(assignedUser._id, { type: "ASSIGNED" });
+            // notificationChannel.publish(assignedUser._id, { type: "ASSIGNED" });
           }
           assigned = [assignedUser._id, ...prev.assigned];
         }
@@ -136,125 +137,166 @@ const Pulse = ({
 
   const isPulseChatOpen = params?.pulse_id === pulse._id;
 
+  const {
+    filters: { [board._id]: filterPerBoard },
+  } = useConfig();
+
+  const {
+    priority: configPriority = "",
+    status: configStatus = "",
+    search: configSearch = "",
+    user: configUser = "",
+  } = filterPerBoard || {};
+
+  if (!pulse.isNew && !isFake) {
+    console.log("in");
+    if (configPriority !== "" && pulse.priority !== configPriority) {
+      return null;
+    }
+    if (configStatus !== "" && pulse.status !== configStatus) {
+      return null;
+    }
+    if (
+      configSearch !== "" &&
+      !pulse.title.toLowerCase().includes(configSearch)
+    ) {
+      return null;
+    }
+    if (configUser !== "" && !pulse.assigned.includes(configUser)) {
+      return null;
+    }
+  }
+
   return (
-    <PulseContext.Provider
-      value={{
-        setPulse,
-        updateStatus,
-        updatePriority,
-        updateTitle,
-        updateTimeline,
-        updateTag,
-        updateAssigned,
-      }}
+    <div
+      className={cn(
+        "h-10",
+        "w-full",
+        "animate-fadeIn",
+        "transition-all duration-300",
+        "hover:bg-main-bg",
+        "active:bg-highlighter-dark"
+      )}
     >
-      <div
-        className={cn(
-          "flex flex-row items-center justify-start h-full",
-          "bg-main-bg pl-2",
-          "border-border-light border-[1px]",
-          isFake === false && "hover:bg-main-fg transition-all duration-150",
-          "transition-all duration-150",
-          isPulseChatOpen && "!bg-highlighter-dark"
-        )}
+      <PulseContext.Provider
+        value={{
+          setPulse,
+          updateStatus,
+          updatePriority,
+          updateTitle,
+          updateTimeline,
+          updateTag,
+          updateAssigned,
+        }}
       >
-        {/* Pulse title  */}
-        {leftPart === true && isFake ? (
-          <h2
-            className={cn(
-              "pulse-title",
-              "w-full text-sm  content-around",
-              "text-ellipsis overflow-hidden text-nowrap",
-              isFake === true && "text-center tracking-wider"
-            )}
-          >
-            {startCase(pulse.title)}
-          </h2>
-        ) : (
-          <PulseTitle pulse={pulse} />
-        )}
-        {leftPart === false && (
-          <div
-            className={cn(
-              "w-full h-full flex flex-row items-center justify-start",
-              "pulse-rest-scroller shrink-0"
-            )}
-          >
-            {/* ----------------------------------------------------------------------- */}
-            <div
-              onClick={() =>
-                isFake === false &&
-                router.push(`${board._id}/pulse/${pulse._id}`)
-              }
+        <div
+          className={cn(
+            "flex flex-row items-center justify-start h-full",
+            "bg-main-bg pl-2",
+            "border-border-light border-[1px]",
+            isFake === false && "hover:bg-main-fg transition-all duration-150",
+            "transition-all duration-150",
+            isPulseChatOpen && "!bg-highlighter-dark"
+          )}
+        >
+          {/* Pulse title  */}
+          {leftPart === true && isFake ? (
+            <h2
               className={cn(
-                baseCssMiniItems(12),
-                "openchat-to flex flex-row items-center justify-center",
-                "cursor-pointer"
+                "pulse-title",
+                "w-full text-sm content-around h-full",
+                "text-ellipsis overflow-hidden text-nowrap",
+                isFake === true && "text-center tracking-wider"
               )}
             >
-              <CustomDiv lvl={20} disabled={isFake}>
-                <MessageCircleMore
-                  size={"24px"}
-                  className={cn(
-                    "stroke-text-color",
-                    isPulseChatOpen && "text-highlighter"
-                  )}
-                />
-              </CustomDiv>
-            </div>
-            {/* ----------------------------------------------------------------------- */}
-            {isFake === true ? (
-              <div className={cn(baseCssMiniItems(), "timeline-block")}>
-                {pulse.timeline.start}
-              </div>
-            ) : (
-              <TimeLine pulse={pulse} board={board} setPulse={setPulse} />
-            )}
-
-            {/*  PRIORITY ----------------------------------------------------------------------- */}
-            {isFake === true ? (
-              <div className={cn(baseCssMiniItems(), "priority")}>
-                {pulse.priority}
-              </div>
-            ) : (
-              <Priority board={board} pulse={pulse} />
-            )}
-            {/* -------------------------------------------------------------------------------- */}
-
-            {/* ASSIGNED ----------------------------------------------------------------------- */}
-            {isFake === true ? (
-              <div className={cn(baseCssMiniItems(), "assigned-to")}>
-                Assigned
-              </div>
-            ) : (
-              <Assigned pulse={pulse} board={board} setPulse={setPulse} />
-            )}
-            {/* ----------------------------------------------------------------------- */}
-
-            {/*STATUS ----------------------------------------------------------------------- */}
-            {isFake === true ? (
-              <div className={cn(baseCssMiniItems(), "status-block")}>
-                {pulse.status}
-              </div>
-            ) : (
-              <Status pulse={pulse} board={board} />
-            )}
-            {/* ----------------------------------------------------------------------- */}
-
-            {isFake ? (
+              {startCase(pulse.title)}
+            </h2>
+          ) : (
+            <PulseTitle pulse={pulse} />
+          )}
+          {leftPart === false && (
+            <div
+              className={cn(
+                "w-full h-full flex flex-row items-center justify-start",
+                "pulse-rest-scroller shrink-0"
+              )}
+            >
+              {/* ----------------------------------------------------------------------- */}
               <div
-                className={cn(baseCssMiniItems(), "pulse-tag")}
-                style={{ color: sprint.color }}
+                onClick={() =>
+                  isFake === false &&
+                  router.push(`${board._id}/pulse/${pulse._id}`)
+                }
+                className={cn(
+                  baseCssMiniItems(12),
+                  "openchat-to flex flex-row items-center justify-center",
+                  "cursor-pointer"
+                )}
               >
-                {pulse.tag}
+                <CustomDiv lvl={20} disabled={isFake}>
+                  <MessageCircleMore
+                    size={"24px"}
+                    className={cn(
+                      "stroke-text-color",
+                      isPulseChatOpen && "text-highlighter"
+                    )}
+                  />
+                </CustomDiv>
               </div>
-            ) : (
-              <PulseTag pulse={pulse} sprint={sprint} />
-            )}
-          </div>
-        )}
-      </div>
-    </PulseContext.Provider>
+              {/* ----------------------------------------------------------------------- */}
+              {isFake === true ? (
+                <div className={cn(baseCssMiniItems(), "timeline-block")}>
+                  {pulse.timeline.start}
+                </div>
+              ) : (
+                <TimeLine pulse={pulse} board={board} setPulse={setPulse} />
+              )}
+
+              {/*  PRIORITY ----------------------------------------------------------------------- */}
+              {isFake === true ? (
+                <div className={cn(baseCssMiniItems(), "priority")}>
+                  {pulse.priority}
+                </div>
+              ) : (
+                <Priority board={board} pulse={pulse} />
+              )}
+              {/* -------------------------------------------------------------------------------- */}
+
+              {/* ASSIGNED ----------------------------------------------------------------------- */}
+              {isFake === true ? (
+                <div className={cn(baseCssMiniItems(), "assigned-to")}>
+                  Assigned
+                </div>
+              ) : (
+                <Assigned pulse={pulse} board={board} setPulse={setPulse} />
+              )}
+              {/* ----------------------------------------------------------------------- */}
+
+              {/*STATUS ----------------------------------------------------------------------- */}
+              {isFake === true ? (
+                <div className={cn(baseCssMiniItems(), "status-block")}>
+                  {pulse.status}
+                </div>
+              ) : (
+                <Status pulse={pulse} board={board} />
+              )}
+              {/* ----------------------------------------------------------------------- */}
+
+              {isFake ? (
+                <div
+                  className={cn(baseCssMiniItems(), "pulse-tag")}
+                  style={{ color: sprint.color }}
+                >
+                  {pulse.tag}
+                </div>
+              ) : (
+                <PulseTag pulse={pulse} sprint={sprint} />
+              )}
+            </div>
+          )}
+        </div>
+      </PulseContext.Provider>
+    </div>
   );
 };
 export { PulseContext };

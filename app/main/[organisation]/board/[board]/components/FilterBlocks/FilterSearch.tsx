@@ -28,7 +28,7 @@ const BoardSearch = () => {
     clearTimeout(dbRef.current);
     dbRef.current = setTimeout(() => {
       setSearch(val, board._id);
-    }, 300);
+    }, 500);
   };
 
   return isSearching === true ? (

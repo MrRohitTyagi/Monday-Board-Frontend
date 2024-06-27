@@ -4,7 +4,7 @@ import {
   updateConfigDeep,
 } from "@/gateways/config-gateway";
 import { ConfigStoreType } from "@/types/configTypes";
-import { isEmpty } from "lodash";
+import { isEmpty, isEqual } from "lodash";
 import { create } from "zustand";
 
 function tempBoardFilter() {
@@ -24,13 +24,14 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
     likedChats: [],
     likedThreads: [],
     filters: {},
-    // search: "",
-    // priority: "",
-    // status: "",
-    // user: "",
 
     setUser: (user_id, boardID) => {
+      let isSame = false;
       setState((ps) => {
+        if (isEqual(ps.filters[boardID].user, user_id)) {
+          isSame = true;
+          return ps;
+        }
         const upDatedPS = { ...ps };
         if (isEmpty(ps.filters[boardID])) {
           ps.filters[boardID] = tempBoardFilter();
@@ -38,12 +39,18 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
         ps.filters[boardID].user = user_id;
         return upDatedPS;
       });
+      if (isSame) return;
       const { _id } = getState();
       updateConfigDeep({ boardID: boardID, user: user_id, _id });
     },
 
     setPriority: (priority_id, boardID) => {
+      let isSame = false;
       setState((ps) => {
+        if (isEqual(ps.filters[boardID].priority, priority_id)) {
+          isSame = true;
+          return ps;
+        }
         const upDatedPS = { ...ps };
         if (isEmpty(ps.filters[boardID])) {
           ps.filters[boardID] = tempBoardFilter();
@@ -51,12 +58,18 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
         ps.filters[boardID].priority = priority_id;
         return upDatedPS;
       });
+      if (isSame) return;
       const { _id } = getState();
       updateConfigDeep({ boardID: boardID, priority: priority_id, _id });
     },
 
     setStatus: (status_id, boardID) => {
+      let isSame = false;
       setState((ps) => {
+        if (isEqual(ps.filters[boardID].status, status_id)) {
+          isSame = true;
+          return ps;
+        }
         const upDatedPS = { ...ps };
         if (isEmpty(ps.filters[boardID])) {
           ps.filters[boardID] = tempBoardFilter();
@@ -64,22 +77,28 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
         ps.filters[boardID].status = status_id;
         return upDatedPS;
       });
+      if (isSame) return;
       const { _id } = getState();
       updateConfigDeep({ boardID: boardID, status: status_id, _id });
     },
 
-    setSearch: (val, boardID) => {
+    setSearch: (search, boardID) => {
+      let isSame = false;
       setState((ps) => {
+        if (isEqual(ps.filters[boardID].search, search)) {
+          isSame = true;
+          return ps;
+        }
         const upDatedPS = { ...ps };
         if (isEmpty(ps.filters[boardID])) {
           ps.filters[boardID] = tempBoardFilter();
         }
-        ps.filters[boardID].search = val;
+        ps.filters[boardID].search = search;
         return upDatedPS;
       });
-
+      if (isSame) return;
       const { _id } = getState();
-      updateConfigDeep({ boardID: boardID, search: val, _id });
+      updateConfigDeep({ boardID: boardID, search: search, _id });
     },
 
     getConfig: async () => {

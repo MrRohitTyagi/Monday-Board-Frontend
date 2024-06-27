@@ -59,11 +59,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
   const {
     filters: { [board._id]: filterPerBoard },
   } = useConfig();
-  console.log(
-    `%c filterPerBoard `,
-    "color: orange;border:2px solid cyan",
-    filterPerBoard
-  );
+
   const {
     priority: configPriority = "",
     status: configStatus = "",
@@ -82,18 +78,18 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
   const filteredSprint = useMemo(() => {
     if (isEmpty(sprint)) return {} as SprintType;
     const obj = { ...sprint };
-    obj.pulses = obj.pulses.filter((p) => {
-      if (
-        p.isNew === true ||
-        ((configPriority === "" || p.priority === configPriority) &&
-          (configStatus === "" || p.status === configStatus) &&
-          (configSearch === "" ||
-            p.title.toLowerCase().includes(configSearch)) &&
-          (configUser === "" || p.assigned.includes(configUser)))
-      ) {
-        return true;
-      } else return false;
-    });
+    // obj.pulses = obj.pulses.filter((p) => {
+    //   if (
+    //     p.isNew === true ||
+    //     ((configPriority === "" || p.priority === configPriority) &&
+    //       (configStatus === "" || p.status === configStatus) &&
+    //       (configSearch === "" ||
+    //         p.title.toLowerCase().includes(configSearch)) &&
+    //       (configUser === "" || p.assigned.includes(configUser)))
+    //   ) {
+    //     return true;
+    //   } else return false;
+    // });
     return obj;
   }, [sprint, configPriority, configStatus, configSearch, configUser]);
 
@@ -205,7 +201,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
 
         {/* RIGHT PART  */}
         <div className="pulse-container-right flex flex-col w-full">
-          <PulseWrapper isRight={true}>
+          <PulseWrapper>
             <Pulse
               board={board}
               pulse={tempPulse}
@@ -216,7 +212,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
           </PulseWrapper>
           {filteredSprint.pulses.map((pulse, i) => {
             return (
-              <PulseWrapper key={pulse._id + i + "right"} isRight={true}>
+              <PulseWrapper key={pulse._id + i + "right"}>
                 <Pulse
                   setSprint={setSprint}
                   board={board}
@@ -260,7 +256,7 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
   return (
     <CustomDiv
       className={cn(
-        "flex flex-row items-center justify-start h-full",
+        "flex flex-row items-center justify-start h-10",
         "bg-main-bg pl-2 opacity-80",
         "border-border-light border-[1px]",
         "hover:bg-main-fg transition-all duration-150",
@@ -292,24 +288,23 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
 
 type PulseWrapperType = {
   children: React.ReactNode;
-  isRight?: boolean;
 };
-const PulseWrapper = ({ children, isRight }: PulseWrapperType) => {
-  return (
-    <div
-      className={cn(
-        "h-10",
-        // isRight ? "w-fit" :
-        "w-full",
-        "animate-fadeIn",
-        "transition-all duration-300",
-        "hover:bg-main-bg",
-        "active:bg-highlighter-dark"
-      )}
-    >
-      {children}
-    </div>
-  );
+const PulseWrapper = ({ children }: PulseWrapperType) => {
+  return children;
+  // (
+  //   <div
+  //     className={cn(
+  //       "h-10",
+  //       "w-full",
+  //       "animate-fadeIn",
+  //       "transition-all duration-300",
+  //       "hover:bg-main-bg",
+  //       "active:bg-highlighter-dark"
+  //     )}
+  //   >
+  //     {children}
+  //   </div>
+  // );
 };
 type EditSprintProps = {
   children: React.ReactNode;
