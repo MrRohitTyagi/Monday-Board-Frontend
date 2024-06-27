@@ -57,7 +57,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
 
     pulse.assigned.forEach((assignedUserId) => {
       if (assignedUserId === user._id) return;
-      notificationChannel.publish(assignedUserId, { type: "NEW_CHAT" });
+      // notificationChannel.publish(assignedUserId, { type: "NEW_CHAT" });
     });
     
 
