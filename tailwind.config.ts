@@ -1,6 +1,5 @@
 import type { Config } from "tailwindcss";
 const navbarHeight = "3rem";
-const main_bg_fg = "#1C1F3B";
 
 const config = {
   darkMode: ["class"],
@@ -191,7 +190,7 @@ const config = {
           "change-bg-transparency 300ms ease-in-out forwards",
 
         "pulse-height": "pulse-height 50ms ease-in-out forwards",
-        "pulse-height-rev": "pulse-height-rev 50ms ease-in-out forwards",
+        "pulse-height-rev": "pulse-height-rev 150ms ease forwards",
       },
     },
   },

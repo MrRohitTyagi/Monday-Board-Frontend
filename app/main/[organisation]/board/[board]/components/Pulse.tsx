@@ -142,8 +142,6 @@ const Pulse = ({
     filters: { [board._id]: filterPerBoard },
   } = useConfig();
 
-  const hideRef = useRef(false);
-
   const {
     priority: configPriority = "",
     status: configStatus = "",
@@ -151,6 +149,7 @@ const Pulse = ({
     user: configUser = "",
   } = filterPerBoard || {};
 
+  const hideRef = useRef(false);
   hideRef.current = useMemo(() => {
     return excludePulse({
       configPriority,
@@ -162,16 +161,27 @@ const Pulse = ({
     });
   }, [configPriority, configSearch, configStatus, configUser, isFake, pulse]);
 
+  // const [hidden, sethidden] = useState(false);
+  // useEffect(() => {
+  //   sethidden(
+  //     excludePulse({
+  //       configPriority,
+  //       configSearch,
+  //       configStatus,
+  //       configUser,
+  //       isFake,
+  //       pulse,
+  //     })
+  //   );
+  // }, [configPriority, configSearch, configStatus, configUser, isFake, pulse]);
+  // console.log(`%c hidden `, "color: red;border:2px dotted red", hidden);
+
   return (
     <div
       className={cn(
         // "h-10",
         "w-full",
-
-        // isFake === false && hideRef.current === true
-        //   ? "animate-pulse-height-rev"
-        //   : "animate-pulse-height",
-        // "transition-all duration-150",
+        "transition-all duration-150",
         "hover:bg-main-bg",
         "active:bg-highlighter-dark"
       )}
@@ -192,6 +202,9 @@ const Pulse = ({
             isFake === false && hideRef.current === true
               ? "animate-pulse-height-rev"
               : "animate-pulse-height",
+            // isFake === false && hidden === true
+            //   ? "animate-pulse-height-rev"
+            //   : "animate-pulse-height",
             "flex flex-row items-center justify-start h-full",
             "bg-main-bg pl-2",
             "border-border-light border-[1px]",
@@ -310,26 +323,33 @@ function excludePulse({
   configPriority,
 }: any) {
   let exclude = false;
-  if (!pulse.isNew && !isFake) {
-    if (configPriority !== "" && pulse.priority !== configPriority) {
-      exclude = true;
-    }
-    if (configStatus !== "" && pulse.status !== configStatus) {
-      exclude = true;
-      // return null;
-    }
-    if (
-      configSearch !== "" &&
-      !pulse.title.toLowerCase().includes(configSearch)
-    ) {
-      exclude = true;
-      // return null;
-    }
-    if (configUser !== "" && !pulse.assigned.includes(configUser)) {
-      exclude = true;
-      // return null;
-    }
+  if (pulse.isNew && isFake) return exclude;
+
+  if (configPriority !== "" && pulse.priority !== configPriority) {
+    exclude = true;
   }
+  if (exclude === true) return exclude;
+
+  if (configStatus !== "" && pulse.status !== configStatus) {
+    exclude = true;
+    // return null;
+  }
+
+  if (exclude === true) return exclude;
+
+  if (
+    configSearch !== "" &&
+    !pulse.title.toLowerCase().includes(configSearch)
+  ) {
+    exclude = true;
+  }
+
+  if (exclude === true) return exclude;
+
+  if (configUser !== "" && !pulse.assigned.includes(configUser)) {
+    exclude = true;
+  }
+
   return exclude;
 }
 export { PulseContext };
