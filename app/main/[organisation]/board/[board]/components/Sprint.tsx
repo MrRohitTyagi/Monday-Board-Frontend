@@ -5,9 +5,10 @@ import React, {
   memo,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from "react";
-import { startCase } from "lodash";
+import { isEmpty, startCase } from "lodash";
 
 import Space from "@/components/core/Space";
 
@@ -36,6 +37,7 @@ import SprintSkeletonLoader from "./SprintSkeletonLoader";
 import CustomDiv from "@/components/core/CustomDiv";
 import { BoardType } from "@/types/boardTypes";
 import { SprintType } from "@/types/sprintTypes";
+import { useConfig } from "@/store/configStore";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -54,6 +56,12 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
   const [sprint, setSprint] = useState<SprintType>({} as SprintType);
   const [isloading, setIsloading] = useState(true);
 
+  const {
+    priority: configPriority,
+    status: configStatus,
+    search: configSearch,
+  } = useConfig();
+
   useEffect(() => {
     (async function init() {
       const fetchedSprint = await getSprint(sprintID);
@@ -62,7 +70,20 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
     })();
   }, [sprintID]);
 
-  // return <SprintSkeletonLoader />;
+  const filteredSprint = useMemo(() => {
+    if (isEmpty(sprint)) return {} as SprintType;
+    const obj = { ...sprint };
+    obj.pulses = obj.pulses.filter((p) => {
+      if (
+        (configPriority === "" || p.priority === configPriority) &&
+        (configStatus === "" || p.status === configStatus) &&
+        (configSearch === "" || p.title.toLowerCase().includes(configSearch))
+      ) {
+        return true;
+      } else return false;
+    });
+    return obj;
+  }, [sprint, configPriority, configStatus, configSearch]);
 
   return isloading === true ? (
     <SprintSkeletonLoader />
@@ -120,7 +141,11 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
 
       {/* pulses */}
       <ScrollWrapper
-        className={cn("overflow-x-auto", "grid grid-cols-[20rem_1fr]", "scrollbar-none")}
+        className={cn(
+          "overflow-x-auto",
+          "grid grid-cols-[20rem_1fr]",
+          "scrollbar-none"
+        )}
       >
         <div className="pulse-container-left flex flex-row z-10 sticky left-0">
           <div
@@ -145,7 +170,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
               />
             </PulseWrapper>
 
-            {sprint.pulses.map((pulse, i) => {
+            {filteredSprint.pulses.map((pulse, i) => {
               return (
                 <PulseWrapper key={pulse._id + i + "left"}>
                   <Pulse
@@ -177,7 +202,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
               isFake={true}
             />
           </PulseWrapper>
-          {sprint.pulses.map((pulse, i) => {
+          {filteredSprint.pulses.map((pulse, i) => {
             return (
               <PulseWrapper key={pulse._id + i + "right"} isRight={true}>
                 <Pulse

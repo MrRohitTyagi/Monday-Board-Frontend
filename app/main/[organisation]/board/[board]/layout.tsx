@@ -57,6 +57,7 @@ const Board = ({ params, children }: pageProps) => {
             >
               {/* Board filter */}
               <BoardFilter />
+              <Space h={4} />
 
               {/* //  Board Content  */}
               <div className="flex flex-col gap-6 sprint-container">
@@ -77,7 +78,7 @@ const Board = ({ params, children }: pageProps) => {
                   open={openSprintForm}
                   trigger={
                     <Button
-                    className="border-2 border-main-bg"
+                      className="border-2 border-main-bg"
                       onClick={() => {
                         setOpenSprintForm(true);
                       }}

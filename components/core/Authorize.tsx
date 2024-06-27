@@ -13,10 +13,10 @@ type AuthorizeTypes = ChildrenType & {};
 
 const Authorize = ({ children }: AuthorizeTypes) => {
   const { isLoading, fetchUser, notAuthenticated } = useAuth();
-  const { ...all } = useConfig();
-  console.log(`%c all `, "color: green;border:1px solid green", all);
   const router = useRouter();
   const { getTheme, applyTheme } = useTheme();
+  const { ...config } = useConfig();
+  console.log(`%c config `, "color: orange;border:2px solid cyan", config);
 
   const logout = useCallback((data: any) => {
     router.replace("/login");

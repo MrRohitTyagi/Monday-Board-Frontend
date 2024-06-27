@@ -4,11 +4,38 @@ import { create } from "zustand";
 
 export const useConfig = create<ConfigStoreType>((setState, getState) => {
   return {
+    _id: "",
     belongsTo: "",
     staredBoards: [],
     likedChats: [],
     likedThreads: [],
-    _id: "",
+    search: "",
+    priority: "",
+    status: "",
+    user: "",
+
+    setUser: (e) => {
+      setState((ps) => ({ ...ps, user: e }));
+    },
+
+    setPriority: (e) => {
+      setState((ps) => ({ ...ps, priority: e }));
+      const { _id } = getState();
+      updateConfig({ priority: e, _id });
+    },
+
+    setStatus: (e) => {
+      const { _id } = getState();
+      updateConfig({ status: e, _id });
+      setState((ps) => ({ ...ps, status: e }));
+    },
+
+    setSearch: (val) => {
+      const { _id } = getState();
+      updateConfig({ search: val, _id });
+      setState((ps) => ({ ...ps, search: val }));
+    },
+
     getConfig: async () => {
       const config = await getConfig();
       setState((ps) => ({ ...ps, ...config }));
