@@ -26,6 +26,24 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
     filters: {},
     pulseHeight: "sm",
     themeID: "1",
+    collapsedSprints: [],
+
+    collapseSprint: (sprintID) => {
+      setState((ps) => {
+        const sprints = [...ps.collapsedSprints, sprintID];
+        const { _id } = getState();
+        updateConfig({ collapsedSprints: sprints, _id });
+        return { ...ps, collapsedSprints: sprints };
+      });
+    },
+    unCollapseSprint: (sprintID) => {
+      setState((ps) => {
+        const sprints = ps.collapsedSprints.filter((s) => s !== sprintID);
+        const { _id } = getState();
+        updateConfig({ collapsedSprints: sprints, _id });
+        return { ...ps, collapsedSprints: sprints };
+      });
+    },
 
     setTheme: (themeID) => {
       setState({ themeID: themeID });

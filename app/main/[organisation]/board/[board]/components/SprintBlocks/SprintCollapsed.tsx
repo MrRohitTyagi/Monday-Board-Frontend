@@ -9,6 +9,7 @@ import SprintLeftColor from "./SprintLeftColor";
 import Divider from "@/components/core/Divider";
 import useBoardContext from "@/hooks/useBoardContext";
 import TooltipComp from "@/components/core/TooltipComp";
+import { formatNumber } from "@/utils/helperFunctions";
 
 type SprintCollapsedProps = {
   sprint: SprintType;
@@ -51,18 +52,14 @@ const SprintCollapsed = ({ sprint }: SprintCollapsedProps) => {
     return Object.values(usedStatuses);
   }, [board, sprint]);
 
-  console.log(`%c {usedStatuses} `, "color: pink;border:1px solid pink", {
-    statusDisplayConfig,
-    priorityDisplayConfig,
-  });
-
   return (
     <div
       className={cn(
         "collapsed-sprint-cont",
         "flex flex-row relative items-center",
         " h-collapsed-sprint-height",
-        "bg-main-bg"
+        "bg-main-bg",
+        "animate-fadeIn"
       )}
     >
       <SprintLeftColor color={sprint.color} />
@@ -79,70 +76,61 @@ const SprintCollapsed = ({ sprint }: SprintCollapsedProps) => {
 
       <Divider horizontal />
 
-      <div className="mx-12 collapse-priority flex flex-col gap-2 items-center">
-        <LowOpacityText>Priority</LowOpacityText>
-        <div className="w-24 h-8 bg-main-fg flex flex-row items-center rounded-sm">
-          {priorityDisplayConfig.map((p: any, i) => {
-            return (
-              <TooltipComp
-                key={p._id + i}
-                title={
-                  <div className="px-4 py-2 border-2 border-highlighter-dark rounded-md">
-                    <h1>
-                      {p.title} {p.count}/{sprint.pulses.length}
-                    </h1>
-                  </div>
-                }
-              >
-                <div
-                  className={cn(
-                    "hover:scale-x-110 hover:scale-y-[1.2] transition-all",
-                    "hover:rounded-sm",
-                    "h-full"
-                  )}
-                  style={{
-                    background: p.color,
-                    width: `${(100 / sprint.pulses.length) * p.count}%`,
-                  }}
-                />
-              </TooltipComp>
-            );
-          })}
-        </div>
-      </div>
-
+      <StatRenderer
+        config={priorityDisplayConfig}
+        sprint={sprint}
+        title={"Priority"}
+      />
       <Divider horizontal />
 
-      <div className="mx-12 collapse-statuses flex flex-col gap-2 items-center">
-        <LowOpacityText>Status</LowOpacityText>
-        <div className="w-24 h-8 bg-main-fg flex flex-row items-center rounded-sm">
-          {statusDisplayConfig.map((s: any, i) => {
-            return (
-              <TooltipComp
-                key={s._id + i}
-                title={
-                  <div className="px-4 py-2 border-2 border-highlighter-dark rounded-md">
-                    <h1>
-                      {s.title} {s.count}/{sprint.pulses.length}
-                    </h1>
-                  </div>
-                }
-              >
-                <div
-                  className={cn(
-                    "hover:scale-x-110 hover:scale-y-[1.2] transition-all",
-                    "hover:rounded-sm",
-                    "h-full"
-                  )}
-                  style={{
-                    background: s.color,
-                    width: `${(100 / sprint.pulses.length) * s.count}%`,
-                  }}
-                />
-              </TooltipComp>
-            );
-          })}
-        </div>
+      <StatRenderer
+        config={statusDisplayConfig}
+        sprint={sprint}
+        title={"Status"}
+      />
+    </div>
+  );
+};
+
+type StatRendererType = {
+  config: any;
+  sprint: SprintType;
+  title: string;
+};
+
+const StatRenderer = ({ config, sprint, title }: StatRendererType) => {
+  return (
+    <div className="mx-12 collapse-statuses flex flex-col gap-2 items-center">
+      <LowOpacityText>{title}</LowOpacityText>
+      <div className="w-32 h-8 bg-main-fg flex flex-row items-center rounded-sm">
+        {config.map((c: any, i: number) => {
+          return (
+            <TooltipComp
+              key={c._id + i}
+              title={
+                <div className="px-4 py-2 border-2 border-highlighter-dark rounded-md">
+                  <h1>
+                    {c.title} {c.count}/{sprint.pulses.length}
+                    {" - "}
+                    {formatNumber((c.count / sprint.pulses.length) * 100)}%
+                  </h1>
+                </div>
+              }
+            >
+              <div
+                className={cn(
+                  "hover:scale-x-110 hover:scale-y-[1.2] transition-all",
+                  "hover:rounded-sm",
+                  "h-full"
+                )}
+                style={{
+                  background: c.color,
+                  width: `${(100 / sprint.pulses.length) * c.count}%`,
+                }}
+              />
+            </TooltipComp>
+          );
+        })}
       </div>
     </div>
   );

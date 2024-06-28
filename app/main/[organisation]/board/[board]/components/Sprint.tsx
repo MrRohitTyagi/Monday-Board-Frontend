@@ -27,6 +27,7 @@ import { SprintType } from "@/types/sprintTypes";
 import SprintCollapsed from "./SprintBlocks/SprintCollapsed";
 import SprintActions from "./SprintBlocks/SprintActions";
 import SprintLeftColor from "./SprintBlocks/SprintLeftColor";
+import { useConfig } from "@/store/configStore";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -41,9 +42,10 @@ const tempPulse = {
 type SprintProps = { sprintID: string; board: BoardType };
 
 const Sprint = ({ sprintID, board }: SprintProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [sprint, setSprint] = useState<SprintType>({} as SprintType);
   const [isloading, setIsloading] = useState(true);
+  const { collapsedSprints } = useConfig();
+  const isExpanded = !collapsedSprints.includes(sprint._id);
 
   useEffect(() => {
     (async function init() {
@@ -71,7 +73,6 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
           <SprintActions
             isExpanded={isExpanded}
             sprint={sprint}
-            setIsExpanded={setIsExpanded}
             setSprint={setSprint}
           />
         </div>

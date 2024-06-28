@@ -21,6 +21,9 @@ export type ConfigStoreType = {
   themeID: string;
   pulseHeight: PulseHeightType;
   filters: SingleBoardFilterType;
+  collapsedSprints: string[];
+  collapseSprint: (e: string) => void;
+  unCollapseSprint: (e: string) => void;
 
   setSearch: (e: string, board_id: string) => void;
   setUser: (e: string, board_id: string) => void;

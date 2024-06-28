@@ -98,4 +98,13 @@ export function areDatesEqual(dateStr1: string, dateStr2: string) {
   return date1.getTime() === date2.getTime();
 }
 
-export { generatePictureFallback, timeBetween };
+function formatNumber(num: number) {
+  // Check if the number is an integer
+  if (Number.isInteger(num)) {
+    return num.toString();
+  } else {
+    // Round the number to two decimal places
+    return num.toFixed(2);
+  }
+}
+export { generatePictureFallback, timeBetween, formatNumber };

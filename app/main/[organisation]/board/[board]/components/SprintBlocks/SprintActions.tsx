@@ -9,20 +9,23 @@ import useBoardContext from "@/hooks/useBoardContext";
 import { Button } from "@/components/ui/button";
 import TooltipComp from "@/components/core/TooltipComp";
 import { ChevronDownCircle, ChevronUpCircle, Edit } from "lucide-react";
+import { useConfig } from "@/store/configStore";
 
 type SprintActionsProps = {
   sprint: SprintType;
   setSprint: StateSetter<SprintType>;
-  setIsExpanded: StateSetter<boolean>;
+  // setIsExpanded: StateSetter<boolean>;
   isExpanded: boolean;
 };
 
 const SprintActions = ({
   sprint,
-  setIsExpanded,
+  // setIsExpanded,
   setSprint,
   isExpanded,
 }: SprintActionsProps) => {
+  const { unCollapseSprint, collapseSprint } = useConfig();
+
   return (
     <div className="sprint-expand-collapse flex felx-row gap-4 opacity-80">
       <EditSprint sprint={sprint} setSprint={setSprint}>
@@ -41,10 +44,16 @@ const SprintActions = ({
       <Button
         variant={"ghost"}
         className="p-1 border-none"
-        onClick={() => setIsExpanded((p) => !p)}
+        onClick={() => {
+          if (isExpanded) {
+            collapseSprint(sprint._id);
+          } else {
+            unCollapseSprint(sprint._id);
+          }
+        }}
       >
         <TooltipComp
-          title={isExpanded ? "Expand" : "Collapse"}
+          title={isExpanded ? "Collapse" : "Expand"}
           className="px-3 py-2"
         >
           {isExpanded ? (
