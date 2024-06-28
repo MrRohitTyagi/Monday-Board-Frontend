@@ -11,13 +11,15 @@ export type SingleBoardFilterType = {
     priority: string;
   };
 };
+export type PulseHeightType = "sm" | "md" | "lg";
 export type ConfigStoreType = {
   belongsTo: string;
   _id: string;
   staredBoards: string[];
   likedChats: string[];
   likedThreads: string[];
-
+  themeID: string;
+  pulseHeight: PulseHeightType;
   filters: SingleBoardFilterType;
 
   setSearch: (e: string, board_id: string) => void;
@@ -34,4 +36,7 @@ export type ConfigStoreType = {
 
   likeThread: (e: string) => void;
   unlikeThread: (e: string) => void;
+
+  setTheme: (e: string) => void;
+  setPulseHeight: (e: PulseHeightType) => void;
 };

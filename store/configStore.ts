@@ -24,6 +24,20 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
     likedChats: [],
     likedThreads: [],
     filters: {},
+    pulseHeight: "sm",
+    themeID: "1",
+
+    setTheme: (themeID) => {
+      setState({ themeID: themeID });
+      const { _id } = getState();
+      updateConfig({ themeID, _id });
+    },
+
+    setPulseHeight: (height) => {
+      setState({ pulseHeight: height });
+      const { _id } = getState();
+      updateConfig({ pulseHeight: height, _id });
+    },
 
     setUser: (user_id, boardID) => {
       let isSame = false;

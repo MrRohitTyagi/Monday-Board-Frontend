@@ -7,6 +7,7 @@ import FilterSearch from "./FilterBlocks/FilterSearch";
 import FilterUser from "./FilterBlocks/FilterUser";
 import FilterStatus from "./FilterBlocks/FilterStatus";
 import FilterPriority from "./FilterBlocks/FilterPriority";
+import MoreSettings from "./FilterBlocks/MoreSettings";
 
 type BoardFilterProps = {};
 
@@ -14,15 +15,12 @@ const BoardFilter = ({}: BoardFilterProps) => {
   const { board } = useBoardContext();
 
   return (
-    <div
-      className={cn(
-        "flex flex-row items-center justify-start gap-2"
-      )}
-    >
+    <div className={cn("flex flex-row items-center justify-start gap-2")}>
       <FilterSearch />
       <FilterUser />
       <FilterStatus />
       <FilterPriority />
+      <MoreSettings />
     </div>
   );
 };

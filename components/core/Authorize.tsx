@@ -14,7 +14,9 @@ type AuthorizeTypes = ChildrenType & {};
 const Authorize = ({ children }: AuthorizeTypes) => {
   const { isLoading, fetchUser, notAuthenticated } = useAuth();
   const router = useRouter();
-  const { getTheme, applyTheme } = useTheme();
+  const { applyTheme } = useTheme();
+  const { ...all } = useConfig();
+  console.log("all", all);
 
   const logout = useCallback((data: any) => {
     router.replace("/login");
@@ -22,8 +24,7 @@ const Authorize = ({ children }: AuthorizeTypes) => {
   }, []);
 
   useEffect(() => {
-    const theme = getTheme();
-    applyTheme(theme._id);
+    applyTheme();
   }, []);
 
   useEffect(() => {
