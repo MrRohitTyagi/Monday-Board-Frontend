@@ -10,7 +10,7 @@ import React, {
   useState,
 } from "react";
 import { debounce, startCase } from "lodash";
-import { MessageCircleMore } from "lucide-react";
+import { MessageCircleMore, Trash2 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import Status from "./PulseBlocks/Status";
@@ -19,7 +19,7 @@ import TimeLine from "./PulseBlocks/TimeLine";
 import Priority from "./PulseBlocks/Priority";
 import Assigned from "./PulseBlocks/Assigned";
 import PulseTitle from "./PulseBlocks/PulseTitle";
-import { updatePulse } from "@/gateways/pulse-gateway";
+import { deleteSinglePulse, updatePulse } from "@/gateways/pulse-gateway";
 import PulseTag from "./PulseBlocks/PulseTag";
 import { useParams, useRouter } from "next/navigation";
 import CustomDiv from "@/components/core/CustomDiv";
@@ -31,6 +31,7 @@ import { UserType } from "@/types/userTypes";
 import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 import { useAuth } from "@/zstore";
 import { useConfig } from "@/store/configStore";
+import { Button } from "@/components/ui/button";
 
 type PulseProps = {
   pulse: PulseType;
@@ -56,6 +57,7 @@ type PulseContextType = {
   updatePriority: (p: string) => void;
   updateTitle: (p: string) => void;
   updateTag: (p: string) => void;
+  deletePulse: (p: string) => void;
   updateStatus: (p: string) => void;
   updateTimeline: (p: { start: string; end: string }) => void;
   updateAssigned: (p: UserType, action?: "add" | "remove") => void;
@@ -122,6 +124,16 @@ const Pulse = ({
   const updateTag = useCallback((tag: string) => {
     debouncePulseUpdate({ tag });
     setPulse((prev) => ({ ...prev, tag: tag }));
+  }, []);
+
+  const deletePulse = useCallback(async (pulse_id: string) => {
+    await deleteSinglePulse(pulse_id);
+    setSprint?.((ps) => {
+      return {
+        ...ps,
+        pulses: ps.pulses.filter((p) => p._id !== pulse_id),
+      };
+    });
   }, []);
 
   const updateAssigned = useCallback(
@@ -199,6 +211,7 @@ const Pulse = ({
           updateTimeline,
           updateTag,
           updateAssigned,
+          deletePulse,
         }}
       >
         <div
@@ -206,15 +219,14 @@ const Pulse = ({
             isFake === false && hideRef.current === true
               ? "animate-pulse-height-rev"
               : "animate-pulse-height",
-            // isFake === false && hidden === true
-            //   ? "animate-pulse-height-rev"
-            //   : "animate-pulse-height",
             "flex flex-row items-center justify-start h-full",
             "bg-main-bg pl-2",
             "border-border-light border-[1px]",
             isFake === false && "hover:bg-main-fg transition-all duration-150",
             "transition-all duration-150",
-            isPulseChatOpen && "!bg-highlighter-dark"
+            isPulseChatOpen && "!bg-highlighter-dark",
+            "relative",
+            "group"
           )}
         >
           {/* Pulse title  */}

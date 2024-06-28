@@ -47,7 +47,7 @@ const FilterUser = (props: FilterUserProps) => {
                 variant={"ghost"}
                 onClick={() => setUser(viewer._id, board._id)}
                 className="per-viewer shrink-0 p-2 animate-fadeIn"
-                key={viewer._id + i}
+                key={viewer._id}
               >
                 <AvatarComp
                   className="h-8 w-8"

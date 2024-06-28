@@ -184,7 +184,7 @@ const AssignedSelector = ({
           usersToPreview.map((user, i) => {
             return (
               <Button
-                key={user._id + i}
+                key={user._id}
                 onClick={() => {
                   if (inpRef.current?.value) inpRef.current.value = "";
                   if (inpRef.current?.value) inpRef.current.focus();

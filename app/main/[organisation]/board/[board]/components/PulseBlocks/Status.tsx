@@ -52,7 +52,7 @@ const Status = ({ board, pulse }: PriorityProps) => {
                   updateStatus(s.id);
                   setOpen(false);
                 }}
-                key={s.id + i}
+                key={s.id}
                 style={{ background: s.color, color: s.textColor }}
                 className={cn(
                   "w-full h-10 text-center flex items-center justify-center mt-2",

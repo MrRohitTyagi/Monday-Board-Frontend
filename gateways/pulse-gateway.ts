@@ -8,7 +8,7 @@ async function getPulse(id: string): Promise<PulseType> {
   const { data } = await axiosInstance().get(`${PULSE_BASE_URL}/get/${id}`);
   return data.response;
 }
-async function deletePulse(id: string) {
+async function deleteSinglePulse(id: string) {
   await axiosInstance().delete(`${PULSE_BASE_URL}/delete/${id}`);
 }
 async function updatePulse(payload: any): Promise<PulseType> {
@@ -26,4 +26,4 @@ async function createPulse(payload: any): Promise<PulseType> {
   return data.response;
 }
 
-export { getPulse, deletePulse, updatePulse, createPulse };
+export { getPulse, deleteSinglePulse, updatePulse, createPulse };

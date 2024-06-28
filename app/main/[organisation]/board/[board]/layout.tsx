@@ -44,7 +44,7 @@ const Board = ({ params, children }: pageProps) => {
           <>
             <div
               className={cn(
-                "bg-main-fg sticky top-0 z-30 pt-4",
+                "bg-main-fg sticky top-0 z-[4] pt-4",
                 "boart-title-filter-comp"
               )}
             >

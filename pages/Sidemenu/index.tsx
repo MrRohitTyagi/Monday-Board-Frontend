@@ -108,11 +108,11 @@ const SideMenu = ({}: SideMenuProps) => {
       >
         {navConfig.map(({ href = "", label, ...nav }, i) =>
           nav.isDivider ? (
-            <div key={href + i} className="divider m-0 h-0" />
+            <div key={href} className="divider m-0 h-0" />
           ) : (
             <NavLink
               isAuthenticated={isAuthenticated}
-              key={href + i}
+              key={href}
               href={href || ""}
               label={label || ""}
               selected={selected === href}

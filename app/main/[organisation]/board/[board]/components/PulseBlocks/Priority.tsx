@@ -49,7 +49,7 @@ const Priority = ({ board, pulse }: PriorityProps) => {
                   setOpen(false);
                 }}
                 variant="ghost"
-                key={p.title + i}
+                key={p.title}
                 style={{ background: p.color, color: p.textColor }}
                 className={cn(
                   "w-full h-10 text-center flex items-center justify-center",

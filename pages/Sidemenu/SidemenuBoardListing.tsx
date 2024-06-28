@@ -32,7 +32,7 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
 
         return (
           <div
-            key={board._id + "side-board" + i}
+            key={board._id + "side-board"}
             onClick={() => navigate(`board/${board._id}`)}
             className={cn(
               "single-board-row",

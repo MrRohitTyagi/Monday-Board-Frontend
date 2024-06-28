@@ -105,7 +105,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
 
               {sprint.pulses.map((pulse, i) => {
                 return (
-                  <PulseWrapper key={pulse._id + i + "left"}>
+                  <PulseWrapper key={pulse._id + "left"}>
                     <Pulse
                       setSprint={setSprint}
                       isFake={false}
@@ -137,7 +137,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
             </PulseWrapper>
             {sprint.pulses.map((pulse, i) => {
               return (
-                <PulseWrapper key={pulse._id + i + "right"}>
+                <PulseWrapper key={pulse._id + "right"}>
                   <Pulse
                     setSprint={setSprint}
                     board={board}

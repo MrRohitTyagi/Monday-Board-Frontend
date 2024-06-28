@@ -32,7 +32,7 @@ const ViededBy = ({ viewers }: ViededByProps) => {
               return (
                 <div
                   className="per-viewer shrink-0 p-2 animate-fadeIn"
-                  key={viewer._id + i}
+                  key={viewer._id}
                 >
                   <AvatarComp
                     className="h-8 w-8"

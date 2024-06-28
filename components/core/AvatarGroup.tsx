@@ -15,7 +15,7 @@ const AvatarGroup = ({ users, max = 3 }: AvatarGroupProps) => {
   return (
     <div className="avatar-group -space-x-3 rtl:space-x-reverse">
       {first3.map((user, i) => (
-        <div className="avatar border-[1px]" key={user.username + i + user._id}>
+        <div className="avatar border-[1px]" key={user.username + user._id}>
           <div className="w-8">
             <TooltipComp title={user.username} side="top" className="px-3 py-2">
               {user.picture ? (

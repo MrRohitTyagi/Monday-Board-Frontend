@@ -126,7 +126,7 @@ const StatRenderer = ({ config, sprint, title }: StatRendererType) => {
         {config.map((c: any, i: number) => {
           return (
             <TooltipComp
-              key={c._id + i}
+              key={c._id}
               title={
                 <div className="px-4 py-2 border-2 border-highlighter-dark rounded-md">
                   <h1>
