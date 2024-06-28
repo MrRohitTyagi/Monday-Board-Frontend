@@ -1,5 +1,5 @@
 "use client";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -10,6 +10,7 @@ import { getBoard } from "@/gateways/board-gateway";
 import { BoardContext } from "@/hooks/useBoardContext";
 import BoardFilter from "./components/BoardBlocks/BoardFilter";
 import { BoardType } from "@/types/boardTypes";
+import { deleteSingleSprint } from "@/gateways/sprint-gateway";
 
 type pageProps = {
   params: { board: string; organisation: string };
@@ -29,6 +30,14 @@ const Board = ({ params, children }: pageProps) => {
     init();
   }, []);
 
+  const deleteSprint = useCallback(async (sprintID: string) => {
+    await deleteSingleSprint(sprintID);
+    setCurrentBoard((pb) => ({
+      ...pb,
+      sprints: pb.sprints.filter((s) => s != sprintID),
+    }));
+  }, []);
+
   return (
     <div className="h-full relative">
       {isLoading ? (
@@ -40,7 +49,9 @@ const Board = ({ params, children }: pageProps) => {
           )}
         />
       ) : (
-        <BoardContext.Provider value={{ setCurrentBoard, board: currentBoard }}>
+        <BoardContext.Provider
+          value={{ setCurrentBoard, board: currentBoard, deleteSprint }}
+        >
           <>
             <div
               className={cn(

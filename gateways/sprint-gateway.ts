@@ -8,7 +8,7 @@ async function getSprint(id: string): Promise<SprintType> {
   const { data } = await axiosInstance().get(`${SPRINT_BASE_URL}/get/${id}`);
   return data.response;
 }
-async function deleteSprint(id: string) {
+async function deleteSingleSprint(id: string) {
   await axiosInstance().delete(`${SPRINT_BASE_URL}/delete/${id}`);
 }
 async function createSprint(payload: any): Promise<SprintType> {
@@ -26,4 +26,4 @@ async function updateSprint(payload: any): Promise<SprintType> {
   return data.response;
 }
 
-export { getSprint, deleteSprint, updateSprint, createSprint };
+export { getSprint, deleteSingleSprint, updateSprint, createSprint };

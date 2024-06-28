@@ -4,6 +4,7 @@ import React, { createContext, useContext } from "react";
 type BoardContenxtProps = {
   board: BoardType;
   setCurrentBoard: React.Dispatch<React.SetStateAction<BoardType>>;
+  deleteSprint: (e: string) => Promise<any>;
 };
 const BoardContext = createContext<BoardContenxtProps>(
   {} as BoardContenxtProps

@@ -32,7 +32,11 @@ const ThreadActions = ({
         size={"sm"}
         variant={"ghost"}
         icon={
-          <Trash2 size={16} className="stroke-main-delete cursor-pointer" />
+          <Trash2
+            size={16}
+            className="stroke-main-delete cursor-pointer"
+            onClick={handleDeleteThread}
+          />
         }
         noTitle={true}
         isSaving={isDeleting}
@@ -50,7 +54,12 @@ const ThreadActions = ({
         )}
         variant={"ghost"}
       >
-        <Edit size={16} color="white" className=" cursor-pointer" />
+        <Edit
+          size={16}
+          color="white"
+          className=" cursor-pointer"
+          onClick={() => triggerEditing?.(true)}
+        />
       </Button>
     </div>
   );

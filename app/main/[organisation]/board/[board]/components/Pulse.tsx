@@ -241,9 +241,9 @@ const Pulse = ({
             >
               {startCase(pulse.title)}
             </h2>
-          ) : (
+          ) : leftPart ? (
             <PulseTitle pulse={pulse} />
-          )}
+          ) : null}
           {leftPart === false && (
             <div
               className={cn(
