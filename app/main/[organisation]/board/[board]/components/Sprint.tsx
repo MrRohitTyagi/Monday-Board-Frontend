@@ -28,16 +28,15 @@ import {
 } from "lucide-react";
 import TooltipComp from "@/components/core/TooltipComp";
 import DialogueComp from "@/components/core/DialogueComp";
-import EditSprintForm from "./EditSprintForm";
+import EditSprintForm from "./SprintBlocks/EditSprintForm";
 import { createPulse } from "@/gateways/pulse-gateway";
 import Loader from "@/components/core/Loader";
 import { toast } from "sonner";
 import useBoardContext from "@/hooks/useBoardContext";
-import SprintSkeletonLoader from "./SprintSkeletonLoader";
+import SprintSkeletonLoader from "./SprintBlocks/SprintSkeletonLoader";
 import CustomDiv from "@/components/core/CustomDiv";
 import { BoardType } from "@/types/boardTypes";
 import { SprintType } from "@/types/sprintTypes";
-import { useConfig } from "@/store/configStore";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -52,20 +51,9 @@ const tempPulse = {
 type SprintProps = { sprintID: string; board: BoardType };
 
 const Sprint = ({ sprintID, board }: SprintProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [sprint, setSprint] = useState<SprintType>({} as SprintType);
   const [isloading, setIsloading] = useState(true);
-
-  const {
-    filters: { [board._id]: filterPerBoard },
-  } = useConfig();
-
-  const {
-    priority: configPriority = "",
-    status: configStatus = "",
-    search: configSearch = "",
-    user: configUser = "",
-  } = filterPerBoard || {};
 
   useEffect(() => {
     (async function init() {
@@ -74,24 +62,6 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
       setIsloading(false);
     })();
   }, [sprintID]);
-
-  const filteredSprint = useMemo(() => {
-    if (isEmpty(sprint)) return {} as SprintType;
-    const obj = { ...sprint };
-    // obj.pulses = obj.pulses.filter((p) => {
-    //   if (
-    //     p.isNew === true ||
-    //     ((configPriority === "" || p.priority === configPriority) &&
-    //       (configStatus === "" || p.status === configStatus) &&
-    //       (configSearch === "" ||
-    //         p.title.toLowerCase().includes(configSearch)) &&
-    //       (configUser === "" || p.assigned.includes(configUser)))
-    //   ) {
-    //     return true;
-    //   } else return false;
-    // });
-    return obj;
-  }, [sprint, configPriority, configStatus, configSearch, configUser]);
 
   return isloading === true ? (
     <SprintSkeletonLoader />
@@ -108,124 +78,124 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
           {startCase(sprint.title)}
         </h2>
         <div className="sprint-handlers cursor-pointer">
-          <PopoverComp
-            classNames={{ content: "sprint-title-popover bg-main-fg" }}
-            trigger={<SlidersHorizontal size={15} />}
-            content={
-              <div className="sprint-expand-collapse flex felx-row gap-4">
-                <EditSprint sprint={sprint} setSprint={setSprint}>
-                  <Button
-                    className="px-2 border-none"
-                    onClick={() => setIsExpanded((p) => !p)}
-                  >
-                    <TooltipComp title={"Edit Sprint"} className="px-3 py-2">
-                      <Edit size={20} color="white" />
-                    </TooltipComp>
-                  </Button>
-                </EditSprint>
+          <div className="sprint-expand-collapse flex felx-row gap-4">
+            <EditSprint sprint={sprint} setSprint={setSprint}>
+              <Button
+                variant={"ghost"}
+                className="p-1 border-none"
+                onClick={() => setIsExpanded((p) => !p)}
+              >
+                <TooltipComp title={"Edit Sprint"} className="px-3 py-2">
+                  <Edit size={20} color="white" />
+                </TooltipComp>
+              </Button>
+            </EditSprint>
 
-                {/* Sprint edit  */}
-                <Button
-                  className="px-2 border-none"
-                  onClick={() => setIsExpanded((p) => !p)}
-                >
-                  <TooltipComp
-                    title={isExpanded ? "Expand" : "Collapse"}
-                    className="px-3 py-2"
-                  >
-                    {isExpanded ? (
-                      <ChevronUp size={20} color="white" />
-                    ) : (
-                      <ChevronDown size={20} color="white" />
-                    )}
-                  </TooltipComp>
-                </Button>
-              </div>
-            }
-          />
+            {/* Sprint Expand collapse  */}
+            <Button
+              variant={"ghost"}
+              className="p-1 border-none"
+              onClick={() => setIsExpanded((p) => !p)}
+            >
+              <TooltipComp
+                title={isExpanded ? "Expand" : "Collapse"}
+                className="px-3 py-2"
+              >
+                {isExpanded ? (
+                  <ChevronUp size={20} color="white" />
+                ) : (
+                  <ChevronDown size={20} color="white" />
+                )}
+              </TooltipComp>
+            </Button>
+          </div>
         </div>
       </div>
       <Space />
 
       {/* pulses */}
-      <ScrollWrapper
-        className={cn(
-          "overflow-x-auto",
-          "grid grid-cols-[20rem_1fr]",
-          "scrollbar-none"
-        )}
-      >
-        <div className="pulse-container-left flex flex-row z-10 sticky left-0">
-          <div
-            style={{ background: sprint.color }}
-            className={cn(
-              "sprint-color-div",
-              " left-color w-2 h-full shrink-0",
-              "rounded-tl-md",
-              "rounded-bl-md"
-            )}
-          />
-          <div className="pulse-container-left w-full flex flex-col overflow-hidden">
-            {/* <TempPulseRow color={sprint.color} /> */}
+      {isExpanded ? (
+        <ScrollWrapper
+          className={cn(
+            "overflow-x-auto",
+            "grid grid-cols-[20rem_1fr]",
+            "scrollbar-none"
+          )}
+        >
+          <div className="pulse-container-left flex flex-row z-10 sticky left-0">
+            <div
+              style={{ background: sprint.color }}
+              className={cn(
+                "sprint-color-div",
+                " left-color w-2 h-full shrink-0",
+                "rounded-tl-md",
+                "rounded-bl-md"
+              )}
+            />
+            <div className="pulse-container-left w-full flex flex-col overflow-hidden">
+              {/* <TempPulseRow color={sprint.color} /> */}
 
+              <PulseWrapper>
+                <Pulse
+                  pulse={tempPulse}
+                  board={board}
+                  sprint={sprint}
+                  leftPart={true}
+                  isFake={true}
+                />
+              </PulseWrapper>
+
+              {sprint.pulses.map((pulse, i) => {
+                return (
+                  <PulseWrapper key={pulse._id + i + "left"}>
+                    <Pulse
+                      setSprint={setSprint}
+                      isFake={false}
+                      pulse={pulse}
+                      board={board}
+                      sprint={sprint}
+                      leftPart={true}
+                    />
+                  </PulseWrapper>
+                );
+              })}
+              {/* // Create new Pulse */}
+              <PulseWrapper>
+                <CreateNewPulse setSprint={setSprint} sprint={sprint} />
+              </PulseWrapper>
+            </div>
+          </div>
+
+          {/* RIGHT PART  */}
+          <div className="pulse-container-right flex flex-col w-full">
             <PulseWrapper>
               <Pulse
-                pulse={tempPulse}
                 board={board}
+                pulse={tempPulse}
                 sprint={sprint}
-                leftPart={true}
+                leftPart={false}
                 isFake={true}
               />
             </PulseWrapper>
-
-            {filteredSprint.pulses.map((pulse, i) => {
+            {sprint.pulses.map((pulse, i) => {
               return (
-                <PulseWrapper key={pulse._id + i + "left"}>
+                <PulseWrapper key={pulse._id + i + "right"}>
                   <Pulse
                     setSprint={setSprint}
+                    board={board}
                     isFake={false}
                     pulse={pulse}
-                    board={board}
                     sprint={sprint}
-                    leftPart={true}
+                    leftPart={false}
                   />
                 </PulseWrapper>
               );
             })}
-            {/* // Create new Pulse */}
-            <PulseWrapper>
-              <CreateNewPulse setSprint={setSprint} sprint={sprint} />
-            </PulseWrapper>
           </div>
-        </div>
-
-        {/* RIGHT PART  */}
-        <div className="pulse-container-right flex flex-col w-full">
-          <PulseWrapper>
-            <Pulse
-              board={board}
-              pulse={tempPulse}
-              sprint={sprint}
-              leftPart={false}
-              isFake={true}
-            />
-          </PulseWrapper>
-          {filteredSprint.pulses.map((pulse, i) => {
-            return (
-              <PulseWrapper key={pulse._id + i + "right"}>
-                <Pulse
-                  setSprint={setSprint}
-                  board={board}
-                  isFake={false}
-                  pulse={pulse}
-                  sprint={sprint}
-                  leftPart={false}
-                />
-              </PulseWrapper>
-            );
-          })}
-        </div>
-      </ScrollWrapper>
+        </ScrollWrapper>
+      ) : (
+        "COLLAPSED"
+      )}
     </div>
   );
 };
@@ -289,23 +259,10 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
 type PulseWrapperType = {
   children: React.ReactNode;
 };
-const PulseWrapper = ({ children }: PulseWrapperType) => {
+const PulseWrapper = memo(({ children }: PulseWrapperType) => {
   return children;
-  // (
-  //   <div
-  //     className={cn(
-  //       "h-10",
-  //       "w-full",
-  //       "animate-fadeIn",
-  //       "transition-all duration-300",
-  //       "hover:bg-main-bg",
-  //       "active:bg-highlighter-dark"
-  //     )}
-  //   >
-  //     {children}
-  //   </div>
-  // );
-};
+});
+
 type EditSprintProps = {
   children: React.ReactNode;
   sprint: SprintType;

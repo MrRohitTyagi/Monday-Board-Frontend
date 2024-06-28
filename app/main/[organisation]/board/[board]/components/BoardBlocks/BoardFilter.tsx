@@ -3,11 +3,11 @@ import React from "react";
 
 import useBoardContext from "@/hooks/useBoardContext";
 import { cn } from "@/lib/utils";
-import FilterSearch from "./FilterBlocks/FilterSearch";
-import FilterUser from "./FilterBlocks/FilterUser";
-import FilterStatus from "./FilterBlocks/FilterStatus";
-import FilterPriority from "./FilterBlocks/FilterPriority";
-import MoreSettings from "./FilterBlocks/MoreSettings";
+import FilterSearch from "../FilterBlocks/FilterSearch";
+import FilterUser from "../FilterBlocks/FilterUser";
+import FilterStatus from "../FilterBlocks/FilterStatus";
+import FilterPriority from "../FilterBlocks/FilterPriority";
+import MoreSettings from "../FilterBlocks/MoreSettings";
 
 type BoardFilterProps = {};
 

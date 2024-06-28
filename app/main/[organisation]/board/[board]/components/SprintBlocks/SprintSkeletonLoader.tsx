@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import React, { memo } from "react";
-import { baseCssMiniItems } from "./Pulse";
+import { baseCssMiniItems } from "../Pulse";
 import Loader from "@/components/core/Loader";
 
 const SprintSkeletonLoader = () => {

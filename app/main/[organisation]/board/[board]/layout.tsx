@@ -3,16 +3,16 @@ import React, { createContext, memo, useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
-import BoardTitle from "./components/BoardTitle";
+import BoardTitle from "./components/BoardBlocks/BoardTitle";
 import Sprint from "./components/Sprint";
 import Space from "@/components/core/Space";
 import { getBoard } from "@/gateways/board-gateway";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import DialogueComp from "@/components/core/DialogueComp";
-import EditSprintForm from "./components/EditSprintForm";
+import EditSprintForm from "./components/SprintBlocks/EditSprintForm";
 import { BoardContext } from "@/hooks/useBoardContext";
-import BoardFilter from "./components/BoardFilter";
+import BoardFilter from "./components/BoardBlocks/BoardFilter";
 import { BoardType } from "@/types/boardTypes";
 import { SprintType } from "@/types/sprintTypes";
 
