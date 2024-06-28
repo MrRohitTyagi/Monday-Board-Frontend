@@ -12,15 +12,9 @@ import TooltipComp from "@/components/core/TooltipComp";
 
 type SprintCollapsedProps = {
   sprint: SprintType;
-  setSprint?: StateSetter<SprintType>;
-  setIsExpanded?: StateSetter<boolean>;
 };
 
-const SprintCollapsed = ({
-  sprint,
-  setSprint,
-  setIsExpanded,
-}: SprintCollapsedProps) => {
+const SprintCollapsed = ({ sprint }: SprintCollapsedProps) => {
   const { board } = useBoardContext();
 
   const priorityDisplayConfig = useMemo(() => {
@@ -85,12 +79,13 @@ const SprintCollapsed = ({
 
       <Divider horizontal />
 
-      <div className="collapse-priority flex flex-col gap-2 items-center">
+      <div className="mx-12 collapse-priority flex flex-col gap-2 items-center">
         <LowOpacityText>Priority</LowOpacityText>
         <div className="w-24 h-8 bg-main-fg flex flex-row items-center rounded-sm">
-          {priorityDisplayConfig.map((p: any) => {
+          {priorityDisplayConfig.map((p: any, i) => {
             return (
               <TooltipComp
+                key={p._id + i}
                 title={
                   <div className="px-4 py-2 border-2 border-highlighter-dark rounded-md">
                     <h1>
@@ -118,12 +113,13 @@ const SprintCollapsed = ({
 
       <Divider horizontal />
 
-      <div className="collapse-statuses flex flex-col gap-2 items-center">
+      <div className="mx-12 collapse-statuses flex flex-col gap-2 items-center">
         <LowOpacityText>Status</LowOpacityText>
         <div className="w-24 h-8 bg-main-fg flex flex-row items-center rounded-sm">
-          {statusDisplayConfig.map((s: any) => {
+          {statusDisplayConfig.map((s: any, i) => {
             return (
               <TooltipComp
+                key={s._id + i}
                 title={
                   <div className="px-4 py-2 border-2 border-highlighter-dark rounded-md">
                     <h1>

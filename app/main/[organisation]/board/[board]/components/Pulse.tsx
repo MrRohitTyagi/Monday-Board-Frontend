@@ -87,12 +87,31 @@ const Pulse = ({
 
   const updateStatus = useCallback((status: string) => {
     debouncePulseUpdate({ status });
-    setPulse((prev) => ({ ...prev, status: status }));
+
+    setPulse((currentPulse) => {
+      setSprint?.((ps) => {
+        const pulses = ps.pulses.map((p) => {
+          if (currentPulse._id === p._id) return { ...p, status: status };
+          else return p;
+        });
+        return { ...ps, pulses };
+      });
+      return { ...currentPulse, status: status };
+    });
   }, []);
 
   const updatePriority = useCallback((priority: string) => {
     debouncePulseUpdate({ priority });
-    setPulse((prev) => ({ ...prev, priority: priority }));
+    setPulse((currentPulse) => {
+      setSprint?.((ps) => {
+        const pulses = ps.pulses.map((p) => {
+          if (currentPulse._id === p._id) return { ...p, priority: priority };
+          else return p;
+        });
+        return { ...ps, pulses };
+      });
+      return { ...currentPulse, priority: priority };
+    });
   }, []);
 
   const updateTitle = useCallback((title: string) => {

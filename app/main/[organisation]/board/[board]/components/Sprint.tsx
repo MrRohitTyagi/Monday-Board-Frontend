@@ -151,7 +151,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
           </div>
         </ScrollWrapper>
       ) : (
-        <SprintCollapsed sprint={sprint} setSprint={setSprint} />
+        <SprintCollapsed sprint={sprint} />
       )}
     </div>
   );
