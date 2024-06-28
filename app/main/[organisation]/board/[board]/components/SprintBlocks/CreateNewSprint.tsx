@@ -3,7 +3,7 @@
 import DialogueComp from "@/components/core/DialogueComp";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import EditSprintForm from "./EditSprintForm";
 import { SprintType } from "@/types/sprintTypes";
 import useBoardContext from "@/hooks/useBoardContext";
@@ -47,4 +47,4 @@ const CreateNewSprint = (props: CreateNewSprintProps) => {
   );
 };
 
-export default CreateNewSprint;
+export default memo(CreateNewSprint);

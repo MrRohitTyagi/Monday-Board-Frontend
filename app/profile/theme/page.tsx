@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import ThemePallets from "./ThemePallets";
 type ThemeProps = {};
 
@@ -13,4 +13,4 @@ const Theme = (props: ThemeProps) => {
   );
 };
 
-export default Theme;
+export default memo(Theme);

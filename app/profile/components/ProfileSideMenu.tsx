@@ -4,7 +4,7 @@ import useNavigate from "@/hooks/useNavigate";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { memo } from "react";
 type ProfileSideMenuProps = {};
 
 const className = "flex flex-row items-center justify-start w-full";
@@ -47,4 +47,4 @@ const ProfileSideMenu = (props: ProfileSideMenuProps) => {
   );
 };
 
-export default ProfileSideMenu;
+export default memo(ProfileSideMenu);

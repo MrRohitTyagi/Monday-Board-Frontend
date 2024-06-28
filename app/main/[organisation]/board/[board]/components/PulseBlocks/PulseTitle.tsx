@@ -42,19 +42,21 @@ const PulseTitle = ({ pulse }: PulseTitleProps) => {
       />
     </>
   ) : (
-    <h1
-      onClick={(e) => {
-        setIsEditable(true);
-      }}
-      className={cn(
-        "pulse-title",
-        "flex flex-row items-center justify-between",
-        "w-full text-sm content-around",
-        "text-ellipsis overflow-hidden text-nowrap"
-      )}
-    >
-      {startCase(pulse.title)}
-
+    <>
+      <h1
+        onClick={(e) => {
+          setIsEditable(true);
+        }}
+        className={cn(
+          "pulse-title",
+          "flex flex-row items-center justify-between",
+          "w-full text-sm content-around",
+          "line-clamp-1",
+          "group-hover:pr-7"
+        )}
+      >
+        {startCase(pulse.title)}
+      </h1>
       <Button
         onClick={async (e) => {
           e.preventDefault();
@@ -77,7 +79,7 @@ const PulseTitle = ({ pulse }: PulseTitleProps) => {
           <Trash2 size={18} className="stroke-main-delete" />
         )}
       </Button>
-    </h1>
+    </>
   );
 };
 

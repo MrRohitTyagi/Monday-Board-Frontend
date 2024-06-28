@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PopoverComp from "@/components/core/PopoverComp";
 import Space from "@/components/core/Space";
 import { Button } from "@/components/ui/button";
@@ -72,4 +72,4 @@ const MoreSettings = (props: MoreSettingsProps) => {
   );
 };
 
-export default MoreSettings;
+export default memo(MoreSettings);

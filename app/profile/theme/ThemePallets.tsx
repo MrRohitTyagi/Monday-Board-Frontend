@@ -3,6 +3,7 @@
 import { Card } from "@/components/ui/card";
 import useTheme from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
+import { memo } from "react";
 
 function ThemePallets() {
   const { themeConfig, applyTheme } = useTheme();
@@ -38,7 +39,7 @@ function ThemePallets() {
   );
 }
 
-export default ThemePallets;
+export default memo(ThemePallets);
 
 function EyeIcon(props: any) {
   return (

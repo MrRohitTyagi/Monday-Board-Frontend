@@ -8,7 +8,7 @@ import { useConfig } from "@/store/configStore";
 import { UserType } from "@/types/userTypes";
 import { generatePictureFallback } from "@/utils/helperFunctions";
 import { UserCircle, X } from "lucide-react";
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
 
 type FilterUserProps = {};
 const FilterUser = (props: FilterUserProps) => {
@@ -95,4 +95,4 @@ const FilterUser = (props: FilterUserProps) => {
   );
 };
 
-export default FilterUser;
+export default memo(FilterUser);
