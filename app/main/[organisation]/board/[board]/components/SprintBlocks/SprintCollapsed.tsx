@@ -55,39 +55,53 @@ const SprintCollapsed = ({ sprint }: SprintCollapsedProps) => {
   return (
     <div
       className={cn(
-        "collapsed-sprint-cont",
-        "flex flex-row relative items-center",
-        " h-collapsed-sprint-height",
-        "bg-main-bg",
-        "animate-fadeIn"
+        "overflow-x-auto",
+        "grid grid-cols-[20rem_1fr]",
+        "scrollbar-none bg-main-bg"
       )}
     >
-      <SprintLeftColor color={sprint.color} />
-      <div
-        className={cn("collapsed-content ml-3 h-full min-w-[30%] max-w-[30%]")}
-      >
-        <div className="collapsed-title flex flex-col gap-3 justify-center h-full">
-          <h1>{sprint.title}</h1>
-          <LowOpacityText className="opacity-45">
-            {sprint.pulses.length} Items
-          </LowOpacityText>
+      <div className="collapse-container-left flex flex-row z-10 sticky left-0">
+        <SprintLeftColor color={sprint.color} />
+        <div className="collapse-container-left w-full flex flex-col overflow-hidden">
+          <div
+            className={cn(
+              "pulse-title",
+              "w-full text-sm content-around h-full",
+              "text-ellipsis overflow-hidden text-nowrap"
+            )}
+          >
+            <div
+              className={cn(
+                "collapsed-title bg-main-bg flex flex-col gap-3",
+                "justify-center h-full p-4",
+                "border-r-1 border-r-border-light"
+              )}
+            >
+              <h1>{sprint.title}</h1>
+              <LowOpacityText className="opacity-45">
+                {sprint.pulses.length} Items
+              </LowOpacityText>
+            </div>
+          </div>
         </div>
       </div>
 
-      <Divider horizontal />
+      <div className="collapse-container-right flex flex-row w-full items-center">
+        {/* <Divider horizontal /> */}
 
-      <StatRenderer
-        config={priorityDisplayConfig}
-        sprint={sprint}
-        title={"Priority"}
-      />
-      <Divider horizontal />
+        <StatRenderer
+          config={priorityDisplayConfig}
+          sprint={sprint}
+          title={"Priority"}
+        />
+        {/* <Divider horizontal /> */}
 
-      <StatRenderer
-        config={statusDisplayConfig}
-        sprint={sprint}
-        title={"Status"}
-      />
+        <StatRenderer
+          config={statusDisplayConfig}
+          sprint={sprint}
+          title={"Status"}
+        />
+      </div>
     </div>
   );
 };
@@ -100,7 +114,13 @@ type StatRendererType = {
 
 const StatRenderer = ({ config, sprint, title }: StatRendererType) => {
   return (
-    <div className="mx-12 collapse-statuses flex flex-col gap-2 items-center">
+    <div
+      className={cn(
+        "px-12 collapse-statuses flex flex-col justify-center",
+        " gap-2 items-center h-full shrink-0",
+        "border-r-1 border-r-border-light"
+      )}
+    >
       <LowOpacityText>{title}</LowOpacityText>
       <div className="w-32 h-8 bg-main-fg flex flex-row items-center rounded-sm">
         {config.map((c: any, i: number) => {

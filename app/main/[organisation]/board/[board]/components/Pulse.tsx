@@ -180,21 +180,6 @@ const Pulse = ({
     });
   }, [configPriority, configSearch, configStatus, configUser, isFake, pulse]);
 
-  // const [hidden, sethidden] = useState(false);
-  // useEffect(() => {
-  //   sethidden(
-  //     excludePulse({
-  //       configPriority,
-  //       configSearch,
-  //       configStatus,
-  //       configUser,
-  //       isFake,
-  //       pulse,
-  //     })
-  //   );
-  // }, [configPriority, configSearch, configStatus, configUser, isFake, pulse]);
-  // console.log(`%c hidden `, "color: red;border:2px dotted red", hidden);
-
   return (
     <div
       className={cn(
