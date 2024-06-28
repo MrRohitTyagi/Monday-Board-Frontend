@@ -34,6 +34,7 @@ const config = {
       height: {
         "main-content-height": `calc(100vh - ${navbarHeight})`,
         "navbar-height": `var(--navbar-height)`,
+        "collapsed-sprint-height": `var(--collapsed-sprint-height)`,
         "card-height": "13rem",
       },
       width: {

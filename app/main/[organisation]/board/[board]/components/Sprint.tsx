@@ -5,10 +5,9 @@ import React, {
   memo,
   useCallback,
   useEffect,
-  useMemo,
   useState,
 } from "react";
-import { isEmpty, startCase } from "lodash";
+import { startCase } from "lodash";
 
 import Space from "@/components/core/Space";
 
@@ -17,26 +16,17 @@ import { cn } from "@/lib/utils";
 import Pulse from "./Pulse";
 import ScrollWrapper from "@/components/core/ScrollWrapper";
 import { getSprint } from "@/gateways/sprint-gateway";
-import PopoverComp from "@/components/core/PopoverComp";
-import { Button } from "@/components/ui/button";
-import {
-  ChevronDown,
-  ChevronUp,
-  Edit,
-  Plus,
-  SlidersHorizontal,
-} from "lucide-react";
-import TooltipComp from "@/components/core/TooltipComp";
-import DialogueComp from "@/components/core/DialogueComp";
-import EditSprintForm from "./SprintBlocks/EditSprintForm";
+import { Plus } from "lucide-react";
 import { createPulse } from "@/gateways/pulse-gateway";
 import Loader from "@/components/core/Loader";
 import { toast } from "sonner";
-import useBoardContext from "@/hooks/useBoardContext";
 import SprintSkeletonLoader from "./SprintBlocks/SprintSkeletonLoader";
 import CustomDiv from "@/components/core/CustomDiv";
 import { BoardType } from "@/types/boardTypes";
 import { SprintType } from "@/types/sprintTypes";
+import SprintCollapsed from "./SprintBlocks/SprintCollapsed";
+import SprintActions from "./SprintBlocks/SprintActions";
+import SprintLeftColor from "./SprintBlocks/SprintLeftColor";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -51,7 +41,7 @@ const tempPulse = {
 type SprintProps = { sprintID: string; board: BoardType };
 
 const Sprint = ({ sprintID, board }: SprintProps) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [sprint, setSprint] = useState<SprintType>({} as SprintType);
   const [isloading, setIsloading] = useState(true);
 
@@ -78,37 +68,12 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
           {startCase(sprint.title)}
         </h2>
         <div className="sprint-handlers cursor-pointer">
-          <div className="sprint-expand-collapse flex felx-row gap-4">
-            <EditSprint sprint={sprint} setSprint={setSprint}>
-              <Button
-                variant={"ghost"}
-                className="p-1 border-none"
-                onClick={() => setIsExpanded((p) => !p)}
-              >
-                <TooltipComp title={"Edit Sprint"} className="px-3 py-2">
-                  <Edit size={20} color="white" />
-                </TooltipComp>
-              </Button>
-            </EditSprint>
-
-            {/* Sprint Expand collapse  */}
-            <Button
-              variant={"ghost"}
-              className="p-1 border-none"
-              onClick={() => setIsExpanded((p) => !p)}
-            >
-              <TooltipComp
-                title={isExpanded ? "Expand" : "Collapse"}
-                className="px-3 py-2"
-              >
-                {isExpanded ? (
-                  <ChevronUp size={20} color="white" />
-                ) : (
-                  <ChevronDown size={20} color="white" />
-                )}
-              </TooltipComp>
-            </Button>
-          </div>
+          <SprintActions
+            isExpanded={isExpanded}
+            sprint={sprint}
+            setIsExpanded={setIsExpanded}
+            setSprint={setSprint}
+          />
         </div>
       </div>
       <Space />
@@ -123,15 +88,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
           )}
         >
           <div className="pulse-container-left flex flex-row z-10 sticky left-0">
-            <div
-              style={{ background: sprint.color }}
-              className={cn(
-                "sprint-color-div",
-                " left-color w-2 h-full shrink-0",
-                "rounded-tl-md",
-                "rounded-bl-md"
-              )}
-            />
+            <SprintLeftColor color={sprint.color} />
             <div className="pulse-container-left w-full flex flex-col overflow-hidden">
               {/* <TempPulseRow color={sprint.color} /> */}
 
@@ -194,7 +151,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
           </div>
         </ScrollWrapper>
       ) : (
-        "COLLAPSED"
+        <SprintCollapsed sprint={sprint} setSprint={setSprint} />
       )}
     </div>
   );
@@ -262,32 +219,5 @@ type PulseWrapperType = {
 const PulseWrapper = memo(({ children }: PulseWrapperType) => {
   return children;
 });
-
-type EditSprintProps = {
-  children: React.ReactNode;
-  sprint: SprintType;
-  setSprint: React.Dispatch<React.SetStateAction<SprintType>>;
-};
-const EditSprint = ({ children, sprint, setSprint }: EditSprintProps) => {
-  //
-  const { setCurrentBoard, board } = useBoardContext();
-
-  const [openSprintEditForm, setOpenSprintEditForm] = useState(false);
-  return (
-    <DialogueComp
-      setOpen={setOpenSprintEditForm}
-      open={openSprintEditForm}
-      trigger={children}
-    >
-      <EditSprintForm
-        setSprint={setSprint}
-        onClose={() => setOpenSprintEditForm(false)}
-        sprint={sprint}
-        board={board}
-        setCurrentBoard={setCurrentBoard}
-      />
-    </DialogueComp>
-  );
-};
 
 export default memo(Sprint);
