@@ -46,19 +46,25 @@ const Board = ({ params, children }: pageProps) => {
           )}
         />
       ) : (
-        <>
-          <div className={cn("board-main-div w-full", "flex justify-between")}>
-            <BoardTitle board={currentBoard} />
-          </div>
-          <div>
-            <Space h={4} />
-            <BoardContext.Provider
-              value={{ setCurrentBoard, board: currentBoard }}
+        <BoardContext.Provider value={{ setCurrentBoard, board: currentBoard }}>
+          <>
+            <div
+              className={cn(
+                "bg-main-fg sticky top-0 z-30 pt-4",
+                "boart-title-filter-comp"
+              )}
             >
+              <div
+                className={cn("board-main-div w-full", "flex justify-between")}
+              >
+                <BoardTitle board={currentBoard} />
+              </div>
+              <Space h={4} />
               {/* Board filter */}
               <BoardFilter />
               <Space h={4} />
-
+            </div>
+            <div>
               {/* //  Board Content  */}
               <div className="flex flex-col gap-6 sprint-container">
                 {currentBoard.sprints.map((sprintID) => {
@@ -98,9 +104,9 @@ const Board = ({ params, children }: pageProps) => {
                   />
                 </DialogueComp>
               </div>
-            </BoardContext.Provider>
-          </div>
-        </>
+            </div>
+          </>
+        </BoardContext.Provider>
       )}
       {children}
     </div>

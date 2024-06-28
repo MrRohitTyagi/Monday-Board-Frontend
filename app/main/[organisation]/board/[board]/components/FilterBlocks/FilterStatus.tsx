@@ -42,7 +42,7 @@ const FilterStatus = (props: FilterStatusProps) => {
       }}
       trigger={
         <Button
-          variant={"ghost"}
+          // variant={"ghost"}
           onClick={(e) => {
             setOpen(true);
           }}

@@ -40,7 +40,7 @@ const FilterPriority = (props: FilterPriorityProps) => {
       }}
       trigger={
         <Button
-          variant={"ghost"}
+          // variant={"ghost"}
           onClick={(e) => {
             setOpen(true);
           }}
