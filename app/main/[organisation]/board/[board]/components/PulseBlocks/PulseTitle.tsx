@@ -65,16 +65,16 @@ const PulseTitle = ({ pulse }: PulseTitleProps) => {
         }}
         variant={"ghost"}
         className={cn(
-          "bg-main-fg h-full w-8 flex-row items-center justify-center",
+          "bg-transparent h-full w-8 flex-row items-center justify-center",
           "absolute right-0 p-0",
           isDeleting ? "flex" : "hidden",
           "group-hover:flex"
         )}
       >
         {isDeleting ? (
-          <Loader className="h-6 w-6" />
+          <Loader className="h-6 w-6 opacity-70" />
         ) : (
-          <Trash2 size={18} className="stroke-main-delete opacity-70" />
+          <Trash2 size={18} className="stroke-main-delete" />
         )}
       </Button>
     </h1>
