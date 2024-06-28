@@ -47,7 +47,7 @@ const BoardSearch = () => {
         placeholder="Search"
         className={cn(
           "pl-8 pr-10 animate-fadeIn",
-          "bg-transparent border-highlighter-dark border"
+          "bg-transparent border-highlighter-dark border-2"
         )}
         onChange={handleOnchange}
       />
@@ -63,8 +63,13 @@ const BoardSearch = () => {
     </div>
   ) : (
     <Button
+      variant={"ghost"}
       onClick={() => setIsSearching(true)}
-      className={cn("rounded-sm", "gap-2 flex flex-row items-center")}
+      className={cn(
+        "border-2 border-highlighter-dark",
+        "rounded-sm",
+        "gap-2 flex flex-row items-center"
+      )}
     >
       <Search size={18} />
       <LowOpacityText>Search</LowOpacityText>

@@ -1,3 +1,4 @@
+import React from "react";
 import PopoverComp from "@/components/core/PopoverComp";
 import Space from "@/components/core/Space";
 import { Button } from "@/components/ui/button";
@@ -7,8 +8,6 @@ import { cn } from "@/lib/utils";
 import { useConfig } from "@/store/configStore";
 import { PulseHeightType } from "@/types/configTypes";
 import { Settings2 } from "lucide-react";
-import React, { useState } from "react";
-import { baseCssMiniItems } from "../Pulse";
 
 type MoreSettingsProps = {};
 
@@ -26,7 +25,14 @@ const MoreSettings = (props: MoreSettingsProps) => {
             "w-fit bg-main-fg p-4 shadow-lg shadow-black border-2 border-highlighter-dark",
         }}
         trigger={
-          <Button className={cn(baseCssMiniItems(5), "rounded-sm border-r-0 py-2.5")}>
+          <Button
+            className={cn(
+              // baseCssMiniItems(5),
+              "rounded-sm border-r-0",
+              "border-2 border-highlighter-dark"
+            )}
+            variant={"ghost"}
+          >
             <Settings2 size={20} color="white" />
           </Button>
         }

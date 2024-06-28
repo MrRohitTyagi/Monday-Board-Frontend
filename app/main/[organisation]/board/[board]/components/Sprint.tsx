@@ -205,10 +205,8 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
           "font-bold"
         )}
       >
-        <h2>
-          {isSubmitting ? "Creating new pulse item ..." : "Create New Pulse"}
-        </h2>
         {isSubmitting ? <Loader /> : <Plus color="white" size={20} />}
+        <h2>{isSubmitting ? "Creating new pulse ..." : "New Pulse"}</h2>
       </div>
     </CustomDiv>
   );

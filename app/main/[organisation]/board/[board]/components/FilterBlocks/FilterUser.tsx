@@ -60,7 +60,10 @@ const FilterUser = (props: FilterUserProps) => {
         </div>
       }
       trigger={
-        <Button className="flex flex-row gap-2 items-center">
+        <Button
+          className="flex flex-row gap-2 items-center border-2 border-highlighter-dark"
+          variant={"ghost"}
+        >
           {selectedUser ? (
             <>
               <AvatarComp src={selectedUser?.picture} className="h-7 w-7" />
