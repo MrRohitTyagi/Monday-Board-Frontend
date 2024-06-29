@@ -69,7 +69,7 @@ const MyWork = ({}: MyWorkProps) => {
                 )}
               >
                 <AvatarComp src={board.picture} className="h-8 w-8" />
-                <LowOpacityText className="text-start overflow-hidden text-ellipsis text-md font-bold">
+                <LowOpacityText className="text-start overflow-hidden text-ellipsis text-base font-bold">
                   {board.title}
                 </LowOpacityText>
               </Button>
@@ -81,7 +81,6 @@ const MyWork = ({}: MyWorkProps) => {
                     <>
                       {i > 0 && <Divider key={sprint._id} />}
                       {sprint.pulses.map((pulse: PulseType) => {
-                        if (!pulse.assigned.includes(user._id)) return null;
                         return (
                           <div
                             onClick={() => {
