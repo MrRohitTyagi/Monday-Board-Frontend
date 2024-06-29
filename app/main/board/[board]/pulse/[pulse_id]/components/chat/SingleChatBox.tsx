@@ -85,14 +85,13 @@ const SingleChatBox = ({
     const cleanContent = convert(chat.draft ? chat.draft : chat.content);
 
     const data = await writeWithAI({
-      pulseID: pulse?._id || "",
       prompt: cleanContent,
       onGenerate(t) {
         setchat((pc) => ({ ...pc, content: t, draft: t }));
       },
     });
     updateChatContent(data, masterChat._id);
-  }, [pulse?._id, chat.draft, chat.content]);
+  }, [chat.draft, chat.content]);
 
   // save the chat content
   const onSaveClick = useCallback(async () => {

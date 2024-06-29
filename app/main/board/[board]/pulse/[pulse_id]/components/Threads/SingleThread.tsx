@@ -5,7 +5,7 @@ import AvatarComp from "@/components/core/AvatarComp";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ThreadType } from "@/types/threadType";
-import { Trash2 } from "lucide-react";
+import { Bot, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Loader from "@/components/core/Loader";
 import Textrenderer from "@/components/core/Textrenderer";
@@ -18,6 +18,8 @@ import useSingleChat from "@/hooks/useSingleChat";
 import ThreadInfo from "./ThreadInfo";
 import Space from "@/components/core/Space";
 import { useAuth } from "@/zstore";
+import useWriteAI from "@/hooks/useWriteAI";
+import ThreadsButtons from "./ThreadsButtons";
 
 type SingleThreadProps = {
   mainThread: ThreadType;
@@ -27,6 +29,7 @@ const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
   const [thread, setthread] = useState<ThreadType>({} as ThreadType);
   const { updateThreadCount } = useSingleChat();
   const { user } = useAuth();
+  const { isWritting, writeWithAI, len } = useWriteAI();
 
   const {
     isLoading,
@@ -63,6 +66,15 @@ const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
     triggerDeleting(false);
     updateThreadCount("SUB");
   }, [mainThread._id]);
+
+  const handleWriteAI = useCallback(async () => {
+    await writeWithAI({
+      prompt: thread.content,
+      onGenerate: (t) => {
+        setthread((pt) => ({ ...pt, content: t }));
+      },
+    });
+  }, [thread.content, writeWithAI]);
 
   return isLoading === true ? (
     <Loader />
@@ -129,33 +141,16 @@ const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
 
       {/* submitbuttons  */}
       {isEditing === true && (
-        <div
-          className={cn(
-            "new-thread-buttons",
-            "flex flex-row gap-2 items-center justify-end"
-          )}
-        >
-          <Button
-            disabled={isSaving}
-            onClick={() => {
-              setthread((pt) => ({ ...pt, content: mainThread.content }));
-              triggerEditing(false);
-            }}
-            size={"sm"}
-            className="flex flex-row gap-1"
-          >
-            <Trash2 size={12} color="white" />
-            <h1>Cancel</h1>
-          </Button>
-
-          <AsyncButton
-            size={"sm"}
-            disabled={isSaving}
-            isSaving={isSaving}
-            loaderProps={{ className: "h-4 w-4" }}
-            onClick={handleThreadSave}
-          />
-        </div>
+        <ThreadsButtons
+          isSaving={isSaving}
+          handleWriteAI={handleWriteAI}
+          isWritting={isWritting}
+          onCancelClick={() => {
+            setthread((pt) => ({ ...pt, content: mainThread.content }));
+            triggerEditing(false);
+          }}
+          onSaveClick={handleThreadSave}
+        />
       )}
     </div>
   );

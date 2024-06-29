@@ -70,13 +70,12 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
   const handleWriteAI = useCallback(async () => {
     const cleanContent = convert(text);
     await writeWithAI({
-      pulseID: pulse._id,
       prompt: cleanContent,
       onGenerate: (t) => {
         settext(t);
       },
     });
-  }, [pulse._id, text, writeWithAI]);
+  }, [text, writeWithAI]);
 
   // const handleKeyDown = useCallback(() => {
   //   handleCreateNew();

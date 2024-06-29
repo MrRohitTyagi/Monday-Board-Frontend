@@ -4,13 +4,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { createThread } from "@/gateways/thread-gateway";
 import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 import useSingleChat from "@/hooks/useSingleChat";
+import useWriteAI from "@/hooks/useWriteAI";
 import { cn } from "@/lib/utils";
 import { StateSetter } from "@/types/genericTypes";
 import { ThreadType } from "@/types/threadType";
 import { useAuth } from "@/zstore";
-import { Save, Trash2 } from "lucide-react";
+import { Bot, Save, Trash2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { memo, useCallback, useState } from "react";
+import ThreadsButtons from "./ThreadsButtons";
+import useLoading from "@/hooks/useLoading";
 
 type NewThreadProps = {
   setThreads: StateSetter<ThreadType[]>;
@@ -22,11 +25,14 @@ const NewThread = ({ setThreads, setOpenNewChatBox }: NewThreadProps) => {
   const [value, setvalue] = useState("");
 
   const { user } = useAuth();
+  const { isSaving, triggerSaving } = useLoading({});
   const { chat, updateThreadCount, pulse } = useSingleChat();
   const { notificationChannel } = useRealtimeChannels();
   const params = useParams();
+  const { isWritting, writeWithAI, len } = useWriteAI();
 
   const handleAddNewThread = useCallback(async () => {
+    triggerSaving(true);
     const payload = {
       content: value,
       chatId: chat._id,
@@ -42,11 +48,21 @@ const NewThread = ({ setThreads, setOpenNewChatBox }: NewThreadProps) => {
     setThreads((pt) => [...pt, newThread]);
     setOpenNewChatBox(false);
     updateThreadCount("ADD");
+    triggerSaving(false);
   }, [user._id, chat._id, value, params]);
 
   const handleCtrlEnter = useCallback(() => {
     handleAddNewThread();
   }, [handleAddNewThread]);
+
+  const handleWriteAI = useCallback(async () => {
+    await writeWithAI({
+      prompt: value,
+      onGenerate: (t) => {
+        setvalue(t);
+      },
+    });
+  }, [value, writeWithAI]);
 
   return (
     <div className={cn("new-thread-cont", "flex flex-row gap-1", "p-3")}>
@@ -77,31 +93,15 @@ const NewThread = ({ setThreads, setOpenNewChatBox }: NewThreadProps) => {
             }}
           />
         </div>
-        <div
-          className={cn(
-            "new-thread-buttons",
-            "flex flex-row gap-2 items-center justify-end"
-          )}
-        >
-          <Button
-            onClick={() => {
-              setOpenNewChatBox(false);
-            }}
-            size={"sm"}
-            className="flex flex-row gap-1"
-          >
-            <Trash2 size={12} color="white" />
-            <h1>Cancel</h1>
-          </Button>
-          <Button
-            onClick={handleAddNewThread}
-            size={"sm"}
-            className="flex flex-row gap-1"
-          >
-            <Save size={12} color="white" />
-            <h1>Save</h1>
-          </Button>
-        </div>
+        <ThreadsButtons
+          isSaving={isSaving}
+          handleWriteAI={handleWriteAI}
+          isWritting={isWritting}
+          onCancelClick={() => {
+            setOpenNewChatBox(false);
+          }}
+          onSaveClick={handleAddNewThread}
+        />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import axiosInstance from "@/utils/axiosinstance";
 const AI_BASE_URL = ((process.env.NEXT_PUBLIC_BACKEND_URL as string) +
   process.env.NEXT_PUBLIC_AI_BASE_URL) as string;
 
-async function writeAI(payload: { pulseID: string; prompt: string }) {
+async function writeAI(payload: { prompt: string }) {
   try {
     const { data } = await axiosInstance().post(
       `${AI_BASE_URL}/generate`,

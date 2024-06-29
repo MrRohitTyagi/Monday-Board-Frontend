@@ -9,16 +9,14 @@ const useWriteAI = () => {
   //
   const writeWithAI = useCallback(
     async ({
-      pulseID,
       prompt,
       onGenerate,
     }: {
-      pulseID: string;
       prompt: string;
       onGenerate?: (e: string) => void;
     }) => {
       triggerSaving(true);
-      const { message, success } = await writeAI({ prompt, pulseID });
+      const { message, success } = await writeAI({ prompt });
 
       if (success === false) {
         triggerSaving(false);
