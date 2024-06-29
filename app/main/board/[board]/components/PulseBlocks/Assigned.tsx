@@ -15,16 +15,16 @@ import { PulseContext, baseCssMiniItems } from "../Pulse";
 import PopoverComp from "@/components/core/PopoverComp";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import AvatarGroup from "@/components/core/AvatarGroup";
 import AvatarComp from "@/components/core/AvatarComp";
-import { Trash2 } from "lucide-react";
+import { Trash2, X } from "lucide-react";
 import { BoardType } from "@/types/boardTypes";
 import { PulseType } from "@/types/pulseTypes";
 import { UserType } from "@/types/userTypes";
 import { StateSetter } from "@/types/genericTypes";
-import useRealtimeChannels from "@/hooks/useRealtimeChannels";
+// import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 
 type AssignedProps = {
   board: BoardType;
@@ -84,6 +84,11 @@ const Assigned = ({ board, pulse }: AssignedProps) => {
     );
   }, [membersAndAdmins, pulse.assigned]);
 
+  console.log(
+    `%c assignedUsers `,
+    "color: green;border:1px solid green",
+    assignedUsers
+  );
   useEffect(() => {
     setAssignedUsers(
       membersAndAdmins.filter((u) => pulse.assigned.includes(u._id))
@@ -111,37 +116,73 @@ const Assigned = ({ board, pulse }: AssignedProps) => {
       }
       classNames={{
         trigger: "h-full",
-        content: "bg-main-fg p-4 shadow-lg shadow-foreground",
+        content:
+          "bg-main-fg p-3 shadow-lg shadow-foreground w-fit max-w-[28rem]",
       }}
       content={
-        <Tabs defaultValue="account" className="w-full">
-          <TabsList className="w-full bg-transparent">
-            <TabsTrigger value="Assigned">Assigned</TabsTrigger>
-            <TabsTrigger value="Members">Members</TabsTrigger>
-          </TabsList>
-          <TabsContent value="Assigned">
-            <AssignedSelector
-              handleNotAssignedUserSearch={handleAssignedUserSearch}
-              usersToPreview={assignedUsers}
-              className="justify-between flex flex-row"
-              extra={
-                <Button variant={"ghost"} className="p-0 m-0">
-                  <Trash2 color="#e68181" size={20} />
+        <div className={cn("flex flex-col gap-2", "assigned-cont")}>
+          <div className="addigned-list flex flex-wrap gap-2">
+            {assignedUsers.map((assigned) => {
+              return (
+                <Button
+                  variant={"ghost"}
+                  className={cn(
+                    "h-fit w-fit rounded-xl hover:bg-transparent",
+                    "flex flex-row items-center",
+                    "space-x-2 border-2 border-highlighter-dark px-2 py-0"
+                  )}
+                >
+                  <AvatarComp src={assigned.picture} className="h-5 w-5" />
+                  <h2 className="text-xs">{assigned.username}</h2>
+                  <Button
+                    className="py-0 px-2"
+                    variant={"ghost"}
+                    size={"xsm"}
+                    onClick={() => {
+                      updateAssigned(assigned, "remove");
+                    }}
+                  >
+                    <X size={16} className="stroke-text-color" />
+                  </Button>
                 </Button>
-              }
-              onUserClick={(user) => {
-                updateAssigned(user, "remove");
-              }}
-            />
-          </TabsContent>
-          <TabsContent value="Members">
-            <AssignedSelector
-              handleNotAssignedUserSearch={handleNotAssignedUserSearch}
-              usersToPreview={allUsers}
-              onUserClick={updateAssigned}
-            />
-          </TabsContent>
-        </Tabs>
+              );
+            })}
+          </div>
+
+          <AssignedSelector
+            handleNotAssignedUserSearch={handleNotAssignedUserSearch}
+            usersToPreview={allUsers}
+            onUserClick={updateAssigned}
+          />
+        </div>
+        // <Tabs defaultValue="account" className="w-full">
+        //   <TabsList className="w-full bg-transparent">
+        //     <TabsTrigger value="Assigned">Assigned</TabsTrigger>
+        //     <TabsTrigger value="Members">Members</TabsTrigger>
+        //   </TabsList>
+        //   <TabsContent value="Assigned">
+        //     <AssignedSelector
+        //       handleNotAssignedUserSearch={handleAssignedUserSearch}
+        //       usersToPreview={assignedUsers}
+        //       className="justify-between flex flex-row"
+        //       extra={
+        //         <Button variant={"ghost"} className="p-0 m-0">
+        //           <Trash2 color="#e68181" size={20} />
+        //         </Button>
+        //       }
+        //       onUserClick={(user) => {
+        //         updateAssigned(user, "remove");
+        //       }}
+        //     />
+        //   </TabsContent>
+        //   <TabsContent value="Members">
+        //     <AssignedSelector
+        //       handleNotAssignedUserSearch={handleNotAssignedUserSearch}
+        //       usersToPreview={allUsers}
+        //       onUserClick={updateAssigned}
+        //     />
+        //   </TabsContent>
+        // </Tabs>
       }
     />
   );
@@ -166,6 +207,7 @@ const AssignedSelector = ({
   return (
     <div className="flex flex-col gap-3">
       <Input
+        placeholder="Search user"
         ref={inpRef}
         className="space-y-4 bg-transparent"
         onChange={handleNotAssignedUserSearch}
