@@ -213,6 +213,7 @@ const Invite = ({}: InviteProps) => {
                             <FormLabel>{startCase(f.label)}</FormLabel>
                             <FormControl>
                               <Input
+                                className="mt-0"
                                 customOnChange={f.customOnChange}
                                 type={f.type}
                                 placeholder={f.placeholder}

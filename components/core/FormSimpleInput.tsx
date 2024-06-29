@@ -15,7 +15,7 @@ type SimpleFormInputProps = {
   form: UseFormReturn<FieldValues, any, undefined>;
   name: string;
   label: string;
-  placeHolder: string;
+  placeHolder?: string;
   classNames?: {
     input?: string;
     formItem?: string;
@@ -51,7 +51,7 @@ const SimpleFormInput = ({
               customOnChange={customOnChange}
               placeholder={placeHolder}
               {...field}
-              className={cn("bg-transparent", classNames?.input)}
+              className={cn("bg-transparent !mt-0", classNames?.input)}
             />
           </FormControl>
           <FormMessage />
