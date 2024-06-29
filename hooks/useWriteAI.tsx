@@ -1,45 +1,48 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import useLoading from "./useLoading";
 import { writeAI } from "@/gateways/ai-gateway";
 import { toast } from "sonner";
-import { StateSetter } from "@/types/genericTypes";
-import { ChatType } from "@/types/chatTypes";
 
 const useWriteAI = () => {
   const { isSaving, triggerSaving } = useLoading({});
+  const [len, setlen] = useState(0);
   //
   const writeWithAI = useCallback(
     async ({
       pulseID,
       prompt,
-      setchat,
+      onGenerate,
     }: {
       pulseID: string;
       prompt: string;
-      setchat?: StateSetter<ChatType>;
+      onGenerate?: (e: string) => void;
     }) => {
       triggerSaving(true);
       const { message, success } = await writeAI({ prompt, pulseID });
-      triggerSaving(false);
 
       if (success === false) {
+        triggerSaving(false);
         return toast.error(message);
       } else {
-        if (setchat) {
+        if (onGenerate) {
           for (let i = 0; i <= message.length; i++) {
             let content = message.slice(0, i);
-            setchat((pc) => ({ ...pc, content, draft: content }));
+            onGenerate(content);
+            setlen(content.length);
             await new Promise((resolve) => setTimeout(resolve, 3));
           }
+
+          triggerSaving(false);
           return message;
         } else {
+          triggerSaving(false);
           return message;
         }
       }
     },
     []
   );
-  return { writeWithAI, isWritting: isSaving };
+  return { writeWithAI, isWritting: isSaving, len };
 };
 
 export default useWriteAI;

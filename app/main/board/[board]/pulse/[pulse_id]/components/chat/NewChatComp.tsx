@@ -39,7 +39,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
   const params = useParams();
   const { createNewChat } = useChat();
   const { notificationChannel } = useRealtimeChannels();
-  const { isWritting, writeWithAI } = useWriteAI();
+  const { isWritting, writeWithAI, len } = useWriteAI();
 
   useEffect(() => {
     settext(content);
@@ -59,7 +59,6 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
       if (assignedUserId === user._id) return;
       notificationChannel.publish(assignedUserId, { type: "NEW_CHAT" });
     });
-    
 
     setChats((ps) => [newChat, ...ps]);
     deleteLocal();
@@ -70,12 +69,14 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
 
   const handleWriteAI = useCallback(async () => {
     const cleanContent = convert(text);
-    const data = await writeWithAI({
+    await writeWithAI({
       pulseID: pulse._id,
       prompt: cleanContent,
+      onGenerate: (t) => {
+        settext(t);
+      },
     });
-    settext(data);
-  }, [pulse._id, text]);
+  }, [pulse._id, text, writeWithAI]);
 
   // const handleKeyDown = useCallback(() => {
   //   handleCreateNew();
@@ -96,7 +97,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
         {isEditing ? (
           <div className=" animate-fadeIn">
             <HTMLEditor
-              key={"new-chat" + String(isWritting)}
+              key={"new-chat" + String(isWritting) + len}
               initialContent={text}
               onContentChange={(e, mentions) => {
                 mentionRef.current = mentions;

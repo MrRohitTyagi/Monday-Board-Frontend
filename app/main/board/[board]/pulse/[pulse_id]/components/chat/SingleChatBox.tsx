@@ -69,7 +69,7 @@ const SingleChatBox = ({
     defaultLoading: true,
     defaultEditing: !isEmpty(masterChat.draft),
   });
-  const { isWritting, writeWithAI } = useWriteAI();
+  const { isWritting, writeWithAI, len } = useWriteAI();
 
   const { updateChatContent, updateChatDraft, deleteSingleChat } = useChat();
 
@@ -87,7 +87,9 @@ const SingleChatBox = ({
     const data = await writeWithAI({
       pulseID: pulse?._id || "",
       prompt: cleanContent,
-      setchat: setchat,
+      onGenerate(t) {
+        setchat((pc) => ({ ...pc, content: t, draft: t }));
+      },
     });
     updateChatContent(data, masterChat._id);
   }, [pulse?._id, chat.draft, chat.content]);
@@ -190,7 +192,7 @@ const SingleChatBox = ({
           {isEditing === true ? (
             <HTMLEditor
               placeholder="White an update ..."
-              key={chat._id + String(isWritting)}
+              key={chat._id + String(isWritting) + len}
               initialContent={chat.draft ? chat.draft : chat.content}
               onContentChange={(e, mentions) => {
                 const value = e;

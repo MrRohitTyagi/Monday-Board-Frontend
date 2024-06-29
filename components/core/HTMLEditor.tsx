@@ -49,7 +49,6 @@ const HTMLEditor = ({
           mentions.push(entityMap[key].data);
         }
       }
-      console.log(`%c mentions `, "color: red;border:2px dotted red", mentions);
       return mentions;
     },
     []
@@ -93,11 +92,6 @@ const HTMLEditor = ({
     };
   }, [user.boards]);
 
-  console.log(`%c params user `, "color: orange;border:2px solid cyan", {
-    params,
-    user,
-    mentions,
-  });
   return (
     <Editor
       onFocus={() => {}}

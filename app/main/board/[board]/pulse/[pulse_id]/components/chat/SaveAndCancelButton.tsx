@@ -39,7 +39,7 @@ const SaveAndCancelButton = ({
           "grow gap-1 flex flex-row items-center m-1 justify-center"
         )}
       >
-        <Trash2 color="white" size={16} className="stroke-main-delete" />
+        <Trash2 color="white" size={14} className="stroke-main-delete" />
         <h1 className="text-base">Cancel</h1>
       </Button>
       <Divider horizontal className="w-1" />
@@ -58,7 +58,7 @@ const SaveAndCancelButton = ({
         {isWritting === true ? (
           <Loader className="h-4 w-4" />
         ) : (
-          <Bot className="stroke-highlighter" size={16} />
+          <Bot className="stroke-text-color" size={16} />
         )}
         <h1 className="text-base">
           {isWritting === true ? "Writing..." : "Write AI"}
@@ -81,7 +81,7 @@ const SaveAndCancelButton = ({
         {loading === true ? (
           <Loader className="h-4 w-4" />
         ) : (
-          <Save className="stroke-highlighter" size={16} />
+          <Save className="stroke-text-color" size={14} />
         )}
         <h1 className="text-base">{loading === true ? "Saving..." : "Save"}</h1>
       </Button>
