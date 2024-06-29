@@ -41,7 +41,7 @@ const NotificationCard = ({
   ) : (
     <Button
       onClick={() => {
-        router.push(notification.redirect_url);
+        router.push("/main" + notification.redirect_url);
         if (notification.seen === false) handleMarkAsRead(notification._id);
         handleLayerClose();
       }}
@@ -54,14 +54,8 @@ const NotificationCard = ({
         notification.seen === true && "bg-main-bg",
         notification.seen === false && "bg-highlighter-dark",
         notification.seen === false && "hover:bg-highlighter",
-
         "border border-main-bg",
         "hover:!border-highlighter"
-
-        // notification.seen === false
-        //   ? "hover:bg-highlighter-dark"
-        //   : "hover:border-highlighter border",
-        // notification.seen === false && "bg-highlighter-dark"
       )}
     >
       <div

@@ -17,7 +17,7 @@ import { BoardType } from "@/types/boardTypes";
 import { useConfig } from "@/store/configStore";
 
 type pageProps = {};
-const Organisation = (props: pageProps) => {
+const MainPage = (props: pageProps) => {
   const { staredBoards } = useConfig();
   const {
     user: { boards, username },
@@ -47,7 +47,7 @@ const Organisation = (props: pageProps) => {
       <div
         className={cn(
           "user-boards bg-main-bg p-4 pt-8 pb-8 ",
-          "rounded-tl-lg rounded-bl-lg space-y-4"
+          "rounded-lg space-y-4"
         )}
       >
         <h1 className="font-bold text-2xl">Your Boards</h1>
@@ -167,4 +167,4 @@ const BoardComp = ({ board }: { board: BoardType }) => {
   );
 };
 
-export default memo(Organisation);
+export default memo(MainPage);
