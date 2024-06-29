@@ -46,6 +46,7 @@ const MyWork = ({}: MyWorkProps) => {
   ) : (
     <div className="space-y-2 pt-2">
       <h1 className="text-2xl">My Work</h1>
+      <h1 className="text-sm opacity-70">View all items you are assigned to</h1>
       <Space h={4} />
       <div className="my-work-board-cont flex flex-col gap-8">
         {myBoards.map((board) => {

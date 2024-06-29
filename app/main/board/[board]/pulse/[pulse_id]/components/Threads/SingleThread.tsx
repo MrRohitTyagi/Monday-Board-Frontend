@@ -149,6 +149,7 @@ const SingleThread = ({ mainThread, setThreads }: SingleThreadProps) => {
           </Button>
 
           <AsyncButton
+            size={"sm"}
             disabled={isSaving}
             isSaving={isSaving}
             loaderProps={{ className: "h-4 w-4" }}

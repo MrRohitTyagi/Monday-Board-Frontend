@@ -32,17 +32,13 @@ const ThreadActions = ({
         size={"sm"}
         variant={"ghost"}
         icon={
-          <Trash2
-            size={16}
-            className="stroke-main-delete cursor-pointer"
-            onClick={handleDeleteThread}
-          />
+          <Trash2 size={16} className="stroke-main-delete cursor-pointer" />
         }
         noTitle={true}
         isSaving={isDeleting}
         className={cn(
           "cursor-pointer border border-main-bg p-2",
-          "hover:bg-main-bg"
+          "hover:bg-main-bg z-10"
         )}
       />
       <Button
@@ -50,16 +46,11 @@ const ThreadActions = ({
         size={"sm"}
         className={cn(
           "cursor-pointer border border-main-bg p-2",
-          "hover:bg-main-bg"
+          "hover:bg-main-bg z-10"
         )}
         variant={"ghost"}
       >
-        <Edit
-          size={16}
-          color="white"
-          className=" cursor-pointer"
-          onClick={() => triggerEditing?.(true)}
-        />
+        <Edit size={16} color="white" className=" cursor-pointer" />
       </Button>
     </div>
   );

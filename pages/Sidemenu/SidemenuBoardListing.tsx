@@ -74,7 +74,7 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
             "border-main-bg border-2 gap-1",
             "flex flex-row items-center",
             "text-ellipsis overflow-hidden text-nowrap",
-            "bg-transparent px-2"
+            "bg-transparent px-2 m-0.5"
           )}
         >
           <Plus size={isCollapsed === true ? 20 : 18} />

@@ -21,6 +21,7 @@ import {
   LucideIcon,
 } from "lucide-react";
 import SidemenuBoardListing from "./SidemenuBoardListing";
+import Space from "@/components/core/Space";
 
 export const gertNavConfig = () => {
   return [
@@ -68,8 +69,9 @@ const SideMenu = ({}: SideMenuProps) => {
         isAuthenticated ? "" : "opacity-70 cursor-not-allowed"
       )}
     >
+      {isCollapsed === false && <Space h={4} />}
       {isLoading === false && (
-        <div className="expand-buitton-wrapper flex flex-row justify-end">
+        <div className="expand-buitton-wrapper flex flex-row justify-end pt-[1px] pr-[1px]">
           <Button
             variant={"ghost"}
             disabled={isAuthenticated === false}
@@ -77,13 +79,13 @@ const SideMenu = ({}: SideMenuProps) => {
             className={cn(
               " z-[200] rounded-tr-lg",
               "transition-[width] duration-500",
-              "rounded-none rounded-bl-md bg-main-bg transition-all",
+              "rounded-none rounded-bl-md rounded-tr-md bg-main-bg transition-all",
               isCollapsed ? "relative" : "absolute",
-              "h-10 place-content-center top-0 right-0 overflow-hidden p-1",
+              "h-10 place-content-center top-[1px] right-[1px] overflow-hidden p-1",
               `${
                 isCollapsed ? "opacity-100" : "opacity-0"
               } group-hover:opacity-100`,
-              isCollapsed ? `rounded-none w-full` : "w-10"
+              isCollapsed ? `rounded-none rounded-tr-md w-full` : "w-10"
             )}
           >
             {isCollapsed ? (
@@ -150,8 +152,8 @@ const NavLink = ({
         "transition-all duration-300 ",
         selected ? "" : "hover:bg-main-bg",
         "rounded-sm w-full",
-        "whitespace-nowrap",
-        isCollapsed ? "flex flex-row justify-center" : "flex flex-row",
+        "whitespace-nowrap flex flex-row",
+        isCollapsed ? "justify-center" : "justify-start",
         selected ? "bg-highlighter-dark" : ""
       )}
       href={href}
