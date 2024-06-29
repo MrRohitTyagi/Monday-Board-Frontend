@@ -65,7 +65,7 @@ const LoginComponent = () => {
         toast.success(promise.message);
         setToken(promise.token);
         fetchUser("user", (data) => {
-          router.replace(`/main/${data.org}`);
+          router.replace(`/main`);
         });
       }
     },

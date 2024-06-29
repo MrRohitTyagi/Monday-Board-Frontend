@@ -1,10 +1,10 @@
 "use client";
+import React, { memo } from "react";
+
 import { Button } from "@/components/ui/button";
 import useNavigate from "@/hooks/useNavigate";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { memo } from "react";
 type ProfileSideMenuProps = {};
 
 const className = "flex flex-row items-center justify-start w-full";
@@ -33,7 +33,7 @@ const ProfileSideMenu = (props: ProfileSideMenuProps) => {
         return (
           // <Link className={"w-full"} href={menu.href}>
           <Button
-            onClick={() => navigateWithQuery(menu.href, true)}
+            onClick={() => navigateWithQuery(menu.href)}
             key={menu.href}
             variant={"ghost"}
             className={cn(className, isActive && "bg-highlighter-dark")}

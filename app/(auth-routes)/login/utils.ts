@@ -41,12 +41,6 @@ function getfields({ isSignupForm, setPicture }: GetFieldsProps): FieldType[] {
       placeholder: "Username",
       type: "text",
     },
-    // {
-    //   name: "org",
-    //   label: "Organisation name",
-    //   placeholder: "Enter your Organisation name",
-    //   type: "text",
-    // },
     {
       name: "picture",
       customOnChange: (e: any) => {
@@ -74,16 +68,6 @@ function getSchema({ isSignupForm }: GetSchemaProps) {
               message: "Username must be at least 2 characters.",
             })
             .max(20, { message: "Username must not exceed 20 characters." }),
-          // org: z
-          //   .string({ message: "Username is required" })
-          //   .min(2, {
-          //     message: "Organisation name must be at least 2 characters.",
-          //   })
-          //   .max(20, {
-          //     message: "Organisation name must not exceed 20 characters.",
-          //   })
-          //   .optional()
-          //   .nullable(),
         }
       : {}),
     email: z.string({ message: "Invalid Email" }).email(),

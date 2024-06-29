@@ -6,13 +6,13 @@ import { cn } from "@/lib/utils";
 import AvatarComp from "@/components/core/AvatarComp";
 import { Button } from "@/components/ui/button";
 import LowOpacityText from "@/components/core/LowOpacityText";
-import useNavigate from "@/hooks/useNavigate";
+import { useRouter } from "next/navigation";
 
 type ProfileProps = {};
 
 const Profile = ({}: ProfileProps) => {
   const { user } = useAuth();
-  const { navigate } = useNavigate();
+  const router = useRouter();
   console.log("user", user);
   return (
     <div
@@ -51,7 +51,7 @@ const Profile = ({}: ProfileProps) => {
         {user.boards.map((board) => {
           return (
             <Button
-              onClick={() => navigate(`board/${board._id}`)}
+              onClick={() => router.push(`/main/board/${board._id}`)}
               variant={"ghost"}
               className={cn("px-2", "flex flex-row justify-start")}
             >

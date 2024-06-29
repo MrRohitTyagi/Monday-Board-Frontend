@@ -7,12 +7,12 @@ import AvatarComp from "@/components/core/AvatarComp";
 import LowOpacityText from "@/components/core/LowOpacityText";
 import { timeBetween } from "@/utils/helperFunctions";
 import { Button } from "@/components/ui/button";
-import useNavigate from "@/hooks/useNavigate";
 import { CheckCircle, Trash2 } from "lucide-react";
 import TooltipComp from "@/components/core/TooltipComp";
 import useLoading from "@/hooks/useLoading";
 import Loader from "@/components/core/Loader";
 import parse from "html-react-parser";
+import { useRouter } from "next/navigation";
 
 type NotificationCardProps = {
   notification: NotificationType;
@@ -34,14 +34,14 @@ const NotificationCard = ({
   }, [notification.createdAt]);
   const { isDeleting, triggerDeleting } = useLoading({});
 
-  const { navigate } = useNavigate();
+  const router = useRouter();
 
   return notification.isDeleted === true ? (
     <div className="animate-unmount-box w-full" />
   ) : (
     <Button
       onClick={() => {
-        navigate(notification.redirect_url);
+        router.push(notification.redirect_url);
         if (notification.seen === false) handleMarkAsRead(notification._id);
         handleLayerClose();
       }}

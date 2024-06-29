@@ -1,19 +1,17 @@
 "use client";
+import { memo } from "react";
 
 import { ChildrenType } from "@/types/genericTypes";
 import { getToken } from "@/utils/cookie";
-import { useAuth } from "@/zstore";
 import { useRouter } from "next/navigation";
-import { memo } from "react";
 
 type layoutProps = ChildrenType;
 const layout = ({ children }: layoutProps) => {
   const router = useRouter();
   const token = getToken();
-  const { user } = useAuth();
 
   if (token) {
-    router.replace(`/main/${user.org}`);
+    router.replace(`/main`);
     return null;
   }
 

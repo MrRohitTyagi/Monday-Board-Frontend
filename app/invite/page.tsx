@@ -102,14 +102,14 @@ const Invite = ({}: InviteProps) => {
     if (token) {
       setToken(token);
       fetchUser("user", (data) => {
-        router.push(`/main/${data.org}`);
+        router.push(`/main`);
       });
     } else {
       addNewBoard(board);
     }
 
     // TODO  replace push with replace
-    if (isAuthenticated) router.push(`/main/${user.org}`);
+    if (isAuthenticated) router.push(`/main`);
     if (isEmpty(values)) setIsLoading(false);
   }
 

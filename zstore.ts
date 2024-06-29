@@ -35,7 +35,6 @@ const emptyUser: UserType = {
   email: "",
   username: "",
   boards: [],
-  org: "",
   picture: "",
 };
 
@@ -76,7 +75,7 @@ export const useAuth = create<AuthStoreType>((setState) => ({
 
     await getUser(id || "").then((user) => {
       getConfig();
-      const userObj = { ...user, org: user.org ? user.org : user.username };
+      const userObj = { ...user };
       setState((ps) => ({
         user: { ...ps.user, ...userObj },
         isLoading: false,

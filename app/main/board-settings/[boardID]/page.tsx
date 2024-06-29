@@ -23,11 +23,11 @@ import { Input } from "@/components/ui/input";
 import { isEmpty } from "lodash";
 import Loader from "@/components/core/Loader";
 import { cn } from "@/lib/utils";
-import useNavigate from "@/hooks/useNavigate";
 import { PriorityType, StatusesType } from "@/types/pulseTypes";
 import CustomDiv from "@/components/core/CustomDiv";
 import useLoading from "@/hooks/useLoading";
 import BoardSkeletonLoader from "./components/BoardSkeletonLoader";
+import { useRouter } from "next/navigation";
 
 type BoardSettingsProps = {
   params: {
@@ -59,7 +59,7 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
     updateBoardState,
   } = useAuth();
 
-  const { navigate } = useNavigate();
+  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(boardSchema),
@@ -112,7 +112,7 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
       toast.success("Board updated successfully");
     }
 
-    navigate(`/`);
+    router.push(`/`);
   };
 
   return isLoading === true ? (

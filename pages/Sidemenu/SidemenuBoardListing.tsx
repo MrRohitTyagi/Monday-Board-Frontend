@@ -1,7 +1,6 @@
 "use client";
 
 import React, { memo } from "react";
-import useNavigate from "@/hooks/useNavigate";
 import { startCase } from "lodash";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -17,7 +16,6 @@ import { generatePictureFallback } from "@/utils/helperFunctions";
 type SidemenuBoardListingProps = { isCollapsed: boolean };
 
 const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
-  const { navigate } = useNavigate();
   const {
     user: { boards },
     isAuthenticated,
@@ -33,7 +31,7 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
         return (
           <div
             key={board._id + "side-board"}
-            onClick={() => navigate(`board/${board._id}`)}
+            onClick={() => router.push(`/main/board/${board._id}`)}
             className={cn(
               "single-board-row",
               "flex flex-row gap-2 items-center ",

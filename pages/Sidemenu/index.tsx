@@ -22,20 +22,19 @@ import {
 } from "lucide-react";
 import SidemenuBoardListing from "./SidemenuBoardListing";
 
-export const gertNavConfig = (org: string = "") => {
+export const gertNavConfig = () => {
   return [
     {
-      href: `/main/${org}`,
+      href: `/main`,
       label: "Home",
       icon: HomeIcon,
     },
     {
-      href: `/main/${org}/my-work`,
+      href: `/main/my-work`,
       label: "My Work",
       icon: BriefcaseBusiness,
     },
     { isDivider: true },
-    // { href: `/${org}/board`, label: "Board", icon: ClipboardList },
   ];
 };
 
@@ -44,9 +43,6 @@ type SideMenuProps = {};
 const SideMenu = ({}: SideMenuProps) => {
   const { isCollapsed, toggleSideMenu } = useSideMenu();
   const { isAuthenticated, isLoading } = useAuth();
-  const {
-    user: { org, username },
-  } = useAuth();
   const [selected, setSelected] = useState("");
   const pathname = usePathname();
 
@@ -55,8 +51,8 @@ const SideMenu = ({}: SideMenuProps) => {
   }, [pathname]);
 
   const navConfig = useMemo(() => {
-    return gertNavConfig(org || username);
-  }, [gertNavConfig, org]);
+    return gertNavConfig();
+  }, [gertNavConfig]);
 
   return (
     <div

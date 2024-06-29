@@ -2,7 +2,7 @@
 import React, { memo, useMemo } from "react";
 import { startCase } from "lodash";
 import Image from "next/image";
-import { Edit, Star, StarOff } from "lucide-react";
+import { Edit, Star } from "lucide-react";
 
 // UI elements
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/zstore";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import useNavigate from "@/hooks/useNavigate";
 import TooltipComp from "@/components/core/TooltipComp";
 import { BoardType } from "@/types/boardTypes";
 import { useConfig } from "@/store/configStore";
@@ -86,14 +85,14 @@ const BoardComp = ({ board }: { board: BoardType }) => {
   const { starBoard, unstarBoard, staredBoards } = useConfig();
 
   const isStared = staredBoards.includes(board._id);
-  const { navigate } = useNavigate();
   const router = useRouter();
+
   return (
     <Card
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
-        navigate(`board/${board._id}`);
+        router.push(`/main/board/${board._id}`);
       }}
       className={cn(
         "bg-transparent h-card-height w-card-width ",
