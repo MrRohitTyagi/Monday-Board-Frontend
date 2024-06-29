@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import React, { memo } from "react";
 import { baseCssMiniItems } from "../Pulse";
 import Loader from "@/components/core/Loader";
+import Space from "@/components/core/Space";
 
 const SprintSkeletonLoader = () => {
   return (
@@ -9,6 +10,7 @@ const SprintSkeletonLoader = () => {
       <div className="h-8 w-40 bg-main-bg animate-pulse items-center flex felx-row pl-2 rounded-md">
         {/* <Loader /> */}
       </div>
+      {/* <Space h={4} /> */}
       {[1, 2, 4].map((i) => {
         return (
           <div

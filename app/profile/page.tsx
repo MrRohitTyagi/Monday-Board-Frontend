@@ -17,17 +17,17 @@ const Profile = ({}: ProfileProps) => {
   return (
     <div
       className={cn(
-        "profile-right-content",
-        "p-4 grid grid-cols-2 gap-3",
+        "p-4 flex flex-row flex-wrap gap-3",
         "animate-fadeIn h-fit"
       )}
     >
       <div
         className={cn(
           "profile-user-top",
-          "border-main-bg border-2 rounded-lg h-fit",
-          "p-4 h-full"
+          "border-main-bg border-2 rounded-lg",
+          "p-4 grow overflow-hidden"
         )}
+        style={{ height: `${(user.boards.length + 1) * 3}rem` }}
       >
         <div className="flex flex-row gap-3">
           <div className="">
@@ -40,11 +40,13 @@ const Profile = ({}: ProfileProps) => {
         </div>
         <div className="flex flex-col gap-2"></div>
       </div>
+
       <div
+        style={{ height: `${(user.boards.length + 1) * 3}rem` }}
         className={cn(
           "profile-user-bottom",
-          "border-2 border-main-bg rounded-lg h-fit",
-          "p-4 flex flex-col gap-1"
+          "border-2 border-main-bg rounded-lg",
+          "p-4 flex flex-col gap-1 grow overflow-hidden"
         )}
       >
         <h1 className="px-2">Assigned Boards</h1>
@@ -53,9 +55,10 @@ const Profile = ({}: ProfileProps) => {
             <Button
               onClick={() => router.push(`/main/board/${board._id}`)}
               variant={"ghost"}
-              className={cn("px-2", "flex flex-row justify-start")}
+              className={cn("px-2", "flex flex-row justify-start gap-2")}
             >
-              <LowOpacityText className="text-start">
+              <AvatarComp src={board.picture} className="h-8 w-8" />
+              <LowOpacityText className="text-start line-clamp-1 overflow-hidden">
                 {board.title}
               </LowOpacityText>
             </Button>

@@ -45,7 +45,9 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
             <ProfileSideMenu />
           </div>
 
-          <div className="profile-right-content h-full">{children}</div>
+          <div className="profile-right-content h-full overflow-hidden">
+            {children}
+          </div>
         </div>
       </div>
     </div>
