@@ -163,9 +163,9 @@ const Pulse = ({
     []
   );
 
-  useEffect(() => {
-    setPulse(mainPulse);
-  }, [mainPulse]);
+  // useEffect(() => {
+  //   setPulse(mainPulse);
+  // }, []);
 
   const isPulseChatOpen = params?.pulse_id === pulse._id;
 

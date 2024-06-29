@@ -39,7 +39,7 @@ const Organisation = (props: pageProps) => {
   }, [boards, staredBoards]);
 
   return (
-    <div>
+    <div className="pt-2">
       <h2>
         Welcome! {startCase(username)} <br /> Quickly access your recent boards,
         Inbox and workspaces

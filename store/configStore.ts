@@ -79,7 +79,7 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
     setPriority: (priority_id, boardID) => {
       let isSame = false;
       setState((ps) => {
-        if (isEqual(ps.filters[boardID].priority, priority_id)) {
+        if (isEqual(ps.filters?.[boardID]?.priority, priority_id)) {
           isSame = true;
           return ps;
         }
@@ -98,7 +98,7 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
     setStatus: (status_id, boardID) => {
       let isSame = false;
       setState((ps) => {
-        if (isEqual(ps.filters[boardID].status, status_id)) {
+        if (isEqual(ps.filters?.[boardID]?.status, status_id)) {
           isSame = true;
           return ps;
         }
@@ -117,7 +117,7 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
     setSearch: (search, boardID) => {
       let isSame = false;
       setState((ps) => {
-        if (isEqual(ps.filters[boardID].search, search)) {
+        if (isEqual(ps.filters?.[boardID]?.search, search)) {
           isSame = true;
           return ps;
         }
