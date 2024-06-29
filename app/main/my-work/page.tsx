@@ -3,7 +3,6 @@
 import { getBoardPerUser } from "@/gateways/board-gateway";
 import useLoading from "@/hooks/useLoading";
 import React, { useEffect, useState } from "react";
-import BoardSkeletonLoader from "../board-settings/[boardID]/components/BoardSkeletonLoader";
 import SprintSkeletonLoader from "../board/[board]/components/SprintBlocks/SprintSkeletonLoader";
 import Space from "@/components/core/Space";
 import { BoardType } from "@/types/boardTypes";
@@ -15,14 +14,15 @@ import { useRouter } from "next/navigation";
 import { startCase } from "lodash";
 import { PulseType } from "@/types/pulseTypes";
 import SprintLeftColor from "../board/[board]/components/SprintBlocks/SprintLeftColor";
-import { Circle } from "lucide-react";
 import Divider from "@/components/core/Divider";
+import { useAuth } from "@/zstore";
 
 type MyWorkProps = {};
 const MyWork = ({}: MyWorkProps) => {
   const { isLoading, triggerLoading } = useLoading({ defaultLoading: true });
   const [myBoards, setMyBoards] = useState<BoardType[]>([]);
   const router = useRouter();
+  const { user } = useAuth();
 
   useEffect(() => {
     async function init() {
@@ -56,7 +56,7 @@ const MyWork = ({}: MyWorkProps) => {
                 "board-mywork-cont",
                 "relative h-fit px-2 py-4",
                 "border border-highlighter-dark",
-                "shrink-0"
+                "shrink-0 shadow-md shadow-[var(--main-bg)]"
               )}
             >
               <Button
@@ -81,6 +81,7 @@ const MyWork = ({}: MyWorkProps) => {
                     <>
                       {i > 0 && <Divider key={sprint._id} />}
                       {sprint.pulses.map((pulse: PulseType) => {
+                        if (!pulse.assigned.includes(user._id)) return null;
                         return (
                           <div
                             onClick={() => {
