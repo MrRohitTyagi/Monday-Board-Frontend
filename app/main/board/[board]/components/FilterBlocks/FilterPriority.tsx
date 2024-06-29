@@ -47,7 +47,7 @@ const FilterPriority = (props: FilterPriorityProps) => {
           className={cn(
             baseCssMiniItems(),
             "priority border-r-0 border-2 border-highlighter-dark",
-            "rounded-sm"
+            "rounded-sm !min-w-32 !max-w-32"
           )}
           style={{
             background: board?.priority?.[selectedPriority]?.color,

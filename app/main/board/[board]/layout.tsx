@@ -64,7 +64,7 @@ const Board = ({ params, children }: pageProps) => {
               >
                 <BoardTitle board={currentBoard} />
               </div>
-              <Space h={4} />
+              <Space h={2} />
               {/* Board filter */}
               <BoardFilter />
               <Space h={4} />

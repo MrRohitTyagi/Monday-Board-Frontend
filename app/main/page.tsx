@@ -3,9 +3,10 @@ import React, { memo, useMemo } from "react";
 import { startCase } from "lodash";
 import Image from "next/image";
 import { Edit, Star } from "lucide-react";
+import { motion } from "framer-motion";
 
 // UI elements
-import { Card, CardFooter, CardHeader } from "@/components/ui/card";
+import { CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 // utils
@@ -64,6 +65,7 @@ const MainPage = (props: pageProps) => {
     </div>
   );
 };
+
 const CreateNewBoard = () => {
   const router = useRouter();
   return (
@@ -88,7 +90,10 @@ const BoardComp = ({ board }: { board: BoardType }) => {
   const router = useRouter();
 
   return (
-    <Card
+    <motion.div
+      initial={{ scale: 0.8 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 0.2, ease: "linear" }}
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -98,7 +103,9 @@ const BoardComp = ({ board }: { board: BoardType }) => {
         "bg-transparent h-card-height w-card-width ",
         "p-2 border-border-light border-[1px] space-y-2",
         "transition-all cursor-pointer",
-        "hover:shadow-foreground shadow-lg"
+        "hover:shadow-foreground hover:shadow-lg ",
+        "rounded-lg",
+        "hover:!scale-[1.02]"
       )}
     >
       <CardHeader className="flex flex-row justify-center items-center p-0">
@@ -114,8 +121,10 @@ const BoardComp = ({ board }: { board: BoardType }) => {
 
       <CardFooter className="flex flex-col justify-start items-start p-0">
         <div className="flex flex-row justify-between w-full items-center">
-          <h3 className="text-ellipsis font-bold">{startCase(board.title)}</h3>
-          <div className="board-actions space-x-2">
+          <h3 className="text-ellipsis font-bold line-clamp-1 overflow-hidden">
+            {startCase(board.title)}
+          </h3>
+          <div className="board-actions space-x-2 flex flex-row items-center">
             {/* StarBoard  */}
             <TooltipComp
               className="px-3 py-2"
@@ -163,7 +172,7 @@ const BoardComp = ({ board }: { board: BoardType }) => {
         </div>
         {/* <h5>{board.description}</h5> */}
       </CardFooter>
-    </Card>
+    </motion.div>
   );
 };
 

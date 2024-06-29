@@ -60,7 +60,7 @@ export const useConfig = create<ConfigStoreType>((setState, getState) => {
     setUser: (user_id, boardID) => {
       let isSame = false;
       setState((ps) => {
-        if (isEqual(ps.filters[boardID].user, user_id)) {
+        if (isEqual(ps.filters?.[boardID]?.user, user_id)) {
           isSame = true;
           return ps;
         }

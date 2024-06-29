@@ -189,10 +189,10 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
         "border-border-light border-[1px]",
         "hover:bg-main-fg transition-all duration-150",
         "active:bg-highlighter-dark transition-all duration-150",
-        " rounded-br-lg animate-fadeIn"
+        "rounded-br-sm animate-fadeIn"
       )}
       onClick={handleCreateNewpulse}
-      disabled={isSubmitting}
+      // disabled={isSubmitting}
     >
       <div
         className={cn(

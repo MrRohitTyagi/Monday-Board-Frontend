@@ -74,7 +74,8 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
         <h2
           className={cn(
             "cursor-pointer text-xl flex gap-2 items-center",
-            "hover:bg-main-bg rounded"
+            "hover:bg-main-bg rounded",
+            "p-2"
           )}
         >
           {startCase(board.title)}

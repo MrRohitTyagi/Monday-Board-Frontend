@@ -61,7 +61,11 @@ const FilterUser = (props: FilterUserProps) => {
       }
       trigger={
         <Button
-          className="flex flex-row gap-2 items-center border-2 border-highlighter-dark"
+          className={cn(
+            "flex flex-row gap-2 items-center",
+            "border-2 border-highlighter-dark",
+            "rounded-sm"
+          )}
           variant={"ghost"}
         >
           {selectedUser ? (
