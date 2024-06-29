@@ -12,15 +12,15 @@ const className = "flex flex-row items-center justify-start w-full";
 const sideMenuButtons = [
   {
     label: "Profile",
-    href: "profile",
+    href: "/profile",
   },
   {
     label: "Password",
-    href: "profile/password",
+    href: "/profile/password",
   },
   {
     label: "Theme",
-    href: "profile/theme",
+    href: "/profile/theme",
   },
 ];
 const ProfileSideMenu = (props: ProfileSideMenuProps) => {

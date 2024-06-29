@@ -171,6 +171,14 @@ const config = {
             opacity: "0",
           },
         },
+        "layer-up": {
+          "0%": { top: "100%" },
+          "100%": { top: "0" },
+        },
+        "layer-down": {
+          "0%": { top: "0" },
+          "100%": { top: "100%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -178,6 +186,10 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
 
         fadeIn: "fadeIn 300ms ease-in-out forwards",
+
+        "layer-up": "layer-up 300ms ease-in-out forwards",
+        "layer-down": "layer-down 300ms ease-in-out forwards",
+
         "unmount-box": "unmount-box 500ms ease-in-out forwards",
 
         "pulse-layer": "pulse-layer 150ms ease-in-out forwards",
