@@ -227,7 +227,7 @@ const config = {
         },
         ".w-col": {
           display: "flex",
-          "flex-direction": "row",
+          "flex-direction": "column",
           "align-items": "center",
         },
         ".mask-bottom-blur": {

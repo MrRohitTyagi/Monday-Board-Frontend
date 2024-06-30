@@ -40,7 +40,7 @@ const Board = ({ params, children }: pageProps) => {
     await deleteSingleSprint(sprintID);
     setCurrentBoard((pb) => ({
       ...pb,
-      sprints: pb.sprints.filter((s) => s != sprintID),
+      sprints: pb.sprints.filter((s) => s._id != sprintID),
     }));
   }, []);
 
@@ -77,13 +77,15 @@ const Board = ({ params, children }: pageProps) => {
             </div>
             <div>
               {/* //  Board Content  */}
-              <SelectedPulseContext.Provider value={selectedPulseMethods}>
+              <SelectedPulseContext.Provider
+                value={selectedPulseMethods as any}
+              >
                 <div className="flex flex-col gap-6 sprint-container">
-                  {currentBoard.sprints.map((sprintID) => {
+                  {currentBoard.sprints.map((sprint) => {
                     return (
                       <Sprint
-                        key={sprintID}
-                        sprintID={sprintID}
+                        key={sprint._id}
+                        sprintID={sprint._id}
                         board={currentBoard}
                       />
                     );

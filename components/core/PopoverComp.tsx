@@ -1,13 +1,14 @@
 import React, { memo } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
+import { PopoverContentProps } from "@radix-ui/react-popover";
 
 type PopoverCompProps = {
   trigger: React.ReactNode;
   content: React.ReactNode;
   additional?: {
     trigger?: any;
-    content?: any;
+    content?: PopoverContentProps;
   };
   classNames?: {
     trigger?: string;

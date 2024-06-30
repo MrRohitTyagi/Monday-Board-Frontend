@@ -1,4 +1,5 @@
 import { PriorityType, StatusesType } from "./pulseTypes";
+import { SprintType } from "./sprintTypes";
 import { UserType } from "./userTypes";
 
 export type BoardType = {
@@ -11,5 +12,5 @@ export type BoardType = {
   members: UserType[];
   statuses: StatusesType;
   priority: PriorityType;
-  sprints: string[];
+  sprints: SprintType[];
 };

@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
-import Space from "@/components/core/Space";
 import { Button } from "@/components/ui/button";
 import { SelectedPulseContext } from "@/hooks/useSelectedPulses";
 import { cn } from "@/lib/utils";
-import { keys } from "lodash";
+import { keys, startCase } from "lodash";
 import { SquareArrowRight, Trash2, X } from "lucide-react";
 import Loader from "@/components/core/Loader";
+import PopoverComp from "@/components/core/PopoverComp";
+import useBoardContext from "@/hooks/useBoardContext";
+import { useAuth } from "@/zstore";
 
 type SelectedPulsePopupProps = {};
 const commonBoxStyle = cn(
@@ -27,6 +29,7 @@ const SelectedPulsePopup = (props: SelectedPulsePopupProps) => {
     moveFromTo,
   } = useContext(SelectedPulseContext);
 
+  const { user } = useAuth();
   const disabled = isSaving || isDeleting;
 
   return keys(selected).length > 0 ? (
@@ -59,26 +62,67 @@ const SelectedPulsePopup = (props: SelectedPulsePopupProps) => {
           <h1 className="">Items selected</h1>
         </div>
 
-        {/* /////////////////////////////////////////////////// */}
-        <Button
-          disabled={disabled}
-          onClick={() => {
-            moveFromTo("TODO");
+        {/* ///////////////////////MOVE TO//////////////////////////// */}
+
+        <PopoverComp
+          additional={{ content: { side: "top" } }}
+          classNames={{
+            content:
+              "bg-main-bg p-0 text-color w-fit shadow-2xl shadow-main-fg",
           }}
-          variant="ghost"
-          className={cn(commonBoxStyle)}
-        >
-          {isSaving ? (
-            <Loader className="h-5 w-5" />
-          ) : (
-            <SquareArrowRight
-              size={20}
-              className="group-hover:stroke-highlighter"
-            />
-          )}
-          <h1 className="text-sm">{isSaving ? "Moving.." : "Move to"}</h1>
-        </Button>
-        {/* /////////////////////////////////////////////////// */}
+          content={
+            <div className={cn("move-to-cont")}>
+              <div className="p-2 w-full w-col gap-2 px-4">
+                {user.boards.map((board) => {
+                  return board.sprints.map((sprint) => {
+                    return (
+                      <Button
+                        key={sprint._id}
+                        onClick={() => {
+                          moveFromTo(sprint._id);
+                        }}
+                        className={cn(
+                          "w-full w-row",
+                          "hover:bg-main-fg ",
+                          "gap-2 justify-start"
+                        )}
+                        variant="ghost"
+                      >
+                        <div
+                          className="rounded-full h-3 w-3"
+                          style={{ background: sprint.color }}
+                        />
+                        <h1>{startCase(sprint.title)}</h1>
+                      </Button>
+                    );
+                  });
+                })}
+              </div>
+            </div>
+          }
+          trigger={
+            <Button
+              disabled={disabled}
+              //   onClick={() => {
+              //     moveFromTo("TODO");
+              //   }}
+              variant="ghost"
+              className={cn(commonBoxStyle)}
+            >
+              {isSaving ? (
+                <Loader className="h-5 w-5" />
+              ) : (
+                <SquareArrowRight
+                  size={20}
+                  className="group-hover:stroke-highlighter"
+                />
+              )}
+              <h1 className="text-sm">{isSaving ? "Moving.." : "Move to"}</h1>
+            </Button>
+          }
+        />
+
+        {/* ///////////////////////// DELETE ////////////////////////// */}
 
         <Button
           disabled={disabled}

@@ -7,7 +7,10 @@ import { deleteBulkPulses } from "@/gateways/pulse-gateway";
 import { keys } from "lodash";
 import useLoading from "./useLoading";
 import { waitfor } from "@/lib/utils";
-import { deletePulseInSprint } from "@/utils/customEvents";
+import {
+  deletePulseInSprint,
+  moveFromOneToOtherSprint,
+} from "@/utils/customEvents";
 import { StateSetter } from "@/types/genericTypes";
 import { useSelectedStore } from "@/store/useSelectedStore";
 
@@ -29,10 +32,6 @@ const SelectedPulseContext = createContext<SelectedPulsesType>(
   {} as SelectedPulsesType
 );
 const useSelectedPulses = () => {
-  // const [selectedPulses, setSelectedPulses] = useState<{
-  //   [key: string]: PulseTypwWithSprint;
-  // }>({});
-
   const { selectedPulses, setSelectedPulses } = useSelectedStore();
 
   const { isDeleting, isSaving, triggerDeleting, triggerSaving } = useLoading(
@@ -54,11 +53,7 @@ const useSelectedPulses = () => {
     setSelectedPulses(() => ({}));
   }, []);
 
-  const deleteAllSelected = useCallback(async () => {
-    triggerDeleting(true);
-    // await waitfor();
-    await deleteBulkPulses(keys(selectedPulses));
-
+  const emitDeleteFromSprints = useCallback(() => {
     const sprintsToEmitData: {
       [key: string]: string[];
     } = {};
@@ -75,6 +70,13 @@ const useSelectedPulses = () => {
     for (const sprintID in sprintsToEmitData) {
       deletePulseInSprint(sprintID, sprintsToEmitData[sprintID]);
     }
+  }, [selectedPulses]);
+
+  const deleteAllSelected = useCallback(async () => {
+    triggerDeleting(true);
+    // await waitfor();
+    await deleteBulkPulses(keys(selectedPulses));
+    emitDeleteFromSprints();
 
     setSelectedPulses(() => ({}));
     triggerDeleting(false);
@@ -83,8 +85,13 @@ const useSelectedPulses = () => {
   const moveFromTo = useCallback(
     async (toSprint: string) => {
       triggerSaving(true);
-      await waitfor();
 
+      // await waitfor();
+
+      emitDeleteFromSprints();
+      moveFromOneToOtherSprint(toSprint, selectedPulses);
+
+      setSelectedPulses(() => ({}));
       triggerSaving(false);
     },
     [selectedPulses]

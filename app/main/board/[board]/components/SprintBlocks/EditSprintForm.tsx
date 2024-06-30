@@ -45,9 +45,9 @@ const EditSprintForm = ({
   }, [sprint]);
 
   const addSprintToCurrentBoard = useCallback(
-    (sprint: any) => {
+    (sprint: SprintType) => {
       setCurrentBoard((prevBoard) => {
-        return { ...prevBoard, sprints: [sprint._id, ...prevBoard.sprints] };
+        return { ...prevBoard, sprints: [sprint, ...prevBoard.sprints] };
       });
     },
     [setCurrentBoard]

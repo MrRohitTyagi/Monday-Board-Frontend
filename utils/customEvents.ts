@@ -15,3 +15,10 @@ export function deletePulseInSprint(sprint_id: string, pulses: string[]) {
   });
   document.dispatchEvent(event);
 }
+
+export function moveFromOneToOtherSprint(sprint_id: string, payload: any) {
+  const event = new CustomEvent(`MOVE_TO_SPRINT_${sprint_id}`, {
+    detail: payload,
+  });
+  document.dispatchEvent(event);
+}

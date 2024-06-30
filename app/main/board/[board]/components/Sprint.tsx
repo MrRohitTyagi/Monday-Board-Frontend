@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { startCase } from "lodash";
+import { keys, startCase, uniqBy, values } from "lodash";
 
 import Space from "@/components/core/Space";
 
@@ -63,15 +63,28 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
       }));
     }
 
+    function handleMoveTo({ detail }: any) {
+      // const pulseIDs = keys(detail);
+      const pulseObjs = values(detail);
+
+      setSprint((ps) => {
+        const pulses = uniqBy([...ps.pulses, ...pulseObjs], "_id");
+        return { ...ps, pulses: pulses };
+      });
+    }
+
     document.addEventListener(
       `DELETE_PULSE_IN_SPRINT_${sprintID}`,
       deletePulse
     );
-    return () =>
+    document.addEventListener(`MOVE_TO_SPRINT_${sprintID}`, handleMoveTo);
+    return () => {
       document.removeEventListener(
         `DELETE_PULSE_IN_SPRINT_${sprintID}`,
         deletePulse
       );
+      document.removeEventListener(`MOVE_TO_SPRINT_${sprintID}`, handleMoveTo);
+    };
   }, [sprintID]);
 
   return isloading === true ? (
