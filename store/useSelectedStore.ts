@@ -2,11 +2,13 @@ import { PulseType } from "@/types/pulseTypes";
 import { create } from "zustand";
 
 type PulseTypwWithSprint = PulseType & { sprintID: string };
-type cc = { [key: string]: PulseTypwWithSprint };
+type selectedPulsesType = { [key: string]: PulseTypwWithSprint };
 
 type useSelectedStoreType = {
-  selectedPulses: cc;
-  setSelectedPulses: (state: (e: cc) => cc) => void;
+  selectedPulses: selectedPulsesType;
+  setSelectedPulses: (
+    state: (e: selectedPulsesType) => selectedPulsesType
+  ) => void;
 };
 
 export const useSelectedStore = create<useSelectedStoreType>(
