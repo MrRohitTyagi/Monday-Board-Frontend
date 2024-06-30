@@ -87,8 +87,13 @@ const Pulse = ({
   const router = useRouter();
   const params = useParams();
 
-  const { selected, handleSelect, handleUnSelect, isDeleting } =
-    useContext(SelectedPulseContext);
+  const {
+    selected,
+    setSelectedPulses,
+    isDeleting,
+    handleSelect,
+    handleUnSelect,
+  } = useContext(SelectedPulseContext);
 
   const debouncePulseUpdate = (data: any) => {
     clearTimeout(debounceRef.current);
@@ -202,6 +207,12 @@ const Pulse = ({
     });
   }, [configPriority, configSearch, configStatus, configUser, isFake, pulse]);
 
+  const allSelectedOfASprint = useMemo(() => {
+    return (
+      sprint.pulses.length > 0 && !!sprint.pulses.every((p) => selected[p._id])
+    );
+  }, [selected, sprint.pulses]);
+
   return (
     <div
       className={cn(
@@ -252,10 +263,26 @@ const Pulse = ({
               )}
             >
               <Checkbox
-                disabled={isFake === true}
-                checked={!!selected[pulse._id]}
+                disabled={sprint.pulses.length === 0}
+                checked={
+                  isFake === true ? allSelectedOfASprint : !!selected[pulse._id]
+                }
                 onCheckedChange={(e) => {
-                  if (e === true) {
+                  if (isFake && allSelectedOfASprint === true) {
+                    setSelectedPulses((ps) => {
+                      const obj = { ...ps };
+                      sprint.pulses.forEach((p) => {
+                        delete obj[p._id];
+                      });
+                      return { ...obj };
+                    });
+                  } else if (isFake) {
+                    const allPulses = sprint.pulses.reduce((acc: any, p) => {
+                      acc[p._id] = { ...p, sprintID: sprint._id };
+                      return acc;
+                    }, {});
+                    setSelectedPulses((ps) => ({ ...ps, ...allPulses }));
+                  } else if (e === true) {
                     handleSelect({ ...pulse, sprintID: sprint._id });
                   } else {
                     handleUnSelect(pulse._id);

@@ -8,11 +8,14 @@ import { keys } from "lodash";
 import useLoading from "./useLoading";
 import { waitfor } from "@/lib/utils";
 import { deletePulseInSprint } from "@/utils/customEvents";
+import { StateSetter } from "@/types/genericTypes";
+import { useSelectedStore } from "@/store/useSelectedStore";
 
 type PulseTypwWithSprint = PulseType & { sprintID: string };
 
 type SelectedPulsesType = {
   selected: { [key: string]: PulseTypwWithSprint };
+  setSelectedPulses: StateSetter<{ [key: string]: PulseTypwWithSprint }>;
   handleSelect: (p: PulseTypwWithSprint) => void;
   handleUnSelect: (p: string) => void;
   unSelectAll: () => void;
@@ -26,9 +29,11 @@ const SelectedPulseContext = createContext<SelectedPulsesType>(
   {} as SelectedPulsesType
 );
 const useSelectedPulses = () => {
-  const [selectedPulses, setSelectedPulses] = useState<{
-    [key: string]: PulseTypwWithSprint;
-  }>({});
+  // const [selectedPulses, setSelectedPulses] = useState<{
+  //   [key: string]: PulseTypwWithSprint;
+  // }>({});
+
+  const { selectedPulses, setSelectedPulses } = useSelectedStore();
 
   const { isDeleting, isSaving, triggerDeleting, triggerSaving } = useLoading(
     {}
@@ -46,7 +51,7 @@ const useSelectedPulses = () => {
   }, []);
 
   const unSelectAll = useCallback(() => {
-    setSelectedPulses({});
+    setSelectedPulses(() => ({}));
   }, []);
 
   const deleteAllSelected = useCallback(async () => {
@@ -71,7 +76,7 @@ const useSelectedPulses = () => {
       deletePulseInSprint(sprintID, sprintsToEmitData[sprintID]);
     }
 
-    setSelectedPulses({});
+    setSelectedPulses(() => ({}));
     triggerDeleting(false);
   }, [selectedPulses]);
 
@@ -94,6 +99,7 @@ const useSelectedPulses = () => {
     isDeleting,
     isSaving,
     moveFromTo,
+    setSelectedPulses,
   };
 };
 
