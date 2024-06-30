@@ -4,6 +4,7 @@ import React, {
   createContext,
   memo,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -32,6 +33,12 @@ import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 import { useAuth } from "@/zstore";
 import { useConfig } from "@/store/configStore";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import Space from "@/components/core/Space";
+import Divider from "@/components/core/Divider";
+import useSelectedPulses, {
+  SelectedPulseContext,
+} from "@/hooks/useSelectedPulses";
 
 type PulseProps = {
   pulse: PulseType;
@@ -79,6 +86,9 @@ const Pulse = ({
   const debounceRef = useRef<any>();
   const router = useRouter();
   const params = useParams();
+
+  const { selected, handleSelect, handleUnSelect } =
+    useContext(SelectedPulseContext);
 
   const debouncePulseUpdate = (data: any) => {
     clearTimeout(debounceRef.current);
@@ -220,15 +230,41 @@ const Pulse = ({
               ? "animate-pulse-height-rev"
               : "animate-pulse-height",
             "flex flex-row items-center justify-start h-full",
-            "bg-main-bg pl-2",
-            "border-border-light border-[1px]",
-            isFake === false && "hover:bg-main-fg transition-all duration-150",
+            "bg-main-bg  transition-all duration-150",
+            "border-border-light border",
+            isFake === false && !selected[pulse._id] && "hover:bg-main-fg",
+            !!selected[pulse._id] && "bg-highlighter-dark",
             "transition-all duration-150",
             isPulseChatOpen && "!bg-highlighter-dark",
+            leftPart === false && "border-l-0",
             "relative",
             "group"
           )}
         >
+          {leftPart === true && (
+            <div
+              className={cn(
+                "pulse-selector",
+                "w-10 h-full px-2 mr-2",
+                "border-0 border-r-1 border-r-border-light",
+                "flex flex-row items-center justify-center"
+              )}
+            >
+              <Checkbox
+                disabled={isFake === true}
+                checked={!!selected[pulse._id]}
+                onCheckedChange={(e) => {
+                  if (e === true) {
+                    handleSelect(pulse);
+                  } else {
+                    handleUnSelect(pulse._id);
+                  }
+                }}
+                className="border border-border-light"
+              />
+              <Divider />
+            </div>
+          )}
           {/* Pulse title  */}
           {leftPart === true && isFake ? (
             <h2

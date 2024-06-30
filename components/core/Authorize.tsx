@@ -7,7 +7,6 @@ import { getToken } from "@/utils/cookie";
 import { useRouter } from "next/navigation";
 import { ChildrenType } from "@/types/genericTypes";
 import useTheme from "@/hooks/useTheme";
-import { useConfig } from "@/store/configStore";
 
 type AuthorizeTypes = ChildrenType & {};
 
@@ -15,8 +14,6 @@ const Authorize = ({ children }: AuthorizeTypes) => {
   const { isLoading, fetchUser, notAuthenticated } = useAuth();
   const router = useRouter();
   const { applyTheme } = useTheme();
-  const { ...all } = useConfig();
-  console.log("all", all);
 
   const logout = useCallback((data: any) => {
     router.replace("/login");

@@ -11,6 +11,10 @@ import { BoardContext } from "@/hooks/useBoardContext";
 import BoardFilter from "./components/BoardBlocks/BoardFilter";
 import { BoardType } from "@/types/boardTypes";
 import { deleteSingleSprint } from "@/gateways/sprint-gateway";
+import useSelectedPulses, {
+  SelectedPulseContext,
+} from "@/hooks/useSelectedPulses";
+import SelectedPulsePopup from "./components/BoardBlocks/SelectedPulsePopup";
 
 type pageProps = {
   params: { board: string; organisation: string };
@@ -20,6 +24,8 @@ type pageProps = {
 const Board = ({ params, children }: pageProps) => {
   const [currentBoard, setCurrentBoard] = useState<BoardType>({} as BoardType);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { selected, handleSelect, handleUnSelect } = useSelectedPulses();
 
   useEffect(() => {
     async function init() {
@@ -71,18 +77,23 @@ const Board = ({ params, children }: pageProps) => {
             </div>
             <div>
               {/* //  Board Content  */}
-              <div className="flex flex-col gap-6 sprint-container">
-                {currentBoard.sprints.map((sprintID) => {
-                  return (
-                    <Sprint
-                      key={sprintID}
-                      sprintID={sprintID}
-                      board={currentBoard}
-                    />
-                  );
-                })}
-                <Space h={4} />
-              </div>
+              <SelectedPulseContext.Provider
+                value={{ selected, handleSelect, handleUnSelect }}
+              >
+                <div className="flex flex-col gap-6 sprint-container">
+                  {currentBoard.sprints.map((sprintID) => {
+                    return (
+                      <Sprint
+                        key={sprintID}
+                        sprintID={sprintID}
+                        board={currentBoard}
+                      />
+                    );
+                  })}
+                  <Space h={4} />
+                </div>
+                <SelectedPulsePopup />
+              </SelectedPulseContext.Provider>
             </div>
           </>
         </BoardContext.Provider>

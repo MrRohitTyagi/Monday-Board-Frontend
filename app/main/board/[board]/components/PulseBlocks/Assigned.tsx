@@ -84,11 +84,6 @@ const Assigned = ({ board, pulse }: AssignedProps) => {
     );
   }, [membersAndAdmins, pulse.assigned]);
 
-  console.log(
-    `%c assignedUsers `,
-    "color: green;border:1px solid green",
-    assignedUsers
-  );
   useEffect(() => {
     setAssignedUsers(
       membersAndAdmins.filter((u) => pulse.assigned.includes(u._id))

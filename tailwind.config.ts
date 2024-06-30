@@ -179,6 +179,12 @@ const config = {
           "0%": { top: "0" },
           "100%": { top: "100%" },
         },
+        "selected-pupup-up": {
+          //
+          "0%": { bottom: "-4rem" },
+          "100%": { bottom: "5rem" },
+        },
+      
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -189,6 +195,8 @@ const config = {
 
         "layer-up": "layer-up 300ms ease-in-out forwards",
         "layer-down": "layer-down 300ms ease-in-out forwards",
+
+        "selected-pupup-up": "selected-pupup-up 300ms ease-in-out forwards",
 
         "unmount-box": "unmount-box 500ms ease-in-out forwards",
 
