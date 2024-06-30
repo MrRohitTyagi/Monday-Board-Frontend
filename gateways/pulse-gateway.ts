@@ -11,6 +11,11 @@ async function getPulse(id: string): Promise<PulseType> {
 async function deleteSinglePulse(id: string) {
   await axiosInstance().delete(`${PULSE_BASE_URL}/delete/${id}`);
 }
+async function deleteBulkPulses(payload: string[]) {
+  await axiosInstance().delete(`${PULSE_BASE_URL}/delete-bulk/`, {
+    data: { pulses: payload },
+  });
+}
 async function updatePulse(payload: any): Promise<PulseType> {
   const { data } = await axiosInstance().put(
     `${PULSE_BASE_URL}/update/${payload._id}`,
@@ -26,4 +31,10 @@ async function createPulse(payload: any): Promise<PulseType> {
   return data.response;
 }
 
-export { getPulse, deleteSinglePulse, updatePulse, createPulse };
+export {
+  getPulse,
+  deleteSinglePulse,
+  updatePulse,
+  createPulse,
+  deleteBulkPulses,
+};

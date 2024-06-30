@@ -87,7 +87,7 @@ const Pulse = ({
   const router = useRouter();
   const params = useParams();
 
-  const { selected, handleSelect, handleUnSelect } =
+  const { selected, handleSelect, handleUnSelect, isDeleting } =
     useContext(SelectedPulseContext);
 
   const debouncePulseUpdate = (data: any) => {
@@ -224,7 +224,8 @@ const Pulse = ({
           deletePulse,
         }}
       >
-        <div
+        <CustomDiv
+          disabled={isDeleting}
           className={cn(
             isFake === false && hideRef.current === true
               ? "animate-pulse-height-rev"
@@ -255,7 +256,7 @@ const Pulse = ({
                 checked={!!selected[pulse._id]}
                 onCheckedChange={(e) => {
                   if (e === true) {
-                    handleSelect(pulse);
+                    handleSelect({ ...pulse, sprintID: sprint._id });
                   } else {
                     handleUnSelect(pulse._id);
                   }
@@ -360,7 +361,7 @@ const Pulse = ({
               )}
             </div>
           )}
-        </div>
+        </CustomDiv>
       </PulseContext.Provider>
     </div>
   );

@@ -25,7 +25,7 @@ const Board = ({ params, children }: pageProps) => {
   const [currentBoard, setCurrentBoard] = useState<BoardType>({} as BoardType);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { selected, handleSelect, handleUnSelect } = useSelectedPulses();
+  const selectedPulseMethods = useSelectedPulses();
 
   useEffect(() => {
     async function init() {
@@ -77,9 +77,7 @@ const Board = ({ params, children }: pageProps) => {
             </div>
             <div>
               {/* //  Board Content  */}
-              <SelectedPulseContext.Provider
-                value={{ selected, handleSelect, handleUnSelect }}
-              >
+              <SelectedPulseContext.Provider value={selectedPulseMethods}>
                 <div className="flex flex-col gap-6 sprint-container">
                   {currentBoard.sprints.map((sprintID) => {
                     return (

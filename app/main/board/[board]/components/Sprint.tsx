@@ -55,6 +55,25 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
     })();
   }, [sprintID]);
 
+  useEffect(() => {
+    function deletePulse({ detail: pulseIDs }: any) {
+      setSprint((ps) => ({
+        ...ps,
+        pulses: ps.pulses.filter((p) => !pulseIDs.includes(p._id)),
+      }));
+    }
+
+    document.addEventListener(
+      `DELETE_PULSE_IN_SPRINT_${sprintID}`,
+      deletePulse
+    );
+    return () =>
+      document.removeEventListener(
+        `DELETE_PULSE_IN_SPRINT_${sprintID}`,
+        deletePulse
+      );
+  }, [sprintID]);
+
   return isloading === true ? (
     <SprintSkeletonLoader />
   ) : (
@@ -192,7 +211,7 @@ const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
         "rounded-br-sm animate-fadeIn"
       )}
       onClick={handleCreateNewpulse}
-      // disabled={isSubmitting}
+      disabled={isSubmitting}
     >
       <div
         className={cn(
