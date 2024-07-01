@@ -5,7 +5,7 @@ export function getToken() {
 }
 export function setToken(token: string) {
   deleteToken();
-  Cookie.set("authToken", token);
+  Cookie.set("authToken", token, { expires: 30 });
 }
 export function deleteToken() {
   Cookie.remove("authToken");
