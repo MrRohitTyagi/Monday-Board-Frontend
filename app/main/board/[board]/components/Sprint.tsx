@@ -62,12 +62,6 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
           (p) => !pulseIDs.includes(p._id)
         );
 
-        const payload = {
-          _id: sprintID,
-          pulses: filteredPulses.map((p) => p._id),
-        };
-
-        updateSprint(payload);
         return {
           ...ps,
           pulses: filteredPulses,
@@ -81,13 +75,6 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
 
       setSprint((ps) => {
         const pulses = uniqBy([...ps.pulses, ...pulseObjs], "_id");
-
-        const payload = {
-          _id: sprintID,
-          pulses: pulses.map((p) => p._id),
-        };
-
-        updateSprint(payload);
         return { ...ps, pulses: pulses };
       });
     }

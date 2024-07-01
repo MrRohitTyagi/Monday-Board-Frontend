@@ -3,8 +3,8 @@
 import { createContext, useCallback, useMemo, useState } from "react";
 
 import { PulseType } from "@/types/pulseTypes";
-import { deleteBulkPulses } from "@/gateways/pulse-gateway";
-import { keys } from "lodash";
+import { deleteBulkPulses, moveBulkPulses } from "@/gateways/pulse-gateway";
+import { keys, values } from "lodash";
 import useLoading from "./useLoading";
 import { waitfor } from "@/lib/utils";
 import {
@@ -92,6 +92,15 @@ const useSelectedPulses = () => {
       emitDeleteFromSprints();
       moveFromOneToOtherSprint(toSprint, selectedPulses);
 
+      const apiPayload = {
+        toSprint: toSprint,
+        pulses: values(selectedPulses).map((p) => ({
+          _id: p._id,
+          sprintID: p.sprintID,
+        })),
+      };
+
+      moveBulkPulses(apiPayload);
       setSelectedPulses(() => ({}));
       triggerSaving(false);
     },
