@@ -13,6 +13,7 @@ import { verifyOTP } from "@/gateways/email-gateway";
 import {
   checkOTPAndChangePass,
   checkPassAndSendOTP,
+  resendOTP,
 } from "@/gateways/auth-gateway";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -107,6 +108,9 @@ const Password = (props: PasswordProps) => {
                     OTP sent to your regestered email
                   </Label>
                   <InputOTP
+                    ref={(e) => {
+                      e?.focus();
+                    }}
                     maxLength={6}
                     pattern="^[0-9]+$"
                     value={otp}
@@ -123,19 +127,26 @@ const Password = (props: PasswordProps) => {
                       <InputOTPSlot index={5} />
                     </InputOTPGroup>
                   </InputOTP>
-                  <div className="w-full">
-                    <h1
+                  <div className="w-full text-center">
+                    <Button
+                      onClick={resendOTP}
+                      type="button"
+                      variant={"ghost"}
                       className={cn(
                         "text-indigo-2  00 cursor-pointer",
                         "text-sm underline underline-offset-2"
                       )}
                     >
                       Resend OTP
-                    </h1>
+                    </Button>
                   </div>
                 </div>
               )}
-              <Button type="submit" className="w-full">
+              <Button
+                disabled={form.formState.isSubmitting}
+                type="submit"
+                className="w-full"
+              >
                 {otpSent ? "Change Password" : "Send OTP"}
               </Button>
             </div>

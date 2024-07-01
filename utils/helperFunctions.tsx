@@ -1,5 +1,5 @@
 function generatePictureFallback(str = "") {
-  return str.charAt(0) + str.charAt(str.length - 1);
+  return (str.charAt(0) + str.charAt(str.length - 1)).toUpperCase();
 }
 
 function formatDate(date: Date, onlyDate?: boolean): string {

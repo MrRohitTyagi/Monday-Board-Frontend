@@ -11,6 +11,9 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useAuth } from "@/zstore";
 import { usePathname, useRouter } from "next/navigation";
+import { deleteToken } from "@/utils/cookie";
+import { generatePictureFallback } from "@/utils/helperFunctions";
+import AvatarComp from "@/components/core/AvatarComp";
 // import { Button } from "@/components/ui/button";
 
 type UserProfileProps = {};
@@ -26,16 +29,10 @@ const UserProfile = (props: UserProfileProps) => {
     <Popover open={open} onOpenChange={setopen}>
       <PopoverTrigger>
         <div className="h-8 w-8 overflow-hidden rounded-full">
-          <Image
-            width={8}
-            height={8}
+          <AvatarComp
             className="w-full h-full"
-            unoptimized
-            alt={"NA"}
-            src={
-              user.picture ||
-              "https://res.cloudinary.com/derplm8c6/image/upload/v1718526303/dkm7ezl1whano6p8osei.png"
-            }
+            fallback={generatePictureFallback(user.username)}
+            src={user.picture}
           />
         </div>
       </PopoverTrigger>
@@ -62,9 +59,13 @@ const UserProfile = (props: UserProfileProps) => {
           )}
           <Button
             onClick={() => {
+              deleteToken();
               router.replace("/login");
               setopen(false);
-              notAuthenticated();
+              const id = setTimeout(() => {
+                notAuthenticated();
+                clearTimeout(id);
+              }, 700);
             }}
             className={cn(
               "logout ",

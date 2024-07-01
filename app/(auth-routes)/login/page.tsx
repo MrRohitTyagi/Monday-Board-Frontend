@@ -109,7 +109,10 @@ const LoginComponent = () => {
                 <FormField
                   key={f.name}
                   control={form.control}
-                  disabled={form.formState.isSubmitting}
+                  disabled={
+                    form.formState.isSubmitting ||
+                    form.formState.isSubmitSuccessful
+                  }
                   name={f.name}
                   render={({ field }) => (
                     <FormItem className="w-full">
