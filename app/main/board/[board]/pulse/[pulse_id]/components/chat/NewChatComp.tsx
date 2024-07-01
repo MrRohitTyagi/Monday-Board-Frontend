@@ -77,10 +77,6 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
     });
   }, [text, writeWithAI]);
 
-  // const handleKeyDown = useCallback(() => {
-  //   handleCreateNew();
-  // }, [handleCreateNew]);
-
   return (
     <>
       <OutsideClickBox
@@ -96,6 +92,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
         {isEditing ? (
           <div className=" animate-fadeIn">
             <HTMLEditor
+              isNew={true}
               key={"new-chat" + String(isWritting) + len}
               initialContent={text}
               onContentChange={(e, mentions) => {
@@ -104,25 +101,6 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
                 saveToLocal(e);
               }}
             />
-            {/* <Textarea
-              dynamicHeight={true}
-              disabled={isSaving}
-              handleCtrlEnter={handleKeyDown}
-              ref={(e) => {
-                e?.focus();
-              }}
-              value={text}
-              onChange={(e) => {
-                settext(e.target.value);
-                saveToLocal(e.target.value);
-              }}
-              placeholder="Write an update ..."
-              className={cn(
-                "w-full opacity-80",
-                "shrink-0",
-                "border-highlighter border"
-              )}
-            /> */}
           </div>
         ) : (
           <Input

@@ -11,6 +11,7 @@ import { getChats } from "@/gateways/chat-gateway";
 import NewChatComp from "./components/chat/NewChatComp";
 import { PulseType } from "@/types/pulseTypes";
 import { ChatType } from "@/types/chatTypes";
+import NoChatsPlaceholder from "./components/chat/NoChatsPlaceholder";
 
 type PulseChatMainType = {
   params: {
@@ -62,17 +63,21 @@ const PulseChatMain = ({ params }: PulseChatMainType) => {
           >
             <Space />
             <NewChatComp setChats={setChats} pulse={pulse} />
-            {chats.map((chat, i) => {
-              return (
-                <SingleChatBox
-                  key={chat._id + "chat"}
-                  chat={chat}
-                  pulse={pulse}
-                  setChats={setChats}
-                  // setPulse={setPulse}
-                />
-              );
-            })}
+            {chats.length === 0 ? (
+              <NoChatsPlaceholder />
+            ) : (
+              chats.map((chat, i) => {
+                return (
+                  <SingleChatBox
+                    key={chat._id + "chat"}
+                    chat={chat}
+                    pulse={pulse}
+                    setChats={setChats}
+                    // setPulse={setPulse}
+                  />
+                );
+              })
+            )}
           </div>
         </>
       )}

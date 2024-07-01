@@ -14,12 +14,14 @@ type HTMLEditor = {
   initialContent: string;
   placeholder?: string;
   onContentChange: (e: string, m: any) => void;
+  isNew?: boolean;
 };
 
 const HTMLEditor = ({
   initialContent = "",
   onContentChange,
   placeholder,
+  isNew,
 }: HTMLEditor) => {
   const dbRef = useRef<any>();
 
@@ -96,6 +98,11 @@ const HTMLEditor = ({
     <Editor
       onFocus={() => {}}
       onBlur={() => {}}
+      ref={(e) => {
+        if (isNew) {
+          e?.focusEditor();
+        }
+      }}
       mention={mentions}
       placeholder={placeholder}
       editorState={editorState}
