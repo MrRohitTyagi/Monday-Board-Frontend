@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 import Pulse from "./Pulse";
 import ScrollWrapper from "@/components/core/ScrollWrapper";
-import { getSprint } from "@/gateways/sprint-gateway";
+import { getSprint, updateSprint } from "@/gateways/sprint-gateway";
 import { Plus } from "lucide-react";
 import { createPulse } from "@/gateways/pulse-gateway";
 import Loader from "@/components/core/Loader";
@@ -57,10 +57,22 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
 
   useEffect(() => {
     function deletePulse({ detail: pulseIDs }: any) {
-      setSprint((ps) => ({
-        ...ps,
-        pulses: ps.pulses.filter((p) => !pulseIDs.includes(p._id)),
-      }));
+      setSprint((ps) => {
+        const filteredPulses = ps.pulses.filter(
+          (p) => !pulseIDs.includes(p._id)
+        );
+
+        const payload = {
+          _id: sprintID,
+          pulses: filteredPulses.map((p) => p._id),
+        };
+
+        updateSprint(payload);
+        return {
+          ...ps,
+          pulses: filteredPulses,
+        };
+      });
     }
 
     function handleMoveTo({ detail }: any) {
@@ -69,6 +81,13 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
 
       setSprint((ps) => {
         const pulses = uniqBy([...ps.pulses, ...pulseObjs], "_id");
+
+        const payload = {
+          _id: sprintID,
+          pulses: pulses.map((p) => p._id),
+        };
+
+        updateSprint(payload);
         return { ...ps, pulses: pulses };
       });
     }

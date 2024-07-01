@@ -13,6 +13,7 @@ import {
 } from "@/utils/customEvents";
 import { StateSetter } from "@/types/genericTypes";
 import { useSelectedStore } from "@/store/useSelectedStore";
+import { updateSprint } from "@/gateways/sprint-gateway";
 
 type PulseTypwWithSprint = PulseType & { sprintID: string };
 
