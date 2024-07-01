@@ -15,6 +15,8 @@ import Notification from "@/components/pages/Notifications/Notifications";
 import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 import useAudio from "@/utils/useAudio";
 import { useNotificationStore } from "@/store/notificationStore";
+import Image from "next/image";
+import logo from "@/assets/favicon.png";
 
 type Props = {};
 
@@ -61,12 +63,15 @@ const Navbar = ({}: Props) => {
   return (
     <div
       className={cn(
-        "p-2 pr-8 items-center w-full h-navbar-height",
+        "p-2 pl-4 pr-8 items-center w-full h-navbar-height",
         " flex flex-row justify-between",
         isAuthenticated === false && "pointer-events-none opacity-50"
       )}
     >
-      <Link href="/">Logo here TODO</Link>
+      <Link href="/main" className={cn("hover:underline", "flex flex-row gap-2")}>
+        <Image src={logo} alt="MB" height={10} width={10} />
+        <h1>Monday board</h1>
+      </Link>
       <div className="right-side-navbar-stuff gap-4 flex flex-row items-center">
         {!!currentBoard && (
           <DialogueComp
@@ -81,7 +86,7 @@ const Navbar = ({}: Props) => {
                   title={`Invite members to ${currentBoard.title}`}
                   side="left"
                 >
-                  <UserRoundPlus  className="stroke-text-color"/>
+                  <UserRoundPlus className="stroke-text-color" />
                 </TooltipComp>
               </Button>
             }
@@ -119,7 +124,8 @@ const Navbar = ({}: Props) => {
               </div>
             )}
             <Bell
-              className={cn('stroke-text-color',
+              className={cn(
+                "stroke-text-color",
                 openNotification !== transitionStates.CLOSED &&
                   "stroke-highlighter-dark"
               )}
