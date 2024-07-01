@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { keys, startCase, uniqBy, values } from "lodash";
+import { startCase, uniqBy, values } from "lodash";
 
 import Space from "@/components/core/Space";
 
@@ -15,8 +15,17 @@ import { cn } from "@/lib/utils";
 
 import Pulse from "./Pulse";
 import ScrollWrapper from "@/components/core/ScrollWrapper";
-import { getSprint, updateSprint } from "@/gateways/sprint-gateway";
-import { Plus } from "lucide-react";
+import { getSprint } from "@/gateways/sprint-gateway";
+import {
+  ArrowBigRight,
+  Copy,
+  CopyIcon,
+  Plus,
+  SquareArrowOutUpRightIcon,
+  Text,
+  Trash2,
+  Type,
+} from "lucide-react";
 import { createPulse } from "@/gateways/pulse-gateway";
 import Loader from "@/components/core/Loader";
 import { toast } from "sonner";
@@ -28,6 +37,15 @@ import SprintCollapsed from "./SprintBlocks/SprintCollapsed";
 import SprintActions from "./SprintBlocks/SprintActions";
 import SprintLeftColor from "./SprintBlocks/SprintLeftColor";
 import { useConfig } from "@/store/configStore";
+
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+import ContextMenuComp from "@/components/core/ContextMenuComp";
+import { Button } from "@/components/ui/button";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -131,28 +149,81 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
             <div className="pulse-container-left w-full flex flex-col overflow-hidden">
               {/* <TempPulseRow color={sprint.color} /> */}
 
-              <PulseWrapper>
-                <Pulse
-                  pulse={tempPulse}
-                  board={board}
-                  sprint={sprint}
-                  leftPart={true}
-                  isFake={true}
-                />
-              </PulseWrapper>
+              <Pulse
+                pulse={tempPulse}
+                board={board}
+                sprint={sprint}
+                leftPart={true}
+                isFake={true}
+              />
 
               {sprint.pulses.map((pulse, i) => {
                 return (
-                  <PulseWrapper key={pulse._id + "left"}>
-                    <Pulse
-                      setSprint={setSprint}
-                      isFake={false}
-                      pulse={pulse}
-                      board={board}
-                      sprint={sprint}
-                      leftPart={true}
-                    />
-                  </PulseWrapper>
+                  <ContextMenuComp
+                    menuItems={
+                      <div
+                        className={cn(
+                          "shadow-xl shadow-main-bg items-start ",
+                          "w-48",
+                          "flex flex-col py-2 px-1 bg-main-fg rounded-lg gap-2",
+                          "border border-highlighter overflow-hidden"
+                        )}
+                      >
+                        <Button
+                          variant={"ghost"}
+                          className="w-full gap-2 text-start w-row justify-start"
+                        >
+                          <Type size={20} className="stroke-text-color" />
+                          <h1>Copy name</h1>
+                        </Button>
+                        <Button
+                          variant={"ghost"}
+                          className="w-full gap-2 text-start w-row justify-start"
+                        >
+                          <SquareArrowOutUpRightIcon
+                            size={20}
+                            className="stroke-text-color"
+                          />
+                          <h1>Open Task</h1>
+                        </Button>
+                        <Button
+                          variant={"ghost"}
+                          className="w-full gap-2 text-start w-row justify-start"
+                        >
+                          <ArrowBigRight
+                            size={20}
+                            className="stroke-text-color"
+                          />
+                          <h1>Move to</h1>
+                        </Button>
+                        <Button
+                          variant={"ghost"}
+                          className="w-full gap-2 text-start w-row justify-start"
+                        >
+                          <Copy size={20} className="stroke-text-color" />
+                          <h1>Duplicate</h1>
+                        </Button>
+                        <Button
+                          variant={"ghost"}
+                          className="w-full gap-2 text-start w-row justify-start"
+                        >
+                          <Trash2 size={20} className="stroke-text-color" />
+                          <h1>Delete</h1>
+                        </Button>
+                      </div>
+                    }
+                  >
+                    <PulseWrapper key={pulse._id + "left"}>
+                      <Pulse
+                        setSprint={setSprint}
+                        isFake={false}
+                        pulse={pulse}
+                        board={board}
+                        sprint={sprint}
+                        leftPart={true}
+                      />
+                    </PulseWrapper>
+                  </ContextMenuComp>
                 );
               })}
               {/* // Create new Pulse */}
@@ -164,15 +235,14 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
 
           {/* RIGHT PART  */}
           <div className="pulse-container-right flex flex-col w-full">
-            <PulseWrapper>
-              <Pulse
-                board={board}
-                pulse={tempPulse}
-                sprint={sprint}
-                leftPart={false}
-                isFake={true}
-              />
-            </PulseWrapper>
+            <Pulse
+              board={board}
+              pulse={tempPulse}
+              sprint={sprint}
+              leftPart={false}
+              isFake={true}
+            />
+
             {sprint.pulses.map((pulse, i) => {
               return (
                 <PulseWrapper key={pulse._id}>

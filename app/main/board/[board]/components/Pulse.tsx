@@ -5,13 +5,12 @@ import React, {
   memo,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import { debounce, startCase } from "lodash";
-import { MessageCircleMore, Trash2 } from "lucide-react";
+import { startCase } from "lodash";
+import { MessageCircleMore } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import Status from "./PulseBlocks/Status";
@@ -32,13 +31,9 @@ import { UserType } from "@/types/userTypes";
 import useRealtimeChannels from "@/hooks/useRealtimeChannels";
 import { useAuth } from "@/zstore";
 import { useConfig } from "@/store/configStore";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import Space from "@/components/core/Space";
 import Divider from "@/components/core/Divider";
-import useSelectedPulses, {
-  SelectedPulseContext,
-} from "@/hooks/useSelectedPulses";
+import { SelectedPulseContext } from "@/hooks/useSelectedPulses";
 
 type PulseProps = {
   pulse: PulseType;

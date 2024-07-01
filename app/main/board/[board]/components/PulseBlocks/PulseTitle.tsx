@@ -9,6 +9,13 @@ import useLoading from "@/hooks/useLoading";
 import Loader from "@/components/core/Loader";
 import { Input } from "@/components/ui/input";
 
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+
 type PulseTitleProps = {
   pulse: PulseType;
 };
@@ -29,23 +36,21 @@ const PulseTitle = ({ pulse }: PulseTitleProps) => {
   }, []);
 
   return isEditable ? (
-    <>
-      <Input
-        onBlur={() => setIsEditable(false)}
-        onKeyUp={handleKey}
-        ref={(e) => {
-          e?.focus();
-        }}
-        className={cn(
-          "p-0 border",
-          "w-11/12 h-5/6 bg-transparent rounded-none",
-          "border border-border-light py-1 mr-2"
-        )}
-        type="text"
-        onChange={(e) => updateTitle(e.target.value)}
-        value={pulse.title}
-      />
-    </>
+    <Input
+      onBlur={() => setIsEditable(false)}
+      onKeyUp={handleKey}
+      ref={(e) => {
+        e?.focus();
+      }}
+      className={cn(
+        "p-0 border",
+        "w-11/12 h-5/6 bg-transparent rounded-none",
+        "border border-border-light py-1 mr-2"
+      )}
+      type="text"
+      onChange={(e) => updateTitle(e.target.value)}
+      value={pulse.title}
+    />
   ) : (
     <>
       <h1
