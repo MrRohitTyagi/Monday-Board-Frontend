@@ -64,9 +64,8 @@ const LoginComponent = () => {
       } else {
         toast.success(promise.message);
         setToken(promise.token);
-        fetchUser("user", (data) => {
-          router.replace(`/main`);
-        });
+        await fetchUser("user");
+        router.replace(`/main`);
       }
     },
     [isLoginForm, picture]

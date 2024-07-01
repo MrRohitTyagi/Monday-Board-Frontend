@@ -15,7 +15,7 @@ type AuthStoreType = {
   isAuthenticated: boolean;
   isLoading: boolean;
   user: UserType;
-  fetchUser: (id: any, cb?: (e: UserType) => any) => void;
+  fetchUser: (id: any, cb?: (e: UserType) => any) => Promise<any>;
   notAuthenticated: () => void;
   addNewBoard: (board: BoardType) => void;
   updateBoardState: (board: BoardType) => void;
