@@ -10,32 +10,38 @@ import {
 } from "@/components/ui/input-otp";
 import { Label } from "@/components/ui/label";
 import { verifyOTP } from "@/gateways/email-gateway";
-import { changeUserPassword } from "@/gateways/user-gateway";
+import {
+  checkOTPAndChangePass,
+  checkPassAndSendOTP,
+} from "@/gateways/auth-gateway";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { isEmpty } from "lodash";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
 type PasswordProps = {};
 
-const passwordSchema = z.object({
-  password: z.string().min(3, "Password must be at least 3 characters"),
-  // new_password: z.string().min(3, "Password must be at least 3 characters"),
-  // confirm_new_password: z.string(),
-});
-// .refine(
-//   (data) => {
-//     return data.new_password === data.confirm_new_password;
-//   },
-//   {
-//     message: "Passwords must match",
-//     path: ["confirm_new_password"],
-//   }
-// );
+const passwordSchema = z
+  .object({
+    password: z.string().min(3, "Password must be at least 3 characters"),
+    new_password: z.string().min(3, "Password must be at least 3 characters"),
+    confirm_new_password: z.string(),
+  })
+  .refine(
+    (data) => {
+      return data.new_password === data.confirm_new_password;
+    },
+    {
+      message: "Passwords must match",
+      path: ["confirm_new_password"],
+    }
+  );
 
 const Password = (props: PasswordProps) => {
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(passwordSchema),
   });
@@ -46,15 +52,18 @@ const Password = (props: PasswordProps) => {
   const onSubmit = async (values: any) => {
     const { success } = otpSent
       ? { success: true }
-      : await changeUserPassword({ password: values.password });
+      : await checkPassAndSendOTP({ password: values.password });
 
     if (success !== true) return;
 
     if (otpSent === false) {
       return setOtpSent(true);
     }
-    verifyOTP({ otp: otp });
-    //....
+    const { success: changedSuccess } = await checkOTPAndChangePass({
+      otp: otp,
+      new_password: values.new_password,
+    });
+    if (changedSuccess) router.replace("/main");
   };
 
   return (
@@ -127,7 +136,7 @@ const Password = (props: PasswordProps) => {
                 </div>
               )}
               <Button type="submit" className="w-full">
-                Change Password
+                {otpSent ? "Change Password" : "Send OTP"}
               </Button>
             </div>
           </div>

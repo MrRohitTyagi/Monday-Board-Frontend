@@ -1,11 +1,11 @@
-import Loader from "@/components/core/Loader";
+import PulseLoader from "@/components/core/PulseLoader";
 
 import React from "react";
 type lodingProps = {};
 const loding = (props: lodingProps) => {
   return (
     <div className="h-full w-full w-row justify-center">
-      <Loader />
+      <PulseLoader />
     </div>
   );
 };

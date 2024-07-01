@@ -39,7 +39,10 @@ const UserProfile = (props: UserProfileProps) => {
           />
         </div>
       </PopoverTrigger>
-      <PopoverContent align="end" className="bg-main-bg w-fit border-2 border-highlighter-dark">
+      <PopoverContent
+        align="end"
+        className="bg-main-bg w-fit border-2 border-highlighter-dark"
+      >
         <div className="flex flex-col gap-2">
           {isAuthenticated && (
             <Button
@@ -60,8 +63,8 @@ const UserProfile = (props: UserProfileProps) => {
           <Button
             onClick={() => {
               router.replace("/login");
-              notAuthenticated();
               setopen(false);
+              notAuthenticated();
             }}
             className={cn(
               "logout ",

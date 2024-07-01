@@ -17,17 +17,5 @@ async function updateUser(payload: any): Promise<UserType> {
   const { data } = await axiosInstance().put(`${USER_BASE_URL}/update/${id}`);
   return data.response;
 }
-async function changeUserPassword(payload: any): Promise<any> {
-  try {
-    const { data } = await axiosInstance().post(
-      `${USER_BASE_URL}/change-password`,
-      payload
-    );
-    console.log(`%c data `, "color: yellow;border:1px solid lightgreen", data);
-    return { success: data.success };
-  } catch (error: any) {
-    toast.error(error.message);
-  }
-}
 
-export { getUser, deleteUser, updateUser, changeUserPassword };
+export { getUser, deleteUser, updateUser };

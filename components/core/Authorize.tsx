@@ -7,6 +7,7 @@ import { getToken } from "@/utils/cookie";
 import { useRouter } from "next/navigation";
 import { ChildrenType } from "@/types/genericTypes";
 import useTheme from "@/hooks/useTheme";
+import PulseLoader from "./PulseLoader";
 
 type AuthorizeTypes = ChildrenType & {};
 
@@ -43,9 +44,8 @@ const Authorize = ({ children }: AuthorizeTypes) => {
   return (
     <MainLayout>
       {isLoading === true ? (
-        <span
+        <PulseLoader
           className={cn(
-            "loading loading-ring loading-lg",
             "absolute top-1/2 left-1/2",
             "translate-x-[-50%] translate-y-[-50%]"
           )}

@@ -73,7 +73,7 @@ function getSchema({ isSignupForm }: GetSchemaProps) {
     email: z.string({ message: "Invalid Email" }).email(),
     password: z
       .string({ message: "Password is required" })
-      .min(4, "Password too short")
+      .min(3, "Password too short")
       .max(20, "Password too long"),
   });
   return formSchema;
