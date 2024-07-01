@@ -35,7 +35,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             "main-right-cont",
             "rounded-tl-lg grow shrink-0 bg-main-fg",
             "h-main-content-height  overflow-auto",
-            "px-4"
+            "px-4 pr-2"
           )}
         >
           {children}

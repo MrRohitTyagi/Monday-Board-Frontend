@@ -120,6 +120,7 @@ const Assigned = ({ board, pulse }: AssignedProps) => {
             {assignedUsers.map((assigned) => {
               return (
                 <Button
+                  key={assigned._id}
                   variant={"ghost"}
                   className={cn(
                     "h-fit w-fit rounded-xl hover:bg-transparent",

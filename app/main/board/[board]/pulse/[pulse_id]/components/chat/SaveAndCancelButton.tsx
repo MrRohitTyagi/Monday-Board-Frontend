@@ -13,6 +13,7 @@ type SaveAndCancelButtonProps = {
   disabled?: boolean;
   isWritting?: boolean;
   loading?: boolean;
+  disableWriteAIButton?: boolean;
 };
 const SaveAndCancelButton = ({
   onCancelClick,
@@ -21,6 +22,7 @@ const SaveAndCancelButton = ({
   disabled,
   loading,
   isWritting,
+  disableWriteAIButton,
 }: SaveAndCancelButtonProps) => {
   return (
     <div
@@ -46,7 +48,7 @@ const SaveAndCancelButton = ({
       {/* Write AI */}
 
       <Button
-        disabled={isWritting || disabled}
+        disabled={disableWriteAIButton || isWritting || disabled}
         onClick={handleWriteAI}
         size={"sm"}
         variant={"ghost"}

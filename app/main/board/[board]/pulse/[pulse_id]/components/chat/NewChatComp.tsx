@@ -137,6 +137,7 @@ const NewChatComp = ({ setChats, pulse }: NewChatCompProps) => {
 
         {isEditing === true && (
           <SaveAndCancelButton
+            disableWriteAIButton={text.length === 0}
             handleWriteAI={handleWriteAI}
             isWritting={isWritting}
             loading={isSaving}

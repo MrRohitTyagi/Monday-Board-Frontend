@@ -36,7 +36,7 @@ const Priority = ({ board, pulse }: PriorityProps) => {
           }}
           className={cn(baseCssMiniItems(), "priority")}
         >
-          {board?.priority?.[pulse?.priority]?.title || "NA"}
+          {board?.priority?.[pulse?.priority]?.title || ""}
         </h1>
       }
       content={

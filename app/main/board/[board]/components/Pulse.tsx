@@ -257,7 +257,7 @@ const Pulse = ({
             <div
               className={cn(
                 "pulse-selector",
-                "w-10 h-full px-2 mr-2",
+                "w-10 h-full px-2 mr-2 shrink-0",
                 "border-0 border-r-1 border-r-border-light",
                 "flex flex-row items-center justify-center"
               )}
