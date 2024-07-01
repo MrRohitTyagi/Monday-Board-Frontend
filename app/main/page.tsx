@@ -121,8 +121,8 @@ const BoardComp = ({ board }: { board: BoardType }) => {
 
       <CardFooter className="flex flex-col justify-start items-start p-0">
         <div className="flex flex-row justify-between w-full items-center">
-          <h3 className="text-ellipsis font-bold line-clamp-1 overflow-hidden">
-            {startCase(board.title)}
+          <h3 className="capitalize text-ellipsis font-bold line-clamp-1 overflow-hidden">
+            {board.title}
           </h3>
           <div className="board-actions space-x-2 flex flex-row items-center">
             {/* StarBoard  */}

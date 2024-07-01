@@ -15,7 +15,8 @@ function formatDate(date: Date, onlyDate?: boolean): string {
   const formattedDate: string = date
     .toLocaleDateString("en-GB", options)
     .replace(",", "");
-  const [day, month, year, prefix, time]: string[] = formattedDate?.split(" ");
+  const [day, month, year, prefix, time = ""]: string[] =
+    formattedDate?.split(" ");
 
   const [hrs = "", min = ""] = time?.split(":");
 

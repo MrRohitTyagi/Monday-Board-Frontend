@@ -75,10 +75,10 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
           className={cn(
             "cursor-pointer text-xl flex gap-2 items-center",
             "hover:bg-main-bg rounded",
-            "p-2"
+            "p-2 capitalize"
           )}
         >
-          {startCase(board.title)}
+          {board.title}
           <ChevronDown size="15px" />
         </h2>
       }

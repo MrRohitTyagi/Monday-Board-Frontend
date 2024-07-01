@@ -8,7 +8,11 @@ type NoChatsPlaceholderProps = {};
 const NoChatsPlaceholder = (props: NoChatsPlaceholderProps) => {
   return (
     <div
-      className={cn("flex w-full h-full flex-col gap-2 items-center", "px-16")}
+      className={cn(
+        "flex w-full h-full ",
+        "flex-col gap-2 items-center",
+        "px-16 select-none"
+      )}
     >
       <Image
         src={noCHats}

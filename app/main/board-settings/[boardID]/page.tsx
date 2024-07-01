@@ -28,6 +28,7 @@ import CustomDiv from "@/components/core/CustomDiv";
 import useLoading from "@/hooks/useLoading";
 import BoardSkeletonLoader from "./components/BoardSkeletonLoader";
 import { useRouter } from "next/navigation";
+import { getTempPriorities, getTempStatuses } from "./utils";
 
 type BoardSettingsProps = {
   params: {
@@ -70,6 +71,8 @@ const BoardSettings = ({ params }: BoardSettingsProps) => {
   useEffect(() => {
     if (params.boardID === "new") {
       triggerLoading(false);
+      setstatuses(getTempStatuses());
+      setpriority(getTempPriorities());
       return;
     }
 
