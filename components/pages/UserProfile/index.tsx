@@ -53,7 +53,7 @@ const UserProfile = (props: UserProfileProps) => {
                 " justify-start gap-3 w-full"
               )}
             >
-              <UserCog color="white" size={20} />
+              <UserCog color="white" size={20} className="stroke-text-color" />
               <h2>User Profile</h2>
             </Button>
           )}
@@ -73,7 +73,7 @@ const UserProfile = (props: UserProfileProps) => {
               " justify-start gap-3 w-full"
             )}
           >
-            <LogOut color="white" size={20} />
+            <LogOut color="white" size={20} className="stroke-text-color" />
             <h2>Logout</h2>
           </Button>
         </div>

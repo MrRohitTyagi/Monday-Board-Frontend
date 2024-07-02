@@ -8,12 +8,26 @@ import {
 import { ChildrenType } from "@/types/genericTypes";
 import { cn } from "@/lib/utils";
 
-type ContextMenuCompProps = { menuItems: ReactNode } & ChildrenType;
-const ContextMenuComp = ({ children, menuItems }: ContextMenuCompProps) => {
+type ContextMenuCompProps = {
+  menuItems: ReactNode;
+  clasnames?: {
+    trigger?: string;
+    content?: string;
+  };
+} & ChildrenType;
+const ContextMenuComp = ({
+  children,
+  menuItems,
+  clasnames,
+}: ContextMenuCompProps) => {
   return (
-    <ContextMenu>
-      <ContextMenuTrigger>{children}</ContextMenuTrigger>
-      <ContextMenuContent className={cn("p-0")}>
+    <ContextMenu modal={false}>
+      <ContextMenuTrigger className={cn("context-trigger", clasnames?.trigger)}>
+        {children}
+      </ContextMenuTrigger>
+      <ContextMenuContent
+        className={cn("context-content", "p-0", clasnames?.content)}
+      >
         {React.Children.map(menuItems, (child) => {
           return (
             <ContextMenuItem className={cn("p-0")}>{child}</ContextMenuItem>

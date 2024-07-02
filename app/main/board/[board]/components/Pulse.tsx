@@ -34,6 +34,7 @@ import { useConfig } from "@/store/configStore";
 import { Checkbox } from "@/components/ui/checkbox";
 import Divider from "@/components/core/Divider";
 import { SelectedPulseContext } from "@/hooks/useSelectedPulses";
+import { StateSetter } from "@/types/genericTypes";
 
 type PulseProps = {
   pulse: PulseType;
@@ -43,19 +44,19 @@ type PulseProps = {
   isLast?: boolean;
   leftPart?: boolean;
   isFake?: boolean;
-  setSprint?: React.Dispatch<React.SetStateAction<SprintType>>;
+  setSprint?: StateSetter<SprintType>;
 };
 // max-w-40 max-w-12 min-w-40 min-w-12
 export const baseCssMiniItems = (w = 40) =>
   cn(
     "text-sm text-center tracking-wider",
-    `max-w-${w} min-w-${w} h-full`,
+    `max-w-${w} min-w-${w} h-full text-text-color`,
     "content-around shrink-0 text-center tracking-wider text-nowrap",
     "border-border-light border-r-[1px] cursor-pointer"
   );
 
 type PulseContextType = {
-  setPulse: React.Dispatch<React.SetStateAction<PulseType>>;
+  setPulse: StateSetter<PulseType>;
   updatePriority: (p: string) => void;
   updateTitle: (p: string) => void;
   updateTag: (p: string) => void;
@@ -79,6 +80,9 @@ const Pulse = ({
   const { notificationChannel } = useRealtimeChannels();
 
   const debounceRef = useRef<any>();
+  const sprintDebounceRef = useRef<any>();
+  const hideRef = useRef(false);
+
   const router = useRouter();
   const params = useParams();
 
@@ -97,17 +101,27 @@ const Pulse = ({
     }, 1000);
   };
 
+  const updateParentSprint = useCallback(
+    (currentPulse: PulseType, key: string, value: string) => {
+      clearTimeout(sprintDebounceRef.current);
+      sprintDebounceRef.current = setTimeout(() => {
+        setSprint?.((ps) => {
+          const pulses = ps.pulses.map((p) => {
+            if (currentPulse._id === p._id) return { ...p, [key]: value };
+            else return p;
+          });
+          return { ...ps, pulses };
+        });
+      }, 700);
+    },
+    []
+  );
+
   const updateStatus = useCallback((status: string) => {
     debouncePulseUpdate({ status });
 
     setPulse((currentPulse) => {
-      setSprint?.((ps) => {
-        const pulses = ps.pulses.map((p) => {
-          if (currentPulse._id === p._id) return { ...p, status: status };
-          else return p;
-        });
-        return { ...ps, pulses };
-      });
+      updateParentSprint(currentPulse, "status", status);
       return { ...currentPulse, status: status };
     });
   }, []);
@@ -115,20 +129,19 @@ const Pulse = ({
   const updatePriority = useCallback((priority: string) => {
     debouncePulseUpdate({ priority });
     setPulse((currentPulse) => {
-      setSprint?.((ps) => {
-        const pulses = ps.pulses.map((p) => {
-          if (currentPulse._id === p._id) return { ...p, priority: priority };
-          else return p;
-        });
-        return { ...ps, pulses };
-      });
+      updateParentSprint(currentPulse, "priority", priority);
+
       return { ...currentPulse, priority: priority };
     });
   }, []);
 
   const updateTitle = useCallback((title: string) => {
     debouncePulseUpdate({ title });
-    setPulse((prev) => ({ ...prev, title: title }));
+    setPulse((currentPulse) => {
+      updateParentSprint(currentPulse, "title", title);
+
+      return { ...currentPulse, title: title };
+    });
   }, []);
 
   const updateTag = useCallback((tag: string) => {
@@ -190,17 +203,14 @@ const Pulse = ({
     user: configUser = "",
   } = filterPerBoard || {};
 
-  const hideRef = useRef(false);
-  hideRef.current = useMemo(() => {
-    return excludePulse({
-      configPriority,
-      configSearch,
-      configStatus,
-      configUser,
-      isFake,
-      pulse,
-    });
-  }, [configPriority, configSearch, configStatus, configUser, isFake, pulse]);
+  hideRef.current = excludePulse({
+    configPriority,
+    configSearch,
+    configStatus,
+    configUser,
+    isFake,
+    pulse,
+  });
 
   const allSelectedOfASprint = useMemo(() => {
     return (
@@ -211,7 +221,9 @@ const Pulse = ({
   return (
     <div
       className={cn(
-        // "h-10",
+        isFake === false && hideRef.current === true
+          ? "animate-pulse-height-rev"
+          : "animate-pulse-height",
         "w-full",
         "transition-all duration-150",
         "hover:bg-main-bg",
@@ -233,10 +245,8 @@ const Pulse = ({
         <CustomDiv
           disabled={isDeleting}
           className={cn(
-            isFake === false && hideRef.current === true
-              ? "animate-pulse-height-rev"
-              : "animate-pulse-height",
-            "flex flex-row items-center justify-start h-full",
+            "h-[var(--pulse-height)]",
+            "flex flex-row items-center justify-start",
             "bg-main-bg  transition-all duration-150",
             "border-border-light border",
             isFake === false && !selected[pulse._id] && "hover:bg-main-fg",

@@ -16,16 +16,7 @@ import { cn } from "@/lib/utils";
 import Pulse from "./Pulse";
 import ScrollWrapper from "@/components/core/ScrollWrapper";
 import { getSprint } from "@/gateways/sprint-gateway";
-import {
-  ArrowBigRight,
-  Copy,
-  CopyIcon,
-  Plus,
-  SquareArrowOutUpRightIcon,
-  Text,
-  Trash2,
-  Type,
-} from "lucide-react";
+import { Plus } from "lucide-react";
 import { createPulse } from "@/gateways/pulse-gateway";
 import Loader from "@/components/core/Loader";
 import { toast } from "sonner";
@@ -38,14 +29,9 @@ import SprintActions from "./SprintBlocks/SprintActions";
 import SprintLeftColor from "./SprintBlocks/SprintLeftColor";
 import { useConfig } from "@/store/configStore";
 
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu";
 import ContextMenuComp from "@/components/core/ContextMenuComp";
-import { Button } from "@/components/ui/button";
+import PulseContextOptions from "./PulseBlocks/PulseContextOptions";
+import { PulseType } from "@/types/pulseTypes";
 
 const tempPulse = {
   _id: "temp-pulse",
@@ -64,6 +50,36 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
   const [isloading, setIsloading] = useState(true);
   const { collapsedSprints } = useConfig();
   const isExpanded = !collapsedSprints.includes(sprint._id);
+
+  const duplicatePulse = useCallback(
+    async (pulse: PulseType, type: "WITH_UPDATES" | "WITHOUT_UPDATES") => {
+      let newCreatedPulse;
+      if (type === "WITH_UPDATES") {
+        newCreatedPulse = await createPulse({
+          ...pulse,
+          sprint: sprint._id,
+          WITH_UPDATES: true,
+        });
+      } else {
+        newCreatedPulse = await createPulse({
+          ...pulse,
+          sprint: sprint._id,
+        });
+      }
+
+      setSprint?.((ps) => {
+        const tempPs = [];
+        for (const mainPulse of ps.pulses) {
+          if (mainPulse._id === pulse._id) {
+            tempPs.push(mainPulse);
+            tempPs.push(newCreatedPulse);
+          } else tempPs.push(mainPulse);
+        }
+        return { ...ps, pulses: tempPs };
+      });
+    },
+    [sprint._id]
+  );
 
   useEffect(() => {
     (async function init() {
@@ -160,60 +176,16 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
               {sprint.pulses.map((pulse, i) => {
                 return (
                   <ContextMenuComp
+                    key={pulse._id + "left"}
                     menuItems={
-                      <div
-                        className={cn(
-                          "shadow-xl shadow-main-bg items-start ",
-                          "w-48",
-                          "flex flex-col py-2 px-1 bg-main-fg rounded-lg gap-2",
-                          "border border-highlighter overflow-hidden"
-                        )}
-                      >
-                        <Button
-                          variant={"ghost"}
-                          className="w-full gap-2 text-start w-row justify-start"
-                        >
-                          <Type size={20} className="stroke-text-color" />
-                          <h1>Copy name</h1>
-                        </Button>
-                        <Button
-                          variant={"ghost"}
-                          className="w-full gap-2 text-start w-row justify-start"
-                        >
-                          <SquareArrowOutUpRightIcon
-                            size={20}
-                            className="stroke-text-color"
-                          />
-                          <h1>Open Task</h1>
-                        </Button>
-                        <Button
-                          variant={"ghost"}
-                          className="w-full gap-2 text-start w-row justify-start"
-                        >
-                          <ArrowBigRight
-                            size={20}
-                            className="stroke-text-color"
-                          />
-                          <h1>Move to</h1>
-                        </Button>
-                        <Button
-                          variant={"ghost"}
-                          className="w-full gap-2 text-start w-row justify-start"
-                        >
-                          <Copy size={20} className="stroke-text-color" />
-                          <h1>Duplicate</h1>
-                        </Button>
-                        <Button
-                          variant={"ghost"}
-                          className="w-full gap-2 text-start w-row justify-start"
-                        >
-                          <Trash2 size={20} className="stroke-text-color" />
-                          <h1>Delete</h1>
-                        </Button>
-                      </div>
+                      <PulseContextOptions
+                        duplicatePulse={duplicatePulse}
+                        pulse={pulse}
+                        setSprint={setSprint}
+                      />
                     }
                   >
-                    <PulseWrapper key={pulse._id + "left"}>
+                    <PulseWrapper>
                       <Pulse
                         setSprint={setSprint}
                         isFake={false}

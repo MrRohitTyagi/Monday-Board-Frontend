@@ -61,7 +61,7 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
       })}
 
       <TooltipComp
-        title={"Create new board"}
+        title={<h1>Create new board</h1>}
         side="right"
         className="px-3 py-2"
       >
@@ -77,7 +77,10 @@ const SidemenuBoardListing = ({ isCollapsed }: SidemenuBoardListingProps) => {
             "bg-transparent px-2 m-0.5"
           )}
         >
-          <Plus size={isCollapsed === true ? 20 : 18} />
+          <Plus
+            size={isCollapsed === true ? 20 : 18}
+            className="stroke-text-color"
+          />
           {isCollapsed === false && <h1>Create board</h1>}
         </Button>
       </TooltipComp>

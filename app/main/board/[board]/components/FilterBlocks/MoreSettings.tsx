@@ -33,7 +33,7 @@ const MoreSettings = (props: MoreSettingsProps) => {
             )}
             variant={"ghost"}
           >
-            <Settings2 size={20} color="white" />
+            <Settings2 size={20} className="stroke-text-color" />
           </Button>
         }
         content={

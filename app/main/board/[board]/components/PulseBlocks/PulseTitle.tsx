@@ -9,13 +9,6 @@ import useLoading from "@/hooks/useLoading";
 import Loader from "@/components/core/Loader";
 import { Input } from "@/components/ui/input";
 
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-
 type PulseTitleProps = {
   pulse: PulseType;
 };
