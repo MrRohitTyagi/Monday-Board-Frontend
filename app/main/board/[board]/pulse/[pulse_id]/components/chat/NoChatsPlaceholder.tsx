@@ -22,10 +22,10 @@ const NoChatsPlaceholder = (props: NoChatsPlaceholderProps) => {
         className=" h-48 w-52"
         unoptimized
       />
-      <LowOpacityText className=" opacity-60 text-2xl text-center">
+      <LowOpacityText className="line-clamp-1 overflow-hidden opacity-60 text-2xl text-center">
         No updates yet for this item
       </LowOpacityText>
-      <LowOpacityText className=" opacity-60 text-md text-center">
+      <LowOpacityText className="line-clamp-3 overflow-hidden opacity-60 text-md text-center">
         Be the first one to update about progress, mention someone or upload
         files to share with your team members
       </LowOpacityText>

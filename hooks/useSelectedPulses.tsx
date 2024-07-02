@@ -1,19 +1,17 @@
 "use client";
 
-import { createContext, useCallback, useMemo, useState } from "react";
+import { createContext, useCallback } from "react";
 
 import { PulseType } from "@/types/pulseTypes";
 import { deleteBulkPulses, moveBulkPulses } from "@/gateways/pulse-gateway";
 import { keys, values } from "lodash";
 import useLoading from "./useLoading";
-import { waitfor } from "@/lib/utils";
 import {
   deletePulseInSprint,
   moveFromOneToOtherSprint,
 } from "@/utils/customEvents";
 import { StateSetter } from "@/types/genericTypes";
-import { useSelectedStore } from "@/store/useSelectedStore";
-import { updateSprint } from "@/gateways/sprint-gateway";
+import { selectedPulsesType, useSelectedStore } from "@/store/useSelectedStore";
 
 type PulseTypwWithSprint = PulseType & { sprintID: string };
 
@@ -23,8 +21,8 @@ type SelectedPulsesType = {
   handleSelect: (p: PulseTypwWithSprint) => void;
   handleUnSelect: (p: string) => void;
   unSelectAll: () => void;
-  deleteAllSelected: () => void;
-  moveFromTo: (e: string) => void;
+  deleteAllSelected: (singleSelectedPulse?: selectedPulsesType) => void;
+  moveFromTo: (e: string, s?: selectedPulsesType) => void;
   isDeleting: boolean;
   isSaving: boolean;
 };
@@ -54,47 +52,51 @@ const useSelectedPulses = () => {
     setSelectedPulses(() => ({}));
   }, []);
 
-  const emitDeleteFromSprints = useCallback(() => {
-    const sprintsToEmitData: {
-      [key: string]: string[];
-    } = {};
+  const emitDeleteFromSprints = useCallback(
+    (selectedPulses: selectedPulsesType) => {
+      const sprintsToEmitData: {
+        [key: string]: string[];
+      } = {};
 
-    for (const pulseID in selectedPulses) {
-      const pulse = selectedPulses[pulseID];
+      for (const pulseID in selectedPulses) {
+        const pulse = selectedPulses[pulseID];
 
-      sprintsToEmitData[pulse.sprintID] = [
-        ...(sprintsToEmitData[pulse.sprintID] || []),
-        pulseID,
-      ];
-    }
+        sprintsToEmitData[pulse.sprintID] = [
+          ...(sprintsToEmitData[pulse.sprintID] || []),
+          pulseID,
+        ];
+      }
 
-    for (const sprintID in sprintsToEmitData) {
-      deletePulseInSprint(sprintID, sprintsToEmitData[sprintID]);
-    }
-  }, [selectedPulses]);
+      for (const sprintID in sprintsToEmitData) {
+        deletePulseInSprint(sprintID, sprintsToEmitData[sprintID]);
+      }
+    },
+    [deletePulseInSprint]
+  );
 
-  const deleteAllSelected = useCallback(async () => {
-    triggerDeleting(true);
-    // await waitfor();
-    await deleteBulkPulses(keys(selectedPulses));
-    emitDeleteFromSprints();
+  const deleteAllSelected = useCallback(
+    async (singleSelectedPulse?: selectedPulsesType) => {
+      triggerDeleting(true);
+      // await waitfor();
+      await deleteBulkPulses(keys(singleSelectedPulse || selectedPulses));
+      emitDeleteFromSprints(singleSelectedPulse || selectedPulses);
 
-    setSelectedPulses(() => ({}));
-    triggerDeleting(false);
-  }, [selectedPulses]);
+      setSelectedPulses(() => ({}));
+      triggerDeleting(false);
+    },
+    [selectedPulses]
+  );
 
   const moveFromTo = useCallback(
-    async (toSprint: string) => {
+    async (toSprint: string, singleSelectedPulse?: selectedPulsesType) => {
       triggerSaving(true);
 
-      // await waitfor();
-
-      emitDeleteFromSprints();
-      moveFromOneToOtherSprint(toSprint, selectedPulses);
+      emitDeleteFromSprints(singleSelectedPulse || selectedPulses);
+      moveFromOneToOtherSprint(toSprint, singleSelectedPulse || selectedPulses);
 
       const apiPayload = {
         toSprint: toSprint,
-        pulses: values(selectedPulses).map((p) => ({
+        pulses: values(singleSelectedPulse || selectedPulses).map((p) => ({
           _id: p._id,
           sprintID: p.sprintID,
         })),

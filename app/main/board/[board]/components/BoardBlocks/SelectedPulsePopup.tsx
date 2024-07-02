@@ -126,7 +126,7 @@ const SelectedPulsePopup = (props: SelectedPulsePopupProps) => {
 
         <Button
           disabled={disabled}
-          onClick={deleteAllSelected}
+          onClick={() => deleteAllSelected()}
           variant="ghost"
           className={cn(commonBoxStyle)}
         >

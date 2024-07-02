@@ -125,7 +125,7 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
       );
       document.removeEventListener(`MOVE_TO_SPRINT_${sprintID}`, handleMoveTo);
     };
-  }, [sprintID]);
+  }, [sprintID, sprint]);
 
   return isloading === true ? (
     <SprintSkeletonLoader />
@@ -179,8 +179,10 @@ const Sprint = ({ sprintID, board }: SprintProps) => {
                     key={pulse._id + "left"}
                     menuItems={
                       <PulseContextOptions
+                        key={pulse._id + "left"}
                         duplicatePulse={duplicatePulse}
                         pulse={pulse}
+                        sprint={sprint}
                         setSprint={setSprint}
                       />
                     }
@@ -242,14 +244,16 @@ type CreateNewPulseProps = {
   setSprint: React.Dispatch<SetStateAction<SprintType>>;
   sprint: SprintType;
 };
-const newPulse = { title: "New item" };
 const CreateNewPulse = ({ setSprint, sprint }: CreateNewPulseProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   //
   const handleCreateNewpulse = useCallback(async () => {
     try {
       setIsSubmitting(true);
-      const pulse = await createPulse({ ...newPulse, sprint: sprint._id });
+      const pulse = await createPulse({
+        title: `New item ${sprint.pulses.length}`,
+        sprint: sprint._id,
+      });
 
       setSprint((ps) => {
         return { ...ps, pulses: [...ps.pulses, { ...pulse, isNew: true }] };

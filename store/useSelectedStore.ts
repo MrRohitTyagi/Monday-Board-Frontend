@@ -2,7 +2,7 @@ import { PulseType } from "@/types/pulseTypes";
 import { create } from "zustand";
 
 type PulseTypwWithSprint = PulseType & { sprintID: string };
-type selectedPulsesType = { [key: string]: PulseTypwWithSprint };
+export type selectedPulsesType = { [key: string]: PulseTypwWithSprint };
 
 type useSelectedStoreType = {
   selectedPulses: selectedPulsesType;
