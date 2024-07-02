@@ -12,3 +12,21 @@ export async function waitfor(time?: number) {
     }, time || 5000);
   });
 }
+
+export function grc({
+  bp,
+  css,
+}: {
+  bp: "sm" | "md" | "lg" | "xl";
+  css: ClassValue;
+}) {
+  const classes = typeof css === "string" ? css.split(" ") : [];
+  const arr = [];
+
+  for (const c of classes) {
+    if (c) arr.push(`${bp}:${c.trim()}`);
+  }
+  console.log(arr.join(" "));
+
+  return twMerge(clsx(arr.join(" ")));
+}

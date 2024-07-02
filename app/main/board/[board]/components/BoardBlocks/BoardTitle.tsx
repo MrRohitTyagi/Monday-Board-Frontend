@@ -1,8 +1,7 @@
 "use client";
 
 import React, { memo, useState } from "react";
-import { startCase } from "lodash";
-import { ChevronDown, Edit, Fullscreen } from "lucide-react";
+import { Edit, Fullscreen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AvatarGroup from "@/components/core/AvatarGroup";
 import PopoverComp from "@/components/core/PopoverComp";
@@ -81,7 +80,7 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
           className={cn(
             "cursor-pointer text-xl flex gap-4 items-center",
             "hover:bg-main-bg rounded",
-            "p-2 capitalize group"
+            "px-2 py-1 capitalize group"
           )}
         >
           <h1 className="group-hover:underline" onClick={() => setopen(true)}>

@@ -25,8 +25,9 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             (isCollapsed === true
               ? "grid-cols-[3rem_1fr]"
               : "grid-cols-[12rem_1fr]"),
-          //
-          "gap-4 rounded-tr-md"
+          "gap-4 rounded-tr-md",
+          // RESPONSIVE
+          "sm:grid-cols-[1fr]"
         )}
       >
         {isAuthenticated ? <SideMenu /> : null}

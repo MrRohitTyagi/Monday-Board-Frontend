@@ -12,6 +12,17 @@ const config = {
   prefix: "",
   safelist: ["opacity-20"],
   theme: {
+    screens: {
+      "2xl": { max: "1535px" },
+
+      xl: { max: "1279px" },
+
+      lg: { max: "1023px" },
+
+      md: { max: "767px" },
+
+      sm: { max: "639px" },
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -184,7 +195,6 @@ const config = {
           "0%": { bottom: "-4rem" },
           "100%": { bottom: "5rem" },
         },
-      
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",

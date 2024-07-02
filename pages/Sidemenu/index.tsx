@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 //utils
-import { cn } from "@/lib/utils";
+import { cn, grc } from "@/lib/utils";
 
 //constants
 
@@ -66,7 +66,10 @@ const SideMenu = ({}: SideMenuProps) => {
         isCollapsed ? "" : `p-4`,
         `relative overflow-hidden`,
         `group  animate-fadeIn`,
-        isAuthenticated ? "" : "opacity-70 cursor-not-allowed"
+        isAuthenticated ? "" : "opacity-70 cursor-not-allowed",
+        // responsive CSS
+        grc({ bp: "sm", css: "hidden" })
+        //
       )}
     >
       {isCollapsed === false && <Space h={4} />}
