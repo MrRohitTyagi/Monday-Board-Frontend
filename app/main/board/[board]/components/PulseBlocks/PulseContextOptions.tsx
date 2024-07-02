@@ -62,11 +62,11 @@ const PulseContextOptions = ({
         variant={"ghost"}
         className={cn(
           "w-full",
-          " gap-2 text-start w-row justify-start",
+          " gap-2 text-start justify-start",
           "grid grid-cols-[1.5rem_1fr]"
         )}
       >
-        <Type size={20} className="stroke-text-color" />
+        <Type size={16} className="stroke-text-color" />
         <h1>Copy name</h1>
       </Button>
       <Divider className="h-0.5" />
@@ -78,11 +78,11 @@ const PulseContextOptions = ({
         variant={"ghost"}
         className={cn(
           "w-full",
-          " gap-2 text-start w-row justify-start",
+          " gap-2 text-start justify-start",
           "grid grid-cols-[1.5rem_1fr]"
         )}
       >
-        <SquareArrowOutUpRightIcon size={20} className="stroke-text-color" />
+        <SquareArrowOutUpRightIcon size={16} className="stroke-text-color" />
         <h1>Open item</h1>
       </Button>
       <Divider className="h-0.5" />
@@ -138,7 +138,7 @@ const PulseContextOptions = ({
           variant={"ghost"}
           className={cn(
             "w-full",
-            " gap-2 text-start w-row justify-start",
+            " gap-2 text-start justify-start",
             "grid grid-cols-[1.5rem_1fr]"
           )}
         >
@@ -163,8 +163,8 @@ const PulseContextOptions = ({
               variant={"ghost"}
               className={cn(
                 "w-full",
-                " gap-2 text-start w-row justify-start",
-                "grid grid-cols-[1.5rem_1fr]"
+                " gap-2 text-start justify-start",
+                // "grid grid-cols-[1.5rem_1fr]"
               )}
               onClick={() => {
                 duplicatePulse(pulse, "WITH_UPDATES");
@@ -180,8 +180,8 @@ const PulseContextOptions = ({
               variant={"ghost"}
               className={cn(
                 "w-full",
-                " gap-2 text-start w-row justify-start",
-                "grid grid-cols-[1.5rem_1fr]"
+                " gap-2 text-start justify-start",
+                // "grid grid-cols-[1.5rem_1fr]"
               )}
             >
               <h1>Duplicate without updates</h1>
@@ -196,11 +196,11 @@ const PulseContextOptions = ({
           variant={"ghost"}
           className={cn(
             "w-full",
-            " gap-2 text-start w-row justify-start",
+            " gap-2 text-start justify-start",
             "grid grid-cols-[1.5rem_1fr]"
           )}
         >
-          <Copy size={20} className="stroke-text-color" />
+          <Copy size={16} className="stroke-text-color" />
           <h1>Duplicate</h1>
         </Button>
       </TooltipComp>
@@ -216,11 +216,11 @@ const PulseContextOptions = ({
         variant={"ghost"}
         className={cn(
           "w-full",
-          " gap-2 text-start w-row justify-start",
+          " gap-2 text-start justify-start",
           "grid grid-cols-[1.5rem_1fr]"
         )}
       >
-        <Trash2 size={20} className="stroke-text-color" />
+        <Trash2 size={16} className="stroke-text-color" />
         <h1>Delete</h1>
       </Button>
     </div>
