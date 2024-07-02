@@ -1,8 +1,8 @@
 "use client";
 
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { startCase } from "lodash";
-import { ChevronDown, Edit } from "lucide-react";
+import { ChevronDown, Edit, Fullscreen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AvatarGroup from "@/components/core/AvatarGroup";
 import PopoverComp from "@/components/core/PopoverComp";
@@ -20,9 +20,15 @@ type BoardTitleProps = {
 const BoardTitle = ({ board }: BoardTitleProps) => {
   const router = useRouter();
   const { userFriendlyDate } = timeBetween(board.createdAt);
+  const [open, setopen] = useState(false);
 
   return (
     <PopoverComp
+      close={(e) => {
+        setopen(e);
+      }}
+      controlled={true}
+      open={open}
       additional={{ content: { align: "start" } }}
       classNames={{
         content:
@@ -51,36 +57,58 @@ const BoardTitle = ({ board }: BoardTitleProps) => {
           <div className="divider m-0"></div>
 
           {/* // Admins */}
-          <div className="flex items-center flex-row gap-4">
+          <div className="flex items-center flex-row gap-4 mt-3">
             <h4 className="text-sm w-20 text-nowrap opacity-80">Admins</h4>
             <AvatarGroup users={board.admins} />
           </div>
 
           {/* // members */}
-          <div className="flex items-center flex-row gap-4">
+          <div className="flex items-center flex-row gap-4 mt-3">
             <h4 className="text-sm w-20 text-nowrap opacity-80">Members</h4>
             <AvatarGroup users={board.members} />
           </div>
           <div className="h-2"></div>
 
           {/* Created On */}
-          <div className="flex items-center flex-row gap-4 overflow-hidden">
+          <div className="flex items-center flex-row gap-4 overflow-hidden mt-3">
             <h4 className="text-sm w-20 text-nowrap opacity-80">Created On</h4>
             <h4 className="text-sm opacity-80">{userFriendlyDate}</h4>
           </div>
         </>
       }
       trigger={
-        <h2
+        <div
           className={cn(
-            "cursor-pointer text-xl flex gap-2 items-center",
+            "cursor-pointer text-xl flex gap-4 items-center",
             "hover:bg-main-bg rounded",
-            "p-2 capitalize"
+            "p-2 capitalize group"
           )}
         >
-          {board.title}
-          <ChevronDown size="15px" />
-        </h2>
+          <h1 className="group-hover:underline" onClick={() => setopen(true)}>
+            {board.title}
+          </h1>
+          {/* <ChevronDown size="15px" /> */}
+
+          <Button
+            onClick={() => {
+              const ele = document.getElementById("main-right-cont");
+              ele?.requestFullscreen();
+            }}
+            variant={"ghost"}
+            className={cn("opacity-0 p-0", "group-hover:!opacity-100")}
+          >
+            <TooltipComp
+              side="right"
+              title={
+                <div className="px-3 py-2 shadow-lg shadow-main-fg border rounded-lg overflow-hidden border-border-light">
+                  Full screen
+                </div>
+              }
+            >
+              <Fullscreen size={18} className="stroke-text-color" />
+            </TooltipComp>
+          </Button>
+        </div>
       }
     />
   );

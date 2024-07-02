@@ -31,6 +31,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       >
         {isAuthenticated ? <SideMenu /> : null}
         <div
+          id="main-right-cont"
           className={cn(
             "main-right-cont",
             "rounded-tl-lg grow shrink-0 bg-main-fg",
