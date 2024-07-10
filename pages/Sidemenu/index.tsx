@@ -67,8 +67,11 @@ const SideMenu = ({}: SideMenuProps) => {
         `relative overflow-hidden`,
         `group  animate-fadeIn`,
         isAuthenticated ? "" : "opacity-70 cursor-not-allowed",
+
         // responsive CSS
-        grc({ bp: "sm", css: "hidden" })
+        "sm:hidden",
+        "md:block"
+        // "sm:block bg-red-600"
         //
       )}
     >

@@ -2,13 +2,21 @@
 
 import { Card } from "@/components/ui/card";
 import useTheme from "@/hooks/useTheme";
-import { cn } from "@/lib/utils";
+import { cn, grc } from "@/lib/utils";
 import { memo } from "react";
 
 function ThemePallets() {
   const { themeConfig, applyTheme } = useTheme();
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto p-4">
+    <div
+      className={cn(
+        "grid gap-6 max-w-6xl mx-auto p-4 grid-cols-3",
+        "overflow-y-auto",
+        "lg:grid-cols-3",
+        "md:grid-cols-2",
+        "sm:grid-cols-1"
+      )}
+    >
       {themeConfig.map((theme, index) => (
         <Card
           onClick={() => applyTheme(theme._id)}
@@ -17,7 +25,7 @@ function ThemePallets() {
             "hover:scale-105 shadow-lg shadow-main-bg",
             "transition-all duration-300",
             "pallet-card bg-main-fg p-6 rounded-lg",
-            "cursor-pointer"
+            "cursor-pointer overflow-hidden"
           )}
         >
           <div className="flex items-center justify-between mb-4">

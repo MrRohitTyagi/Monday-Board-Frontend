@@ -23,8 +23,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           isAuthenticated === true && "grid grid-cols-[1fr] w-full",
           isAuthenticated === true &&
             (isCollapsed === true
-              ? "grid-cols-[3rem_1fr]"
-              : "grid-cols-[12rem_1fr]"),
+              ? "md:grid-cols-[3rem_1fr]"
+              : "md:grid-cols-[12rem_1fr]"),
           "gap-4 rounded-tr-md",
           // RESPONSIVE
           "sm:grid-cols-[1fr]"

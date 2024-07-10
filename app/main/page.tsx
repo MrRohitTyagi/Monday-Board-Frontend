@@ -51,8 +51,14 @@ const MainPage = (props: pageProps) => {
           "rounded-lg space-y-4"
         )}
       >
-        <h1 className="font-bold text-2xl">Your Boards</h1>
-        <div className="boards-listing flex flex-row gap-4 flex-wrap">
+        <h1 className={cn("font-bold text-2xl", "sm:text-center", "md:text-start")}>Your Boards</h1>
+        <div
+          className={cn(
+            "boards-listing flex flex-row gap-4 flex-wrap",
+            "sm:justify-center",
+            "md:justify-start"
+          )}
+        >
           {sortedBoards.length === 0 ? (
             <CreateNewBoard />
           ) : (
