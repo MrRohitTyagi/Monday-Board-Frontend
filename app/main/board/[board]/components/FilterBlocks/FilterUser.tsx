@@ -34,7 +34,7 @@ const FilterUser = (props: FilterUserProps) => {
         <div
           className={cn(
             // "border-2 border-highlighter-dark",
-            "viewed-by-cont",
+            "viewed-by-cont ",
             "grid grid-cols-6 rounded-md",
             "min-h-6 min-w-6",
             "transition-all",

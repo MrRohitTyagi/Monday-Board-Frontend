@@ -22,7 +22,7 @@ const MoreSettings = (props: MoreSettingsProps) => {
         classNames={{
           trigger: "h-full",
           content:
-            "w-fit bg-main-fg p-4 shadow-lg shadow-black border-2 border-highlighter-dark",
+            "bg-main-fg p-4 shadow-lg shadow-black border-2 border-highlighter-dark",
         }}
         trigger={
           <Button
@@ -49,7 +49,7 @@ const MoreSettings = (props: MoreSettingsProps) => {
                       "hover:border-2",
                       "transition-all",
                       "border border-highlighter-dark",
-                      "w-16",
+
                       size === pulseHeight && "bg-highlighter-dark"
                     )}
                     key={size}

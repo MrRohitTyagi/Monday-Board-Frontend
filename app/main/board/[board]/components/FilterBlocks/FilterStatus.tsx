@@ -38,7 +38,7 @@ const FilterStatus = (props: FilterStatusProps) => {
       classNames={{
         trigger: "h-full",
         content:
-          "w-44 bg-main-fg p-4 shadow-lg shadow-black border-2 border-highlighter-dark",
+          "bg-main-fg p-4 shadow-lg shadow-black border-2 border-highlighter-dark",
       }}
       trigger={
         <Button
@@ -49,7 +49,7 @@ const FilterStatus = (props: FilterStatusProps) => {
           className={cn(
             baseCssMiniItems(),
             "statuses border-r-0 border-2 border-highlighter-dark",
-            "rounded-sm !min-w-32 !max-w-32"
+            "rounded-sm"
           )}
           style={{
             background: board?.statuses?.[selectedStatus]?.color,
